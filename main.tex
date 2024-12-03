@@ -122,6 +122,26 @@ For the other indices:
   a_2 & = r_2[t] + b_2 \sum_{i=0}^t (-1)^{t-i} F_i
 \end{align*}
 
+\chapter{Implementation}
+
+\section{Using an Out-of-the-Box Solver}
+
+\begin{itemize}
+  \item Algorithm technically only requires one fractional bit to determine how to round.
+  \item Problem: Solving a system of linear equations requires exact fractional solutions.
+    Using floating-point numbers leads to inaccurate results.
+  \item Could be solved by using an iterative method? However, does a method
+    exist, which is accurate up to one fractional bit?
+\end{itemize}
+
+\section{Custom Implementation}
+
+\begin{itemize}
+  \item Uses custom \texttt{ratio} datatype which implements rational numbers.
+  \item Linear system solver implemented using Gaussian elimination and pivoting.
+  \item Only the basic algorithm is implemented, so far.
+\end{itemize}
+
 \begin{bibtex-entries}
 \end{bibtex-entries}
 
