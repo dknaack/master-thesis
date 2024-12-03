@@ -27,11 +27,100 @@
 
 \begin{document}
 
-\chapter{Introduction}
+\chapter{Bounds}
 
-\chapter{Preliminaries}
+\section{Determinant}
 
-\chapter{Conclusion}
+Assumptions:
+\begin{itemize}
+  \item The algorithm always chooses the same vector from $C$ until it is removed.
+  \item The algorithm always chooses the same index $\ell$ until $x_\ell$ is integral.
+  \item The first fractional $x_\ell$ is chosen.
+\end{itemize}
+
+\begin{lemma}
+  \label{lemma:half}
+  If $x_\ell = 1/2$, then $x_\ell$ is integral in the next iteration.
+\end{lemma}
+
+\begin{proof}
+  Follows from the update rule:
+  \[
+    x_\ell' = 1/x_\ell = 2. \qedhere
+  \]
+\end{proof}
+
+\begin{lemma}
+  There is a vector $c$ and matrix $B$
+  such that $\det B' = \left(\frac12\right)^k \det B$ in $k \le d$,
+  where $B'$ is the resulting basis from applying the algorithm with $B$ and $c$.
+\end{lemma}
+
+\begin{proof}
+  We choose $c = (1, \dots, 1)$ and $B_i = 2^i e_i$ where $e_i$ is the $i$th unit vector.
+  In the first iteration, $x_i = 2^{-i}$.
+  By Lemma~\ref{lemma:half}, the solution for the first coordinate is integral
+  in the next iteration.
+  By the update rule, if $x_j = 2^{i - j}$ for $j > i$ in the $i$th iteration,
+  then in the next iteration, we have
+  \[
+    x_i' = \frac{1}{x_j} = 2 \quad \text{ and } \quad x_{j}' = -\frac{x_j}{x_i} = \frac{2^{i-j}}{1/2} = -2^{i + 1 - j}. \qedhere
+  \]
+\end{proof}
+
+\begin{lemma}
+  There is no vector $c$ and no matrix $B$
+  such that $\det B' > \left(\frac12\right)^k \det B$ in $k \le d$ steps,
+  where $B'$ is the resulting basis from applying the algorithm with $B$ and $c$.
+\end{lemma}
+
+\begin{lemma}
+  There is no vector $c$ and no matrix $B$
+  such that $\det B' \ge \left(\frac12\right)^k \det B$ in $k > d$ steps,
+  where $B'$ is the resulting basis from applying the algorithm with $B$ and $c$.
+\end{lemma}
+
+\section{Worst-Case}
+
+In one dimension, the worst case input consists of Fibonacci numbers.
+
+\[\begin{aligned}
+  x_1[0] & = a_1/b_1                       \\
+  x_1[1] & = b_1/(a_1 \bmod b_1)              && = b_1 / r_1[0]      \\
+  x_1[2] & = r_1[0]/(b \bmod r_1)       && = r_1[0] / r_1[1] \\
+  x_1[3] & = r_1[1]/(r_1 \bmod r_1[1])  && = r_1[1] / r_1[2] \\
+         & \vdots
+\end{aligned}\]
+
+\begin{align*}
+  a_1    & = b_1 + r_1[0]      \\
+  b_1    & = r_1[0]+ r_1[1]  \\
+  r_1[0] & = r_1[1] + r_1[2] \\
+  r_1[1] & = r_1[2] + r_1[3] \\
+         & \vdots
+\end{align*}
+Setting the last two $r_1[t-1]$ and $r_1[t]$ to $1$ gives us the Fibonacci numbers.
+
+For the other indices:
+\[\begin{aligned}
+  x_1[0] & = a_2/(b_2 \cdot b_1)                                    \\
+  x_1[1] & = -(a_2 \bmod (b_2 \cdot b_1)) / (b_2 \cdot r_1[0])        &  & = -r_2[0] / (b_2 \cdot r_1[0]) \\
+  x_1[2] & = -(r_2[0] \bmod (b_2 \cdot r_1[0])) / (b_2 \cdot r_1[1])  &  & = -r_2[1] / (b_2 \cdot r_1[1]) \\
+  x_1[3] & = -(r_2[1] \bmod (b_2 \cdot r_1[1])) / (b_2 \cdot r_1[2])  &  & = -r_2[2] / (b_2 \cdot r_1[2]) \\
+         & \vdots
+\end{aligned}\]
+
+\begin{align*}
+  a_2    & = b_2 b_1 - r_2[0]      \\
+  r_2[0] & = b_2 r_1[0] - r_2[1] \\
+  r_2[1] & = b_2 r_1[1] - r_2[2] \\
+  r_2[2] & = b_2 r_1[2] - r_2[3] \\
+         & \vdots
+\end{align*}
+
+\begin{align*}
+  a_2 & = r_2[t] + b_2 \sum_{i=0}^t (-1)^{t-i} F_i
+\end{align*}
 
 \begin{bibtex-entries}
 \end{bibtex-entries}
