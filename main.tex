@@ -35,7 +35,137 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
+\chapter{$d$-bonacci Number}
+
+\section{Multi-Dimensional Golden Ratio}
+
+\begin{definition}[$d$-dimensional Golden Ratio]
+  The $d$-dimensional golden ratio is the only positive real root $\phi_d$ of the polynomial:
+  \[
+    x^{d+1} + x^d + \dots + x^2 + x = 1.
+  \]
+\end{definition}
+
+All sums of the form $\sum_{k=1}^i \phi_d^k$ with $i \le d$ must be strictly less than one.
+
+Dividing by $x$ on each side gives us the following equation:
+\[
+  x^d + x^{d-1} + \dots + x + 1 = 1/x.
+\]
+
+% TODO: Explain why we can subtract one from each.
+We choose $x_i = \sum_{k = 1}^i \phi_d^k$.
+The values are ordered such that $x_1$ is the smallest value.
+Therefore we begin pivoting with $x_1$.
+After the update, the new value for $x_1$ is
+\[
+  x_1' = 1/\phi_d - 1 = \phi_d^d + \phi_d^{d-1} + \dots + \phi_d = x_d.
+\]
+The other values of the new solution are
+\[
+  x_i' = x_i / x_1 - 1 = \sum_{k = 1}^i \phi_d^k / \phi_d - 1 = \sum_{k=1}^{i-1} \phi_d^k.
+\]
+Hence, we rotate the values forwards, so that $x_i' = x_{i-1}$ and $x_1' = x_d$.
+In the next iteration we would choose $x_2$ as our pivot since it is the smallest value.
+
+\section{Higher-Order Fibonacci Numbers}
+
+\begin{definition}
+  The \emph{$d$-bonacci numbers} are defined as follows:
+  \begin{enumerate}
+    \item $F_d(0) = F_d(1) = \dots = F_d(d) = 0$.
+    \item $F_d(n) = \sum_{i = 1}^{d+1} F_d(n - i)$ for $n > d$.
+  \end{enumerate}
+\end{definition}
+
+Using the $d$-bonacci numbers, we can approximate the golden ratio $\phi_d$
+by computing the ratio between consecutive terms $F_d(n - 1) / F_d(n)$.
+Furthermore, we can approximate powers of the golden ratio by increasing the distance between the terms.
+For example, we can approximate $\phi_d^2$ by the term $F_d(n - 2) / F_d(n)$.
+
+In order to prove that the ratios approximate $\phi_d$,
+we first prove the convergence criteria for this sequence, i.e.
+the sequence is bounded and is monotonically increasing.
+
+\begin{lemma}
+  The ratio $F_d(n - i) / F_d(n)$ is bounded between $0$ and $1$.
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{lemma}
+  The ratios are monotonically increasing with increasing $n$.
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}
+  $\lim_{n \to \infty} F_d(n - k) / F_d(n) = \phi_d^i$ for $i \ge 1$.
+\end{theorem}
+
+\begin{proof}
+  We begin with $k = 1$.
+  By the previous lemmas, we can assume that the ratio approaches some limit $L$:
+  \begin{align*}
+    \lim_{n \to \infty} \frac{F_d(n - 1)}{F_d(n)} = L.
+  \end{align*}
+  From the definition of the $d$-bonacci numbers, we can rewrite $F_d(n - 1)$ as follows:
+  \begin{align*}
+    F_d(n) & = F_d(n - 1) + \dots + F_d(n - d - 1) \\
+    \Leftrightarrow F_d(n - 1) & = F_d(n) - F_d(n - 2) - \dots - F_d(n - d - 1)
+  \end{align*}
+  This gives us the following equation for the limit $L$:
+  \begin{align*}
+    L = \lim_{n \to \infty} \frac{F_d(n - 1)}{F_d(n)}
+      = \lim_{n \to \infty} 1 - \frac{\sum_{i=2}^{d+1} F_d(n - i)}{F_d(n)}
+      = 1 - \sum_{i=2}^{d+1} \lim_{n \to \infty} \frac{F_d(n - i)}{F_d(n)}
+  \end{align*}
+  Each term in the sum can be rewritten as the ratio of two consecutive $d$-bonacci numbers:
+  \begin{align}
+    \label{eq:power}
+    \lim_{n\to\infty} \frac{F_d(n - i)}{F_d(n)} = \lim_{n\to\infty}\frac{F_d(n - i)}{F_d(n - i + 1)} \cdot \ldots \cdot \frac{F_d(n - 1)}{F_d(n)} = L^i.
+  \end{align}
+  Therefore, as $n$ approaches infinity each term in the sum approaches a power of $L$:
+  \begin{align*}
+    L = \lim_{n \to \infty} \frac{F_d(n - 1)}{F_d(n)}
+      = 1 - \sum_{i=2}^{d+1} \lim_{n \to \infty} \frac{F_d(n - i)}{F_d(n)}
+      = 1 - L^2 - L^3 - \dots - L^{d+1}
+  \end{align*}
+  Per definition, the solution to this equation is exactly $\phi_d$.
+  The limit for $k > 1$ follows directly from Equation~\ref{eq:power}.
+\end{proof}
+
+Using this theorem, we can swap out the power-sum of $\phi_d$ in the solution
+vector from the previous section with sums of consecutive $d$-bonacci terms.
+We set $x_i = \sum_{k=1}^i (-1)^k F_d(n - k) / F_d(n)$ and pivot with $x_1$.
+The new value for $x_1$ is
+\[
+  x_1'
+  = \{1/x_1\}
+  = \frac{F_d(n)}{F_d(n - 1)} - 1
+  = \sum_{k=1}^{d+1} (-1)^{k + 1} \frac{F_d(n - k)}{F_d(n - 1)} - 1
+  = \sum_{k=1}^d (-1)^k \frac{F_d(n - 1 - k)}{F_d(n - 1)}
+\]
+and the new values for $x_i$ are
+\[
+  x_i'
+  = -x_i / x_1
+  = -\sum_{k=1}^i (-1)^k \frac{F_d(n - i)}{F_d(n)} \frac{F_d(n)}{F_d(n - 1)}
+  = \sum_{k=1}^{i-1} (-1)^k \frac{F_d(n - 1 - i)}{F_d(n - 1)}.
+\]
+
+% TODO: How would we choose the matrix? Can
+
 \chapter{Bounds}
+
+\begin{itemize}
+  \item We choose the smallest index in each iteration since this gives us the
+    largest change in the determinant.
+\end{itemize}
 
 Assumption:
 \[
