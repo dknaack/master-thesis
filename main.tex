@@ -27,9 +27,12 @@
 \section{Generalized Euclidean Algorithm}
 
 \begin{Pseudocode}
-solve $Bx = c$
-swap $B_l$ and $c$
-...
+while $x$ is not integral do
+  solve $Bx = c$
+  find $x_l$ which is not integral
+  swap $B_l$ and $c$
+  ...
+end
 \end{Pseudocode}
 
 \chapter{Bounds}
