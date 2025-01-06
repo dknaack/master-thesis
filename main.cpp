@@ -448,6 +448,56 @@ static matrix<T> basic_euclidean2(matrix<T> B, matrix<T> c)
 	return B;
 }
 
+template<typename T>
+static matrix<T> fast_euclidean(matrix<T> B, matrix<T> C)
+{
+	int g, old_g, a, b, t;
+	matrix<T> X, Y, Z;
+
+	int d = B.num_rows;
+	int n = B.num_cols + C.num_cols;
+
+	X = zeros<T>(d, n - d);
+	Y = zeros<T>(d, d);
+	Z = zeros<T>(d, 1);
+
+	solve(B, X, C);
+
+	for (int i = 0; i < d; i++) {
+		// choose index with maximum fractionality
+		int l = 0;
+		for (int j = 1; j < n - d; j++) {
+			if (frac(X(i, j)) > frac(X(i, l))) {
+				l = j;
+			}
+		}
+
+		// determine the translate of B[l] and of vectors C
+		// TODO: Compute LCM of all denominators
+
+		g = t;
+		clear(Z);
+		Z(l, 0) = 1;
+
+		for (int j = 0; j < n - d; j++) {
+			old_g = g;
+			g = xgcd(old_g, t, a, b);
+
+			for (int k = 0; k < d; k++) {
+				int x = X(k, j);
+				int z = Z(k, 0);
+
+				Z(k, 0) = a * z + b * x;
+				X(k, j) = old_g / g * x + t / g * z;
+			}
+		}
+
+		Y = Z;
+	}
+
+	return B * Y;
+}
+
 int
 main(void)
 {
@@ -458,6 +508,6 @@ main(void)
 	fscanf(f, "%zd", &d);
 	matrix B = read_matrix<ratio>(f, d, d);
 	matrix c = read_matrix<ratio>(f, d, 1);
-	matrix result = basic_euclidean(B, c);
+	matrix result = basic_euclidean2(B, c);
     return 0;
 }
