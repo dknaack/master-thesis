@@ -35,6 +35,91 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
+\chapter{Bounds}
+
+\section{What Makes a Bad Solution?}
+
+In one dimension, a solution is bad when the value $x_1$ is close to $1$.
+However, in the next iteration $x_1$ would be close to $0$ and therefore
+would lead to a greater decrease in the determinant.
+An initial guess would be that the solution lies exactly between $0$ and $1$ at $1/2$.
+However, this solution is also good as after just one step we have achieved integrality.
+
+The solution is to choose a value $x_1$ such that its value in the first
+iteration is the same as its value in the second iteration.
+This means we are trying to solve the following equation:
+\[
+  x_1 = 1/x_1 - 1.
+\]
+This gives us the polynomial $x^2 + x - 1$ where the root is the inverse of the
+golden ratio.
+
+% TODO: Explore other strategies. Can we generalize this to every possible strategy?
+In just two dimensions, we already have an additional degree of freedom.
+Since the solution $x$ consists of two values, we can choose which index we pivot with.
+We will choose the value with the smallest fractional value as this decreases
+the determinant the fastest.
+We assume w.l.o.g. that our values are sorted in increasing order.
+This means we pivot with $x_1$ first.
+
+% TODO: What about just choosing the golden ratio for every x_i?
+% TODO: Are odd dimensions easier since the decrease is not worse? We could
+% choose two values to be the same, since the ratio for odd dimensions is
+% smaller than the previous dimension
+Just like in one dimension we want to choose $x_1$ carefully such that the
+determinant decreases the same amount in every iteration.
+A simple solution would be to fill both values with the golden ratio.
+In this case, it does not matter which index we choose as each one decreases
+the determinant the same amount.
+However, in two dimensions we can make this decrease slightly worse
+by choosing different values for $x_1$ and $x_2$ such that we swap the pivot
+in each iteration.
+
+Assuming the value for $x_1$ is already chosen where would $x_2$ be placed?
+Ideally, it would be close to the right side of $x_1$, because then the new
+value $-x_2 / x_1$ would be close to $-1$ and the fractional value would be
+close to $1$.
+Since the decrease must stay the same in each iteration, this gives us the
+following two equations:
+\begin{align*}
+  x_1 = 2 - x_2 / x_1 \\
+  x_2 = 1 / x_1 - 1,\\
+\end{align*}
+which leads to the following polynomial:
+\begin{align*}
+  x_1^3 - 2x_1^2 - x_1 + 1 = 0
+\end{align*}
+
+Let $\phi_2$ be the root of this polynomial.
+If we choose $x_1 = \phi_2$ and $x_2 = 2\phi_2 - \phi_2^2$,
+then the values in the second iteration are
+\[\begin{aligned}
+  x_1' & = 1 / x_1 - 1   &  & = 1 / \phi_2 - 1                    &  & = 2\phi_2 + \phi_2^2 &  & = x_2, \\
+  x_2' & = 2 - x_2 / x_1 &  & = 2 - (2\phi_2 + \phi_2^2) / \phi_2 &  & = \phi_2             &  & = x_1
+\end{aligned}\]
+
+We can extend this to $d$ dimensions using the following equations:
+\begin{align*}
+  x_1 = 2 - x_2 / x_1 \\
+  x_2 = 2 - x_3 / x_1 \\
+  x_3 = 2 - x_4 / x_1 \\
+  \vdots \\
+  x_{d-1} = 2 - x_d / x_1 \\
+  x_d = 1 / x_d - 1 \\
+\end{align*}
+
+\section{Fibonacci Numbers}
+
+\begin{itemize}
+  \item Fibonacci numbers are just linear recurrences with constant coefficients $c_0 = 1, c_1 = 1$.
+  \item Linear recurrence with coefficients $c_0, c_1, \dots, c_d$: $a_{n+d+1} = \sum_{i=0}^d c_i a_{n+i}$.
+  \item The characteristic polynomial of the Fibonacci sequence is the polynomial of the golden ratio.
+  \item For even dimensions: $c_0 = -1, c_1 = 1, c_2 = 2, c_3 = -2, \dots, c_{2d-1} = -2, c_{2d} = 2$.
+  \item For odd dimensions:  $c_0 = 1, c_1 = -1, c_2 = -2, c_3 = 2, \dots, c_{2d} = -2, c_{2d+1} = 2$.
+  \item The ratio $\phi_d$ for the characteristic polynomials approaches $1/\sqrt{3}$ as $d \to \infty$.
+  \item Folding an A4 paper?
+\end{itemize}
+
 \chapter{$d$-bonacci Number}
 
 \section{Multi-Dimensional Golden Ratio}
@@ -160,7 +245,7 @@ and the new values for $x_i$ are
 
 % TODO: How would we choose the matrix? Can
 
-\chapter{Bounds}
+\chapter{Bounds (old)}
 
 \begin{itemize}
   \item We choose the smallest index in each iteration since this gives us the
