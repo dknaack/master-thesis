@@ -35,7 +35,20 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-\chapter{Bounds}
+\chapter{Bounds on the Decrease of the Determinant}
+
+\begin{theorem}
+  The determinant $\det(B)$ decreases by a factor of at least $\phi^{-2d}$ over
+  $2d$ iterations.
+\end{theorem}
+
+\begin{proof}
+  Assume there is some solution vector $x$ with $x_i > 1/\phi$ for all $i$
+  such that the decrease is slower than $1/\phi$ over $d+1$ iterations.
+  Because $1/x_i < \phi$ and $\phi - 1 = 1/\phi$,
+  the next value $1/x_i - 1$ must be smaller than $1/\phi$,
+  Therefore, choosing
+\end{proof}
 
 \section{What Makes a Bad Solution?}
 
