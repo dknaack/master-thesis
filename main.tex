@@ -35,7 +35,20 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-\chapter{Bounds on the Decrease of the Determinant}
+\chapter{Bounds on the Determinant}
+
+\[
+  K_n(x_1, \dots, x_n) =
+  \begin{cases}
+    1, & \text{ if } n = 0, \\
+    x_1, & \text{ if } n = 1, \\
+    x_1 K_{n-1}(x_2, \dots, x_n) + K_{n-2}(x_3, \dots, x_n), & \text{ otherwise.}
+  \end{cases}
+\]
+
+The Euclidean algorithm takes exactly $n$ steps if $a$ has a minimal continued
+fraction with $n$ terms $[a_0; a_1, a_2, \dots, a_n]$. For the generalized
+algorithm, it takes as long as the length of the longest continued fraction.
 
 \begin{theorem}
   The determinant $\det(B)$ decreases by a factor of at least $\phi^{-2d}$ over
