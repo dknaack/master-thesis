@@ -414,19 +414,282 @@ where $a = F_d(n)$ and $b = F_d(n + 1)$.
 \end{proof}
 
 \begin{theorem}
-  The sequence $R^{(d)}_n$ converges to $\phi^{(d)}$.
+  The sequence $F_d(n + k) / F_d(n)$ for $k \ge 1$ converges to $\phi_d^k$.
 \end{theorem}
 
 \begin{proof}
   From the previous two lemmas, we know that the sequence converges.
   Therefore, there exists some $L$ such that
   \[
-    \lim_{n \to \infty} R^{(d)}_n = \lim_{n \to \infty} 1 + \frac{1}{R^{(d)}_{n-1} R^{(d)}_{n-2} \dots R^{(d)}_{n-d}} = L.
+    \lim_{n \to \infty} R_d(n) = \lim_{n \to \infty} 1 + \frac{1}{R_d(n-1) R_d(n-2) \dots R_d(n-d)} = L.
   \]
   As $n$ approaches infinity, all ratios approach some limit $L$.
   Hence, $L = 1 + 1/L^d$ or equivalently $L^{d+1} - L^d - 1 = 0$,
-  which fits the definition of the golden ratio $\phi^{(d)}$.
+  which fits the definition of the golden ratio $\phi_d$.
 \end{proof}
+
+From the previous theorem, we can construct a matrix $A$ and vector $b$ such that the solution
+still approximates the powers of $\phi_d$ but with significantly smaller terms:
+
+\begin{align*}
+  A = \begin{pmatrix}
+    F_d(n + d) \\
+    & F_d(n + d - 1) \\
+    && \ddots \\
+    &&& F_d(n + 2) \\
+    &&&& F_d(n + 1) \\
+  \end{pmatrix},
+  b =
+  \begin{pmatrix}
+    F_d(n) \\
+    F_d(n) \\
+    \vdots \\
+    F_d(n) \\
+    F_d(n) \\
+  \end{pmatrix}
+\end{align*}
+
+The most fractional index in the solution is $x_d$ since it approximates $1/\phi_d$,
+while the other terms approximate powers of $1/\phi_d$ and are therefore smaller.
+Pivoting once with $d$, reduces the power of each term $x_i$ with $i \ne d$.
+However, at the same time it increases the power of $x_d$, because now $x_d$ has the following value:
+\[
+  x_d' = 1/x_d - 1 = \frac{F_d(n+1)}{F_d(n)} - 1 = \frac{F_d(n) + F_d(n - d)}{F_d(n)} - 1 = \frac{F_d(n - d)}{F_d(n)}.
+\]
+Again, from the previous theorem it follows that the next solution $x_d'$ would approach $\phi_d^d$ as $n$ goes to infinity.
+For the other terms, we reduce each by one power:
+\begin{align*}
+  x_i'
+  & = x_i/x_d - 1 \\
+  & = \frac{F_d(n)}{F_d(n + d + 1 - i)} \cdot \frac{F_d(n + 1)}{F_d(n)} - 1 \\
+  & = \frac{F_d(n + d - i)}{F_d(n + d + 1 - i)} \cdot \dots \cdot \frac{F_d(n)}{F_d(n + 1)} \cdot \frac{F_d(n + 1)}{F_d(n)} - 1 \\
+  & = \frac{F_d(n + d - i)}{F_d(n + d + 1 - i)} \cdot \dots \cdot \frac{F_d(n+1)}{F_d(n + 2)} \frac{F_d(n)}{F_d(n + 1)} \cdot \frac{F_d(n + 1)}{F_d(n)} - 1 \\
+  & = \frac{F_d(n + d - i)}{F_d(n + d + 1 - i)} \cdot \dots \cdot \frac{F_d(n+2)}{F_d(n + 1)} - 1 \\
+  & = \frac{F_d(n + d - i)}{F_d(n + 1)} - 1 \\
+\end{align*}
+
+\section{Sums of Higher-Order Fibonacci Numbers}
+
+\begin{lemma}
+  \[\sum_{i = 0}^n F_d(i) = F_d(n + 1 + d) - 1.\]
+\end{lemma}
+
+\begin{proof}
+  Let $n = 0$, then $F_d(d + 1) = F_d(d) + F_d(0) - 1 = 1 + F_d(0) - 1 = F_d(0)$.
+  Per induction, assume $\sum_{i=0}^n F_d(i) = F_d(n + 1 + d) - 1$. For $n + 1$, it follows:
+  \begin{align*}
+    \sum_{i = 0}^{n+1} F_d(i)
+    & = F_d(n + 1) + \sum_{i = 0}^n F_d(i) \\
+    & = F_d(n + 1) + F_d(n + d) - 1 \\
+    & = F_d(n + 1) + F_d(n + 1 + d) - 1 \\
+    & = F_d(n + 2 + d) - 1. \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  \[\sum_{i = k}^n F_d(i) = F_d(n + 1 + d) - F_d(k + 1 + d).\]
+\end{lemma}
+
+\begin{proof}
+  \begin{align*}
+    \sum_{i = k}^n F_d(i)
+    & = \sum_{i = 0}^n F_d(i) - \sum_{i = 0}^{k-1} F_d(i) \\
+    & = F_d(n + 1 + d) - 1 - F_d(k + d) + 1 \\
+    & = F_d(n + 1 + d) - F_d(k + d). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  $\sum_{i=k}^n F_d(i) = F_d(n + 1 + d) - F_d(k + 1 + d)$.
+\end{corollary}
+
+\section{Generator Matrix for Higher-Order Fibonacci Numbers}
+
+\begin{lemma}[Honsberger's Identity]
+  \[
+    F_d(n + m) = F_d(m - d) F_d(n) + F_d(m) F_d(n + d).
+  \]
+\end{lemma}
+
+\begin{definition}[Generator Matrix]
+  \[
+    G_d := \begin{pmatrix}
+      \begin{matrix}
+        1 & 0 & \dots & 0
+      \end{matrix} & 1 \\
+      I_d &
+      \begin{matrix}
+        0 \\
+        \vdots \\
+        0 \\
+        0 \\
+      \end{matrix} \\
+    \end{pmatrix} \in \mathbb{N}^{(d+1) \times (d+1)}
+  \]
+\end{definition}
+
+\begin{itemize}
+  \item How could we compute a diagonalization of this matrix?
+  \item What is the value of $G_d^n$?
+\end{itemize}
+
+\begin{lemma}
+  $\det(G_d) = (-1)^d$.
+\end{lemma}
+
+\begin{proof}
+  We calculate the determinant using Laplace expansion in the first row.
+  Taking the first entry $(G_d)_{1,1}$ and removing the first row and column produces
+  a lower-triangle matrix with only zeros on its diagonal.
+  The determinant for this submatrix is therefore zero.
+  For the last entry $(G_d)_{1,d+1}$, we get the identity matrix.
+  Hence, the determinant for the matrix is $(-1)^{d+2} = (-1)^d$.
+\end{proof}
+
+\begin{lemma}
+  The only real positive eigenvalue of $G_d$ is $\phi_d$.
+\end{lemma}
+
+\begin{proof}
+  We find a $\lambda$ such that $\det(G_d - \lambda I_d) = 0$ using Laplace expansion in the first row.
+  Again, only two candidates are of interest: The first column and last column.
+  Removing the first column and first row, we get a lower triangle matrix with a diagonal of $-\lambda$.
+  Removing the last column and first row, we get an upper triangle matrix with a diagonal of $1$.
+  Therefore, the determinant is:
+  \[
+    \det(G_d - \lambda I_d) = (1 - \lambda^d) (-\lambda^d) + (-1)^d = 0.
+  \]
+  Multiplying by $(-1)^d$ gives us the polynomial for the golden ratio.
+\end{proof}
+
+\begin{lemma}
+  The eigenvector of $G_d$ is $v = (\phi_d^d, \phi_d^{d-1}, \dots, \phi_d^1, \phi_d^0)^\top$.
+\end{lemma}
+
+\begin{proof}
+  The eigenvector of $G_d$ must satisfy $(G_d - \phi_d I_d) v = 0$.
+  The first equation in this linear system is $(1 - \phi_d) v_1 + v_d = 0$.
+  The $(i+1)$-th equation gives us $v_i + \phi_d v_{i+1} = 0$ or equivalently $v_i = \phi_d v_{i+1}$.
+  Replacing $v_{i+1}$ until we reach the last element gives us $v_i = \phi_d^{d - i + 1} v_d$.
+  Substituting $v_1$ with $v_1 = \phi_d^d v_3$ gives us:
+  \begin{align*}
+    (1 - \phi_d) \phi_d^d v_d + v_d = 0 \iff v_d (\phi_d^{d+1} - \phi_d - 1) = 0.
+  \end{align*}
+  Hence, the eigenvector is $v = v_d (\phi_d^d, \dots, \phi_d^1, \phi_d^0)$ for $v_d \ne 0$.
+\end{proof}
+
+\begin{lemma}
+  $G_d^n = G_d^{n - 1} + G_d^{n - d - 1}$.
+\end{lemma}
+
+\begin{proof}
+  Follows from the Cayley-Hamilton Theorem.
+\end{proof}
+
+\begin{corollary}
+  The matrix $G_d^n$ consists solely of either $d$-order Fibonacci numbers or zeros.
+\end{corollary}
+
+\section{Combinatorics}
+
+\textbf{Sequences}.
+Let $S_d(n) \subseteq \{1, d + 1\}^*$ be the subset of sequences which add up to $n$.
+Then, $F_d(n) = |S_d(n)|$.
+For $n = 0$, there is one sequence, the empty sequence $\langle\rangle$, which adds up to $0$.
+For $n < d$, the only sequence which adds up to $n$ consists of only 1's.
+For $n \ge d$, we can append $d + 1$ to the sequences which add up to $n - d - 1$
+and we can append $1$ to the sequences which add up to $n - 1$.
+Hence, $F_d(n) = F_d(n - 1) + F_d(n - d - 1)$.
+
+\begin{align*}
+  S_d(0) &= \{\langle\rangle\} \\
+  S_d(n) &= \{\langle 1 \rangle^k\}, \quad \text{ for } n \le d \\
+  S_d(n) &= (\langle 1 \rangle \circ S_d(n - 1)) \cup (\langle d + 1 \rangle \circ S_d(n - d - 1)), \quad \text{ for } n > d \\
+\end{align*}
+For set $S$ and sequence $s$, we denote $s \circ S := \{ s \circ s' \mid s' \in S \}$.
+
+From this perspective, we can deduce that the sum of $F_d(i)$ must be $F_d(n + d + 1) - 1$.
+We can construct the sequences of length $n + d + 1$ in the following way:
+We prepend $d + 1$ to all sequences of length $n$,
+we prepend $1$ and $d + 1$ to all sequences of length $n - 1$, and so on.
+We repeat this up until the empty sequences $S_d(0)$.
+However, we are missing the sequence which only consists of 1's, which is why we subtract by $1$.
+
+\begin{align*}
+  & \langle d + 1 \rangle \circ S_d(n) \\
+  & \langle 1, d + 1 \rangle \circ S_d(n - 1) \\
+  & \langle 1, 1, d + 1 \rangle \circ S_d(n - 2) \\
+  & \vdots \\
+  & \langle 1, \dots, 1, d + 1 \rangle \circ S_d(0) \\
+  & \langle 1, \dots, 1, 1, \dots, 1 \rangle \\
+\end{align*}
+
+A similar argument can be used for the sums of multiples of $d + 1$ Fibonacci numbers.
+This time, we construct $F_d((d + 1)n + 1)$ using only sequences which add up to multiples of $d + 1$.
+But instead of prepending 1's and then $d + 1$, we reverse it and prepend $d + 1$ and then a single $1$.
+
+\begin{align*}
+  & \langle 1 \rangle \circ S_d((d + 1)n) \\
+  & \langle d + 1, 1 \rangle \circ S_d((d + 1)(n - 1)) \\
+  & \langle d + 1, d + 1, 1 \rangle \circ S_d((d + 1)(n - 2)) \\
+  & \vdots \\
+  & \langle d + 1, \dots, d + 1, 1 \rangle \circ S_d(d + 1) \\
+  & \langle d + 1, \dots, d + 1, d + 1, 1 \rangle \circ S_d(0) \\
+\end{align*}
+
+In this case, the last sequence counts, because it contains the empty sequence.
+We cannot generalize this to $F_d((d + 1)n + k)$ for any $k \le d$
+by simply prepending 1's exactly $k$ times, because we are missing sequences.
+For example, the sequences which begin alternating between $1$ and $d + 1$
+and then continue with suitable values.
+Instead, we add $k - 1$ to $(d + 1)n$ in each invocation of $S_d$.
+This argument leads to the following lemma.
+
+\begin{lemma}
+  \[\sum_{i=0}^n F_d((d + 1)i + k - 1) = F_d((d + 1)n + k).\]
+\end{lemma}
+
+\textbf{Squares}.
+Begin with a hyper-cuboid with size $F_d(n) \times F_d(n + 1) \times \dots \times F_d(n + d)$
+and remove a hyper-cube of size $F_d(n)$ from the rectangle.
+We get a new hyper-cuboid with side-lengths $F_d(n + i) - F_d(n) = F_d(n - d)$ and $F_d(n)$
+
+\begin{lemma}
+  \begin{align*}
+    \sum_{i = 0}^n (F_d(i))^2 = F_d(n) F_d(n + d)
+  \end{align*}
+\end{lemma}
+
+\textbf{Binomial Coefficient}.
+\begin{align*}
+  F_d(n) = \sum_{i=0}^{n / (d + 1)} \binom{n - di}{i}.
+\end{align*}
+
+\section{Worst-Case when Choosing the Maximal Fractional Index}
+
+\begin{align*}
+  x_i = \phi_d \approx \frac{F_d(n - i)}{F_d(n)}
+\end{align*}
+where
+\begin{align*}
+  \psi_d^{d+1} + \psi_d = 1.
+\end{align*}
+
+\section{Worst-Case when Choosing the Minimal Fractional Index}
+
+\begin{align*}
+  x_i = \sum_{k=1}^i \Psi_d^k \approx \sum_{k=1}^i \frac{F_d(n)}{F_d(n+k)}
+\end{align*}
+where
+\begin{align*}
+  \sum_{k=1}^{d+1} \Psi_d^k = 1
+\end{align*}
+
+Per definition of $\Psi_d$: $0 < x_1 < x_2 < \dots < x_d$.
+
+For $d = 1$, these are the Fibonacci numbers.
+For $d = 2$, these are the Tribonacci numbers.
+
 
 \chapter{Implementation}
 
