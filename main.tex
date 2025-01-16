@@ -354,59 +354,61 @@ an example matrix which leads to the solution given by Equation~\ref{eq:solution
 \end{align*}
 where $a = F_d(n)$ and $b = F_d(n + 1)$.
 
+\section{Multi-Dimensional Golden Ratio and Higher-Order Fibonacci Numbers}
+
 \begin{definition}
-  The $d$-th golden ratio $\phi^{(d)}$ is the real positive root of $x^{d+1} - x^d - 1$.
+  The $d$-dimensional golden ratio $\phi_d$ is the real positive root of $x^{d+1} - x^d - 1$.
 \end{definition}
 
 \begin{definition}
-  The $d$-Fibonacci numbers are defined as follows:
+  The $d$-th order Fibonacci numbers are defined as follows:
   \begin{itemize}
-    \item $F^{(d)}_0 = F^{(d)}_1 = \dots = F^{(d)}_{d-1} = 1$,
-    \item $F^{(d)}_{n} = F^{(d)}_{n-1} + F^{(d)}_{n-d-1}$ for $n \ge d$.
+    \item $F_d(0) = F_d(1) = \dots = F_d(d-1) = 1$,
+    \item $F_d(n) = F_d(n-1) + F_d(n-d-1)$ for $n \ge d$.
   \end{itemize}
 \end{definition}
 
 \begin{lemma}
-  The sequence $R^{(d)}_{n+d}$ can be reformulated as follows:
+  The sequence $R_d(n+d)$ can be reformulated as follows:
   \begin{align*}
-    R^{(d)}_{n+d}
-    & = 1 + \frac{1}{R^{(d)}_{n+d-1} R^{(d)}_{n+d-2} \dots R^{(d)}_n}
+    R_d(n+d)
+    & = 1 + \frac{1}{R_d(n+d-1) R_d(n+d-2) \dots R_d(n)}
   \end{align*}
 \end{lemma}
 
 \begin{proof}
   \begin{align*}
-    R^{(d)}_{n+d}
-    & = \frac{F^{(d)}_{n+d+1}}{F^{(d)}_{n+d}}
-    = \frac{F^{(d)}_{n+d} + F^{(d)}_{n}}{F^{(d)}_{n+d}}
-    = 1 + \frac{F^{(d)}_{n}}{F^{(d)}_{n+d}} \\
-    & = 1 + \frac{F^{(d)}_{n}}{R^{(d)}_{n+d-1} F^{(d)}_{n+d-1}}
-    = 1 + \frac{F^{(d)}_{n}}{R^{(d)}_{n+d-1} R^{(d)}_{n+d-2} F^{(d)}_{n+d-2}} \\
+    R_d(n+d)
+    & = \frac{F_d(n+d+1)}{F_d(n+d)}
+    = \frac{F_d(n+d) + F_d(n)}{F_d(n+d)}
+    = 1 + \frac{F_d(n)}{F_d(n+d)} \\
+    & = 1 + \frac{F_d(n)}{R_d(n+d-1) F_d(n+d-1)}
+    = 1 + \frac{F_d(n)}{R_d(n+d-1) R_d(n+d-2) F_d(n+d-2)} \\
     & \mathrel{\vdots} \\
-    & = 1 + \frac{F^{(d)}_{n}}{R^{(d)}_{n+d-1} R^{(d)}_{n+d-2} \dots R^{(d)}_n F^{(d)}_n} \\
-    & = 1 + \frac{1}{R^{(d)}_{n+d-1} R^{(d)}_{n+d-2} \dots R^{(d)}_n}
+    & = 1 + \frac{F_d(n)}{R_d(n+d-1) R_d(n+d-2) \dots R_d(n) F_d(n)} \\
+    & = 1 + \frac{1}{R_d(n+d-1) R_d(n+d-2) \dots R_d(n)}
     \qedhere
   \end{align*}
 \end{proof}
 
 \begin{lemma}
-  The sequence $R^{(d)}_n = F^{(d)}_{n+1} / F^{(d)}_{n}$ is bounded between $1$ and $2$.
+  The sequence $R_d(n) = F_d(n+1) / F_d(n)$ is bounded between $1$ and $2$.
 \end{lemma}
 
 \begin{proof}
   For all $n < d - 1$ this is obviously the case.
-  Per induction, assume that $R^{(d)}_n, R^{(d)}_{n+1}, \dots, R^{(d)}_{n+d-1}$ are bounded.
+  Per induction, assume that $R_d(n), R_d(n+1), \dots, R_d(n+d-1)$ are bounded.
   From the previous lemma, we know
   \begin{align*}
-    R^{(d)}_{n+d}
-    & = 1 + \frac{1}{R^{(d)}_{n+d-1} R^{(d)}_{n+d-2} \dots R^{(d)}_n}
+    R_d(n+d)
+    & = 1 + \frac{1}{R_d(n+d-1) R_d(n+d-2) \dots R_d(n)}
   \end{align*}
   By the induction hypothesis, each ratio is bounded between $1$ and $2$.
-  Therefore, $R^{(d)}_{n+d}$ is equally bounded between $1$ and $2$.
+  Therefore, $R_d(n+d)$ is equally bounded between $1$ and $2$.
 \end{proof}
 
 \begin{lemma}
-  The sequence $R^{(d)}_n$ is monotonically increasing.
+  The sequence $R_d(n)$ is monotonically increasing.
 \end{lemma}
 
 \begin{proof}
