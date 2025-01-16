@@ -1,12 +1,20 @@
-struct ratio {
-	int num, denom;
-
-	ratio(int _num = 0, int _denom = 1);
-};
-
 static int gcd(int a, int b)
 {
 	return b == 0 ? a : gcd(b, a % b);
+}
+
+static int xgcd(int a, int b, int &x, int &y)
+{
+    if (b == 0) {
+        x = 1, y = 0;
+        return a;
+    }
+
+    int x1, y1;
+    int gcd = xgcd(b, a % b, x1, y1);
+
+    x = y1, y = x1 - (a / b) * y1;
+    return gcd;
 }
 
 ratio::ratio(int _num, int _denom)
@@ -142,4 +150,13 @@ static int round(ratio r)
 static ratio abs(ratio r)
 {
 	return r > 0 ? r : -r;
+}
+
+static std::ostream &operator<<(std::ostream &out, ratio r)
+{
+	if (r.denom != 1) {
+		return out << r.num << "/" << r.denom;
+	} else {
+		return out << r.num;
+	}
 }
