@@ -35,35 +35,95 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-\chapter{Bounds on the Determinant}
+\chapter{Determinant}
 
-\[
-  K_n(x_1, \dots, x_n) =
-  \begin{cases}
-    1, & \text{ if } n = 0, \\
-    x_1, & \text{ if } n = 1, \\
-    x_1 K_{n-1}(x_2, \dots, x_n) + K_{n-2}(x_3, \dots, x_n), & \text{ otherwise.}
-  \end{cases}
-\]
+\begin{align*}
+  x_1     & = 2 - x_2 / x_1 \\
+  x_2     & = 2 - x_3 / x_1 \\
+  x_3     & = 2 - x_4 / x_1 \\
+          & \vdots          \\
+  x_{d-1} & = 2 - x_d / x_1 \\
+  x_d     & = 1 / x_d - 1   \\
+\end{align*}
 
-The Euclidean algorithm takes exactly $n$ steps if $a$ has a minimal continued
-fraction with $n$ terms $[a_0; a_1, a_2, \dots, a_n]$. For the generalized
-algorithm, it takes as long as the length of the longest continued fraction.
+\begin{itemize}
+  \item For odd $d$: $1 - x - 2 x^2 + 2 x^3 - \dots + 2 x^d - x^{d+1} = 0$.
+  \item For even $d$: $1 - x - 2 x^2 + 2 x^3 - 2 x^4 \dots - 2 x^d + x^{d+1} = 0$.
+\end{itemize}
+or in one equation $p_d(x) := 1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0$.
 
-\begin{theorem}
-  The determinant $\det(B)$ decreases by a factor of at least $\phi^{-2d}$ over
-  $2d$ iterations.
-\end{theorem}
+\begin{definition}
+  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its reciprocal polynomial,
+  denoted as $p^*$, is defined as
+  \[
+    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
+  \]
+\end{definition}
+
+\begin{example}
+  The reciprocal of the previous polynomial $p_d$ is:
+  \begin{align*}
+    p_d^*(x) & = x^{d+1} - x^d - (-1)^{d+1} + \sum_{i = 2}^{d} -2 (-x)^{d + 1 - i} \\
+             & = x^{d+1} - x^d + (-1)^d - \sum_{i = 1}^{d - 1} 2 (-x)^i.
+  \end{align*}
+\end{example}
+
+\begin{lemma}
+  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
+\end{lemma}
 
 \begin{proof}
-  Assume there is some solution vector $x$ with $x_i > 1/\phi$ for all $i$
-  such that the decrease is slower than $1/\phi$ over $d+1$ iterations.
-  Because $1/x_i < \phi$ and $\phi - 1 = 1/\phi$,
-  the next value $1/x_i - 1$ must be smaller than $1/\phi$,
-  Therefore, choosing
+  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
+  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
+  By construction, $a$ cannot be zero and therefore $p(a) = 0$.
 \end{proof}
 
-\section{What Makes a Bad Solution?}
+\begin{definition}
+  The characteristic polynomial of a linear recurrence $F$ with coefficients
+  $a_0, \dots, a_d$ is defined as
+  \[
+    p_F(x) = x^{d+1} - \sum_{i = 0}^d a_i x^i.
+  \]
+\end{definition}
+
+\begin{example}
+  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
+  \begin{align*}
+    F(n) = F(n - 1) + (-1)^d F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i} 2 F(n - i).
+  \end{align*}
+\end{example}
+
+% TODO: Show that this converges! We're still missing the convergence criteria
+\begin{lemma}
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
+  If its characteristic polynomial has a real positive root $\phi$, then
+  \[
+    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi
+  \]
+\end{lemma}
+
+\begin{proof}
+  By the previous lemmas, we can assume that the ratios approach some limit $L$.
+  It follows:
+  \[
+    L
+    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
+    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
+  \]
+  Each term in the sum can be rewritten as a product of consecutive terms:
+  \[
+    \frac{F(n - 1 - d + i)}{F(n - 1)}
+    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
+  \]
+  Hence, each term in the sum approaches $L^{-i}$,
+  which results in the following polynomial:
+  \[
+    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
+    \quad \text{or equivalently} \quad
+    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
+  \]
+  which directly corresponds to a root of its characteristic polynomial.
+\end{proof}
 
 In one dimension, a solution is bad when the value $x_1$ is close to $1$.
 However, in the next iteration $x_1$ would be close to $0$ and therefore
@@ -133,6 +193,12 @@ We can extend this to $d$ dimensions using the following equations:
   x_{d-1} = 2 - x_d / x_1 \\
   x_d = 1 / x_d - 1 \\
 \end{align*}
+
+These leads us to two polynomials depending on the dimension.
+\begin{itemize}
+  \item For even $d$: $x - 1 + 2 x^2 - 2 x^3 + \dots + x^{d+1}$
+  \item For odd $d$: $1 - x - 2 x^2 + 2 x^3 - 2 x^4 \dots + x^{d+1}$
+\end{itemize}
 
 \begin{tikzpicture}[scale=10]
   \draw (0.5820216424559055, -0.01) -- node[above] {$x_1$} (0.5820216424559055, 0.01);
