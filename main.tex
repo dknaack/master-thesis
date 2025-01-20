@@ -18,6 +18,8 @@
 
 \UzLStyle{alegrya modern design}
 
+\newcommand\Z{{\mathbb Z}}
+
 \begin{document}
 
 \chapter{Introduction}
@@ -44,93 +46,7 @@ end
 
 \chapter{Determinant}
 
-\begin{align*}
-  x_1     & = 2 - x_2 / x_1 \\
-  x_2     & = 2 - x_3 / x_1 \\
-  x_3     & = 2 - x_4 / x_1 \\
-          & \vdots          \\
-  x_{d-1} & = 2 - x_d / x_1 \\
-  x_d     & = 1 / x_d - 1   \\
-\end{align*}
-
-\begin{itemize}
-  \item For odd $d$: $1 - x - 2 x^2 + 2 x^3 - \dots + 2 x^d - x^{d+1} = 0$.
-  \item For even $d$: $1 - x - 2 x^2 + 2 x^3 - 2 x^4 \dots - 2 x^d + x^{d+1} = 0$.
-\end{itemize}
-or in one equation $p_d(x) := 1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0$.
-
-\begin{definition}
-  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its reciprocal polynomial,
-  denoted as $p^*$, is defined as
-  \[
-    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
-  \]
-\end{definition}
-
-\begin{example}
-  The reciprocal of the previous polynomial $p_d$ is:
-  \begin{align*}
-    p_d^*(x) & = x^{d+1} - x^d - (-1)^{d+1} + \sum_{i = 2}^{d} -2 (-x)^{d + 1 - i} \\
-             & = x^{d+1} - x^d + (-1)^d - \sum_{i = 1}^{d - 1} 2 (-x)^i.
-  \end{align*}
-\end{example}
-
-\begin{lemma}
-  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
-\end{lemma}
-
-\begin{proof}
-  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
-  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
-  By construction, $a$ cannot be zero and therefore $p(a) = 0$.
-\end{proof}
-
-\begin{definition}
-  The characteristic polynomial of a linear recurrence $F$ with coefficients
-  $a_0, \dots, a_d$ is defined as
-  \[
-    p_F(x) = x^{d+1} - \sum_{i = 0}^d a_i x^i.
-  \]
-\end{definition}
-
-\begin{example}
-  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
-  \begin{align*}
-    F(n) = F(n - 1) + (-1)^d F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i} 2 F(n - i).
-  \end{align*}
-\end{example}
-
-% TODO: Show that this converges! We're still missing the convergence criteria
-\begin{lemma}
-  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
-  If its characteristic polynomial has a real positive root $\phi$, then
-  \[
-    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi
-  \]
-\end{lemma}
-
-\begin{proof}
-  By the previous lemmas, we can assume that the ratios approach some limit $L$.
-  It follows:
-  \[
-    L
-    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
-    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
-  \]
-  Each term in the sum can be rewritten as a product of consecutive terms:
-  \[
-    \frac{F(n - 1 - d + i)}{F(n - 1)}
-    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
-  \]
-  Hence, each term in the sum approaches $L^{-i}$,
-  which results in the following polynomial:
-  \[
-    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
-    \quad \text{or equivalently} \quad
-    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
-  \]
-  which directly corresponds to a root of its characteristic polynomial.
-\end{proof}
+\section{Rotating the Solution}
 
 In one dimension, a solution is bad when the value $x_1$ is close to $1$.
 However, in the next iteration $x_1$ would be close to $0$ and therefore
@@ -198,7 +114,7 @@ We can extend this to $d$ dimensions using the following equations:
   x_3 = 2 - x_4 / x_1 \\
   \vdots \\
   x_{d-1} = 2 - x_d / x_1 \\
-  x_d = 1 / x_d - 1 \\
+  x_d = 1 / x_1 - 1 \\
 \end{align*}
 
 These leads us to two polynomials depending on the dimension.
@@ -206,15 +122,295 @@ These leads us to two polynomials depending on the dimension.
   \item For even $d$: $x - 1 + 2 x^2 - 2 x^3 + \dots + x^{d+1}$
   \item For odd $d$: $1 - x - 2 x^2 + 2 x^3 - 2 x^4 \dots + x^{d+1}$
 \end{itemize}
+or in one equation $p_d(x) := 1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0$.
+Let $\phi_d$ be the root of this polynomial.
+Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
+\begin{equation}
+  \label{eq:solution}
+  x_1 = \phi_d, \quad x_i = 2 - x_1 x_{i-1} = -(-\phi_d)^i + \sum_{k=0}^{i-1} 2 (-\phi_d)^i.
+\end{equation}
 
-\begin{tikzpicture}[scale=10]
-  \draw (0.5820216424559055, -0.01) -- node[above] {$x_1$} (0.5820216424559055, 0.01);
-  \draw (0.7181491667223714, -0.01) -- node[above] {$x_2$} (0.7181491667223714, 0.01);
-  \draw (0.7661126076135922, -0.01) -- node[above] {$x_3$} (0.7661126076135922, 0.01);
-  \draw (0.6837042616132034, -0.01) -- node[above] {$x_4$} (0.6837042616132034, 0.01);
-  \draw (0.8252940926247403, -0.01) -- node[above] {$x_5$} (0.8252940926247403, 0.01);
-  \draw[->] (0, 0) -- (1, 0);
+\begin{example}
+  For $d = 5$, we get the following values:
+
+  \begin{tikzpicture}[scale=10]
+    \draw (0.5820216424559055, -0.01) -- node[above] {$x_1$} (0.5820216424559055, 0.01);
+    \draw (0.7181491667223714, -0.01) -- node[above] {$x_2$} (0.7181491667223714, 0.01);
+    \draw (0.7661126076135922, -0.01) -- node[above] {$x_3$} (0.7661126076135922, 0.01);
+    \draw (0.6837042616132034, -0.01) -- node[above] {$x_4$} (0.6837042616132034, 0.01);
+    \draw (0.8252940926247403, -0.01) -- node[above] {$x_5$} (0.8252940926247403, 0.01);
+    \draw[->] (0, 0) -- (1, 0);
+  \end{tikzpicture}
+\end{example}
+
+\begin{definition}
+  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
+  denoted as $p^*$, is defined as
+  \[
+    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
+  \]
+\end{definition}
+
+\begin{example}
+  The reciprocal of the previous polynomial $p_d$ is:
+  \begin{align*}
+    p_d^*(x) & = x^{d+1} - x^d - (-1)^{d+1} + \sum_{i = 2}^{d} -2 (-x)^{d + 1 - i} \\
+             & = x^{d+1} - x^d + (-1)^d - \sum_{i = 1}^{d - 1} 2 (-x)^i.
+  \end{align*}
+\end{example}
+
+\begin{lemma}
+  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
+\end{lemma}
+
+\begin{proof}
+  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
+  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
+  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
+\end{proof}
+
+\begin{definition}
+  Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
+  \emph{characteristic polynomial} $p_F$ is defined as
+  \[
+    p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
+  \]
+\end{definition}
+
+\begin{example}
+  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
+  \begin{align*}
+    F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
+  \end{align*}
+\end{example}
+
+% TODO: Show that this converges! We're still missing the convergence criteria
+\begin{lemma}
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
+  If its characteristic polynomial has a real positive root $\phi$
+  and the sequence $F(n+1)/F(n)$ is converging, then
+  \[
+    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi.
+  \]
+\end{lemma}
+
+\begin{proof}
+  By assumption, the ratios approach some limit $L$. It follows:
+  \[
+    L
+    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
+    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
+  \]
+  Each term in the sum can be rewritten as a product of consecutive terms:
+  \[
+    \frac{F(n - 1 - d + i)}{F(n - 1)}
+    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
+  \]
+  Hence, each term in the sum approaches $L^{-i}$,
+  which results in the following polynomial:
+  \[
+    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
+    \quad \text{or equivalently} \quad
+    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
+  \]
+  which directly corresponds to a root of its characteristic polynomial.
+\end{proof}
+
+\begin{corollary}
+  Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
+\end{corollary}
+
+\begin{corollary}
+  The consecutive terms from the previous example are approaching $\phi_d$.
+\end{corollary}
+
+Given, the linear recurrence $F(n + d + 1) = a_0 F(n) + \dots + a_d F(n + d)$,
+the value for $x_i$ in the solution is
+\[
+  x_i = \frac{a_{d-i} F(n + 1 - i) + \dots + a_d F(n)}{F(n + 1)}.
+\]
+From these values we can construct a lower triangle matrix $A$ and vector $b$
+such that $A \vec x = \vec b$.
+This means, that in the first row $a_{1,1} x_1 = b_1$
+and by the choice of $x_i$ we have $a_{1,1} = F(n+1)$ and $b_1 = a_d F(n)$.
+In the next row, we have $a_{2,1} x_1 + a_{2,2} x_2 = b_2$.
+
+\begin{example}
+  A linear system with matrix $A \in \Z^{d \times d}$ and vector $b \in \Z^d$
+  which approximates the optimal solution from Equation~\ref{eq:solution} via
+  the linear recurrence is
+  \[
+    (A \mid b) = \left(\begin{array}{ccccc|c}
+      F(n)   & 0      & 0      & \dots  & 0           & F(n - 1) \\
+      2 F(n) & -F(n)  & 0      & \dots  & 0           & F(n - 2) \\
+      2 F(n) & -2F(n) & F(n)   & \dots  & 0           & F(n - 3) \\
+      \vdots & \vdots & \vdots & \ddots & \vdots      & \vdots   \\
+      2 F(n) & -2F(n) & 2F(n)  & \dots  & (-1)^d F(n) & F(n - d) \\
+    \end{array}\right).
+  \]
+\end{example}
+
+\begin{example}
+  For $d = 3$:
+  \[
+    (A \mid b) = \left(\begin{array}{ccc|r}
+      F(n)   & 0       & 0    & F(n - 1) \\
+      2 F(n) & -F(n)   & 0    & F(n - 2) \\
+      2 F(n) & -2 F(n) & F(n) & F(n - 3) \\
+    \end{array}\right).
+  \]
+
+  Solving the linear system leads to the following values:
+  \begin{enumerate}
+    \item $\begin{aligned}[t]
+        F(n) x_1 & = F(n - 1)              \\
+             x_1 & = \frac{F(n - 1)}{F(n)} \\
+      \end{aligned}$
+    \item $\begin{aligned}[t]
+        -F(n) x_1 + F(n) x_2   & = - F(n - 2)                        \\
+        -2 F(n - 1) + F(n) x_2 & = - F(n - 2)                        \\
+        F(n) x_2               & = 2 F(n - 1) - F(n - 2)            \\
+        x_2                    & = \frac{2 F(n - 1) - F(n - 2)}{F(n)} \\
+      \end{aligned}$
+    \item $\begin{aligned}[t]
+        2 F(n) x_1 - 2 F(n) x_2 + F(n) x_3 & = F(n - 3)                                        \\
+                                  F(n) x_3 & = 2 F(n - 1) - 2 F(n - 2) + F(n - 3)              \\
+                                  F(n) x_3 & = 2 F(n - 1) - 2                                  \\
+                                       x_3 & = \frac{2 F(n - 1) - 2 F(n - 2) + F(n - 3)}{F(n)} \\
+      \end{aligned}$
+  \end{enumerate}
+\end{example}
+
+\begin{example}
+  \begin{align*}
+    \left\{ \frac{1}{x_1} \right\}
+    & = \left\{ \frac{F(n - 1) + 2 F(n - 2) - 2 F(n - 3) + F(n - 4)}{F(n - 1)} \right\} \\
+    & = \frac{2 F(n - 2) - 2 F(n - 3) + F(n - 4)}{F(n - 1)} \\
+    \left\{ -\frac{x_2}{x_1} \right\}
+    & = \left\{ -\frac{2 F(n - 1) - F(n - 2)}{F(n)} \frac{F(n)}{F(n - 1)} \right\} \\
+    & = \frac{F(n - 2)}{F(n - 1)} \\
+    \left\{ -\frac{x_3}{x_1} \right\}
+    & = \left\{ -\frac{2 F(n - 1) - 2 F(n - 2) + F(n - 3)}{F(n)} \frac{F(n)}{F(n - 1)} \right\} \\
+    & = \frac{2 F(n - 2) - F(n - 3)}{F(n - 1)}
+  \end{align*}
+\end{example}
+
+\section{Changing the Update Rule}
+
+\begin{tikzpicture}[scale=0.5]
+  \draw (0,0) -- (2,6);
+  \draw (0,0) -- (6,1);
+  \draw (2,6) -- (8,7);
+  \draw (6,1) -- (8,7);
+
+  \draw[->] (0, 0) -- (5, 3);
+  \draw[->] (2, 6) -- (5, 3);
+  \draw[->] (0, 0) -- (3, -3);
+  \draw[->] (0, 0) -- (5, -5);
 \end{tikzpicture}
+
+\section{The Better Solution}
+
+Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
+For this solution, it does not matter which element we choose to pivot with, it will always
+yield the same result.
+
+Pivoting with $x_1$:
+\begin{align*}
+  \frac{1}{x_1} - 1 & = \frac{1}{\psi} - 1 = \psi, \\
+  1 - \frac{x_2}{x_1} & = 1 - \frac{1 - \psi}{\psi} = 1 - \psi.
+\end{align*}
+
+Pivoting with $x_2$:
+\begin{align*}
+  \frac{1}{x_2} - 2 & = \frac{1}{1 - \psi} - 2 = \psi, \\
+  1 - \frac{x_1}{x_2} & = 1 - \frac{\psi}{1 - \psi} = 1 - \psi.
+\end{align*}
+
+For more dimensions, the solution can still only be an algebraic number of degree 2.
+Otherwise, pivoting only the algebraic number of degree 3 or higher would lead to
+a sequence which is not periodic and therefore must decrease the determinant
+faster than any algebraic number of degree 2.
+
+How can we find this number?
+For $\zeta = \frac{P+\sqrt{D}}{Q}$, the maximum period length is of the order $O(\sqrt{D} \ln D)$.
+
+\section{Representing Cubic Irrationals}
+
+\begin{definition}
+  A $d$-order periodic continued fraction with $a_0, a_1, \dots, a_d \in \Z$ is defined as
+  \begin{align*}
+    K(A) = K(A_1, A') = K\begin{pmatrix}
+      a_{0,0} & a_{0,1} & \dots \\
+      a_{1,0} & a_{1,1} & \dots \\
+      \vdots  & \vdots  & \ddots \\
+      a_{d,0} & a_{d,1} & \dots \\
+    \end{pmatrix}
+    & = a_{0,0} + \sum_{i=1}^d \frac{a_i}{(K_d(A'))^i}.
+  \end{align*}
+\end{definition}
+
+\begin{definition}
+  The $n$-th convergent of the infinite fraction $K_d(a_0, a_1, \dots)$ is $K_d(a_0, a_1, \dots, a_n)$.
+\end{definition}
+
+\begin{align*}
+  K
+  \begin{pmatrix}
+    1 & 1 & 2 \\
+    1 & 1 & 1 \\
+  \end{pmatrix} =
+  1 + \frac{1}{}
+\end{align*}
+
+\section{Higher Dimensional Continuant Polynomials}
+
+Let $A = (A_1, A_2, \dots)$ and $A_i = (a_{1,i}, a_{2,i}, \dots, a_{d,i})$.
+
+\begin{align*}
+  K_{1,n}(A_1, A_2, \dots)   & = a_{1,1}   K_{1,n-1}(A_2, \dots) + K_{d,n-2}(A_1, \dots)   \\
+  K_{2,n}(A_1, A_2, \dots)   & = a_{2,1}   K_{1,n-1}(A_2, \dots) + K_{1,n-1}(A_1, \dots)     \\
+  K_{3,n}(A_1, A_2, \dots)   & = a_{3,1}   K_{1,n-1}(A_2, \dots) + K_{2,n-1}(A_1, \dots)     \\
+                             & \vdots                                                        \\
+  K_{d-1,n}(A_1, A_2, \dots) & = a_{d-1,1} K_{1,n-1}(A_2, \dots) + K_{d-2,n-1}(A_1, \dots) \\
+  K_{d,n}(A_1, A_2, \dots)   & = a_{d,1}   K_{1,n-1}(A_2, \dots) + K_{d-1,n-1}(A_3, \dots)     \\
+\end{align*}
+
+For $d = 1$:
+\begin{align*}
+  K_{1,n}(a_1, a_2, \dots) & = a_1 K_{1,n-1}(a_2, \dots) + K_{1,n-2}(a_3, \dots)
+\end{align*}
+
+For $d = 2$:
+\begin{align*}
+  K_{1,n}(A_1, A_2, \dots) & = a_{1,1} K_{1,n-1}(A_2, \dots) + K_{2,n-1}(A_3, \dots) \\
+  K_{2,n}(A_1, A_2, \dots) & = a_{2,1} K_{1,n-1}(A_2, \dots) + K_{1,n-2}(A_3, \dots)
+\end{align*}
+
+For $d = 3$:
+\begin{align*}
+  K_{1,n}(A_1, A_2, \dots) & = a_{1,1} K_{1,n-1}(A_2, \dots) + K_{3,n-1}(A_3, \dots) \\
+  K_{2,n}(A_1, A_2, \dots) & = a_{2,1} K_{1,n-1}(A_2, \dots) + K_{1,n-2}(A_3, \dots) \\
+  K_{2,n}(A_1, A_2, \dots) & = a_{3,1} K_{1,n-1}(A_2, \dots) + K_{2,n-2}(A_3, \dots)
+\end{align*}
+
+\begin{align*}
+  \frac{K_{1,n}(A_1, A_2, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
+  & = a_{1,1} + \frac{K_{d,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)} \\
+  \frac{K_{2,n-1}(A_2, A_3, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
+  & = a_{2,1} + \frac{K_{1,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)} \\
+  \frac{K_{3,n-1}(A_2, A_3, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
+  & = a_{3,1} + \frac{K_{2,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
+\end{align*}
+
+\begin{align*}
+  K_{1,n}(A_1, A_2, \dots)     & = a_{1,1} K_{1,n-1}(A_2, A_3, \dots) + K_{d,n-2}(A_3, A_4, \dots) \\
+  K_{2,n-1}(A_2, A_3, \dots)   & = a_{2,1} K_{1,n-1}(A_2, A_3, \dots) + K_{1,n-2}(A_3, A_4, \dots) \\
+  K_{3,n-1}(A_2, A_3, \dots)   & = a_{3,1} K_{1,n-1}(A_2, A_3, \dots) + K_{2,n-2}(A_3, A_4, \dots) \\
+                               & \vdots                                                            \\
+  K_{d-1,n-1}(A_2, A_3, \dots) & = a_{d-1,1} K_{1,n-1}(A_2, \dots) + K_{d-2,n-1}(A_1, \dots)       \\
+  K_{d,n-1}(A_2, A_3, \dots)   & = a_{d,1}   K_{1,n-1}(A_2, \dots) + K_{d-1,n-1}(A_3, \dots)       \\
+\end{align*}
 
 \chapter{Implementation}
 
