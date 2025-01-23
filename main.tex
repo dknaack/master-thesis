@@ -84,6 +84,14 @@ of the polynomial $x^2 - x - 1$.
 \end{proof}
 
 \begin{definition}
+  A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
+  following form:
+  \[
+    F(n + 1) = a_0 F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) + a_d F(n).
+  \]
+\end{definition}
+
+\begin{definition}
   Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
   \emph{characteristic polynomial} $p_F$ is defined as
   \[
