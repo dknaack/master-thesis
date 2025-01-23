@@ -335,82 +335,12 @@ faster than any algebraic number of degree 2.
 How can we find this number?
 For $\zeta = \frac{P+\sqrt{D}}{Q}$, the maximum period length is of the order $O(\sqrt{D} \ln D)$.
 
-\section{Representing Cubic Irrationals}
+\section{Jacobi-Perron Algorithm}
 
-\begin{definition}
-  A $d$-order periodic continued fraction with $a_0, a_1, \dots, a_d \in \Z$ is defined as
-  \begin{align*}
-    K(A) = K(A_1, A') = K\begin{pmatrix}
-      a_{0,0} & a_{0,1} & \dots \\
-      a_{1,0} & a_{1,1} & \dots \\
-      \vdots  & \vdots  & \ddots \\
-      a_{d,0} & a_{d,1} & \dots \\
-    \end{pmatrix}
-    & = a_{0,0} + \sum_{i=1}^d \frac{a_i}{(K_d(A'))^i}.
-  \end{align*}
-\end{definition}
-
-\begin{definition}
-  The $n$-th convergent of the infinite fraction $K_d(a_0, a_1, \dots)$ is $K_d(a_0, a_1, \dots, a_n)$.
-\end{definition}
-
-\begin{align*}
-  K
-  \begin{pmatrix}
-    1 & 1 & 2 \\
-    1 & 1 & 1 \\
-  \end{pmatrix} =
-  1 + \frac{1}{}
-\end{align*}
-
-\section{Higher Dimensional Continuant Polynomials}
-
-Let $A = (A_1, A_2, \dots)$ and $A_i = (a_{1,i}, a_{2,i}, \dots, a_{d,i})$.
-
-\begin{align*}
-  K_{1,n}(A_1, A_2, \dots)   & = a_{1,1}   K_{1,n-1}(A_2, \dots) + K_{d,n-2}(A_1, \dots)   \\
-  K_{2,n}(A_1, A_2, \dots)   & = a_{2,1}   K_{1,n-1}(A_2, \dots) + K_{1,n-1}(A_1, \dots)     \\
-  K_{3,n}(A_1, A_2, \dots)   & = a_{3,1}   K_{1,n-1}(A_2, \dots) + K_{2,n-1}(A_1, \dots)     \\
-                             & \vdots                                                        \\
-  K_{d-1,n}(A_1, A_2, \dots) & = a_{d-1,1} K_{1,n-1}(A_2, \dots) + K_{d-2,n-1}(A_1, \dots) \\
-  K_{d,n}(A_1, A_2, \dots)   & = a_{d,1}   K_{1,n-1}(A_2, \dots) + K_{d-1,n-1}(A_3, \dots)     \\
-\end{align*}
-
-For $d = 1$:
-\begin{align*}
-  K_{1,n}(a_1, a_2, \dots) & = a_1 K_{1,n-1}(a_2, \dots) + K_{1,n-2}(a_3, \dots)
-\end{align*}
-
-For $d = 2$:
-\begin{align*}
-  K_{1,n}(A_1, A_2, \dots) & = a_{1,1} K_{1,n-1}(A_2, \dots) + K_{2,n-1}(A_3, \dots) \\
-  K_{2,n}(A_1, A_2, \dots) & = a_{2,1} K_{1,n-1}(A_2, \dots) + K_{1,n-2}(A_3, \dots)
-\end{align*}
-
-For $d = 3$:
-\begin{align*}
-  K_{1,n}(A_1, A_2, \dots) & = a_{1,1} K_{1,n-1}(A_2, \dots) + K_{3,n-1}(A_3, \dots) \\
-  K_{2,n}(A_1, A_2, \dots) & = a_{2,1} K_{1,n-1}(A_2, \dots) + K_{1,n-2}(A_3, \dots) \\
-  K_{2,n}(A_1, A_2, \dots) & = a_{3,1} K_{1,n-1}(A_2, \dots) + K_{2,n-2}(A_3, \dots)
-\end{align*}
-
-\begin{align*}
-  \frac{K_{1,n}(A_1, A_2, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
-  & = a_{1,1} + \frac{K_{d,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)} \\
-  \frac{K_{2,n-1}(A_2, A_3, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
-  & = a_{2,1} + \frac{K_{1,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)} \\
-  \frac{K_{3,n-1}(A_2, A_3, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
-  & = a_{3,1} + \frac{K_{2,n-2}(A_3, A_4, \dots)}{K_{1,n-1}(A_2, A_3, \dots)}
-\end{align*}
-
-\begin{align*}
-  K_{1,n}(A_1, A_2, \dots)     & = a_{1,1} K_{1,n-1}(A_2, A_3, \dots) + K_{d,n-2}(A_3, A_4, \dots) \\
-  K_{2,n-1}(A_2, A_3, \dots)   & = a_{2,1} K_{1,n-1}(A_2, A_3, \dots) + K_{1,n-2}(A_3, A_4, \dots) \\
-  K_{3,n-1}(A_2, A_3, \dots)   & = a_{3,1} K_{1,n-1}(A_2, A_3, \dots) + K_{2,n-2}(A_3, A_4, \dots) \\
-                               & \vdots                                                            \\
-  K_{d-1,n-1}(A_2, A_3, \dots) & = a_{d-1,1} K_{1,n-1}(A_2, \dots) + K_{d-2,n-1}(A_1, \dots)       \\
-  K_{d,n-1}(A_2, A_3, \dots)   & = a_{d,1}   K_{1,n-1}(A_2, \dots) + K_{d-1,n-1}(A_3, \dots)       \\
-\end{align*}
+\[
+  a_1^{(i)} = \frac{v_{i+1}}{u_{i+1}} = \frac{\frac{w_i}{u_i} - m_i}{\frac{v_i}{u_i} - \ell_i},
+  a_2^{(i)} = \frac{w_{i+1}}{u_{i+1}} = \frac{1}{\frac{v_i}{u_i} - \ell_i}.
+\]
 
 \chapter{Implementation}
 
