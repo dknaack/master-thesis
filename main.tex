@@ -1,6 +1,5 @@
 \documentclass[english,version-2020-11]{uzl-thesis}
 
-
 \UzLThesisSetup{
   Masterarbeit,
   Logo-Dateiname        = {uzl-thesis-logo-itcs.pdf},
@@ -46,7 +45,145 @@ end
 
 \chapter{Determinant}
 
-\section{Rotating the Solution}
+\section{Generalized Fibonacci Sequence}
+
+Dividing two consecutive Fibonacci numbers approaches the golden ratio as $n$ increases.
+The golden ratio is a solution to the equation $x^2 - x - 1 = 0$.
+For higher dimensions, we will encounter similar polynomial equations with higher degree.
+The goal of this section is to generalize the relationship between linear
+recurrences like the Fibonacci sequence with their respective golden ratio.
+
+Since the algorithm expects $x_i$ between $0$ and $1$, we have to use $1/\phi$ instead of $\phi$.
+The value $1/\phi$ is the root of another polynomial $x^2 + x - 1$, which is the reciprocal
+of the polynomial $x^2 - x - 1$.
+
+\begin{definition}
+  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
+  denoted as $p^*$, is defined as
+  \[
+    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
+  \]
+\end{definition}
+
+\begin{example}
+  The reciprocal of the previous polynomial $p_d$ is:
+  \begin{align*}
+    p_d^*(x) & = x^{d+1} - x^d - (-1)^{d+1} + \sum_{i = 2}^{d} -2 (-x)^{d + 1 - i} \\
+             & = x^{d+1} - x^d + (-1)^d - \sum_{i = 1}^{d - 1} 2 (-x)^i.
+  \end{align*}
+\end{example}
+
+\begin{lemma}
+  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
+\end{lemma}
+
+\begin{proof}
+  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
+  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
+  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
+\end{proof}
+
+\begin{definition}
+  Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
+  \emph{characteristic polynomial} $p_F$ is defined as
+  \[
+    p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
+  \]
+\end{definition}
+
+\begin{example}
+  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
+  \begin{align*}
+    F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
+  \end{align*}
+\end{example}
+
+% TODO: Show that this converges! We're still missing the convergence criteria
+\begin{lemma}
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
+  If its characteristic polynomial has a real positive root $\phi$
+  and the sequence $F(n+1)/F(n)$ is converging, then
+  \[
+    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi.
+  \]
+\end{lemma}
+
+\begin{proof}
+  By assumption, the ratios approach some limit $L$. It follows:
+  \[
+    L
+    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
+    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
+  \]
+  Each term in the sum can be rewritten as a product of consecutive terms:
+  \[
+    \frac{F(n - 1 - d + i)}{F(n - 1)}
+    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
+  \]
+  Hence, each term in the sum approaches $L^{-i}$,
+  which results in the following polynomial:
+  \[
+    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
+    \quad \text{or equivalently} \quad
+    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
+  \]
+  which directly corresponds to a root of its characteristic polynomial.
+\end{proof}
+
+\begin{corollary}
+  Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
+\end{corollary}
+
+Given, the linear recurrence $F(n + d + 1) = a_0 F(n) + \dots + a_d F(n + d)$,
+the value for $x_i$ in the solution is
+\[
+  x_i = \frac{F(n - i) + a_{d-i+1} F(n - i + 1) + a_{d-i+2} F(n - i + 2) + \dots + a_d F(n)}{F(n)}.
+\]
+
+\begin{lemma}
+
+\end{lemma}
+
+From these values we can construct a very simple linear system in the following way:
+\[
+  B_n =
+  \begin{pmatrix}
+    F(n) & 0 & \dots & 0 & 0 \\
+    0 & F(n) & \dots & 0 & 0 \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    0 & 0 & \dots & F(n) & 0 \\
+    0 & 0 & \dots & 0 & F(n) \\
+  \end{pmatrix}
+  c_n =
+  \begin{pmatrix}
+    F(n - 1) \\
+    F(n - 2) + a_{d-1} F(n - 1) \\
+    F(n - 3) + a_{d-2} F(n - 2) + a_{d-1} F(n - 1) \\
+    \vdots \\
+    F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) \\
+  \end{pmatrix}.
+\]
+
+\begin{lemma}
+  The vector $x$ from Equation~\ref{eq:general-solution} is a solution to the
+  linear system $B_n x = c_n$.
+\end{lemma}
+
+\section{Changing the Update Rule}
+
+\begin{tikzpicture}[scale=0.5]
+  \draw (0,0) -- (2,6);
+  \draw (0,0) -- (6,1);
+  \draw (2,6) -- (8,7);
+  \draw (6,1) -- (8,7);
+
+  \draw[->] (0, 0) -- (5, 3);
+  \draw[->] (2, 6) -- (5, 3);
+  \draw[->] (0, 0) -- (3, -3);
+  \draw[->] (0, 0) -- (5, -5);
+\end{tikzpicture}
+
+\section{Pivoting the Same Element}
 
 In one dimension, a solution is bad when the value $x_1$ is close to $1$.
 However, in the next iteration $x_1$ would be close to $0$ and therefore
@@ -126,7 +263,7 @@ or in one equation $p_d(x) := 1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} =
 Let $\phi_d$ be the root of this polynomial.
 Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
 \begin{equation}
-  \label{eq:solution}
+  \label{eq:rotate-solution}
   x_1 = \phi_d, \quad x_i = 2 - x_1 x_{i-1} = -(-\phi_d)^i + \sum_{k=0}^{i-1} 2 (-\phi_d)^i.
 \end{equation}
 
@@ -143,101 +280,9 @@ Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
   \end{tikzpicture}
 \end{example}
 
-\begin{definition}
-  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
-  denoted as $p^*$, is defined as
-  \[
-    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
-  \]
-\end{definition}
-
-\begin{example}
-  The reciprocal of the previous polynomial $p_d$ is:
-  \begin{align*}
-    p_d^*(x) & = x^{d+1} - x^d - (-1)^{d+1} + \sum_{i = 2}^{d} -2 (-x)^{d + 1 - i} \\
-             & = x^{d+1} - x^d + (-1)^d - \sum_{i = 1}^{d - 1} 2 (-x)^i.
-  \end{align*}
-\end{example}
-
-\begin{lemma}
-  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
-\end{lemma}
-
-\begin{proof}
-  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
-  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
-  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
-\end{proof}
-
-\begin{definition}
-  Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
-  \emph{characteristic polynomial} $p_F$ is defined as
-  \[
-    p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
-  \]
-\end{definition}
-
-\begin{example}
-  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
-  \begin{align*}
-    F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
-  \end{align*}
-\end{example}
-
-% TODO: Show that this converges! We're still missing the convergence criteria
-\begin{lemma}
-  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
-  If its characteristic polynomial has a real positive root $\phi$
-  and the sequence $F(n+1)/F(n)$ is converging, then
-  \[
-    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi.
-  \]
-\end{lemma}
-
-\begin{proof}
-  By assumption, the ratios approach some limit $L$. It follows:
-  \[
-    L
-    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
-    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
-  \]
-  Each term in the sum can be rewritten as a product of consecutive terms:
-  \[
-    \frac{F(n - 1 - d + i)}{F(n - 1)}
-    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
-  \]
-  Hence, each term in the sum approaches $L^{-i}$,
-  which results in the following polynomial:
-  \[
-    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
-    \quad \text{or equivalently} \quad
-    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
-  \]
-  which directly corresponds to a root of its characteristic polynomial.
-\end{proof}
-
-\begin{corollary}
-  Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
-\end{corollary}
-
-\begin{corollary}
-  The consecutive terms from the previous example are approaching $\phi_d$.
-\end{corollary}
-
-Given, the linear recurrence $F(n + d + 1) = a_0 F(n) + \dots + a_d F(n + d)$,
-the value for $x_i$ in the solution is
-\[
-  x_i = \frac{a_{d-i} F(n + 1 - i) + \dots + a_d F(n)}{F(n + 1)}.
-\]
-From these values we can construct a lower triangle matrix $A$ and vector $b$
-such that $A \vec x = \vec b$.
-This means, that in the first row $a_{1,1} x_1 = b_1$
-and by the choice of $x_i$ we have $a_{1,1} = F(n+1)$ and $b_1 = a_d F(n)$.
-In the next row, we have $a_{2,1} x_1 + a_{2,2} x_2 = b_2$.
-
 \begin{example}
   A linear system with matrix $A \in \Z^{d \times d}$ and vector $b \in \Z^d$
-  which approximates the optimal solution from Equation~\ref{eq:solution} via
+  which approximates the optimal solution from Equation~\ref{eq:rotate-solution} via
   the linear recurrence is
   \[
     (A \mid b) = \left(\begin{array}{ccccc|c}
@@ -254,9 +299,9 @@ In the next row, we have $a_{2,1} x_1 + a_{2,2} x_2 = b_2$.
   For $d = 3$:
   \[
     (A \mid b) = \left(\begin{array}{ccc|r}
-      F(n)   & 0       & 0    & F(n - 1) \\
-      2 F(n) & -F(n)   & 0    & F(n - 2) \\
-      2 F(n) & -2 F(n) & F(n) & F(n - 3) \\
+      F(n) & 0    & 0    & F(n - 1) \\
+      0    & F(n) & 0    & F(n - 1) + F(n - 2) \\
+      0    & 0    & F(n) & F(n - 1) - 2 F(n - 2) + F(n - 3) \\
     \end{array}\right).
   \]
 
@@ -294,22 +339,9 @@ In the next row, we have $a_{2,1} x_1 + a_{2,2} x_2 = b_2$.
     & = \frac{2 F(n - 2) - F(n - 3)}{F(n - 1)}
   \end{align*}
 \end{example}
+\section{Keeping Equal Distances between Neighbors}
 
-\section{Changing the Update Rule}
-
-\begin{tikzpicture}[scale=0.5]
-  \draw (0,0) -- (2,6);
-  \draw (0,0) -- (6,1);
-  \draw (2,6) -- (8,7);
-  \draw (6,1) -- (8,7);
-
-  \draw[->] (0, 0) -- (5, 3);
-  \draw[->] (2, 6) -- (5, 3);
-  \draw[->] (0, 0) -- (3, -3);
-  \draw[->] (0, 0) -- (5, -5);
-\end{tikzpicture}
-
-\section{The Better Solution}
+\section{An Idempotent Solution for Two Dimensions}
 
 Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
 For this solution, it does not matter which element we choose to pivot with, it will always
@@ -334,13 +366,6 @@ faster than any algebraic number of degree 2.
 
 How can we find this number?
 For $\zeta = \frac{P+\sqrt{D}}{Q}$, the maximum period length is of the order $O(\sqrt{D} \ln D)$.
-
-\section{Jacobi-Perron Algorithm}
-
-\[
-  a_1^{(i)} = \frac{v_{i+1}}{u_{i+1}} = \frac{\frac{w_i}{u_i} - m_i}{\frac{v_i}{u_i} - \ell_i},
-  a_2^{(i)} = \frac{w_{i+1}}{u_{i+1}} = \frac{1}{\frac{v_i}{u_i} - \ell_i}.
-\]
 
 \chapter{Implementation}
 

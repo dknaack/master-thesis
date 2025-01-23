@@ -14,7 +14,9 @@ class Rat:
         g = gcd(abs(num), denom)
         self.num = num // g
         self.denom = denom // g
-        assert self.denom != 0
+
+        if self.denom == 0:
+            raise ValueError(f'Denominator is zero.')
 
     def __repr__(self):
         if self.denom == 1:
@@ -88,6 +90,12 @@ class Rat:
 
     def frac(self):
         return Rat(self.num % self.denom, self.denom)
+
+    @classmethod
+    def range(cls, n):
+        for denom in range(2, n):
+            for num in range(1, denom):
+                yield Rat(num, denom)
 
 class Poly:
     def __init__(self, *coeffs):
@@ -222,7 +230,7 @@ def solution_coeffs(d):
 
 def solution(d):
     p = Poly(solution_coeffs(d))
-    r = 1/p.root(2)
+    r = p.root(0)
     xs = [0] * d
     xs[0] = r
     if d > 1:
@@ -235,7 +243,7 @@ def solution(d):
 def frac(x):
     if isinstance(x, Rat):
         return Rat(x.num % x.denom, x.denom)
-    else:
+    elif isinstance(x, float):
         f = x - floor(x)
         if f < 0.0001:
             return 0
@@ -243,30 +251,50 @@ def frac(x):
             return 0
         else:
             return f
+    else:
+        return x - floor(x)
 
 def min_frac(xs):
     fs = [i for i, x in enumerate(xs) if frac(x) != 0]
     l = min(fs, key=lambda i: xs[i]) if fs else -1
     return l
 
-def pivot(xs, l=None):
-    if all(frac(x) == 0 for x in xs):
-        return xs
+def select_min(xs):
+    fs = [i for i, x in enumerate(xs) if frac(x) != 0]
+    if not fs:
+        raise ValueError('All values are integers')
 
-    # Find index with minimum fractionality
-    if l is None:
-        l = min_frac(xs)
+    l = min(fs, key=lambda i: xs[i])
+    return l
 
-    # Update the vector accordingly
-    ys = [0] * len(xs)
-    for i, x in enumerate(xs):
-        if l == i:
-            ys[i] = frac(1 / xs[l])
-        else:
-            ys[i] = frac(-x / xs[l])
-    return tuple(ys)
 
-def update(xs):
+def pivot(xs, indices):
+    if isinstance(indices, int):
+        indices = [indices]
+    for l in indices:
+        ys = [0] * len(xs)
+        for i, x in enumerate(xs):
+            if l == i:
+                ys[i] = frac(1 / frac(xs[l]))
+            else:
+                ys[i] = frac(-frac(x) / frac(xs[l]))
+        xs = tuple(sorted(ys))
+    return xs
+
+def xpivot(xs, indices):
+    if isinstance(indices, int):
+        indices = [indices]
+    for l in indices:
+        ys = [0] * len(xs)
+        for i, x in enumerate(xs):
+            if l == i:
+                ys[i] = frac(1 / xs[l])
+            else:
+                ys[i] = frac(x / xs[l])
+        xs = tuple(ys)
+    return xs
+
+def update(xs, ls=None):
     steps = 0
     while any(frac(x) != 0 for x in xs):
         #xs = tuple(sorted(xs))
@@ -341,22 +369,72 @@ def invert_dict(d):
     return inverse
 
 def brute_force_search(n):
-    steps = {(Rat(0), Rat(0)): 0}
-    for i in ranges((1, n), (1,n), (1, n), (1, n)):
-        def backtrack(xs):
-            if xs in steps:
-                return steps[xs]
-            else:
-                steps[xs] = 1 + backtrack(pivot(xs))
-                return steps[xs]
+    d = 2
+    num_steps = {(Rat(0), Rat(0)): 0}
+    for x1 in Rat.range(n):
+        for x2 in Rat.range(n):
+            def count_steps(xs):
+                if all(frac(x) == 0 for x in xs):
+                    return 0
 
-        xs = (frac(Rat(i[3], i[2])), frac(Rat(i[1], i[0])))
-        backtrack(xs)
+                min_steps = -1
+                for l in range(d):
+                    if frac(xs[l]) == 0:
+                        continue
+                    ys = pivot(xs, l)
 
-    inputs = invert_dict(steps)
+                    if ys not in num_steps:
+                        num_steps[ys] = count_steps(ys)
+                    steps = num_steps[ys]
+                    if min_steps == -1 or steps < min_steps:
+                        min_steps = steps
 
-    mins = {k: min(v, key=lambda xs: max(xs[0].denom, xs[1].denom)) for k, v in inputs.items()}
+                return 1 + min_steps
 
-    return steps, inputs, mins
+            xs = (x1, x2)
+            num_steps[xs] = count_steps(xs)
 
-f = LinearRec([-1, -1, -2, +2, -1])
+    return num_steps
+
+def get_pivot(xs, num_steps):
+    result = []
+
+    for l in range(len(xs)):
+        if frac(xs[l]) == 0:
+            continue
+
+        ys = pivot(xs, l)
+        if num_steps[xs] - 1 == num_steps[ys]:
+            result.append(l)
+    return result
+
+def get_sequence(xs, num_steps):
+    if num_steps[xs] == 0:
+        return []
+
+    l = get_pivot(xs, num_steps)[0]
+    ys = pivot(xs, l)
+    return [l] + get_sequence(ys, num_steps)
+
+def get_prev(xs, num_steps):
+    if num_steps[xs] == 0:
+        return []
+    return [pivot(xs, l) for l in get_pivot(xs, num_steps)]
+
+def get_info(xs, num_steps):
+    info = {}
+    for i in range(len(xs)):
+        if frac(xs[i]) == 0:
+            continue
+
+        ys = pivot(xs, i)
+        for j in range(len(xs)):
+            if frac(ys[j]) == 0:
+                continue
+
+            zs = pivot(ys, j)
+            info[(i, j)] = zs
+    return info
+
+num_steps = brute_force_search(20)
+inputs = invert_dict(num_steps)
