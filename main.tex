@@ -274,51 +274,31 @@ Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
   \end{tikzpicture}
 \end{example}
 
-\begin{example}
-  A linear system with matrix $A \in \Z^{d \times d}$ and vector $b \in \Z^d$
-  which approximates the optimal solution from Equation~\ref{eq:rotate-solution} via
-  the linear recurrence is
-  \[
-    (A \mid b) = \left(\begin{array}{ccccc|c}
-      F(n)   & 0      & 0      & \dots  & 0           & F(n - 1) \\
-      2 F(n) & -F(n)  & 0      & \dots  & 0           & F(n - 2) \\
-      2 F(n) & -2F(n) & F(n)   & \dots  & 0           & F(n - 3) \\
-      \vdots & \vdots & \vdots & \ddots & \vdots      & \vdots   \\
-      2 F(n) & -2F(n) & 2F(n)  & \dots  & (-1)^d F(n) & F(n - d) \\
-    \end{array}\right).
-  \]
-\end{example}
-
-\begin{example}
-  For $d = 3$:
-  \[
-    (A \mid b) = \left(\begin{array}{ccc|r}
-      F(n) & 0    & 0    & F(n - 1) \\
-      0    & F(n) & 0    & F(n - 1) + F(n - 2) \\
-      0    & 0    & F(n) & F(n - 1) - 2 F(n - 2) + F(n - 3) \\
-    \end{array}\right).
-  \]
-
-  Solving the linear system leads to the following values:
-  \begin{enumerate}
-    \item $\begin{aligned}[t]
-        F(n) x_1 & = F(n - 1)              \\
-             x_1 & = \frac{F(n - 1)}{F(n)} \\
-      \end{aligned}$
-    \item $\begin{aligned}[t]
-        -F(n) x_1 + F(n) x_2   & = - F(n - 2)                        \\
-        -2 F(n - 1) + F(n) x_2 & = - F(n - 2)                        \\
-        F(n) x_2               & = 2 F(n - 1) - F(n - 2)            \\
-        x_2                    & = \frac{2 F(n - 1) - F(n - 2)}{F(n)} \\
-      \end{aligned}$
-    \item $\begin{aligned}[t]
-        2 F(n) x_1 - 2 F(n) x_2 + F(n) x_3 & = F(n - 3)                                        \\
-                                  F(n) x_3 & = 2 F(n - 1) - 2 F(n - 2) + F(n - 3)              \\
-                                  F(n) x_3 & = 2 F(n - 1) - 2                                  \\
-                                       x_3 & = \frac{2 F(n - 1) - 2 F(n - 2) + F(n - 3)}{F(n)} \\
-      \end{aligned}$
-  \end{enumerate}
-\end{example}
+\begin{itemize}
+  \item \textbf{Polynomial}:
+    \[
+      1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0.
+    \]
+  \item \textbf{Algebraic Solution Vector}:
+    \[
+      x_i = 2x + (-x)^{i+1} + \sum_{k=2}^{i} (-x)^{k}.
+    \]
+  \item \textbf{Linear Recurrence}:
+    \[
+      F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
+    \]
+  \item \textbf{Rational Solution Vector}:
+    \[
+      x_1 = \frac{F(n - 1)}{F(n)}, x_i = \frac{2 F(n-1) + (-1)^{i+1} F(n - i) + \sum_{k=2}^i (-1)^k F(n-k)}{F(n)}.
+    \]
+  \item \textbf{Matrix}:
+    \[\left(\begin{array}{cccc|c}
+      F(n)   & 0      & \dots  & 0      & F(n - 1) \\
+        0    & F(n)   & \dots  & 0      & 2 F(n - 1) - F(n - 2) \\
+      \vdots & \vdots & \ddots & \vdots & \vdots   \\
+        0    & 0      & \dots  & F(n)   & 2 F(n-1) + (-1)^{d+1} F(n - d) + \sum_{k=2}^d (-1)^k F(n-k) \\
+    \end{array}\right)\]
+\end{itemize}
 
 \begin{example}
   \begin{align*}
@@ -333,7 +313,40 @@ Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
     & = \frac{2 F(n - 2) - F(n - 3)}{F(n - 1)}
   \end{align*}
 \end{example}
+
+\section{Changing the Update Rule}
+
+\begin{tikzpicture}[scale=0.5]
+  \draw (0,0) -- (2,6);
+  \draw (0,0) -- (6,1);
+  \draw (2,6) -- (8,7);
+  \draw (6,1) -- (8,7);
+
+  \draw[->] (0, 0) -- (5, 3);
+  \draw[->] (2, 6) -- (5, 3);
+  \draw[->] (0, 0) -- (3, -3);
+  \draw[->] (0, 0) -- (5, -5);
+\end{tikzpicture}
+
 \section{Keeping Equal Distances between Neighbors}
+
+\[
+  x_1 = \frac{x_2}{x_1} - 1 = \frac{x_3}{x_2} - 1 = \dots = \frac{x_d}{x_{d-1}} = \frac{1}{x_d} - 1.
+\]
+
+\begin{itemize}
+  \item \textbf{Polynomial}: \[x^{d+1} + x - 1 = 0.\]
+  \item \textbf{Algebraic Solution Vector}: \[x_i = \psi^{d+1-i}.\]
+  \item \textbf{Linear Recurrence}: \[F(n + 1) = F(n) + F(n - d).\]
+  \item \textbf{Rational Solution Vector}: \[x_i = \frac{F(n)}{F(n-d+i)}.\]
+  \item \textbf{Matrix}:
+    \[\left(\begin{array}{cccc|c}
+      F(n)   & 0      & \dots  & 0      & F(n - d) \\
+        0    & F(n)   & \dots  & 0      & F(n - d + 1) \\
+      \vdots & \vdots & \ddots & \vdots & \vdots   \\
+        0    & 0      & \dots  & F(n)   & F(n - 1) \\
+    \end{array}\right)\]
+\end{itemize}
 
 \section{An Idempotent Solution for Two Dimensions}
 
