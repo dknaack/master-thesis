@@ -366,13 +366,14 @@ Pivoting with $x_2$:
   1 - \frac{x_1}{x_2} & = 1 - \frac{\psi}{1 - \psi} = 1 - \psi.
 \end{align*}
 
-For more dimensions, the solution can still only be an algebraic number of degree 2.
-Otherwise, pivoting only the algebraic number of degree 3 or higher would lead to
-a sequence which is not periodic and therefore must decrease the determinant
-faster than any algebraic number of degree 2.
-
-How can we find this number?
-For $\zeta = \frac{P+\sqrt{D}}{Q}$, the maximum period length is of the order $O(\sqrt{D} \ln D)$.
+\begin{align*}
+  \left(
+  \begin{array}{cc|c}
+    F(n) & 0    & F(n-1) \\
+    0    & F(n) & F(n) - F(n-1) \\
+  \end{array}
+  \right)
+\end{align*}
 
 \chapter{Implementation}
 
