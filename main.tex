@@ -93,8 +93,14 @@ end
 \begin{example}
   Let $\Q[X]$ be the ring of polynomials in the variable $X$ with only rational
   coefficients and $I = (X^2 - X - 1)$ an ideal consisting of all multiples of $X^2 - X - 1$.
-  Then, the quotient ring $\Q[X]/(X^2 - X - 1)$ consists of ...
-  % TODO: What do they consist of?
+  Then, the operations of the quotient ring $\Q[X]/(X^2 - X - 1)$ are
+  \begin{align*}
+    (a_0 + a_1 X) + (b_0 + b_1 X)
+    & = (a_0 + b_0) + (a_1 + b_1) X \\
+    (a_0 + a_1 X) \cdot (b_0 + b_1 X)
+    & = (a_0 b_0) + (a_1 b_0 + a_0 b_1) X + (a_1 b_1) X^2 \\
+    & = (a_0 b_0 + a_1 b_1) + (a_1 b_0 + a_0 b_1 + a_1 b_1) X
+  \end{align*}
 \end{example}
 
 \begin{definition}[Simple Extension]
