@@ -200,9 +200,9 @@ where $x^{(n)}$ is the solution, in the following way:
   \begin{pmatrix}
     F(n - 1) \\
     F(n - 2) + a_{d-1} F(n - 1) \\
-    F(n - 3) + a_{d-2} F(n - 2) + a_{d-1} F(n - 1) \\
     \vdots \\
-    F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) \\
+    F(n - d + 1) + \sum_{k=1}^{d-2} a_{d-k} F(n - k) \\
+    F(n - d) + \sum_{k=1}^{d-1} a_{d-k} F(n - k) \\
   \end{pmatrix}.
 \]
 
