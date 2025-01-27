@@ -186,15 +186,17 @@ and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
 However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
 where $x^{(n)}$ is the solution, in the following way:
 \[
-  B_n =
+  B^{(n)} =
   \begin{pmatrix}
     F(n) & 0 & \dots & 0 & 0 \\
     0 & F(n) & \dots & 0 & 0 \\
     \vdots & \vdots & \ddots & \vdots & \vdots \\
     0 & 0 & \dots & F(n) & 0 \\
     0 & 0 & \dots & 0 & F(n) \\
-  \end{pmatrix}
-  c_n =
+  \end{pmatrix},
+\]
+\[
+  c^{(n)} =
   \begin{pmatrix}
     F(n - 1) \\
     F(n - 2) + a_{d-1} F(n - 1) \\
@@ -206,7 +208,7 @@ where $x^{(n)}$ is the solution, in the following way:
 
 \begin{lemma}
   The vector $x$ from Equation~\ref{eq:general-solution} is a solution to the
-  linear system $B_n x = c_n$.
+  linear system $B^{(n)} x = c^{(n)}$.
 \end{lemma}
 
 \section{Pivoting the Same Element}
