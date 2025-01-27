@@ -142,11 +142,12 @@ of the polynomial $x^2 - x - 1$.
   Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
 \end{corollary}
 
-Given, the linear recurrence $F(n + d + 1) = a_0 F(n) + \dots + a_d F(n + d)$,
-the value for $x_i$ in the solution is
-\[
-  x_i = \frac{F(n - i) + a_{d-i+1} F(n - i + 1) + a_{d-i+2} F(n - i + 2) + \dots + a_d F(n)}{F(n)}.
-\]
+Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
+the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
+\begin{equation}
+  \label{eq:general-solution}
+  x_i^{(n)} = \frac{F(n - i) + a_{d-i+1} F(n - i + 1) + a_{d-i+2} F(n - i + 2) + \dots + a_{d-1} F(n - 1)}{F(n)}.
+\end{equation}
 
 \begin{lemma}
 
