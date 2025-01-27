@@ -183,8 +183,80 @@ class Poly:
     def reflect(self):
         return Poly([c for c in reversed(self.coeffs)])
 
-    def neg(self):
+    def __neg__(self):
         return Poly([-c for c in self.coeffs])
+
+    def __add__(self, other):
+        if isinstance(other, int) or isinstance(other, Rat):
+            other = Poly([other])
+
+        n = max(len(self.coeffs), len(other.coeffs))
+
+        xs = list(self.coeffs) + [0] * (n - len(self.coeffs))
+        ys = list(other.coeffs) + [0] * (n - len(other.coeffs))
+
+        return Poly([x + y for x, y in zip(xs, ys)])
+
+    __radd__ = __add__
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def __rsub__(self, other):
+        return (-self) + other
+
+    def __mul__(self, other):
+        if isinstance(other, int) or isinstance(other, Rat):
+            other = Poly(other)
+
+        n = len(self.coeffs) + len(other.coeffs) - 1
+        result = [0] * n
+        for i, a in enumerate(self.coeffs):
+            for j, b in enumerate(other.coeffs):
+                result[i + j] += a * b
+        return Poly(result)
+
+    __rmul__ = __mul__
+
+    def __divmod__(self, other):
+        quotient = [Rat(0)] * (len(self.coeffs) - len(other.coeffs) + 1)
+        rem = self.coeffs[:]
+
+        while len(rem) >= len(other.coeffs) and any(rem):
+            lead_ratio = rem[-1] / other.coeffs[-1]
+            diff = len(rem) - len(other.coeffs)
+
+            term = [0] * diff + [lead_ratio]
+            quotient[diff] = lead_ratio
+
+            subtrahend = Poly(term) * other
+            rem = [rem[i] - subtrahend.coeffs[i] for i in range(len(rem))]
+
+            while rem and rem[-1] == 0:
+                rem.pop()
+
+        return Poly(quotient), Poly(rem)
+
+    def __floordiv__(self, other):
+        quotient, _ = divmod(self, other)
+        return quotient
+
+    def __mod__(self, other):
+        _, rem = divmod(self, other)
+        return rem
+
+    def __pow__(self, exp):
+        if not isinstance(exp, int):
+            raise TypeError('Only integer powers are supported')
+        if exp <= 0:
+            raise ValueError('Negative integer power')
+
+        result = [0] * len(self.coeffs) * exp
+        for i, a in enumerate(self.coeffs):
+            result[exp * i] = a
+        return Poly(result)
+
+    __xor__ = __pow__
 
 class LinearRec:
     def __init__(self, coeffs):
