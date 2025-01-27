@@ -18,6 +18,7 @@
 \UzLStyle{alegrya modern design}
 
 \newcommand\Z{{\mathbb Z}}
+\newcommand\Q{{\mathbb Q}}
 
 \begin{document}
 
@@ -42,6 +43,60 @@ end
     x_i / x_l & \text{ otherwise.}
   \end{cases}
 \end{align*}
+
+\section{Algebraic Numbers}
+
+\begin{definition}[Ring]
+  A ring is a set $R$ with two binary operations $+$ (addition) and $\cdot$ (multiplication)
+  satisfying the following conditions:
+  \begin{enumerate}
+    \item $(R, +)$ is a commutative group.
+    \item $(R, \cdot)$ is a monoid, i.e. $\cdot$ is associative and there exists an identity element $1 \in R$.
+    \item Multiplication is distributive with respect to addition:
+      \begin{align*}
+        a \cdot (b + c) = (a \cdot b) + (a \cdot c), & \quad \text{for all } a, b, c \in R \\
+        (b + c) \cdot a = (b \cdot a) + (c \cdot a), & \quad \text{for all } a, b, c \in R
+      \end{align*}
+  \end{enumerate}
+  A ring is commutative if multiplication is commutative.
+\end{definition}
+
+\begin{definition}[Ideal]
+  % TODO: Add note about left and right-sided ideals?
+  Given a commutative ring $R$, an ideal $I$ is a subset of $R$ satisfying
+  \begin{enumerate}
+    \item $(I, +)$ is a subgroup of $(R, +)$
+    \item For every $r \in R$ and every $x \in I$, the $r \cdot x \in I$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Quotient Ring]
+  For an ideal $I$ over a ring $R$, the equivalence relation $\sim$ is defined as
+  \[
+    a \sim b \quad \text{if and only if} \quad a - b \in I.
+  \]
+  % TODO: Define the equivalence class of an element.
+  The set of equivalence classes is denoted by $R/I$ and forms another ring with
+  \begin{align*}
+    (a + I) + (b + I) = (a + b) + I. \\
+    (a + I) \cdot (b + I) = (a \cdot b) + I. \\
+  \end{align*}
+\end{definition}
+
+\begin{example}
+  Let $\Q[X]$ be the ring of polynomials in the variable $X$ with only rational
+  coefficients and $I = (X^2 - X - 1)$ an ideal consisting of all multiples of $X^2 - X - 1$.
+  Then, the quotient ring $\Q[X]/(X^2 - X - 1)$ consists of ...
+  % TODO: What do they consist of?
+\end{example}
+
+\begin{definition}[Simple Extension]
+  Given an algebraic number $\alpha$ of degree $d$,
+  a simple extension of the rational numbers with $\alpha$ is the set
+  \[
+    \Q(\alpha) = \{\sum_{i=0}^d \alpha^i q_i \mid q_i \in \Q\}.
+  \]
+\end{definition}
 
 \chapter{Determinant}
 
