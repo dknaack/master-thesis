@@ -362,9 +362,7 @@ def select_min(xs):
     return l
 
 
-def pivot(xs, indices):
-    if isinstance(indices, int):
-        indices = [indices]
+def pivot(xs, *indices):
     for l in indices:
         ys = [0] * len(xs)
         for i, x in enumerate(xs):
@@ -372,12 +370,10 @@ def pivot(xs, indices):
                 ys[i] = frac(1 / frac(xs[l]))
             else:
                 ys[i] = frac(-frac(x) / frac(xs[l]))
-        xs = tuple(sorted(ys))
+        xs = tuple(ys)
     return xs
 
-def xpivot(xs, indices):
-    if isinstance(indices, int):
-        indices = [indices]
+def xpivot(xs, *indices):
     for l in indices:
         ys = [0] * len(xs)
         for i, x in enumerate(xs):
