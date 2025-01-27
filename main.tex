@@ -449,6 +449,21 @@ Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
 The algebraic solution falls apart after two iterations when pivoting with the
 smallest element, i.e. $x_1$.
 
+\section{Jacobi-Perron Algorithm}
+
+The algorithm in this form, where we always choose the same pivot,
+is equivalent to the Jacobi-Perron algorithm, which was first proposed
+by Jacobi \cite{Jacobi68} and later analyzed by Perron \cite{Perron07}.
+In modern times, the algorithm was picked up again by Bernstein \cite{Bernstein06}.
+Each of them has analyzed the algorithm in the context of Hermite's Problem.
+
+Charles Hermite initially posed a question to Jacobi, whether there exists a
+representation of the real numbers as an infinite sequence of natural numbers
+such that the sequence is eventually periodic if and only if the number is a
+cubic irrational. The question remains unanswered with the latest attempt
+\cite{Murru15} showing that there is an infinite sequence which is eventually
+periodic for every cubic irrational.
+
 \section{An Idempotent Solution for Two Dimensions}
 
 Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
@@ -497,6 +512,44 @@ Pivoting with $x_2$:
 \end{itemize}
 
 \begin{bibtex-entries}
+@article{Murru15,
+  title     = {On the periodic writing of cubic irrationals and a generalization of R{\'e}dei functions},
+  author    = {Murru, Nadir},
+  journal   = {International Journal of Number Theory},
+  volume    = {11},
+  number    = {03},
+  pages     = {779--799},
+  year      = {2015},
+  publisher = {World Scientific}
+}
+
+@book{Bernstein06,
+  title     = {The Jacobi-Perron algorithm: Its theory and application},
+  author    = {Bernstein, Leon},
+  volume    = {207},
+  year      = {2006},
+  publisher = {Springer}
+}
+
+@article{Perron07,
+  title     = {Grundlagen f{\"u}r eine Theorie des Jacobischen Kettenbruchalgorithmus},
+  author    = {Perron, Oskar},
+  journal   = {Mathematische Annalen},
+  volume    = {64},
+  number    = {1},
+  pages     = {1--76},
+  year      = {1907},
+  publisher = {Springer}
+}
+
+@article{Jacobi68,
+  title   = {Allgemeine Theorie der kettenbruch{\"a}hnlichen Algorithmen, in welchen jede Zahl aus drei vorhergehenden gebildet wird.},
+  author  = {Jacobi, CGJ},
+  journal = {Journal f{\"u}r die reine und angewandte Mathematik},
+  volume  = {69},
+  pages   = {29--64},
+  year    = {1868}
+}
 \end{bibtex-entries}
 
 \end{document}
