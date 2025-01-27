@@ -83,7 +83,29 @@ class Rat:
             return NotImplemented
 
     def __lt__(self, other):
+        if isinstance(other, int):
+            other = Rat(other)
         return self.num * other.denom < other.num * self.denom
+
+    def __gt__(self, other):
+        if isinstance(other, int):
+            other = Rat(other)
+        return self.num * other.denom > other.num * self.denom
+
+    def __le__(self, other):
+        if isinstance(other, int):
+            other = Rat(other)
+        return self.num * other.denom <= other.num * self.denom
+
+    def __ge__(self, other):
+        if isinstance(other, int):
+            other = Rat(other)
+        return self.num * other.denom >= other.num * self.denom
+
+    def __eq__(self, other):
+        if isinstance(other, int):
+            other = Rat(other)
+        return self.num * other.denom == other.num * self.denom
 
     def __neg__(self):
         return Rat(-self.num, self.denom)
