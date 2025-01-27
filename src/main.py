@@ -528,3 +528,5 @@ def get_info(xs, num_steps):
 
 num_steps = brute_force_search(20)
 inputs = invert_dict(num_steps)
+
+x = Poly([Rat(0), Rat(1)])
