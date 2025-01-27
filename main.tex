@@ -150,10 +150,41 @@ the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
 \end{equation}
 
 \begin{lemma}
-
+  Pivoting with the first element of $x^{(n)}$ using the modified update rule yields the vector
+  \[
+    x' = (x^{(n-1)}_2, x^{(n-1)}_3, \dots, x^{(n-1)}_d, x^{(n-1)}_1).
+  \]
 \end{lemma}
 
-From these values we can construct a very simple linear system in the following way:
+\begin{proof}
+  For $x_1$, we get
+  \[
+    \begin{aligned}
+      \frac{1}{x_1}
+      & = \frac{F(n)}{F(n - 1)} \\
+      & = a_d + \frac{F(n - d - 1) + a_1 F(n - d - 2) + \dots + a_{d-1} F(n - 2)}{F(n - 1)} \\
+      & = a_d + x^{(n-1)}_d.
+    \end{aligned}
+  \]
+  For the other values, we get
+  \begin{align*}
+    \frac{x_i}{x_1}
+    & = \frac{F(n - i) + a_{d-i+1} F(n - i + 1) + \dots + a_{d-2} F(n - 2) + a_{d-1} F(n - 1)}{F(n)} \frac{F(n)}{F(n - 1)} \\
+    & = a_{d-1} + \frac{F(n - i) + a_{d-i+1} F(n - i + 1) + \dots + a_{d-2} F(n - 2)}{F(n-1)} \\
+    & = x^{(n-1)}_d \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  Running the generalized Euclidean algorithm with $x^{(n)}$ as the solution to
+  the linear system $B x = c$ requires $n$ steps, if $x^{(n)}_1$ is the
+  smallest element in $x^{(n)}$.
+\end{corollary}
+
+Of course, the Euclidean algorithm receives a matrix $B \in \Z^{d \times d}$
+and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
+However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
+where $x^{(n)}$ is the solution, in the following way:
 \[
   B_n =
   \begin{pmatrix}
