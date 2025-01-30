@@ -17,12 +17,28 @@
 
 \UzLStyle{alegrya modern design}
 
+\newcommand\N{{\mathbb N}}
 \newcommand\Z{{\mathbb Z}}
 \newcommand\Q{{\mathbb Q}}
 
 \begin{document}
 
 \chapter{Introduction}
+
+\begin{problem}[Hermite's Problem]
+  Is there a representation of the real numbers as a sequence of integers such
+  that the sequence is eventually periodic if and only if the real number is a
+  cubic irrational?
+\end{problem}
+
+% TODO: Fix definition of eventually periodic
+More formally, we are looking for a function which maps any real number $r$ to
+a sequence $(a_n)_{n \in \N}$ such that $a_{k+n} = a_{\ell+n}$ for all $n \ge k$ and
+some $k \ne \ell$ if and only if there is a cubic polynomial $p$ such that $p(r) = 0$.
+Importantly, the function must map \emph{all} real numbers to a sequence.
+Nadir Murru \cite{Murru15} has already shown that there exists a mapping from all
+cubic irrationals to eventually periodic sequences.
+However, the author was unable to derive a sequence for all real numbers.
 
 \chapter{Preliminaries}
 
