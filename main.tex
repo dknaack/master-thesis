@@ -105,12 +105,66 @@ with the smallest numerator.
   is defined as the finite continued fraction $[a_0; a_1, \dots, a_n]$.
 \end{definition}
 
-\begin{definition}
-  Each convergent has a canonical structure:
+\begin{lemma}
+  For every $n \in \N$ there exists two polynomials $p_n$ and $q_n$ such that the
+  $n$-th convergent of $[a_0; a_1, \dots]$ can be represented by the quotient
+  of the two polynomials:
   \[
-    [a_0; a_1, \dots, a_n] = \frac{p_k}{q_k} = \frac{p_k(a_0, \dots, a_k)}{p_{k-1}(a_1, \dots, a_k)}.
+    [a_0; a_1, \dots, a_n] = \frac{p_n(a_0, a_1, \dots, a_n)}{q_n(a_0, a_1, \dots, a_n)}
+  \]
+\end{lemma}
+
+\begin{proof}
+  For $n = 0$, we have $p_0(a_0) = a_0$ and $q_0(a_0) = 1$.
+  By induction, it follows that
+  \[
+    [a_0; a_1, \dots, a_n] = a_0 + \frac{1}{[a_1; a_2 \dots, a_n]} = a_0 + \frac{q_{n-1}(a_1, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
+  \]
+  From this, we can derive the polynomials $p_n$ and $q_n$:
+  \begin{align*}
+    p_n(a_0, \dots, a_n) & = a_0 p_{n-1}(a_1, \dots, a_n) + p_{n-2}(a_2, \dots, a_n) \\
+    q_n(a_0, \dots, a_n) & = p_{n-1}(a_1, \dots, a_n). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  The canonical structure of the $n$-th convergent $[a_0; a_1, \dots, a_n]$ is defined as
+  \[
+    [a_0; a_1, \dots, a_n] = \frac{p_n}{q_n} = \frac{p_n(a_0, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
   \]
 \end{definition}
+
+\begin{lemma}
+  The canonical structure of the continued fractions satisfies the recurrence
+  \[
+    \begin{matrix}
+      p_n = a_n p_{n-1} + p_{n-2}, & p_{-1} = 1, & p_0 = a_0 \\
+      q_n = a_n q_{n-1} + q_{n-2}, & q_{-1} = 0, & q_0 = 1
+    \end{matrix}
+  \]
+\end{lemma}
+
+\begin{lemma}
+  For every positive $x \in \Q$, there are unique
+  $a_0, a_1, \dots, a_n \in \N \setminus \{0\}$ with $a_n \ne 1$
+  such that
+  \[
+    x = [a_0; a_1, \dots, a_n].
+  \]
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{lemma}
+  If $[a_0; a_1, \dots, a_n]$ is the unique continued fraction for $a/b$,
+  then the Euclidean algorithm requires $n$ steps on input $(a, b)$.
+\end{lemma}
+
+\begin{lemma}
+  The smallest continued fraction which requires $n$ steps is $[1; 1, 1, \dots, 1]$.
+\end{lemma}
 
 \section{Generalized Euclidean Algorithm}
 
