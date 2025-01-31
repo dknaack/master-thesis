@@ -42,6 +42,54 @@ However, the author was unable to derive a sequence for all real numbers.
 
 \chapter{Preliminaries}
 
+\section{Analysis of the Rational Euclidean Algorithm}
+
+The Euclidean algorithm can be seen as operating on a single rational number $x
+= a/b \in \Q$ and returning the greatest common divisor between $a$ and $b$.
+
+% TODO
+\begin{Pseudocode}
+while  do
+  $(a, b) \gets (b \bmod a, a)$
+end
+\end{Pseudocode}
+
+The size of the input is measured by the size of the denominator.
+Since there might be multiple elements with the same denominator but different
+numerators which take the same number of steps, we look at the element
+with the smallest numerator.
+
+\begin{lemma}
+  For the Euclidean Algorithm, $F(n) / F(n+1)$ is the worst-case input,
+  i.e. there exists no other input $a / b$ such that $b < F(n + 1)$ or
+  $a < F(n)$ which requires more than $n$ steps.
+\end{lemma}
+
+\begin{proof}
+  Let $X_n$ be the set of inputs, which require $n$ steps in the Euclidean Algorithm.
+  For $n = 1$, we have $1/2$ which obviously requires one step of the algorithm.
+  Assume $x' = \frac{a}{b}$ is the element with the smallest denominator, which
+  requires $n$ steps.
+  Then $x = \frac{b}{a+b}$ is the element with the smallest denominator,
+  which requires $n + 1$ steps.
+
+  First, $x$ requires $n + 1$ steps since applying the algorithm on this input
+  yields $x'$.
+  Next, we need to show that $x'$ is the element with the smallest denominator.
+  For a contradiction, assume that there is an element $y = c/d \in X_{n+1}$
+  with $d < a + b$ or $c < b$.
+  Applying the algorithm on $y$ yields $(d \bmod c) / c$,
+  from which it follows that $c \ge b$.
+  Otherwise, it would contradict our assumption that $a/b$ is the element with
+  smallest denominator.
+  By the same argument $d \bmod c \ge d - a \ge a$.
+  Putting both inequalities together leads to
+  \[
+    d < a + b \le d - c + c = d,
+  \]
+  which is a contradiction.
+\end{proof}
+
 \section{Continued Fraction}
 
 \begin{definition}
