@@ -15,11 +15,13 @@
   Numerische Bibliographie,
 }
 
-\UzLStyle{alegrya modern design}
+\UzLStyle{pagella contrast design}
+\usetikzlibrary{decorations.pathreplacing, calligraphy}
 
 \newcommand\N{{\mathbb N}}
 \newcommand\Z{{\mathbb Z}}
 \newcommand\Q{{\mathbb Q}}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \begin{document}
 
@@ -630,6 +632,84 @@ Pivoting with $x_2$:
   \end{array}
   \right)
 \end{align*}
+
+\section{How Fast does the Determinant Decrease?}
+
+\begin{proposition}
+  In one dimension, the determinant decreases by a factor of at least $1/2$ over
+  two iterations.
+\end{proposition}
+
+\begin{proof}
+  Let $x₁ ∈ ℚ$ be the input to the 1-dimensional algorithm.
+  We assume $x₁ > 1/2$ as the other case already proves the assumption.
+  Then, $1/x₁ < 2$ and we have
+  \[
+    x₁ \left\{\frac{1}{x₁}\right\}
+    = x₁ \left(\frac{1}{x₁} - 1\right)
+    = 1 - x₁ < 1/2.
+  \]
+  Therefore, over two iterations we decrease by at least $1/2$.
+\end{proof}
+
+What is the largest rational number between $0$ and $1$ with a maximum
+denominator $b$ that maximizes this decrease?
+
+What can we expect for higher dimensions?
+This depends on the strategy of our pivot element $x_\ell$.
+There are different strategies we can follow like choosing the minimum in each iteration, for example.
+
+\begin{theorem}
+  The determinant decreases by a factor of at least $(d+1)$ over $2$ iterations.
+\end{theorem}
+
+\begin{proof}
+  Let $x ∈ ℚ^d$ with $0 < x_i < 1$ for every $1 ≤ i ≤ d$.
+  We additionally define $x_0 = 0$ and $x_{d+1} = 1$.
+  We assume WLOG that $x$ is ordered in increasing order.
+  Suppose that pivoting with any $ℓ ∈ \{0, 1, \dots, d\}$
+  decreases the determinant slower than $(d+1)$ over two iterations,
+  i.e.
+  \[
+    % TODO: Handle ℓ = 0 case, (just a formality)
+    x_1 > \frac{1}{d+1},
+    \quad \text{ and } \quad
+    x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}, \quad \text{ for all } 1 ≤ ℓ ≤ d.
+  \]
+  Because $x_{\ell+1} > x_\ell$, we have
+  \[
+    x_{\ell+1} - x_\ell ≥ x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}.
+  \]
+
+  The inequality tells us, that the distance between all neighbors
+  (including $1$ and $0$) must be greater than $1/(d+1)$.
+  Or equivalently, we must space our $d$ variables on the unit interval such that they
+  divide it into $d+1$ intervals where each interval must be larger than $1/(d+1)$.
+
+  {\begin{center}
+    \begin{tikzpicture}
+      \def\one{0.8 \textwidth}
+      \draw (0, 0) -- (\one, 0);
+
+      \draw (0, -0.2) -- (0, 0.2) node[above] {$x₀$};
+      \draw (\one, -0.2) -- (\one, 0.2) node[above] {$x_{d+1}$};
+      \draw ({3.5 * \one / 5}, 0.2) node[above] {$\dots$};
+
+      \foreach \x/\y in {1,...,3,4/d}
+        \draw ({\x * \one / 5}, -0.2) -- ({\x * \one / 5}, 0.2) node[above] {$x_{\y}$};
+      \foreach \x in {1,...,3,5}
+        \draw[decorate, line width=1.25pt, decoration={calligraphic brace, mirror}]
+          ({(\x - 1) * \one / 5 + 1}, -0.3) -- node[below] {$> \frac{1}{d+1}$} ({\x * \one / 5 - 1}, -0.3);
+    \end{tikzpicture}
+  \end{center}}
+
+  However, no such values can exist.
+  The maximum size we can achieve is exactly $1/(d+1)$ by evenly
+  spacing the values.
+  Moving one value increases the size of one interval, but decreases the size
+  of the other interval.
+  Therefore, we must have a decrease of at least $(d+1)$ over two iterations.
+\end{proof}
 
 \chapter{Implementation}
 
