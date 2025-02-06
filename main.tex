@@ -171,11 +171,30 @@ with the smallest numerator.
 \section{Generalized Euclidean Algorithm}
 
 \begin{Pseudocode}
+solve $Bx = c$
 while $x$ is not integral do
+  find $x_\ell$ which is not integral
+  $c \gets B_\ell$
+  $B_\ell \gets Bx \bmod Π(B)$
   solve $Bx = c$
-  find $x_l$ which is not integral
-  swap $B_l$ and $c$
-  ...
+end
+\end{Pseudocode}
+
+\begin{Pseudocode}
+solve $Bx = c$
+while $x$ is not integral do
+  find $x_\ell$ which is not integral
+  $c \gets B_\ell$
+  $B_\ell \gets Bx \bmod Π(B)$
+
+  for $i$ in $1..{\le} \ell$ do
+    if $i = \ell$ then
+      $x_i' \gets 1 / \{x_\ell\}$
+    else
+      $x_i' \gets \{x_i\} / \{x_\ell\}$
+    end
+  end
+  $x \gets x'$
 end
 \end{Pseudocode}
 
