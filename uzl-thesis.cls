@@ -882,6 +882,7 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{\uzlTheorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{\uzlLemma}
 \newtheorem{corollary}[theorem]{\uzlCorollary}
 \newtheorem{conjecture}[theorem]{\uzlConjecture}
