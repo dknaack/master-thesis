@@ -678,8 +678,15 @@ What can we expect for higher dimensions?
 This depends on the strategy of our pivot element $x_\ell$.
 There are different strategies we can follow like choosing the minimum in each iteration, for example.
 
+\begin{enumerate}
+  \item Sort $x$ in increasing order.
+  \item Find the index $ℓ₁$ which minimizes $\{x_{ℓ+1}/x_ℓ\}$.
+  \item Choose $ℓ₁$ in the first iteration and $ℓ₂ = ℓ₁ + 1$ in the second iteration.
+\end{enumerate}
+
 \begin{theorem}
-  The determinant decreases by a factor of at least $(d+1)$ over $2$ iterations.
+  The determinant decreases by a factor of at least $d+1$ over two iterations
+  using the previously described strategy.
 \end{theorem}
 
 \begin{proof}
