@@ -276,7 +276,257 @@ Hence, $\Q[X]/(X^2 + X + 1)$ forms a field.
   \]
 \end{definition}
 
+% ==============================================================================
+
+\chapter{Choosing the Minimum}
+
+% ==============================================================================
+
+We begin with the simplest strategy: Choosing the minimum in each iteration.
+
+\section{Bound on the Decrease of the Determinant}
+
+\begin{proposition}
+  The determinant decreases by a factor of at least $\max\{1/3,1/(d + 1)\}$ over two iterations
+  using the minimum strategy.
+\end{proposition}
+
+\begin{proof}
+  Let $x ∈ [0, 1)^d$.
+  We assume WLOG the values $x₁, x₂, \dots, x_d$ are ordered in increasing order.
+  Suppose $x₁ \{x_i / x₁\} ≥ 1/3$ for every $i ≤ d$ and $x₁ \{1 / x₁\} ≥ 1/3$.
+  Then, over two iterations we have a decrease of
+  \[
+    x₁ \left\{\frac{1}{x₁}\right\} ≤ 1 - x₁ ≤ \frac{1}{2}. \qedhere
+  \]
+\end{proof}
+
+\section{Golden Ratio}
+
+The goal is to find an input $x ∈ [0, 1]^d$,
+where the decrease stays constant in each iteration and is maximal.
+This input cannot be rational since it would eventually lead to one element in $x$ being zero.
+Therefore, our input must consist of at least one algebraic number.
+
+First, assume that in the input $x$ the value $x₁$ is the smallest and $x₂$ the second smallest.
+After pivoting, $x₂'$ has to be the smallest element in $x' = \mathrm{pivot}(x, 1)$ unless $x₁ < 1/2$.
+However, in that case the decrease is already smaller in the first iteration.
+Therefore, we can assume that $x₂'$ is the smallest element in the next iteration.
+For the decrease to remain constant, it follows that $x₁ = x₂'$.
+Furthermore, we must have $x₂ = x₃'$.
+Extending this to all elements leads to the following equations:
+\[
+  x₁ = \frac{x₂}{x₁} - 1,
+  \quad x₂ = \frac{x₃}{x₁} - 1,
+  \quad \dots,
+  \quad x_{d-1} = \frac{x_d}{x₁} - 1,
+  \quad x_d = \frac{1}{x₁} - 1.
+\]
+These can be rearranged such that $x_{i + 1} = x₁ (x_i + 1) = x₁^{i+1} + x₁^i + \dots + x₁$
+and substituting $x_d$ in the last equation gives us
+\[
+  x₁^d + x₁^{d-1} + \dots + x₁ = \frac{1}{x₁} - 1
+  \iff
+  x₁^{d+1} + x₁^{d-1} + \dots + x₁ - 1 = 0.
+\]
+
+\begin{lemma}
+  The polynomial $p(x) = x^{d+1} + x^d + \dots + x - 1$ has only one positive real root.
+\end{lemma}
+
+\begin{corollary}
+  If $ψ$ is the positive root of $p(x)$, then $ψ^i + ψ^{i-1} + \dots + ψ < 1$ for $i ≤ d$.
+\end{corollary}
+
+In the following lemma, we use the fact that if $p(ψ) = 0$, then
+\[
+  ψ^{-1} = ψ^d + ψ^{d-1} + \dots + ψ + 1.
+\]
+
+\begin{lemma}
+  Let $ψ$ be the positive real root of $p(x) = x^{d+1} + \dots + x - 1$
+  and let $x$ be a $d$-dimensional vector with $x_i = ψ^i + \dots + ψ$.
+  Then, the decrease of the determinant under $x$ remains constant over every iteration.
+\end{lemma}
+
+\begin{proof}
+  Because $ψ$ is positive, $x$ is already ordered in increasing order.
+  Hence, we pivot with $x₁$ first.
+  Let $x' = \mathrm{pivot}(x, 1)$,
+  then
+  \begin{align*}
+    x₁'
+    & = \left\{\frac{1}{x₁}\right\}
+    = \left\{\frac1{ψ}\right\}
+    = \left\{ψ^d + ψ^{d-1} + \dots + ψ\right\} = x_d, \\
+    x_{i+1}'
+    & = \left\{\frac{x_{i+1}}{x₁}\right\}
+    = \left\{\frac{ψ^{i+1} + ψ^i + \dots + ψ}{ψ}\right\}
+    = \left\{ψ^i + ψ^{i-1} + \dots + ψ + 1\right\}
+    = x_i.
+  \end{align*}
+  Because we choose the minimum, $x'$ yields the same decrease in the next iteration.
+\end{proof}
+
+\section{Fibonacci Numbers}
+
+\[
+  F(n + d + 1) = F(n + d) + \dots + F(n + 1) + F(n).
+\]
+
+\section{Multi-Dimensional Continued Fractions}
+
+\begin{align*}
+  y_d = \frac{1}{x_1} - a_d,
+  \quad y_i = \frac{x_{i+1}}{x_1} - a_1
+\end{align*}
+
+\begin{align*}
+  x_1 = \frac{1}{a_d + y_d},
+  \quad x_{i+1} = \frac{a_i + y_i}{a_d + y_d}
+\end{align*}
+
+\begin{align*}
+  K_1(a^{(1)}, a^{(2)}, \dots) & = \frac{1}{a^{(1)}_d + K_d(a^{(2)}, a^{(3)}, \dots)} \\
+  K_{i+1}(a^{(1)}, a^{(2)}, \dots) & =
+    \frac{a^{(1)}_i + K_i(a^{(2)}, a^{(3)}, \dots)}
+         {a^{(1)}_d + K_d(a^{(2)}, a^{(3)}, \dots)} \\
+\end{align*}
+
+\section{Comparison to the Jacobi-Perron Algorithm}
+
+The algorithm in this form, where we always choose the same pivot,
+is equivalent to the Jacobi-Perron algorithm, which was first proposed
+by Jacobi \cite{Jacobi68} and later analyzed by Perron \cite{Perron07}.
+In modern times, the algorithm was picked up again by Bernstein \cite{Bernstein06}.
+Each of them has analyzed the algorithm in the context of Hermite's Problem.
+
+Charles Hermite initially posed a question to Jacobi, whether there exists a
+representation of the real numbers as an infinite sequence of natural numbers
+such that the sequence is eventually periodic if and only if the number is a
+cubic irrational. The question remains unanswered with the latest attempt
+\cite{Murru15} showing that there is an infinite sequence which is eventually
+periodic for every cubic irrational.
+
+For the purposes of this thesis, I do not believe that Hermite's question is
+relevant in the case of a simple pivoting strategy like choosing the minimum
+element in each iteration.
+My reasoning is that for the Euclidean algorithm, we need a minimal periodic
+continued fraction, which is simply $[1; \overline{1}]$.
+Therefore, for higher dimensions, we can equally look for a minimal periodic
+solution which is unrelated to Hermite's question.
+
+However, I suspect that Hermite's question \emph{is} relevant when looking for
+the optimal pivoting strategy.
+
+% ==============================================================================
+
+\chapter{Choosing the Closest Pair of Neighbors}
+
+% ==============================================================================
+
+We use the following strategy:
+
+\begin{enumerate}
+  \item Sort $x$ in increasing order.
+  \item Find the index $ℓ₁$ which minimizes $\{x_{ℓ+1}/x_ℓ\}$.
+  \item Choose $ℓ₁$ in the first iteration and $ℓ₂ = ℓ₁ + 1$ in the second iteration.
+\end{enumerate}
+
+\section{Bounds on the Decrease of the Determinant}
+
+\begin{theorem}
+  The determinant decreases by a factor of at least $d+1$ over two iterations
+  using the closest neighbor strategy.
+\end{theorem}
+
+\begin{proof}
+  Let $x ∈ ℚ^d$ with $0 < x_i < 1$ for every $1 ≤ i ≤ d$.
+  We assume $x$ is already given in increasing order.
+  We additionally define $x_0 = 0$ and $x_{d+1} = 1$.
+  Suppose that pivoting with any $ℓ ∈ \{0, 1, \dots, d\}$
+  decreases the determinant slower than $(d+1)$ over two iterations,
+  i.e.
+  \[
+    % TODO: Handle ℓ = 0 case, (just a formality)
+    x_1 > \frac{1}{d+1},
+    \quad \text{ and } \quad
+    x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}, \quad \text{ for all } 1 ≤ ℓ ≤ d.
+  \]
+  Because $x_{\ell+1} > x_\ell$, we have
+  \[
+    x₁ - x₀ > \frac{1}{d+1},
+    \quad \text{ and } \quad
+    x_{\ell+1} - x_\ell ≥ x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}.
+  \]
+
+  The inequality tells us, that the distance between all neighbors
+  (including $1$ and $0$) must be greater than $1/(d+1)$.
+  Or equivalently, we must space our $d$ variables on the unit interval such that they
+  divide it into $d+1$ intervals and each interval is larger than $1/(d+1)$.
+
+  {\begin{center}
+    \begin{tikzpicture}
+      \def\one{0.8 \textwidth}
+      \draw (0, 0) -- (\one, 0);
+
+      \draw (0, -0.2) -- (0, 0.2) node[above] {$x₀$};
+      \draw (\one, -0.2) -- (\one, 0.2) node[above] {$x_{d+1}$};
+      \draw ({3.5 * \one / 5}, 0.2) node[above] {$\dots$};
+
+      \foreach \x/\y in {1,...,3,4/d}
+        \draw ({\x * \one / 5}, -0.2) -- ({\x * \one / 5}, 0.2) node[above] {$x_{\y}$};
+      \foreach \x in {1,...,3,5}
+        \draw[decorate, line width=1.25pt, decoration={calligraphic brace, mirror}]
+          ({(\x - 1) * \one / 5 + 1}, -0.3) -- node[below] {$> \frac{1}{d+1}$} ({\x * \one / 5 - 1}, -0.3);
+    \end{tikzpicture}
+  \end{center}}
+
+  However, no such values can exist.
+  The maximum size we can achieve is exactly $1/(d+1)$ by evenly
+  spacing the values.
+  Moving one value increases the size of one interval, but decreases the size
+  of the other interval.
+  Therefore, we must have a decrease of at least $(d+1)$ over two iterations.
+\end{proof}
+
+\section{Golden Ratio and Fibonacci Numbers}
+
+To find a generalization of the golden ratio for this strategy,
+we first establish an equation for the decrease of the determinant.
+The decrease must stay the same in each iteration.
+Hence, we should choose values for $x₁, \dots, x_d$ such that the decrease
+stays the same for all possible combinations.
+\[
+  x_1 = \frac{x_2}{x_1} - 1 = \frac{x_3}{x_2} - 1 = \dots = \frac{x_d}{x_{d-1}} = \frac{1}{x_d} - 1.
+\]
+Solving the equation for $x₁$ yields the following polynomial:
+\[
+  x₁^{d+1} + x₁ - 1 = 0.
+\]
+
+\begin{itemize}
+  \item \textbf{Polynomial}: \[x^{d+1} + x - 1 = 0.\]
+  \item \textbf{Algebraic Solution Vector}: \[x_i = \psi^{d+1-i}.\]
+  \item \textbf{Linear Recurrence}: \[F(n + 1) = F(n) + F(n - d).\]
+  \item \textbf{Rational Solution Vector}: \[x_i = \frac{F(n)}{F(n-d+i)}.\]
+  \item \textbf{Matrix}:
+    \[\left(\begin{array}{cccc|c}
+      F(n)   & 0      & \dots  & 0      & F(n - d) \\
+        0    & F(n)   & \dots  & 0      & F(n - d + 1) \\
+      \vdots & \vdots & \ddots & \vdots & \vdots   \\
+        0    & 0      & \dots  & F(n)   & F(n - 1) \\
+    \end{array}\right)\]
+\end{itemize}
+
+The algebraic solution falls apart after two iterations when pivoting with the
+smallest element, i.e. $x_1$.
+
+% ==============================================================================
+
 \chapter{Determinant}
+
+% ==============================================================================
 
 \section{Generalized Fibonacci Sequence}
 
@@ -585,46 +835,6 @@ Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
   \end{align*}
 \end{example}
 
-\section{$d$-bonacci Numbers}
-
-\section{Keeping Equal Distances between Neighbors}
-
-\[
-  x_1 = \frac{x_2}{x_1} - 1 = \frac{x_3}{x_2} - 1 = \dots = \frac{x_d}{x_{d-1}} = \frac{1}{x_d} - 1.
-\]
-
-\begin{itemize}
-  \item \textbf{Polynomial}: \[x^{d+1} + x - 1 = 0.\]
-  \item \textbf{Algebraic Solution Vector}: \[x_i = \psi^{d+1-i}.\]
-  \item \textbf{Linear Recurrence}: \[F(n + 1) = F(n) + F(n - d).\]
-  \item \textbf{Rational Solution Vector}: \[x_i = \frac{F(n)}{F(n-d+i)}.\]
-  \item \textbf{Matrix}:
-    \[\left(\begin{array}{cccc|c}
-      F(n)   & 0      & \dots  & 0      & F(n - d) \\
-        0    & F(n)   & \dots  & 0      & F(n - d + 1) \\
-      \vdots & \vdots & \ddots & \vdots & \vdots   \\
-        0    & 0      & \dots  & F(n)   & F(n - 1) \\
-    \end{array}\right)\]
-\end{itemize}
-
-The algebraic solution falls apart after two iterations when pivoting with the
-smallest element, i.e. $x_1$.
-
-\section{Jacobi-Perron Algorithm}
-
-The algorithm in this form, where we always choose the same pivot,
-is equivalent to the Jacobi-Perron algorithm, which was first proposed
-by Jacobi \cite{Jacobi68} and later analyzed by Perron \cite{Perron07}.
-In modern times, the algorithm was picked up again by Bernstein \cite{Bernstein06}.
-Each of them has analyzed the algorithm in the context of Hermite's Problem.
-
-Charles Hermite initially posed a question to Jacobi, whether there exists a
-representation of the real numbers as an infinite sequence of natural numbers
-such that the sequence is eventually periodic if and only if the number is a
-cubic irrational. The question remains unanswered with the latest attempt
-\cite{Murru15} showing that there is an infinite sequence which is eventually
-periodic for every cubic irrational.
-
 \section{An Idempotent Solution for Two Dimensions}
 
 Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
@@ -665,80 +875,64 @@ Pivoting with $x_2$:
   Let $x₁ ∈ ℚ$ be the input to the 1-dimensional algorithm.
   We assume $x₁ > 1/2$ as the other case already proves the assumption.
   Then, $1/x₁ < 2$ and we have
-  \[
+  $$
     x₁ \left\{\frac{1}{x₁}\right\}
     = x₁ \left(\frac{1}{x₁} - 1\right)
     = 1 - x₁ < 1/2.
-  \]
+    $$
   Therefore, over two iterations we decrease by at least $1/2$.
 \end{proof}
 
-What is the largest rational number between $0$ and $1$ with a maximum
-denominator $b$ that maximizes this decrease?
+How can we derive the golden ratio from this?
 
 What can we expect for higher dimensions?
 This depends on the strategy of our pivot element $x_\ell$.
 There are different strategies we can follow like choosing the minimum in each iteration, for example.
 
-\begin{enumerate}
-  \item Sort $x$ in increasing order.
-  \item Find the index $ℓ₁$ which minimizes $\{x_{ℓ+1}/x_ℓ\}$.
-  \item Choose $ℓ₁$ in the first iteration and $ℓ₂ = ℓ₁ + 1$ in the second iteration.
-\end{enumerate}
+\section{Golden Ratio}
+
+\begin{align*}
+  ψ(ψ + 1)^d - 1 = 0,
+\end{align*}
+
+Reflecting the polynomial gives us:
+\begin{align*}
+  φ^{d+1} - (φ + 1)^d = 0.
+\end{align*}
+Using the binomial theorem:
+\begin{align*}
+  φ^{d+1} = ∑_{i=0}^d \binom{d}{i} φ^i,
+\end{align*}
+which leads directly to the Fibonacci numbers for this ratio:
+\begin{align*}
+  F(n + d + 1) = ∑_{i=0}^d \binom{d}{i} F(n + i).
+\end{align*}
+
+We choose $x₁ = ψ$ and $x_i = x₁ (1 + x₁)^{i-1} = ψ (1 + ψ)^{i-1}$.
+
+\begin{align*}
+  \text{pivot}(\text{pivot}(x, ℓ₁), ℓ₂) = \left(x_{σ(1)}, \dots, x_{σ(d)}\right).
+\end{align*}
+
+From the proof, it follows that $1/(d+1)$ should be the worst-case.
+However, using $1/(d+1)$ exactly only requires one iteration until the values are integral.
+
+\begin{align*}
+  ψ^{d+1} + ∑_{k=0}^d k ψ^{d-k} = 1.
+\end{align*}
+
+Is this the optimal one?
 
 \begin{theorem}
-  The determinant decreases by a factor of at least $d+1$ over two iterations
-  using the previously described strategy.
+  There is no vector $x ∈ (0, 1)^d$
+  such that any pivot operation yields the same decrease
+  over every iteration for $d ≥ 2$.
 \end{theorem}
 
 \begin{proof}
-  Let $x ∈ ℚ^d$ with $0 < x_i < 1$ for every $1 ≤ i ≤ d$.
-  We assume $x$ is already given in increasing order.
-  We additionally define $x_0 = 0$ and $x_{d+1} = 1$.
-  Suppose that pivoting with any $ℓ ∈ \{0, 1, \dots, d\}$
-  decreases the determinant slower than $(d+1)$ over two iterations,
-  i.e.
-  \[
-    % TODO: Handle ℓ = 0 case, (just a formality)
-    x_1 > \frac{1}{d+1},
-    \quad \text{ and } \quad
-    x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}, \quad \text{ for all } 1 ≤ ℓ ≤ d.
-  \]
-  Because $x_{\ell+1} > x_\ell$, we have
-  \[
-    x₁ - x₀ > \frac{1}{d+1},
-    \quad \text{ and } \quad
-    x_{\ell+1} - x_\ell ≥ x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}.
-  \]
-
-  The inequality tells us, that the distance between all neighbors
-  (including $1$ and $0$) must be greater than $1/(d+1)$.
-  Or equivalently, we must space our $d$ variables on the unit interval such that they
-  divide it into $d+1$ intervals and each interval is larger than $1/(d+1)$.
-
-  {\begin{center}
-    \begin{tikzpicture}
-      \def\one{0.8 \textwidth}
-      \draw (0, 0) -- (\one, 0);
-
-      \draw (0, -0.2) -- (0, 0.2) node[above] {$x₀$};
-      \draw (\one, -0.2) -- (\one, 0.2) node[above] {$x_{d+1}$};
-      \draw ({3.5 * \one / 5}, 0.2) node[above] {$\dots$};
-
-      \foreach \x/\y in {1,...,3,4/d}
-        \draw ({\x * \one / 5}, -0.2) -- ({\x * \one / 5}, 0.2) node[above] {$x_{\y}$};
-      \foreach \x in {1,...,3,5}
-        \draw[decorate, line width=1.25pt, decoration={calligraphic brace, mirror}]
-          ({(\x - 1) * \one / 5 + 1}, -0.3) -- node[below] {$> \frac{1}{d+1}$} ({\x * \one / 5 - 1}, -0.3);
-    \end{tikzpicture}
-  \end{center}}
-
-  However, no such values can exist.
-  The maximum size we can achieve is exactly $1/(d+1)$ by evenly
-  spacing the values.
-  Moving one value increases the size of one interval, but decreases the size
-  of the other interval.
-  Therefore, we must have a decrease of at least $(d+1)$ over two iterations.
+  Suppose there is such an $x$.
+  Then, the distance between neighbors is the same between all elements of $x$.
+  This vector is unique.
 \end{proof}
 
 \chapter{Notes on Hermite's Problem}
