@@ -84,7 +84,7 @@ with the smallest numerator.
   from which it follows that $c \ge b$.
   Otherwise, it would contradict our assumption that $a/b$ is the element with
   smallest denominator.
-  By the same argument $d \bmod c \ge d - a \ge a$.
+  By the same argument $d \bmod c \ge a$ and therefore $d - c \ge a$.
   Putting both inequalities together leads to
   \[
     d < a + b \le d - c + c = d,
@@ -652,7 +652,147 @@ Pivoting with $x_2$:
   \right)
 \end{align*}
 
-\section{How Fast does the Determinant Decrease?}
+\section{Bifurcating Continued Fractions}
+
+The pivot choice can be represented as a binary string $w \in \{0, 1\}^*$.
+
+\begin{align*}
+  x_{w0} & = \frac{1}{x_w - [x_w]}           \\
+  y_{w0} & = \frac{y_w - [y_w]}{x_w - [x_w]} \\
+\end{align*}
+
+\begin{align*}
+  x_{w1} & = \frac{x_w - [x_w]}{y_w - [y_w]} \\
+  y_{w1} & = \frac{1}{y_w - [y_w]}           \\
+\end{align*}
+
+Which leaves us with two equations for each variable:
+
+\begin{align*}
+  \begin{aligned}
+    x_w & = a_w + \frac{1}{x_{w0}}, \\
+    x_w & = a_w + \frac{x_{w1}}{y_{w1}}, \\
+  \end{aligned}
+  \quad
+  \begin{aligned}
+    y_w & = b_w + \frac{1}{y_{w0}} \\
+    y_w & = b_w + \frac{y_{w1}}{x_{w1}} \\
+  \end{aligned}
+\end{align*}
+
+\begin{align*}
+  \frac{a x^{2} p\left(k\right)^{2} + b x^{2} p\left(k\right) q\left(k\right) + c x^{2} q\left(k\right)^{2} + 2 \, a x p\left(k - 1\right) p\left(k\right) + b x p\left(k\right) q\left(k - 1\right) + b x p\left(k - 1\right) q\left(k\right) + 2 \, c x q\left(k - 1\right) q\left(k\right) + a p\left(k - 1\right)^{2} + b p\left(k - 1\right) q\left(k - 1\right) + c q\left(k - 1\right)^{2}}{{\left(x q\left(k\right) + q\left(k - 1\right)\right)}^{2}}
+\end{align*}
+
+\section{Bifurcating Continued Fraction}
+
+The bifurcating continued fraction is an extension of the continued fraction to
+two dimensions. Given two sequences $a_n$ and $b_n$, the bifurcating continued
+fraction of $a_n$ and $b_n$ produces two numbers in the following way:
+
+\begin{align*}
+  [\{a_0, a_1, \dots\}, \{b_0, b_1, \dots\}]_1
+  & = a_0 + \frac{[\{a_1, \dots\}, \{b_1, \dots\}]_2}{[\{a_1, \dots\}, \{b_1, \dots\}]_1} \\
+  [\{a_0, a_1, \dots\}, \{b_0, b_1, \dots\}]_2
+  & = b_0 + \frac{1}{[\{a_1, \dots\}, \{b_1, \dots\}]_1}
+\end{align*}
+
+\begin{lemma}
+  There are rational numbers for which there are infinitely many bifurcating
+  continued fractions.
+\end{lemma}
+
+\begin{proof}
+  Let $p,q \in \N$ such that $\gcd(p, q) = 1$
+  and $a_0, a_1, b_1 \in \N^+$.
+  \begin{align*}
+    \frac{a_0(a_1 q + p) + b_1 q + 1}{a_1 q + p}.
+  \end{align*}
+  Choosing $a_1 = 1$
+  \begin{align*}
+    \frac{(a_0 + 1) (q + 1)}{q + 1}.
+  \end{align*}
+
+  \begin{align*}
+    \frac{p}{q} = a_0 + \frac{r}{q} = a_0 + \frac{b_1 + \frac{1}{q'}}{a_1 + \frac{p'}{q'}}.
+  \end{align*}
+
+  We have to find positive natural numbers $a_0, a_1, b_1$ and $q', p'$ such that
+  \begin{align*}
+    \frac{p}{q} = \frac{a_0(a_1 q' + p') + b_1 q' + 1}{a_1 q' + p'}.
+  \end{align*}
+
+  We begin by setting $a_0 = 1$, $b_1 = 1$
+  \begin{align*}
+    \frac{p}{q} = \frac{p'' + (a_0 + 1)q' + 1}{q' + p''}.
+  \end{align*}
+\end{proof}
+
+We call an input $x$ the worst-case input, if for all other input $x'$
+the maximum denominator is greater than or equal to maximum denominator in $x$.
+
+We do not have to construct a worst-case input from a reverse pivot.
+We can construct a worst-case input such that no pivot operation returns the
+previous worst-case input!
+However, this means we have to show that the other input requires $n + 1$ steps.
+
+\begin{lemma}
+  If $y = (p₁ / p₀, p₂ / p₀, \dots, p_d / p₀)$ is the smallest input which
+  requires exactly $n$ steps, then
+  \[
+    x = \left(
+      \frac{p₀}{p₀ + p_d},
+      \frac{p₀ + p₁}{p₀ + p_d},
+      \dots,
+      \frac{p₀ + p_{d-1}}{p₀ + p_d} \right)
+  \]
+  is the smallest input which requires $n + 1$ steps.
+\end{lemma}
+
+\begin{proof}
+  % TODO: This proof is definitely wrong...
+  Assume a smaller input exists, say \[x' = \left(\frac{q₀}{q_d}, \frac{q₁}{q_d}, \dots, \frac{q_{d-1}}{q_d} \right).\]
+  This means that the denominator $q₀$ is smaller or at least one of the numerators $q_i$ is smaller.
+  We assume WLOG that $q₀ ≤ q₁ ≤ \dots ≤ q_{d-1} < q_d$.
+  Updating $x'$ by its smallest element $x₁'$ yields the vector
+  \[
+    y' = \left(
+      \frac{q₁ \bmod q_d}{q_0},
+      \dots,
+      \frac{q_{d-1} \bmod q_0}{q_0},
+      \frac{q_d \bmod q_0}{q_0} \right).
+  \]
+  From the assumption that $y$ is the worst-case input, it follows that $q₀ ≥ p₀$
+  and therefore $q_i > p₀$ for $i ≤ d$.
+  Similarly, there must be an index $i_j$ for every index $j$
+  such that $p_i ≤ q_{i_j} \bmod q_d ≤ q_{i_j} - q_d$.
+  These indices can be chosen such that they are distinct.
+  Hence, we have a permutation $σ$ which assigns each $p_i$
+  the value $q_{σ(i)}$ such that
+  \[
+    p_i ≤ q_{σ(i)} \bmod q_d ≤ q_{σ(i)} - q_d ≤ q_{σ(i)} \qquad \text{or} \qquad p_i ≤ q_d.
+  \]
+
+  Suppose the denominator $q_d$ in $x'$ is smaller than the denominator $p₀ + p_d$ in $x$.
+  Then, $q_d < p₀ + p_d ≤ q_d + q_{σ(i)} - q_d = q_{σ(i)}$.
+  Because $q_d$ was chosen to be the largest value,
+  this is a contradiction, especially so if $σ(i) = d$.
+  Hence, $q_d ≥ p₀ + p_d$ and we can fix $σ(d) = d$
+  in the permutation.
+
+  Suppose $q_i < p₀ + p_i$ for some index $i$ and $q_k ≥ p₀ + p_k$ for all $k > i$.
+  Then, $q_i < q_d + q_{σ(i)} - q_d = q_{σ(i)}$.
+  Because of the ordering, $σ(i)$ must be greater than index $i$.
+  However,
+\end{proof}
+
+\begin{lemma}
+  The determinant decreases by at least $2$ over two iterations for $d = 1$.
+\end{lemma}
+
+\chapter{How Fast does the Determinant Decrease?}
+
+\section{Bound over Two Iterations}
 
 \begin{proposition}
   In one dimension, the determinant decreases by a factor of at least $1/2$ over
