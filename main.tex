@@ -919,6 +919,31 @@ The matrix naturally gives rise to a linear recurrence of the form
 For example, when $d = 2$ and $a_0 = a_1 = -1$, the linear recurrence
 corresponds to the Fibonacci sequence.
 
+\begin{definition}
+  The \emph{Markov-Davenport characteristic} of a vector $x ∈ ℝ^3$ with respect to vectors $u, v, w ∈ ℝ^3$
+  is defined as
+  \[
+    \det
+    \begin{pmatrix}
+      x_1 & v_1 & w_1 \\
+      x_2 & v_2 & w_2 \\
+      x_3 & v_3 & w_3 \\
+    \end{pmatrix}
+    · \det
+    \begin{pmatrix}
+      u_1 & x_1 & w_1 \\
+      u_2 & x_2 & w_2 \\
+      u_3 & x_3 & w_3 \\
+    \end{pmatrix}
+    · \det
+    \begin{pmatrix}
+      u_1 & v_1 & x_1 \\
+      u_2 & v_2 & x_2 \\
+      u_3 & v_3 & x_3 \\
+    \end{pmatrix}
+  \]
+\end{definition}
+
 \chapter{Implementation}
 
 \section{Using an Out-of-the-Box Solver}
