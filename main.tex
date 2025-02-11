@@ -831,8 +831,8 @@ There are different strategies we can follow like choosing the minimum in each i
 
 \begin{proof}
   Let $x ∈ ℚ^d$ with $0 < x_i < 1$ for every $1 ≤ i ≤ d$.
+  We assume $x$ is already given in increasing order.
   We additionally define $x_0 = 0$ and $x_{d+1} = 1$.
-  We assume WLOG that $x$ is ordered in increasing order.
   Suppose that pivoting with any $ℓ ∈ \{0, 1, \dots, d\}$
   decreases the determinant slower than $(d+1)$ over two iterations,
   i.e.
@@ -844,13 +844,15 @@ There are different strategies we can follow like choosing the minimum in each i
   \]
   Because $x_{\ell+1} > x_\ell$, we have
   \[
+    x₁ - x₀ > \frac{1}{d+1},
+    \quad \text{ and } \quad
     x_{\ell+1} - x_\ell ≥ x_\ell \left\{\frac{x_{\ell+1}}{x_\ell}\right\} > \frac{1}{d+1}.
   \]
 
   The inequality tells us, that the distance between all neighbors
   (including $1$ and $0$) must be greater than $1/(d+1)$.
   Or equivalently, we must space our $d$ variables on the unit interval such that they
-  divide it into $d+1$ intervals where each interval must be larger than $1/(d+1)$.
+  divide it into $d+1$ intervals and each interval is larger than $1/(d+1)$.
 
   {\begin{center}
     \begin{tikzpicture}
