@@ -737,6 +737,46 @@ There are different strategies we can follow like choosing the minimum in each i
   Therefore, we must have a decrease of at least $(d+1)$ over two iterations.
 \end{proof}
 
+\chapter{Notes on Hermite's Problem}
+
+\begin{problem}[Hermite's Problem]
+  Is there a representation of the real numbers as a sequence of integers such
+  that the sequence is eventually periodic if and only if the real number is a
+  cubic irrational?
+\end{problem}
+
+\section{HAPD Algorithm}
+
+Given a monic irreducible polynomial $p(x)$ over $ℚ$ with integer coefficients and roots $α₁, \dots, α_d ∈ \overline{Q}$,
+we can find algebraic vectors $v_1, \dots, v_d$ for each root $α_i$:
+\[
+  v_i = (q_0(α_i), q_1(α_i), q_2(α_i), \dots, q_{d-1}(α_i)),
+\]
+where the polynomials $q_i$ must have degree $i$, respectively.
+The choice of $q_i$ does not matter as long as they have degree $i$.
+Furthermore, we can find a rational matrix $C(p) ∈ ℚ^{d × d}$ such that $v_1, \dots, v_d$ are the eigenvectors of $M$.
+Let $p(x) = x^d + a_{d-1} x^{d-1} + \dots + a₁ x^1 + a₀$, then
+\[
+  C(p) =
+  \begin{pmatrix}
+    0 & 0 & \dots & 0 & -a₀ \\
+    1 & 0 & \dots & 0 & -a₁ \\
+    0 & 1 & \dots & 0 & -a₂ \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    0 & 0 & \dots & 1 & -a_{d-1} \\
+  \end{pmatrix},
+\]
+By multiplying all elements of this matrix with the least common multiple of the denominators in $C(p)$,
+we can turn it into an integer matrix.
+The matrix $C(p)$ is also called the \emph{companion matrix} of $p$.
+
+The matrix naturally gives rise to a linear recurrence of the form
+\[
+  F(n + d) = -a_{d-1} F(n + d - 1) - \dots - a_1 F(n + 1) - a_0 F(n).
+\]
+For example, when $d = 2$ and $a_0 = a_1 = -1$, the linear recurrence
+corresponds to the Fibonacci sequence.
+
 \chapter{Implementation}
 
 \section{Using an Out-of-the-Box Solver}
