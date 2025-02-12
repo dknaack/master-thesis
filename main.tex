@@ -16,12 +16,14 @@
 }
 
 \UzLStyle{pagella contrast design}
+\usepackage{standalone}
 \usetikzlibrary{decorations.pathreplacing, calligraphy}
 
 \newcommand\N{{\mathbb N}}
 \newcommand\Z{{\mathbb Z}}
 \newcommand\Q{{\mathbb Q}}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 \begin{document}
 
@@ -384,22 +386,57 @@ In the following lemma, we use the fact that if $p(ψ) = 0$, then
 
 \section{Multi-Dimensional Continued Fractions}
 
+The integer parts can be extracted from the algorithm.
+These form a unique sequence for a given vector $x ∈ ℚ^d$.
+We can reverse this process to retrieve a rational vector from a sequence of numbers.
+For the Euclidean algorithm, this gives us the continued fraction representation of a rational number.
+For the generalized algorithm, we can similarly derive a multi-dimensional continued fraction.
+
+Given a vector $x ∈ ℚ^d$, the algorithm calculates:
 \begin{align*}
-  y_d = \frac{1}{x_1} - a_d,
-  \quad y_i = \frac{x_{i+1}}{x_1} - a_1
+  y_d
+  = \frac{1}{\{x₁\}}
+  = \frac{1}{x₁ - a₁},
+  \quad y_i
+  = \frac{\{x_{i+1}\}}{\{x₁\}}
+  = \frac{x_{i+1} - a_{i+1}}{x₁ - a₁}.
+\end{align*}
+Solving for $x₁$ and $x_{i+1}$ respectively,
+gives us the recurrence for the multi-dimensional continued fractions:
+\begin{align*}
+  x₁ = a₁ + \frac{1}{y_d},
+  \quad x_{i+1} = a_{i+1} + \frac{y_i}{y_d}.
+\end{align*}
+Let $T_a$ be a function which given $a ∈ ℤ_{> 0}^d$ maps any $y ∈ ℚ^d$ to the vector $x$ given by
+the previous equation.
+
+Whereas one-dimensional continued fractions are defined over a sequence of integers,
+the multi-dimensional continued fraction takes a sequence of positive integer vectors
+$a^{(0)}, a^{(2)}, \dots, a^{(n)}$ and produces a single rational vector.
+This vector is given by
+\begin{align*}
+  [a^{(0)}] & := a^{(0)}, \\
+  [a^{(0)}; a^{(1)}, \dots, a^{(n)}] & := T_{a^{(0)}}([a^{(1)}, a^{(2)}, \dots, a^{(n)}]).
 \end{align*}
 
-\begin{align*}
-  x_1 = \frac{1}{a_d + y_d},
-  \quad x_{i+1} = \frac{a_i + y_i}{a_d + y_d}
-\end{align*}
+\begin{lemma}
+  For each rational vector $x ∈ ℚ^d$, there exists a unique finite sequence of vectors $a^{(0)}, \dots, a^{(n)} ∈ ℤ_{> 0}^d$
+  such that
+  \[
+    x = [a^{(0)}; a^{(1)}, \dots, a^{(n)}].
+  \]
+\end{lemma}
 
+The $d$-dimensional continued fractions is defined as
 \begin{align*}
-  K_1(a^{(1)}, a^{(2)}, \dots) & = \frac{1}{a^{(1)}_d + K_d(a^{(2)}, a^{(3)}, \dots)} \\
-  K_{i+1}(a^{(1)}, a^{(2)}, \dots) & =
-    \frac{a^{(1)}_i + K_i(a^{(2)}, a^{(3)}, \dots)}
-         {a^{(1)}_d + K_d(a^{(2)}, a^{(3)}, \dots)} \\
+  [a₀, \dots, a_{d-1}] & = a₀, \\
+  [a_i, \dots, a_{d-1}] & = a_i, \\
+  [a₀, \dots, a_{d-1}; a_d, \dots]
+  & = a₀ + \frac{1}{[a_{2d-1}; a_{2d}, \dots]}, \\
+  [a_i, \dots, a_{d-1}; a_d, \dots]
+  & = a_i + \frac{[a_{d+i}, \dots, a_{2d - 1}; a_d, \dots]}{[a_{2d-1}; a_{2d}, \dots]},
 \end{align*}
+where $0 < i < d$.
 
 \section{Comparison to the Jacobi-Perron Algorithm}
 
