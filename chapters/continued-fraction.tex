@@ -70,6 +70,9 @@ We can simply calculate the index from the fractions themselves.
 \begin{remark}
   In case of a tie, we choose the first element.
   In particular, when the last $d$ elements of the sequence are all equal, then we define $\argmax_i a_i = 1$.
+  \todo[inline]{%
+    Does this actually lead to the same numbers as the algorithm itself?
+    Could there me multiple inputs which lead to the same sequence?}
 \end{remark}
 
 \begin{proposition}
@@ -85,9 +88,12 @@ We can simply calculate the index from the fractions themselves.
   Per induction, assume that the algorithm requires $n - 2$ steps for
   the continued fraction $x' = [a_{d+1}, \dots, a_{2d}; a_{2d+1}, \dots, a_{dn}]$.
   Given $x$, the algorithm chooses the minimum fractional value $\{x_ℓ\}$.
+  \todo[inline]{Finish this proof.}
 
 \end{proof}
 
 The smallest purely periodic continued fraction is $[\overline{1, \dots, 1}]$.
 
 \section{Neighbor Continued Fractions}
+
+\todo[inline]{What fractions result from the closest neighbor strategy?}
