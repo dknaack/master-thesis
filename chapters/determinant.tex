@@ -1,0 +1,407 @@
+\chapter{Notes on the Determinant}
+
+\section{Generalized Fibonacci Sequence}
+
+Dividing two consecutive Fibonacci numbers approaches the golden ratio as $n$ increases.
+The golden ratio is a solution to the equation $x^2 - x - 1 = 0$.
+For higher dimensions, we will encounter similar polynomial equations with higher degree.
+The goal of this section is to generalize the relationship between linear
+recurrences like the Fibonacci sequence with their respective golden ratio.
+
+Since the algorithm expects $x_i$ between $0$ and $1$, we have to use $1/\phi$ instead of $\phi$.
+The value $1/\phi$ is the root of another polynomial $x^2 + x - 1$, which is the reciprocal
+of the polynomial $x^2 - x - 1$.
+
+\begin{definition}
+  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
+  denoted as $p^*$, is defined as
+  \[
+    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
+  \]
+\end{definition}
+
+\begin{example}
+  The reciprocal of the golden ratio polynomial $x^2 - x - 1$ is
+  \begin{align*}
+    x^2 + x - 1,
+  \end{align*}
+  which has a root at $\psi = 1/\phi$.
+\end{example}
+
+\begin{lemma}
+  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
+\end{lemma}
+
+\begin{proof}
+  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
+  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
+  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
+\end{proof}
+
+\begin{definition}
+  A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
+  following form:
+  \[
+    F(n + 1) = a_0 F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) + a_d F(n).
+  \]
+\end{definition}
+
+\begin{definition}
+  Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
+  \emph{characteristic polynomial} $p_F$ is defined as
+  \[
+    p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
+  \]
+\end{definition}
+
+\begin{example}
+  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
+  \begin{align*}
+    F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
+  \end{align*}
+\end{example}
+
+% TODO: Show that this converges! We're still missing the convergence criteria
+\begin{lemma}
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
+  If its characteristic polynomial has a real positive root $\phi$
+  and the sequence $F(n+1)/F(n)$ is converging, then
+  \[
+    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi.
+  \]
+\end{lemma}
+
+\begin{proof}
+  By assumption, the ratios approach some limit $L$. It follows:
+  \[
+    L
+    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
+    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
+  \]
+  Each term in the sum can be rewritten as a product of consecutive terms:
+  \[
+    \frac{F(n - 1 - d + i)}{F(n - 1)}
+    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
+  \]
+  Hence, each term in the sum approaches $L^{-i}$,
+  which results in the following polynomial:
+  \[
+    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
+    \quad \text{or equivalently} \quad
+    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
+  \]
+  which directly corresponds to a root of its characteristic polynomial.
+\end{proof}
+
+\begin{corollary}
+  Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
+\end{corollary}
+
+Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
+the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
+\begin{equation}
+  \label{eq:general-solution}
+  x_i^{(n)} = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)}.
+\end{equation}
+
+\begin{lemma}
+  Pivoting with the first element of $x^{(n)}$ using the modified update rule yields the vector
+  \[
+    x' = (x^{(n-1)}_2, x^{(n-1)}_3, \dots, x^{(n-1)}_d, x^{(n-1)}_1).
+  \]
+\end{lemma}
+
+\begin{proof}
+  For $x_1$, we get
+  \[
+    \begin{aligned}
+      \frac{1}{x_1}
+      & = \frac{F(n)}{F(n - 1)} \\
+      & = a_d + \frac{F(n - d - 1) + a_1 F(n - d - 2) + \dots + a_{d-1} F(n - 2)}{F(n - 1)} \\
+      & = a_d + x^{(n-1)}_d.
+    \end{aligned}
+  \]
+  For the other values, we get
+  \begin{align*}
+    \frac{x_i}{x_1}
+    & = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)} \frac{F(n)}{F(n - 1)} \\
+    & = a_{d-1} + \frac{F(n - i) + \sum_{k=2}^{i-1} a_{d-k} F(n - k)}{F(n-1)} \\
+    & = x^{(n-1)}_{i+1} \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  Running the generalized Euclidean algorithm with $x^{(n)}$ as the solution to
+  the linear system $B x = c$ requires $n$ steps, if $x^{(n)}_1$ is the
+  smallest element in $x^{(n)}$.
+\end{corollary}
+
+Of course, the Euclidean algorithm receives a matrix $B \in \Z^{d \times d}$
+and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
+However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
+where $x^{(n)}$ is the solution, in the following way:
+\[
+  B^{(n)} =
+  \begin{pmatrix}
+    F(n) & 0 & \dots & 0 & 0 \\
+    0 & F(n) & \dots & 0 & 0 \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    0 & 0 & \dots & F(n) & 0 \\
+    0 & 0 & \dots & 0 & F(n) \\
+  \end{pmatrix},
+\]
+\[
+  c^{(n)} =
+  \begin{pmatrix}
+    F(n - 1) \\
+    F(n - 2) + a_{d-1} F(n - 1) \\
+    \vdots \\
+    F(n - d + 1) + \sum_{k=1}^{d-2} a_{d-k} F(n - k) \\
+    F(n - d) + \sum_{k=1}^{d-1} a_{d-k} F(n - k) \\
+  \end{pmatrix}.
+\]
+
+\begin{lemma}
+  The vector $x^{(n)}$ from Equation~\ref{eq:general-solution} is a solution to the
+  linear system $B^{(n)} x = c^{(n)}$.
+\end{lemma}
+
+\begin{proof}
+  Follows directly from the definition of $x^{(n)}$.
+\end{proof}
+
+\section{Pivoting the Same Element}
+
+In one dimension, a solution is bad when the value $x_1$ is close to $1$.
+However, in the next iteration $x_1$ would be close to $0$ and therefore
+would lead to a greater decrease in the determinant.
+An initial guess would be that the solution lies exactly between $0$ and $1$ at $1/2$.
+However, this solution is also good as after just one step we have achieved integrality.
+
+The solution is to choose a value $x_1$ such that its value in the first
+iteration is the same as its value in the second iteration.
+This means we are trying to solve the following equation:
+\[
+  x_1 = 1/x_1 - 1.
+\]
+This gives us the polynomial $x^2 + x - 1$ where the root is the inverse of the
+golden ratio.
+
+% TODO: Explore other strategies. Can we generalize this to every possible strategy?
+In just two dimensions, we already have an additional degree of freedom.
+Since the solution $x$ consists of two values, we can choose which index we pivot with.
+We will choose the value with the smallest fractional value as this decreases
+the determinant the fastest.
+We assume w.l.o.g. that our values are sorted in increasing order.
+This means we pivot with $x_1$ first.
+
+% TODO: What about just choosing the golden ratio for every x_i?
+% TODO: Are odd dimensions easier since the decrease is not worse? We could
+% choose two values to be the same, since the ratio for odd dimensions is
+% smaller than the previous dimension
+Just like in one dimension we want to choose $x_1$ carefully such that the
+determinant decreases the same amount in every iteration.
+A simple solution would be to fill both values with the golden ratio.
+In this case, it does not matter which index we choose as each one decreases
+the determinant the same amount.
+However, in two dimensions we can make this decrease slightly worse
+by choosing different values for $x_1$ and $x_2$ such that we swap the pivot
+in each iteration.
+
+Assuming the value for $x_1$ is already chosen where would $x_2$ be placed?
+Ideally, it would be close to the right side of $x_1$, because then the new
+value $-x_2 / x_1$ would be close to $-1$ and the fractional value would be
+close to $1$.
+Since the decrease must stay the same in each iteration, this gives us the
+following two equations:
+\begin{align*}
+  x_1 = 2 - x_2 / x_1 \\
+  x_2 = 1 / x_1 - 1,\\
+\end{align*}
+which leads to the following polynomial:
+\begin{align*}
+  x_1^3 - 2x_1^2 - x_1 + 1 = 0
+\end{align*}
+
+Let $\phi_2$ be the root of this polynomial.
+If we choose $x_1 = \phi_2$ and $x_2 = 2\phi_2 - \phi_2^2$,
+then the values in the second iteration are
+\[\begin{aligned}
+  x_1' & = 1 / x_1 - 1   &  & = 1 / \phi_2 - 1                    &  & = 2\phi_2 + \phi_2^2 &  & = x_2, \\
+  x_2' & = 2 - x_2 / x_1 &  & = 2 - (2\phi_2 + \phi_2^2) / \phi_2 &  & = \phi_2             &  & = x_1
+\end{aligned}\]
+
+We can extend this to $d$ dimensions using the following equations:
+\begin{align*}
+  x_1 = 2 - x_2 / x_1 \\
+  x_2 = 2 - x_3 / x_1 \\
+  x_3 = 2 - x_4 / x_1 \\
+  \vdots \\
+  x_{d-1} = 2 - x_d / x_1 \\
+  x_d = 1 / x_1 - 1 \\
+\end{align*}
+
+These leads us to two polynomials depending on the dimension.
+\begin{itemize}
+  \item For even $d$: $x - 1 + 2 x^2 - 2 x^3 + \dots + x^{d+1}$
+  \item For odd $d$: $1 - x - 2 x^2 + 2 x^3 - 2 x^4 \dots + x^{d+1}$
+\end{itemize}
+or in one equation $p_d(x) := 1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0$.
+Let $\phi_d$ be the root of this polynomial.
+Then, we choose as our solution $x = (x_1, \dots, x_d)$ with
+\begin{equation}
+  \label{eq:rotate-solution}
+  x_1 = \phi_d, \quad x_i = 2 - x_1 x_{i-1} = -(-\phi_d)^i + \sum_{k=0}^{i-1} 2 (-\phi_d)^i.
+\end{equation}
+
+\begin{example}
+  For $d = 5$, we get the following values:
+
+  \begin{tikzpicture}[scale=10]
+    \draw (0.5820216424559055, -0.01) -- node[above] {$x_1$} (0.5820216424559055, 0.01);
+    \draw (0.7181491667223714, -0.01) -- node[above] {$x_2$} (0.7181491667223714, 0.01);
+    \draw (0.7661126076135922, -0.01) -- node[above] {$x_3$} (0.7661126076135922, 0.01);
+    \draw (0.6837042616132034, -0.01) -- node[above] {$x_4$} (0.6837042616132034, 0.01);
+    \draw (0.8252940926247403, -0.01) -- node[above] {$x_5$} (0.8252940926247403, 0.01);
+    \draw[->] (0, 0) -- (1, 0);
+  \end{tikzpicture}
+\end{example}
+
+\begin{itemize}
+  \item \textbf{Polynomial}:
+    \[
+      1 - x - (-x)^{d+1} - \sum_{i = 2}^{d} 2 (-x)^{i} = 0.
+    \]
+  \item \textbf{Algebraic Solution Vector}:
+    \[
+      x_i = 2x + (-x)^{i+1} + \sum_{k=2}^{i} (-x)^{k}.
+    \]
+  \item \textbf{Linear Recurrence}:
+    \[
+      F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
+    \]
+  \item \textbf{Rational Solution Vector}:
+    \[
+      x_1 = \frac{F(n - 1)}{F(n)}, x_i = \frac{2 F(n-1) + (-1)^{i+1} F(n - i) + \sum_{k=2}^i (-1)^k F(n-k)}{F(n)}.
+    \]
+  \item \textbf{Matrix}:
+    \[\left(\begin{array}{cccc|c}
+      F(n)   & 0      & \dots  & 0      & F(n - 1) \\
+        0    & F(n)   & \dots  & 0      & 2 F(n - 1) - F(n - 2) \\
+      \vdots & \vdots & \ddots & \vdots & \vdots   \\
+        0    & 0      & \dots  & F(n)   & 2 F(n-1) + (-1)^{d+1} F(n - d) + \sum_{k=2}^d (-1)^k F(n-k) \\
+    \end{array}\right)\]
+\end{itemize}
+
+\begin{example}
+  \begin{align*}
+    \left\{ \frac{1}{x_1} \right\}
+    & = \left\{ \frac{F(n - 1) + 2 F(n - 2) - 2 F(n - 3) + F(n - 4)}{F(n - 1)} \right\} \\
+    & = \frac{2 F(n - 2) - 2 F(n - 3) + F(n - 4)}{F(n - 1)} \\
+    \left\{ -\frac{x_2}{x_1} \right\}
+    & = \left\{ -\frac{2 F(n - 1) - F(n - 2)}{F(n)} \frac{F(n)}{F(n - 1)} \right\} \\
+    & = \frac{F(n - 2)}{F(n - 1)} \\
+    \left\{ -\frac{x_3}{x_1} \right\}
+    & = \left\{ -\frac{2 F(n - 1) - 2 F(n - 2) + F(n - 3)}{F(n)} \frac{F(n)}{F(n - 1)} \right\} \\
+    & = \frac{2 F(n - 2) - F(n - 3)}{F(n - 1)}
+  \end{align*}
+\end{example}
+
+\section{An Idempotent Solution for Two Dimensions}
+
+Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
+For this solution, it does not matter which element we choose to pivot with, it will always
+yield the same result.
+
+Pivoting with $x_1$:
+\begin{align*}
+  \frac{1}{x_1} - 1 & = \frac{1}{\psi} - 1 = \psi, \\
+  1 - \frac{x_2}{x_1} & = 1 - \frac{1 - \psi}{\psi} = 1 - \psi.
+\end{align*}
+
+Pivoting with $x_2$:
+\begin{align*}
+  \frac{1}{x_2} - 2 & = \frac{1}{1 - \psi} - 2 = \psi, \\
+  1 - \frac{x_1}{x_2} & = 1 - \frac{\psi}{1 - \psi} = 1 - \psi.
+\end{align*}
+
+\begin{align*}
+  \left(
+  \begin{array}{cc|c}
+    F(n) & 0    & F(n-1) \\
+    0    & F(n) & F(n) - F(n-1) \\
+  \end{array}
+  \right)
+\end{align*}
+
+\section{Bound over Two Iterations}
+
+\begin{proposition}
+  In one dimension, the determinant decreases by a factor of at least $1/2$ over
+  two iterations.
+\end{proposition}
+
+\begin{proof}
+  Let $x₁ ∈ ℚ$ be the input to the 1-dimensional algorithm.
+  We assume $x₁ > 1/2$ as the other case already proves the assumption.
+  Then, $1/x₁ < 2$ and we have
+  $$
+    x₁ \left\{\frac{1}{x₁}\right\}
+    = x₁ \left(\frac{1}{x₁} - 1\right)
+    = 1 - x₁ < 1/2.
+    $$
+  Therefore, over two iterations we decrease by at least $1/2$.
+\end{proof}
+
+How can we derive the golden ratio from this?
+
+What can we expect for higher dimensions?
+This depends on the strategy of our pivot element $x_\ell$.
+There are different strategies we can follow like choosing the minimum in each iteration, for example.
+
+\section{Golden Ratio}
+
+\begin{align*}
+  ψ(ψ + 1)^d - 1 = 0,
+\end{align*}
+
+Reflecting the polynomial gives us:
+\begin{align*}
+  φ^{d+1} - (φ + 1)^d = 0.
+\end{align*}
+Using the binomial theorem:
+\begin{align*}
+  φ^{d+1} = ∑_{i=0}^d \binom{d}{i} φ^i,
+\end{align*}
+which leads directly to the Fibonacci numbers for this ratio:
+\begin{align*}
+  F(n + d + 1) = ∑_{i=0}^d \binom{d}{i} F(n + i).
+\end{align*}
+
+We choose $x₁ = ψ$ and $x_i = x₁ (1 + x₁)^{i-1} = ψ (1 + ψ)^{i-1}$.
+
+\begin{align*}
+  \text{pivot}(\text{pivot}(x, ℓ₁), ℓ₂) = \left(x_{σ(1)}, \dots, x_{σ(d)}\right).
+\end{align*}
+
+From the proof, it follows that $1/(d+1)$ should be the worst-case.
+However, using $1/(d+1)$ exactly only requires one iteration until the values are integral.
+
+\begin{align*}
+  ψ^{d+1} + ∑_{k=0}^d k ψ^{d-k} = 1.
+\end{align*}
+
+Is this the optimal one?
+
+\begin{theorem}
+  There is no vector $x ∈ (0, 1)^d$
+  such that any pivot operation yields the same decrease
+  over every iteration for $d ≥ 2$.
+\end{theorem}
+
+\begin{proof}
+  Suppose there is such an $x$.
+  Then, the distance between neighbors is the same between all elements of $x$.
+  This vector is unique.
+\end{proof}
+

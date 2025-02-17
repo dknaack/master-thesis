@@ -1,0 +1,162 @@
+\chapter{Choosing the Minimum}
+
+We begin with the simplest strategy: Choosing the minimum in each iteration.
+
+\section{Bound on the Decrease of the Determinant}
+
+\begin{proposition}
+  The determinant decreases by a factor of at least $\max\{1/3,1/(d + 1)\}$ over two iterations
+  using the minimum strategy.
+\end{proposition}
+
+\begin{proof}
+  Let $x ∈ [0, 1)^d$.
+  We assume WLOG the values $x₁, x₂, \dots, x_d$ are ordered in increasing order.
+  Suppose $x₁ \{x_i / x₁\} ≥ 1/3$ for every $i ≤ d$ and $x₁ \{1 / x₁\} ≥ 1/3$.
+  Then, over two iterations we have a decrease of
+  \[
+    x₁ \left\{\frac{1}{x₁}\right\} ≤ 1 - x₁ ≤ \frac{1}{2}. \qedhere
+  \]
+\end{proof}
+
+\section{Golden Ratio}
+
+The goal is to find an input $x ∈ [0, 1]^d$,
+where the decrease stays constant in each iteration and is maximal.
+This input cannot be rational since it would eventually lead to one element in $x$ being zero.
+Therefore, our input must consist of at least one algebraic number.
+
+First, assume that in the input $x$ the value $x₁$ is the smallest and $x₂$ the second smallest.
+After pivoting, $x₂'$ has to be the smallest element in $x' = \mathrm{pivot}(x, 1)$ unless $x₁ < 1/2$.
+However, in that case the decrease is already smaller in the first iteration.
+Therefore, we can assume that $x₂'$ is the smallest element in the next iteration.
+For the decrease to remain constant, it follows that $x₁ = x₂'$.
+Furthermore, we must have $x₂ = x₃'$.
+Extending this to all elements leads to the following equations:
+\[
+  x₁ = \frac{x₂}{x₁} - 1,
+  \quad x₂ = \frac{x₃}{x₁} - 1,
+  \quad \dots,
+  \quad x_{d-1} = \frac{x_d}{x₁} - 1,
+  \quad x_d = \frac{1}{x₁} - 1.
+\]
+These can be rearranged such that $x_{i + 1} = x₁ (x_i + 1) = x₁^{i+1} + x₁^i + \dots + x₁$
+and substituting $x_d$ in the last equation gives us
+\[
+  x₁^d + x₁^{d-1} + \dots + x₁ = \frac{1}{x₁} - 1
+  \iff
+  x₁^{d+1} + x₁^{d-1} + \dots + x₁ - 1 = 0.
+\]
+
+\begin{lemma}
+  The polynomial $p(x) = x^{d+1} + x^d + \dots + x - 1$ has only one positive real root.
+\end{lemma}
+
+\begin{corollary}
+  If $ψ$ is the positive root of $p(x)$, then $ψ^i + ψ^{i-1} + \dots + ψ < 1$ for $i ≤ d$.
+\end{corollary}
+
+In the following lemma, we use the fact that if $p(ψ) = 0$, then
+\[
+  ψ^{-1} = ψ^d + ψ^{d-1} + \dots + ψ + 1.
+\]
+
+\begin{lemma}
+  Let $ψ$ be the positive real root of $p(x) = x^{d+1} + \dots + x - 1$
+  and let $x$ be a $d$-dimensional vector with $x_i = ψ^i + \dots + ψ$.
+  Then, the decrease of the determinant under $x$ remains constant over every iteration.
+\end{lemma}
+
+\begin{proof}
+  Because $ψ$ is positive, $x$ is already ordered in increasing order.
+  Hence, we pivot with $x₁$ first.
+  Let $x' = \mathrm{pivot}(x, 1)$,
+  then
+  \begin{align*}
+    x₁'
+    & = \left\{\frac{1}{x₁}\right\}
+    = \left\{\frac1{ψ}\right\}
+    = \left\{ψ^d + ψ^{d-1} + \dots + ψ\right\} = x_d, \\
+    x_{i+1}'
+    & = \left\{\frac{x_{i+1}}{x₁}\right\}
+    = \left\{\frac{ψ^{i+1} + ψ^i + \dots + ψ}{ψ}\right\}
+    = \left\{ψ^i + ψ^{i-1} + \dots + ψ + 1\right\}
+    = x_i.
+  \end{align*}
+  Because we choose the minimum, $x'$ yields the same decrease in the next iteration.
+\end{proof}
+
+\section{Fibonacci Numbers}
+
+\[
+  F(n + d + 1) = F(n + d) + \dots + F(n + 1) + F(n).
+\]
+
+\section{Multi-Dimensional Continued Fractions}
+
+The integer parts can be extracted from the algorithm.
+These form a unique sequence for a given vector $x ∈ ℚ^d$.
+We can reverse this process to retrieve a rational vector from a sequence of numbers.
+For the Euclidean algorithm, this gives us the continued fraction representation of a rational number.
+For the generalized algorithm, we can similarly derive a multi-dimensional continued fraction.
+
+Given a vector $x ∈ ℚ^d$, the algorithm calculates:
+\begin{align*}
+  y_d
+  = \frac{1}{\{x₁\}}
+  = \frac{1}{x₁ - a₁},
+  \quad y_i
+  = \frac{\{x_{i+1}\}}{\{x₁\}}
+  = \frac{x_{i+1} - a_{i+1}}{x₁ - a₁}.
+\end{align*}
+Solving for $x₁$ and $x_{i+1}$ respectively,
+gives us the recurrence for the multi-dimensional continued fractions:
+\begin{align*}
+  x₁ = a₁ + \frac{1}{y_d},
+  \quad x_{i+1} = a_{i+1} + \frac{y_i}{y_d}.
+\end{align*}
+Let $T_a$ be a function which given $a ∈ ℤ_{> 0}^d$ maps any $y ∈ ℚ^d$ to the vector $x$ given by
+the previous equation.
+
+Whereas one-dimensional continued fractions are defined over a sequence of integers,
+the multi-dimensional continued fraction takes a sequence of positive integer vectors
+$a^{(0)}, a^{(2)}, \dots, a^{(n)}$ and produces a single rational vector.
+This vector is given by
+\begin{align*}
+  [a^{(0)}] & := a^{(0)}, \\
+  [a^{(0)}; a^{(1)}, \dots, a^{(n)}] & := T_{a^{(0)}}([a^{(1)}, a^{(2)}, \dots, a^{(n)}]).
+\end{align*}
+
+\begin{lemma}
+  For each rational vector $x ∈ ℚ^d$, there exists a unique finite sequence of vectors $a^{(0)}, \dots, a^{(n)} ∈ ℤ_{> 0}^d$
+  such that
+  \[
+    x = [a^{(0)}; a^{(1)}, \dots, a^{(n)}].
+  \]
+\end{lemma}
+
+The $d$-dimensional continued fractions is defined as
+\begin{align*}
+  [a₀, \dots, a_{d-1}] & = a₀, \\
+  [a_i, \dots, a_{d-1}] & = a_i, \\
+  [a₀, \dots, a_{d-1}; a_d, \dots]
+  & = a₀ + \frac{1}{[a_{2d-1}; a_{2d}, \dots]}, \\
+  [a_i, \dots, a_{d-1}; a_d, \dots]
+  & = a_i + \frac{[a_{d+i}, \dots, a_{2d - 1}; a_d, \dots]}{[a_{2d-1}; a_{2d}, \dots]},
+\end{align*}
+where $0 < i < d$.
+
+\section{Comparison to the Jacobi-Perron Algorithm}
+
+The algorithm in this form, where we always choose the same pivot,
+is equivalent to the Jacobi-Perron algorithm, which was first proposed
+by Jacobi \cite{Jacobi68} and later analyzed by Perron \cite{Perron07}.
+In modern times, the algorithm was picked up again by Bernstein \cite{Bernstein06}.
+Each of them has analyzed the algorithm in the context of Hermite's Question.
+
+Charles Hermite initially posed a question to Jacobi, whether there exists a
+representation of the real numbers as an infinite sequence of natural numbers
+such that the sequence is eventually periodic if and only if the number is a
+cubic irrational. The question remains unanswered with the latest attempt
+\cite{Murru15} showing that there is an infinite sequence which is eventually
+periodic for every cubic irrational.
