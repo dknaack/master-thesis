@@ -526,6 +526,14 @@ def get_info(xs, num_steps):
             info[(i, j)] = zs
     return info
 
+def farey_sequence(n):
+    a, b, c, d = 0, 1, 1, n
+    yield Rat(a, b)
+    while 0 <= c <= n:
+        k = (n + b) // d
+        a, b, c, d = c, d, k * c - a, k * d - b
+        yield Rat(a, b)
+
 num_steps = brute_force_search(20)
 inputs = invert_dict(num_steps)
 
