@@ -1,6 +1,6 @@
 \chapter{Choosing the Closest Pair of Neighbors}
 
-We use the following strategy:
+In this chapter, the following strategy is analyzed:
 
 \begin{enumerate}
   \item Sort $x$ in increasing order.
@@ -8,10 +8,17 @@ We use the following strategy:
   \item Choose $ℓ$ in the first iteration and $ℓ + 1$ in the second iteration.
 \end{enumerate}
 
-\section{Bounds on the Decrease of the Determinant}
+\todo[inline]{Remark about the endpoints, $0$ and $1$.}
+
+\section{Why the Strategy is Better than Choosing the Minimum}
+
+The strategy is so effective, because the determinant decreases by a larger
+factor than simply choosing the minimum in each iteration.
+Whereas the minimum only guaranteed a decrease of at least $1/2$,
+this strategy guarantees a decrease of at least $1/(d+1)$ over two iterations.
 
 \begin{theorem}
-  The determinant decreases by a factor of at least $d+1$ over two iterations
+  The determinant decreases by a factor of at least $1/(d+1)$ over two iterations
   using the closest neighbor strategy.
 \end{theorem}
 
