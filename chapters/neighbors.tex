@@ -72,20 +72,51 @@ this strategy guarantees a decrease of at least $1/(d+1)$ over two iterations.
   Therefore, we must have a decrease of at least $(d+1)$ over two iterations.
 \end{proof}
 
-\section{Golden Ratio}
+\section{Finding the Golden Ratio}
 
 To find a generalization of the golden ratio for this strategy,
-we first establish an equation for the decrease of the determinant.
+we first have to establish an equation for the decrease of the determinant.
 The decrease must stay the same in each iteration.
 Hence, we should choose values for $x₁, \dots, x_d$ such that the decrease
 stays the same for all possible combinations.
-\[
+\begin{equation}
+  \label{eq:equal-neighbor-distance}
   x_1 = \frac{x_2}{x_1} - 1 = \frac{x_3}{x_2} - 1 = \dots = \frac{x_d}{x_{d-1}} = \frac{1}{x_d} - 1.
-\]
-Solving the equation for $x₁$ yields the following polynomial:
+\end{equation}
+Solving the equation for $x₁$ yields the following solution:
 \[
-  x₁^{d+1} + x₁ - 1 = 0.
+  x_d^{d+1} + x_d - 1 = 0 \text{ and } x_i = x_d^{d+1-i} \text{ for } i < d.
 \]
+
+Just like the minimum strategy, $x_d$ is the real positive root of a polynomial $p(x)$
+and the other values are chosen according to $x_d$.
+We can extend the rational number $ℚ$ with the algebraic number $x_d$ and then
+see if the algorithm is periodic for our input $x ∈ ℚ(x_d)$.
+Because $x_d$ is real, we have an embedding $σ \colon ℚ(x_d) → ℝ$,
+which we can use to compute $\lfloor y \rfloor$ for any $y ∈ ℚ(x_d)$.
+
+\begin{table}[b]
+  \label{tbl:equal-neighbor-distance}
+  \caption{
+    The first ten iterations of the algorithm with the solution from
+    Equation~\ref{eq:equal-neighbor-distance}.
+    In the first iteration, $x₁$ is chosen, since all distances between the
+    neighbors are equal and $x₁$ is the smallest element.
+    The first and second pivot $ℓ₁, ℓ₂$ are shown.
+    In case $ℓ₁$ or $ℓ₂$ are not shown, then only one pivot is performed.}
+  \centering
+  \input{tables/equal-neighbor-distance.tex}
+\end{table}
+
+Unfortunately, the algebraic solution falls apart after just two iterations.
+In the first iteration, the choice does not matter since, by construction, all
+distances between neighbors are equal.
+Because all distances are equal, it would make the most sense to choose the
+smallest element since that would guarantee the largest decrease in the
+determinant.
+However, choosing this element also destroys our structure given by the initial
+equation.
+See Table~\ref{tbl:equal-neighbor-distance} for an example run with $d = 3$.
 
 \begin{itemize}
   \item \textbf{Polynomial}: \[x^{d+1} + x - 1 = 0.\]
