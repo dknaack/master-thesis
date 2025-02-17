@@ -75,21 +75,29 @@ We can simply calculate the index from the fractions themselves.
     Could there me multiple inputs which lead to the same sequence?}
 \end{remark}
 
-\begin{proposition}
-  Given a continued fraction $x = [a₁, \dots, a_d; a_{d+1}, \dots, a_{dn}]$,
+\begin{lemma}
+  Given a continued fraction $x = [a₁, \dots, a_{dn}]$,
   the generalized Euclidean algorithm requires exactly $n - 1$ steps
   when choosing the minimum fractional value.
-\end{proposition}
+\end{lemma}
 
 \begin{proof}
   When $n = 1$, the input consists solely of integers.
   Therefore, the Euclidean algorithm immediately stops.
-
   Per induction, assume that the algorithm requires $n - 2$ steps for
   the continued fraction $x' = [a_{d+1}, \dots, a_{2d}; a_{2d+1}, \dots, a_{dn}]$.
   Given $x$, the algorithm chooses the minimum fractional value $\{x_ℓ\}$.
   \todo[inline]{Finish this proof.}
+\end{proof}
 
+\begin{lemma}
+  Let $b$ be the largest denominator in $x ∈ ℚ^d$.
+  If $b$ is greater than the $n$-th $d$-bonacci number $F(n)$,
+  then the algorithm takes at least $n$ steps.
+\end{lemma}
+
+\begin{proof}
+  \todo[inline]{Prove this.}
 \end{proof}
 
 The smallest purely periodic continued fraction is $[\overline{1, \dots, 1}]$.
