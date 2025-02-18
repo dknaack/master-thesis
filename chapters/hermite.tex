@@ -106,8 +106,66 @@ corresponds to the Fibonacci sequence.
 
 \section{Brute-Force Search}
 
+\begin{itemize}
+  \item Using breadth-first search over all possible sequences.
+  \item Pivots for $2^{1/3}$: $0\overline{10}$.
+  \item Pivots for $3^{1/3}$: $01\overline{01}$.
+  \item Pivots for $5^{1/3}$: $0\overline{00111000}$.
+  \item Pivots for $7^{1/3}$: $0\overline{010100}$.
+  \item Pivots for $11^{1/3}$: $0\overline{1100}$.
+  \item Pivots for $13^{1/3}$: $00\overline{010000}$.
+  \item Pivots for $17^{1/3}$: $000\overline{11110000}$.
+  \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
+  \item Alternating pivots is likely not possible as this corresponds to the
+    Jacobi-Perron algorithm.
+    For example, for the number $4^{1/3}$ there is likely no alternating period.
+  \item The first number with a leading $1$ as the pivot is $12$: $1\overline{0111011101}$.
+\end{itemize}
+
+\begin{lemma}
+  \label{lem:consecutive-same}
+  For every $k ∈ ℕ$, there exists a number $n ∈ ℕ$,
+  such that $\sqrt[3]{n}$ and $\sqrt[3]{n + 1}$ have the same first $k$ terms in
+  their pivot sequences.
+\end{lemma}
+
+\iffalse
+\begin{theorem}
+  There exists no algorithm which given $x ∈ ℝ^d$ can determine the same
+  strategy as the brute-force search using only $f(d)$ comparison, addition
+  and subtraction operations, for some computable function $f \colon ℕ → ℕ$.
+\end{theorem}
+
+\begin{proof}
+  Idea: A constant-number of additions and subtraction only compare the integer
+  parts of each $x_i$ when the values are chosen close enough to an integer.
+  Because the trees are the same for the first level, the output for both
+  inputs must be the same.
+
+  We choose $x₁ = f(d)$ and $x₂ = \sqrt{f(d) + 1}$ where $n^3 > f(d)$.
+  In particular, $x₁$ is an integer and $x₂$ is between $x₁$ and the next integer.
+  Suppose the algorithm compares $a₁ x₁$ with $a₂ x₂$ for $|a₁|, |a₂| ≤ f(d)$.
+  \[
+    a₂ x₂
+    = a₂ \sqrt{(f(d))^2 + i + 1}
+    ≤ a₂ \left( f(d) + \frac{1}{3 f(d)} \right)
+    = a₂ · f(d) + \frac{a₂}{3 f(d)} \right)
+  \]
+  Furthermore, $a₂ x₂ ≥ a₂ · f(d)$.
+  Therefore, the integer part of $a₂ x₂$ is equal to $a₂ x₁$,
+  even if $a₂ = f(d)$.
+  Hence, any algorithm can only compare the integer parts of $x₁$ and $x₂$.
+\end{proof}
+\fi
+
 \begin{table}[t]
-  \caption{Representation of $\sqrt[3]{4}$ using the brute-force search.}
+  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
   \centering
   \input{tables/cube-root-4.tex}
+\end{table}
+
+\begin{table}[t]
+  \caption{Period Length of the first $28$ numbers.}
+  \centering
+  \input{tables/period-length.tex}
 \end{table}
