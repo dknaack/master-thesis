@@ -15,19 +15,20 @@ reversing the generalized Euclidean algorithm.
 We can reverse the pivot operation.
 In this case, the inverse operation takes not only the output and the index $ℓ$,
 but also the integer part $a = (a₁, \dots, a_d)$ of each input value.
-Given $x ∈ ℚ^d$, an index $ℓ$ and $a ∈ ℤ^d$, the vector $x = pivot^{-1}(y, ℓ, a)$ is defined as follows:
+Given $x ∈ ℚ^d$, an index $ℓ$ and $a ∈ ℤ^d$ with $a_ℓ ≠ 0$,
+the vector $x = pivot^{-1}(y, ℓ, a)$ is defined as follows:
 \[
   x_ℓ = a_ℓ + \frac{1}{y_ℓ}, \quad x_i = a_i + \frac{y_i}{y_ℓ} \text{ for } i ≠ ℓ.
 \]
-
 The reverse pivot operation allows us to describe any rational vector $x ∈ ℚ^d$ as a
 sequence of indices $ℓ$ and integer vectors $a$.
+
 However, this representation is not unique for every vector,
 since any vector with at least two non-integer numbers has two different
 choices for the pivot $ℓ$.
 Hence, we can find at least two different representations for this vector.
 
-\section{Maximum Continued Fractions}
+\section{Continued Fractions for the Minimum Strategy}
 
 The first strategy was choosing the minimal fractional value in each iteration.
 For the corresponding multi-dimensional continued fraction,
