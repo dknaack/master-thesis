@@ -1,21 +1,126 @@
-\chapter{Notes on Hermite's Question}
+\chapter{Hermite's Question}
 
 \begin{problem}[Hermite's Question]
-  Is there a representation of the real numbers as a sequence of integers such
-  that the sequence is eventually periodic if and only if the real number is a
-  cubic irrational?
+  Is there a representation of the real numbers as a sequence of natural
+  numbers such that the sequence is eventually periodic if and only if the real
+  number is a cubic irrational?
 \end{problem}
 
 More formally: Does there exists a function $f$ which maps any $α ∈ ℝ$ to an
 infinite sequence $(a_n)_{n ∈ ℕ}$ of natural numbers such that $a_n$ is
-eventually periodic if and only if $x$ is a cubic irrational?
+eventually periodic if and only if $α$ is a cubic irrational?
+The problem can very easily be generalized to higher degrees of algebraic numbers:
+The representation is periodic if and only if $x$ is the root of a polynomial of degree $d + 1$.
+
+\section{Finding a Periodic Representation through Brute-Force}
+
+We use the generalized Euclidean algorithm to find a representation for $α ∈ ℝ$.
+More specifically, we use the update rule from the algorithm to find the representation.
+The update rule takes a vector and not a real number, so we use the vector $x_i = α^i$ for $i ≤ d$.
+
+For our input $x ∈ ℝ^d$, we can build up a $d$-ary tree where $x$ is the root and any
+two nodes of this tree $x', x''$ are connected if $\mathrm{pivot}(x, i) = x''$
+for some $i$.
+The brute-force algorithm performs a breadth-first search over this tree to
+find a node which points to a higher node in the tree, i.e. the path forms a loop.
+As our pivot sequence we use the path from the root to the this node.
+
+\begin{example}
+  The sequences for the prime numbers are:
+  \begin{itemize}
+    \item $2^{1/3}$: $0\overline{10}$.
+    \item $3^{1/3}$: $01\overline{01}$.
+    \item $5^{1/3}$: $0\overline{00111000}$.
+    \item $7^{1/3}$: $0\overline{010100}$.
+    \item $11^{1/3}$: $0\overline{1100}$.
+    \item $13^{1/3}$: $00\overline{010000}$.
+    \item $17^{1/3}$: $000\overline{11110000}$.
+    \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
+  \end{itemize}
+\end{example}
+
+\begin{remark}
+  The first number that has a leading $1$ as the pivot is $12$,
+  which has the pivot sequence $1\overline{0111011101}$.
+  However, there are other possible choices where it does not have a leading $0$.
+\end{remark}
+
+We can likely rule out alternating pivot sequences since this corresponds to
+the Jacobi-Perron algorithm and for this algorithm it is conjectured
+\cite{Karpenkov2024} that the algorithm is not periodic for $\sqrt[3]{4}$.
+However, the brute-force algorithm is periodic for this input (see Table~\ref{table:cube-root-4}).
+
+\begin{conjecture}
+  The brute-force algorithm is periodic if and only if $α$ is a cubic irrational.
+\end{conjecture}
+
+\begin{lemma}
+  \label{lem:consecutive-same}
+  For every $k ∈ ℕ$, there exists a number $n ∈ ℕ$,
+  such that $\sqrt[3]{n}$ and $\sqrt[3]{n + 1}$ have the same first $k$ terms in
+  their pivot sequences.
+\end{lemma}
+
+\begin{corollary}
+  Any strategy which only compares the fractional values does not produce the
+  same pivot sequence as the brute-force algorithm.
+\end{corollary}
+
+\begin{corollary}
+  The minimum strategy does not produce the same pivot sequence as the
+  brute-force algorithm.
+\end{corollary}
+
+\iffalse
+\begin{theorem}
+  There exists no algorithm which given $x ∈ ℝ^d$ can determine the same
+  strategy as the brute-force search using only $f(d)$ comparison, addition
+  and subtraction operations, for some computable function $f \colon ℕ → ℕ$.
+\end{theorem}
+
+\begin{proof}
+  Idea: A constant-number of additions and subtraction only compare the integer
+  parts of each $x_i$ when the values are chosen close enough to an integer.
+  Because the trees are the same for the first level, the output for both
+  inputs must be the same.
+
+  We choose $x₁ = f(d)$ and $x₂ = \sqrt{f(d) + 1}$ where $n^3 > f(d)$.
+  In particular, $x₁$ is an integer and $x₂$ is between $x₁$ and the next integer.
+  Suppose the algorithm compares $a₁ x₁$ with $a₂ x₂$ for $|a₁|, |a₂| ≤ f(d)$.
+  \[
+    a₂ x₂
+    = a₂ \sqrt{(f(d))^2 + i + 1}
+    ≤ a₂ \left( f(d) + \frac{1}{3 f(d)} \right)
+    = a₂ · f(d) + \frac{a₂}{3 f(d)} \right)
+  \]
+  Furthermore, $a₂ x₂ ≥ a₂ · f(d)$.
+  Therefore, the integer part of $a₂ x₂$ is equal to $a₂ x₁$,
+  even if $a₂ = f(d)$.
+  Hence, any algorithm can only compare the integer parts of $x₁$ and $x₂$.
+\end{proof}
+\fi
+
+\begin{table}[t]
+  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
+  \label{table:cube-root-4}
+  \centering
+  \input{tables/cube-root-4.tex}
+\end{table}
+
+\begin{table}[t]
+  \caption{Period Length of the first $28$ numbers.}
+  \centering
+  \input{tables/period-length.tex}
+\end{table}
+
+\section{Notes on Algebraic Numbers}
 
 For any $d$th irrational number $x ∈ ℝ$, we can find a unique irreducible polynomial $p(x) ∈ ℚ[x]$
-which has $x$ as its root and is monic.
+which has $x$ as its root and is \emph{monic}.
 Furthermore, it must have $d$ distinct roots $α₁, α₂, \dots, α_d ∈ ℂ$,
 where one of them is $x$.
 
-\section{$\sin^2$ Algorithm}
+\section{Notes on the $\sin^2$ Algorithm}
 
 Let $p$ be an irreducible cubic polynomial over $ℚ$ with integer coefficients.
 The roots $α, β, γ$ are called \emph{conjugates}.
@@ -46,7 +151,7 @@ exists a matrix $B ∈ \text{SL}(3, ℤ)$ with irreducible characteristic
 polynomial over $ℚ$ such that $a, b, c$ are eigenvectors of $B$ with distinct
 eigenvalues.
 
-\section{HAPD algorithm}
+\section{Notes on the HAPD algorithm}
 
 See \cite{Karpenkov2024}.
 Given a monic irreducible polynomial $p(x)$ over $ℚ$ with integer coefficients and roots $α₁, \dots, α_d ∈ \overline{ℚ}$,
@@ -103,69 +208,3 @@ corresponds to the Fibonacci sequence.
     \end{pmatrix}
   \]
 \end{definition}
-
-\section{Brute-Force Search}
-
-\begin{itemize}
-  \item Using breadth-first search over all possible sequences.
-  \item Pivots for $2^{1/3}$: $0\overline{10}$.
-  \item Pivots for $3^{1/3}$: $01\overline{01}$.
-  \item Pivots for $5^{1/3}$: $0\overline{00111000}$.
-  \item Pivots for $7^{1/3}$: $0\overline{010100}$.
-  \item Pivots for $11^{1/3}$: $0\overline{1100}$.
-  \item Pivots for $13^{1/3}$: $00\overline{010000}$.
-  \item Pivots for $17^{1/3}$: $000\overline{11110000}$.
-  \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
-  \item Alternating pivots is likely not possible as this corresponds to the
-    Jacobi-Perron algorithm.
-    For example, for the number $4^{1/3}$ there is likely no alternating period.
-  \item The first number with a leading $1$ as the pivot is $12$: $1\overline{0111011101}$.
-\end{itemize}
-
-\begin{lemma}
-  \label{lem:consecutive-same}
-  For every $k ∈ ℕ$, there exists a number $n ∈ ℕ$,
-  such that $\sqrt[3]{n}$ and $\sqrt[3]{n + 1}$ have the same first $k$ terms in
-  their pivot sequences.
-\end{lemma}
-
-\iffalse
-\begin{theorem}
-  There exists no algorithm which given $x ∈ ℝ^d$ can determine the same
-  strategy as the brute-force search using only $f(d)$ comparison, addition
-  and subtraction operations, for some computable function $f \colon ℕ → ℕ$.
-\end{theorem}
-
-\begin{proof}
-  Idea: A constant-number of additions and subtraction only compare the integer
-  parts of each $x_i$ when the values are chosen close enough to an integer.
-  Because the trees are the same for the first level, the output for both
-  inputs must be the same.
-
-  We choose $x₁ = f(d)$ and $x₂ = \sqrt{f(d) + 1}$ where $n^3 > f(d)$.
-  In particular, $x₁$ is an integer and $x₂$ is between $x₁$ and the next integer.
-  Suppose the algorithm compares $a₁ x₁$ with $a₂ x₂$ for $|a₁|, |a₂| ≤ f(d)$.
-  \[
-    a₂ x₂
-    = a₂ \sqrt{(f(d))^2 + i + 1}
-    ≤ a₂ \left( f(d) + \frac{1}{3 f(d)} \right)
-    = a₂ · f(d) + \frac{a₂}{3 f(d)} \right)
-  \]
-  Furthermore, $a₂ x₂ ≥ a₂ · f(d)$.
-  Therefore, the integer part of $a₂ x₂$ is equal to $a₂ x₁$,
-  even if $a₂ = f(d)$.
-  Hence, any algorithm can only compare the integer parts of $x₁$ and $x₂$.
-\end{proof}
-\fi
-
-\begin{table}[t]
-  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
-  \centering
-  \input{tables/cube-root-4.tex}
-\end{table}
-
-\begin{table}[t]
-  \caption{Period Length of the first $28$ numbers.}
-  \centering
-  \input{tables/period-length.tex}
-\end{table}
