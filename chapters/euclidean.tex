@@ -1,0 +1,91 @@
+\chapter{The Euclidean Algorithm}
+
+\section{Analysis}
+
+\begin{Pseudocode}
+algorithm Euclidean(a, b)
+  while $b ≠ 0$ do
+    $(a, b) ← (b, a \bmod b)$
+  end
+
+  return $a$
+end
+\end{Pseudocode}
+
+\begin{proposition}
+  The ratio $b/a$ decreases by at least $1/2$ over two iterations.
+\end{proposition}
+
+\begin{proof}
+  Suppose $b/a > 1/2$ in the first iteration.
+  Over two iterations, we have
+  \[
+    \frac{b}{a} · \frac{a \bmod b}{b}
+    ≤ \frac{b}{a} · \frac{a - b}{b}
+    = 1 - \frac{b}{a}
+    < 1 - \frac{1}{2}
+    = \frac{1}{2}.
+  \]
+  Therefore, it decreases by at least $1/2$ over two iterations.
+\end{proof}
+
+\section{Fibonacci Numbers}
+
+\begin{definition}
+  The \emph{Fibonacci numbers} are defined as
+  \begin{enumerate}
+    \item $F(0) = F(1) = 1$.
+    \item $F(n) = F(n - 1) + F(n - 2)$ for $n > 2$.
+  \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Lamé's Theorem \cite{Lame1844}]
+  The Euclidean algorithm requires at most $5h$ steps,
+  where $h = \log_{10}(b)$.
+\end{proposition}
+
+\begin{proof}
+  \todo[inline]{Using Fibonacci numbers.}
+\end{proof}
+
+\section{Continued Fractions}
+
+Continued fractions are fractions of the form
+\[
+  a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{a_4 + \ddots}}}},
+\]
+
+\begin{proposition}
+  Let $a, b ∈ ℕ$.
+  If $a/b$ can be represented as $[a₀; a₁, \dots, a_n]$, then the Euclidean
+  algorithm requires exactly $n + 1$ steps given input $(a, b)$.
+\end{proposition}
+
+% TODO: Fix this proof, b'/a' is reversed
+\begin{proof}
+  By induction.
+  For $n = 0$, we have $a = a_n · b$.
+  Hence, $a \bmod b = 0$ and the algorithm stops after just one iteration.
+  Suppose the algorithm requires $n + 1$ steps for inputs $a', b'$ with $a'/b' = [a₁; a₂ \dots, a_n]$.
+  For $a, b$ with $a/b = [a₀; a₁, \dots, a_n]$, the algorithm calculates
+  \[
+    \frac{a \bmod b}{b} = \left\{a₀ + \frac{1}{[a₁; a₂, \dots, a_n]} \right\} = \frac{1}{[a₁; a₂, \dots, a_n]} = \frac{b'}{a'}
+  \]
+  By our assumption, the algorithm therefore requires $n + 1$ steps for $a, b$.
+\end{proof}
+
+\section{Periodicity and Quadratic Irrationals}
+
+\begin{definition}
+  A number $x ∈ ℝ$ is said to be a \emph{quadratic irrational} if $x$ is the root of some
+  polynomial $p(x)$ over the rational numbers with degree $2$.
+\end{definition}
+
+\begin{proposition}
+  A number $x ∈ ℝ$ is a quadratic irrational
+  if and only if the Euclidean algorithm is periodic on input $x$.
+\end{proposition}
+
+\begin{proof}
+
+\end{proof}
