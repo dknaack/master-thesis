@@ -72,7 +72,42 @@ Continued fractions are fractions of the form
     \frac{a \bmod b}{b} = \left\{a₀ + \frac{1}{[a₁; a₂, \dots, a_n]} \right\} = \frac{1}{[a₁; a₂, \dots, a_n]} = \frac{b'}{a'}
   \]
   By our assumption, the algorithm therefore requires $n + 1$ steps for $a, b$.
+  \todo[inline]{Finish this proof.}
 \end{proof}
+
+\begin{definition}
+  The \emph{$n$-th convergent} of an infinite continued fraction $[a_0; a_1, \dots]$
+  is defined as the finite continued fraction $[a_0; a_1, \dots, a_n]$.
+\end{definition}
+
+\begin{lemma}
+  For every $n \in \N$ there exists two polynomials $p_n$ and $q_n$ such that the
+  $n$-th convergent of $[a_0; a_1, \dots]$ can be represented by the quotient
+  of the two polynomials:
+  \[
+    [a_0; a_1, \dots, a_n] = \frac{p_n(a_0, a_1, \dots, a_n)}{q_n(a_0, a_1, \dots, a_n)}
+  \]
+\end{lemma}
+
+\begin{proof}
+  For $n = 0$, we have $p_0(a_0) = a_0$ and $q_0(a_0) = 1$.
+  By induction, it follows that
+  \[
+    [a_0; a_1, \dots, a_n] = a_0 + \frac{1}{[a_1; a_2 \dots, a_n]} = a_0 + \frac{q_{n-1}(a_1, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
+  \]
+  From this, we can derive the polynomials $p_n$ and $q_n$:
+  \begin{align*}
+    p_n(a_0, \dots, a_n) & = a_0 p_{n-1}(a_1, \dots, a_n) + p_{n-2}(a_2, \dots, a_n) \\
+    q_n(a_0, \dots, a_n) & = p_{n-1}(a_1, \dots, a_n). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  The canonical structure of the $n$-th convergent $[a_0; a_1, \dots, a_n]$ is defined as
+  \[
+    [a_0; a_1, \dots, a_n] = \frac{p_n}{q_n} = \frac{p_n(a_0, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
+  \]
+\end{definition}
 
 \section{Periodicity and Quadratic Irrationals}
 
