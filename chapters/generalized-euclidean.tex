@@ -1,0 +1,129 @@
+\chapter{The Generalized Euclidean Algorithm}
+
+\section{Lattice Basis Reduction}
+
+\begin{figure}[b]
+  \centering
+  \includestandalone{figures/lattice}
+  \caption{A two-dimensional lattice with vectors $B_1 = (2, 1)$ and $B_2 = (1, 3)$.}
+\end{figure}
+
+\begin{definition}
+  Given a basis $B ∈ ℤ^{d × n}$, the \emph{lattice} over the basis $B$ is defined as
+  \[
+    \mathcal{L}(B) = \left\{\, B₁z₁ + \dots + B_n z_n \mid z_1, \dots, z_n ∈ ℤ \,\right\}.
+  \]
+  The \emph{rank} of $\mathcal{L}(B)$ is $n$ and its \emph{dimension} is $d$.
+  If $n = d$, then $\mathcal{L}(B)$ is a \emph{full rank} lattice.
+\end{definition}
+
+\begin{definition}
+  The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
+  \[
+    Π(B) = \left\{\, B₁ x₁ + \dots + B_n x_n \mid x_1, \dots, x_n ∈ [0, 1) \,\right\}
+  \]
+\end{definition}
+
+If $B$ is a $d × d$ integer matrix,
+then the volume of the parallelepiped $Π(B)$ and the number of integer points
+in $Π(B)$ is exactly $\mathrm{det}(B)$, i.e.
+\[
+  \text{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = \mathrm{det}(B).
+\]
+
+\begin{problem}[Lattice Basis Reduction]~
+  \begin{itemize}
+    \item \textbf{Input}: A matrix $A ∈ ℤ^{d × n}$ with $\text{rank}(A) = d$.
+    \item \textbf{Output}: A matrix $B ∈ ℤ^{d × d}$ with $\mathcal{L}(B) = \mathcal{L}(A)$.
+  \end{itemize}
+\end{problem}
+
+\section{Description of the Algorithm}
+
+Each point $x ∈ ℝ^d$ can be represented as a combination of a lattice point $z
+∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ \Pi(B)$.
+Specifically,
+\[
+  x = z + r = B\floor{x} + B\{x\}.
+\]
+
+\begin{Pseudocode}[caption={The Generalized Euclidean Algorithm.}]
+solve $Bx = c$
+while $x$ is not integral do
+  find $x_ℓ$ which is not integral
+  $c ← B_ℓ$
+  $B_ℓ ← B\{x\}$
+  solve $Bx = c$
+end
+\end{Pseudocode}
+
+The solve operation inside the loop can be replaced by the following update
+rule:
+\begin{align*}
+  x_i' =
+  \begin{cases}
+    \frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
+    -\frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise.}
+  \end{cases}
+\end{align*}
+
+This follows from
+\[
+  B_ℓ \{x_ℓ\} + \sum_{i ≠ ℓ} B_i \{x_i\} = r
+  \iff
+  r - \sum_{i ≠ ℓ} B_i \{x_i\} = B_ℓ \{x_ℓ\}
+  \iff
+  r \frac{1}{\{x_ℓ\}} - \sum_{i ≠ ℓ} B_i \frac{\{x_i\}}{\{x_ℓ\}} = B_ℓ.
+\]
+
+I propose a slight modification to the generalized algorithm
+which makes the analysis in the following sections easier.
+Not only do we replace $B_ℓ$ with $c$,
+but we also flip all vectors $B_i$ with $i ≠ ℓ$.
+This leads to the modified update rule
+where the numerator has no more negation:
+\begin{align*}
+  x_i' =
+  \begin{cases}
+    \frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
+    \frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise.}
+  \end{cases}
+\end{align*}
+
+\begin{lemma}
+  The determinant of $B$ decreases by $\{x_ℓ\}$ in each iteration.
+\end{lemma}
+
+\begin{theorem}
+  The generalized Euclidean algorithm terminates in at most $\det(B)$ steps.
+\end{theorem}
+
+\begin{figure}[t]
+  \centering
+  \includestandalone{figures/pivot-choice}
+  \caption{
+    Different choices for the remainder of vector $c$. The original algorithm
+    always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
+\end{figure}
+
+\section{Two Different Pivoting Strategies}
+
+In this thesis, I analyze two different possible strategies for the choice of the pivot $ℓ$.
+The first strategy is choosing the minimum fractional value in each iteration.
+This guarantees that we choose the locally optimal value in each iteration.
+However it might not guarantee an optimal solution globally across all iterations.
+
+The second strategy is more involved.
+Instead of choosing the minimum, we choose the closest pair of values in $x$.
+More specifically, we do the following:
+\begin{enumerate}
+  \item Sort the vector $x$ in increasing order.
+  \item Find the index $ℓ$ which minimizes $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
+  \item Choose $ℓ$ in the first iteration and $ℓ + 1$ in the second iteration.
+\end{enumerate}
+The idea behind this strategy is that if one value $x_i$ is very close to the
+next value $x_{i+1}$, then the ratio between them is very close to $1$.
+Hence, the determinant decreases very quickly.
+
+In the following chapters, I analyze both strategies on their speed and what
+worst-case inputs they have.
