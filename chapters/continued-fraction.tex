@@ -39,11 +39,47 @@ There are certain fractions which cannot be produced from the algorithm.
 
 Ternary continued fractions are two fractions of the form
 \[
-  α = a_0 + \cfrac
-    {b_1 + \cfrac{1}{\displaystyle a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}}
-    {a_1 + \cfrac{\displaystyle b_2 + \cfrac{1}{a_3 + \cfrac{\ddots}{\ddots}}}{\displaystyle a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}},
+  α = a_0 + \cfrac{b_1 +
+    \cfrac{
+      1
+    }{
+      \displaystyle a_2 + \cfrac{b_3 +
+        \cfrac{1}{\ddots}
+      }{
+        a_3 + \cfrac{\ddots}{\ddots}
+      }
+    }
+  }{
+    a_1 + \cfrac{
+      \displaystyle b_2 + \cfrac{
+        1
+      }{
+        a_3 + \cfrac{\ddots}{\ddots}
+      }
+    }{
+      \displaystyle a_2 + \cfrac{
+        b_3 + \cfrac{1}{\ddots}
+      }{
+        a_3 + \cfrac{\ddots}{\ddots}
+      }
+    }
+  },
     \text{ and }
-  β = b_0 + \cfrac{1}{a_1 + \cfrac{b_2 + \cfrac{1}{a_3 + \cfrac{\ddots}{\ddots}}}{a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}}}
+  β = b_0 + \cfrac{
+    1
+  }{
+    a_1 + \cfrac{
+      b_2 + \cfrac{1}{
+        a_3 + \cfrac{\ddots}{\ddots}
+      }
+    }{
+      a_2 + \cfrac{
+        b_3 + \cfrac{1}{\ddots}
+      }{
+        a_3 + \cfrac{\ddots}{\ddots}
+      }
+    }
+  }
 \]
 
 \section{Continued Fractions for the Minimum Strategy}
