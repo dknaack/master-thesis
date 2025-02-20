@@ -28,6 +28,24 @@ since any vector with at least two non-integer numbers has two different
 choices for the pivot $ℓ$.
 Hence, we can find at least two different representations for this vector.
 
+\section{Ternary Continued Fractions}
+
+Ternary continued fractions, also called bifurcating continued fractions \cite{Gupta00},
+have been proposed as a way to represent roots of polynomials with higher degree.
+They follow directly from the Jacobi-Perron algorithm,
+where we rotate the pivots in each round.
+However, not all ternary continued fractions arise from the Jacobi-Perron algorithm.
+There are certain fractions which cannot be produced from the algorithm.
+
+Ternary continued fractions are two fractions of the form
+\[
+  α = a_0 + \cfrac
+    {b_1 + \cfrac{1}{\displaystyle a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}}
+    {a_1 + \cfrac{\displaystyle b_2 + \cfrac{1}{a_3 + \cfrac{\ddots}{\ddots}}}{\displaystyle a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}},
+    \text{ and }
+  β = b_0 + \cfrac{1}{a_1 + \cfrac{b_2 + \cfrac{1}{a_3 + \cfrac{\ddots}{\ddots}}}{a_2 + \cfrac{b_3 + \cfrac{1}{\ddots}}{a_3 + \cfrac{\ddots}{\ddots}}}}}
+\]
+
 \section{Continued Fractions for the Minimum Strategy}
 
 The first strategy was choosing the minimal fractional value in each iteration.
