@@ -28,6 +28,75 @@ since any vector with at least two non-integer numbers has two different
 choices for the pivot $ℓ$.
 Hence, we can find at least two different representations for this vector.
 
+Not only do we have $d$ sequences $a_1^{(n)}, \dots, a_d^{(n)}$ but also a
+sequence $L = ℓ₁, ℓ₂, \dots$ for the pivots.
+
+\[
+  \begin{array}{rl rl l}
+    r_i^{(0)} & = a_i^{(0)}, &&
+    & \quad (i = 1, \dots, d) \\
+    r_{ℓ_k}^{(k)} & = a_{ℓ_k}^{(k)} + \frac{1}{r_{ℓ_k}^{(k - 1)}},
+    & \quad r_{i}^{(k)} & = a_{i}^{(k)} + \frac{r_i^{(k-1)}}{r_{ℓ_k}^{(k - 1)}},
+    & \quad (i ≠ ℓ_k, k = 1, 2, \dots) \\
+  \end{array}
+\]
+
+Clearly, for every convergent $r^{(k)}$ we can find integers $p₁^{(k)}, \dots, p_d^{(k)}$
+and $q₁^{(k)}, \dots, q_d^{(k)}$ such that
+\[
+  r_i^{(k)} = \frac{p_i^{(k)}}{q_i^{(k)}}.
+\]
+We can use the previous equation to construct the values.
+\[
+  \begin{array}{rllll}
+    r_i^{(0)}
+    & = a_i^{(0)}
+    & = \frac{a_i^{(0)}}{1}
+    & = \frac{p_i^{(0)}}{q_i^{(0)}},
+    & \quad (i = 1, \dots, d), \\
+    r_ℓ^{(k)}
+    & = a_ℓ^{(k)} + \frac{1}{r_ℓ^{(k - 1)}}
+    & = a_ℓ^{(k)} + \frac{q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}
+    & = \frac{a_ℓ^{(k)} p_{ℓ}^{(k - 1)} + q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}, \\
+    r_{i}^{(k)}
+    & = a_{i}^{(k)} + \frac{r_i^{(k-1)}}{r_ℓ^{(k - 1)}}
+    & = a_{i}^{(k)} + \frac{p_i^{(k-1)}}{q_i^{(k - 1)}} \frac{q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}
+    & = \frac{a_{i}^{(k)} q_i^{(k - 1)} p_ℓ^{(k - 1)} + p_i^{(k-1)} q_ℓ^{(k - 1)}}{q_i^{(k - 1)} p_ℓ^{(k - 1)}}.
+    & \quad (i ≠ ℓ) \\
+  \end{array}
+\]
+
+In summary, we have
+\[
+  \begin{aligned}
+    p_i^{(ℓ ∘ L)} &= a_i^{(L)} q_i^{(L)} p_ℓ^{(L)} + p_i^{(L)} q_ℓ^{(L)} \\
+    q_i^{(ℓ ∘ L)} &= q_i^{(L)} p_ℓ^{(L)}
+  \end{aligned}
+  \quad \text{ and } \quad
+  \begin{aligned}
+    p_ℓ^{(ℓ ∘ L)} &= a_i^{(L)} p_ℓ^{(L)} + q_ℓ^{(L)} \\
+    q_ℓ^{(ℓ ∘ L)} &= p_ℓ^{(L)}
+  \end{aligned}
+\]
+
+\begin{lemma}
+  If $L = 1^*$ or $L = 2^*$, then
+  \[
+    p_i^{(ℓ ∘ ℓ ∘ L)} &= a_i^{(ℓ ∘ L)} q_i^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)} + p_i^{(ℓ ∘ L)} p_ℓ^{(L)}, \\
+    q_i^{(ℓ ∘ ℓ ∘ L)} &= q_i^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)}
+  \]
+\end{lemma}
+
+\begin{proposition}
+  Given $x ∈ ℝ^d$, the continued fraction of $x$ is periodic with one index if
+  and only if $x$ consists solely of rational numbers or quadratic irrationals.
+\end{proposition}
+
+\begin{proof}
+  Suppose the continued fraction of $x$ is periodic with index $ℓ$.
+  Then, $x_ℓ$ must be a quadratic irrational.
+\end{proof}
+
 \section{Ternary Continued Fractions}
 
 Ternary continued fractions, also called bifurcating continued fractions \cite{Gupta00},
