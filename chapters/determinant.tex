@@ -1,0 +1,177 @@
+\chapter{Bounds on the Decrease of the Determinant}
+
+\section{Choosing the Minimum Fractional Value}
+
+\begin{proposition}
+  The determinant decreases by a factor of at least $1/2$ over two iterations
+  using the minimum strategy.
+\end{proposition}
+
+\begin{proof}
+  Suppose we do not achieve a decrease of $1/2$ in the first iteration, i.e. $\{x_ℓ\} > 1/2$.
+  Then, over two iterations the determinant decreases by
+  \[
+    \{x₁\} \left\{\frac{1}{\{x₁\}}\right\} < 1 - \{x₁\} < \frac{1}{2}. \qedhere
+  \]
+\end{proof}
+
+The decrease can actually be slightly improved in higher dimensions.
+In higher dimensions, there must be some variable in between the smallest value $\{x_ℓ\}$
+and $1$.
+Therefore, the fractional ratio between those two variables must be smaller than the ratio between $1$ and $x_ℓ$,
+unless
+
+\begin{theorem}
+  Let $d ≥ 2$, then
+  the determinant decreases by a factor of at least $1/3$ over two iterations
+  using the minimum strategy.
+\end{theorem}
+
+\begin{proof}
+  Let $x ∈ ℚ^d$.
+  Suppose we do not achieve a decrease of one third in the first iteration, i.e. $\{x_ℓ\} > 1/3$.
+  We differentiate between two cases.
+  First, assume we chose the same index $ℓ$ in both iterations, i.e.
+  \begin{align*}
+    \{x_ℓ\} ≤ \{x_i\}
+    \text{ and }
+    \left\{\frac{1}{\{x_ℓ\}}\right\} ≤ \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\}
+    \text{ for }
+    i ≠ ℓ.
+  \end{align*}
+  Because fractional values are always positive, we have for all indices $i ≠ ℓ$ and suitable numbers $a_1, \dots, a_d ∈ ℕ$,
+  \begin{align*}
+    \{x_ℓ\} \left\{\frac{1}{\{x_ℓ\}}\right\} = 1 - a_ℓ \{x_ℓ\} ≤ \{x_ℓ\} \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\} ≤ \{x_i\} - a_i \{x_ℓ\}.
+  \end{align*}
+  Because we chose $x_ℓ$ as our pivot, it must be the smallest element.
+  It follows that we cannot choose $a_ℓ = a_i$.
+  Hence, $a_ℓ ≥ 2$.
+  But if $x_ℓ > 1/3$, then the determinant decreases by at least
+  \[
+    \{x_ℓ\} \left\{ \frac{1}{\{x_ℓ\}} \right\} ≤ 1 - 2\{x_ℓ\} < 1/3.
+  \]
+
+  Next, suppose we chose $ℓ₁ ≠ ℓ₂$ and $\{x_{ℓ₁}\} > 1/3$.
+  Again, there are numbers $a_{ℓ₁}, a_{ℓ₂} ∈ ℕ$ such that
+  \begin{align*}
+    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\}
+    = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\}
+    ≤ \{x_{ℓ₁}\} \left\{\frac{1}{\{x_{ℓ₁}\}}\right\}
+    = 1 - a_{ℓ₁} \{x_{ℓ₁}\}.
+  \end{align*}
+  Because $\{x_{ℓ₂}\} ≠ 1$, we must have $a_{ℓ_2} > a_{ℓ₁} ≥ 1$.
+  However, then the determinant decreases over two iterations by at least
+  \[
+    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\} = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\} ≤ \{x_{ℓ₂}\} - 2 \{x_{ℓ₁}\} < 1/3.
+    \qedhere
+  \]
+\end{proof}
+
+\begin{theorem}
+  For every $ε > 0$, there exists an input $x ∈ ℝ^d$ which achieves a decrease
+  of exactly $1/3 - ε$ over two iterations.
+\end{theorem}
+
+\begin{proof}
+  Set $x₁ = 1 / 3 + ε$ and $x_i = 2/3$ for $i ≠ 1$.
+  We choose $x₁$ first and next one of the $x_i$ with $i ≠ 1$.
+  The total decrease over two iterations is
+  \[
+    x₁ \left\{ \frac{x_i}{x₁} \right\}
+    = x₂ - x₁
+    = \frac{1}{3} - ε.
+    \qedhere
+  \]
+\end{proof}
+
+\section{Choosing the Closest Pair of Values}
+
+The second strategy works as follows:
+\begin{enumerate}
+  \item Sort $x$ in increasing order.
+  \item Find the index $ℓ$ which minimizes $\{x_{ℓ+1}/x_ℓ\}$.
+    In the case that $ℓ = d$, let $x_{ℓ + 1} = 1$.
+  \item Choose $ℓ$ in the first iteration and $ℓ + 1$ in the second iteration.
+\end{enumerate}
+
+To analyze the decrease of this strategy over two iterations,
+we assume that each choice of our pivot yields the same decrease.
+Hence, we have
+\[
+  x_1 = \frac{x_2}{x_1} - 1 = \frac{x_3}{x_2} - 1 = \dots = \frac{x_d}{x_{d-1}} = \frac{1}{x_d} - 1.
+\]
+Solving the equation for $x_d$ yields the following solution:
+\[
+  x_d^{d+1} + x_d - 1 = 0 \text{ and } x_i = x_d^{d+1-i} \text{ for } i < d.
+\]
+
+Let $ψ$ be the root of the polynomial.
+The following lemma helps us calculate the fractional value of $1/ψ$.
+
+\begin{lemma}
+  For every $d ≥ 1$, we have $1/ψ < 2$.
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}
+  The determinant decreases by at least $ψ^{d+1}$ over two iterations with $d ≥ 2$.
+\end{theorem}
+
+\begin{proof}
+  We assume WLOG that the vector is sorted in increasing order and
+  $0 ≤ x_i ≤ 1$ for every $i ≤ d$.
+  For a contradiction, assume the algorithm yields a smaller decrease than $ψ^{d+1}$ on input $x$.
+  We must have $x_i > ψ^{d+1-i}$ for every $i = 1, \dots, d$.
+  For the first value, we have $x₁ > ψ^d$, because otherwise we have a total decrease of
+  \[
+    x₁ \left\{ \frac{x₂}{x₁} \right\} ≤ ψ^{d-1} - ψ^d = ψ^{2d+1} < ψ^d.
+  \]
+  Suppose $x_i > ψ^{d+1-i}$ and $x_{i+1} ≤ ψ^{d-i}$.
+  Then we can achieve a total decrease of
+  \[
+    x_i · \left\{ \frac{x_{i+1}}{x_i} \right\} ≤ x_{i+1} - x_i < ψ^{d-i} - ψ^{d+1-i} = ψ^{2d+1-i} < ψ^d.
+  \]
+  It follows that $x_i > ψ^{d+1-i}$ for every $i ≤ d$.
+  But then
+  \[
+    x_d \left\{ \frac{1}{x_d} \right\} ≤ 1 - x_d < 1 - ψ = ψ^{d+1}.
+  \]
+  Hence, we achieve a decrease of at least $ψ^{d+1}$ over two iterations.
+\end{proof}
+
+The bound for this strategy is tight.
+We can construct an input that moves arbitrarily close to this bound.
+Formally, for every sufficiently small $ε > 0$, we can find an input $x$ which
+achieves a decrease of at most $ψ^{d+1} - ε$.
+The idea is to choose $x_d$ to be just over $ψ$ and all other variables as a multiple of $x_d$
+such that we have to choose $x_d$.
+But choosing $x_d$ only gives us a decrease of $ψ^{d+1} - ε$ in total.
+
+% TODO: Explain what sufficiently small means
+\begin{theorem}
+  For every (sufficiently small) $ε > 0$,
+  there exists an input $x ∈ ℝ^d$ with $d ≥ 2$,
+  which achieves a decrease in the determinant of exactly $ψ^{d+1} - ε$ over two
+  iterations.
+\end{theorem}
+
+\begin{proof}
+  We choose $x_i = ψ^{d+1-i} (1 + ε)$ for $i = 1, \dots, d$.
+  The strategy chooses between
+  \[
+    \left\{ \frac{x_{i+1}}{x_i} \right\}
+    = \frac{ψ^{d-i} (1 + ε)}{ψ^{d+1-i} (1 + ε)} - 1 = \frac{1}{ψ} - 1,
+    \text{ and }
+    \left\{ \frac{1}{x_d} \right\}
+    = \frac{1}{ψ + ε} - 1
+  \]
+  Clearly, the strategy chooses $x_d$ since its ratio $\{1/x_d\}$ is the smallest.
+  Therefore, the total decrease over two iterations is
+  \[
+    (ψ + ε) \left\{ \frac{1}{ψ + ε} \right\} = 1 - ψ - ε = ψ^{d+1} - ε.
+    \qedhere
+  \]
+\end{proof}
