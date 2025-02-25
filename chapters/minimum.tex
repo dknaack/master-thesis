@@ -5,17 +5,67 @@ We begin with the simplest strategy: Choosing the minimum in each iteration.
 \section{Bound on the Decrease of the Determinant}
 
 \begin{proposition}
-  The determinant decreases by a factor of at least $\max\{1/3,1/(d + 1)\}$ over two iterations
+  The determinant decreases by a factor of at least $1/2$ over two iterations
   using the minimum strategy.
 \end{proposition}
 
 \begin{proof}
-  Let $x ∈ [0, 1)^d$.
-  We assume WLOG the values $x₁, x₂, \dots, x_d$ are ordered in increasing order.
-  Suppose $x₁ \{x_i / x₁\} ≥ 1/3$ for every $i ≤ d$ and $x₁ \{1 / x₁\} ≥ 1/3$.
-  Then, over two iterations we have a decrease of
+  Suppose we do not achieve a decrease of $1/2$ in the first iteration, i.e. $\{x_ℓ\} > 1/2$.
+  Then, over two iterations the determinant decreases by
   \[
-    x₁ \left\{\frac{1}{x₁}\right\} ≤ 1 - x₁ ≤ \frac{1}{2}. \qedhere
+    \{x₁\} \left\{\frac{1}{\{x₁\}}\right\} < 1 - \{x₁\} < \frac{1}{2}. \qedhere
+  \]
+\end{proof}
+
+The decrease can actually be slightly improved in higher dimensions.
+In higher dimensions, there must be some variable in between the smallest value $\{x_ℓ\}$
+and $1$.
+Therefore, the fractional ratio between those two variables must be smaller than the ratio between $1$ and $x_ℓ$,
+unless
+
+\begin{proposition}
+  Let $d ≥ 2$, then
+  the determinant decreases by a factor of at least $1/3$ over two iterations
+  using the minimum strategy.
+\end{proposition}
+
+\begin{proof}
+  Let $x ∈ ℚ^d$.
+  Suppose we do not achieve a decrease of one third in the first iteration, i.e. $\{x_ℓ\} > 1/3$.
+  We differentiate between two cases.
+  First, assume we chose the same index $ℓ$ in both iterations, i.e.
+  \begin{align*}
+    \{x_ℓ\} ≤ \{x_i\}
+    \text{ and }
+    \left\{\frac{1}{\{x_ℓ\}}\right\} ≤ \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\}
+    \text{ for }
+    i ≠ ℓ.
+  \end{align*}
+  Because fractional values are always positive, we have for all indices $i ≠ ℓ$ and suitable numbers $a_1, \dots, a_d ∈ ℕ$,
+  \begin{align*}
+    \{x_ℓ\} \left\{\frac{1}{\{x_ℓ\}}\right\} = 1 - a_ℓ \{x_ℓ\} ≤ \{x_ℓ\} \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\} ≤ \{x_i\} - a_i \{x_ℓ\}.
+  \end{align*}
+  Because we chose $x_ℓ$ as our pivot, it must be the smallest element.
+  It follows that we cannot choose $a_ℓ = a_i$.
+  Hence, $a_ℓ ≥ 2$.
+  But if $x_ℓ > 1/3$, then the determinant decreases by at least
+  \[
+    \{x_ℓ\} \left\{ \frac{1}{\{x_ℓ\}} \right\} ≤ 1 - 2\{x_ℓ\} < 1/3.
+  \]
+
+  Next, suppose we chose $ℓ₁ ≠ ℓ₂$ and $\{x_{ℓ₁}\} > 1/3$.
+  Again, there are numbers $a_{ℓ₁}, a_{ℓ₂} ∈ ℕ$ such that
+  \begin{align*}
+    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\}
+    = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\}
+    ≤ \{x_{ℓ₁}\} \left\{\frac{1}{\{x_{ℓ₁}\}}\right\}
+    = 1 - a_{ℓ₁} \{x_{ℓ₁}\}.
+  \end{align*}
+  Because $\{x_{ℓ₂}\} ≠ 1$, we must have $a_{ℓ_2} > a_{ℓ₁} ≥ 1$.
+  However, then the determinant decreases over two iterations by at least
+  \[
+    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\} = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\} ≤ \{x_{ℓ₂}\} - 2 \{x_{ℓ₁}\} < 1/3.
+    \qedhere
   \]
 \end{proof}
 
