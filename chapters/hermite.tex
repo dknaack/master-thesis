@@ -12,6 +12,21 @@ eventually periodic if and only if $α$ is a cubic irrational?
 The problem can very easily be generalized to higher degrees of algebraic numbers:
 The representation is periodic if and only if $x$ is the root of a polynomial of degree $d + 1$.
 
+\section{Comparison to the Jacobi-Perron Algorithm}
+
+The algorithm in this form, where we always choose the same pivot,
+is equivalent to the Jacobi-Perron algorithm, which was first proposed
+by Jacobi \cite{Jacobi68} and later analyzed by Perron \cite{Perron07}.
+In modern times, the algorithm was picked up again by Bernstein \cite{Bernstein06}.
+Each of them has analyzed the algorithm in the context of Hermite's Question.
+
+Charles Hermite initially posed a question to Jacobi, whether there exists a
+representation of the real numbers as an infinite sequence of natural numbers
+such that the sequence is eventually periodic if and only if the number is a
+cubic irrational. The question remains unanswered with the latest attempt
+\cite{Murru15} showing that there is an infinite sequence which is eventually
+periodic for every cubic irrational.
+
 \section{Finding a Periodic Representation through Brute-Force}
 
 We use the generalized Euclidean algorithm to find a representation for $α ∈ ℝ$.
