@@ -23,11 +23,11 @@ and $1$.
 Therefore, the fractional ratio between those two variables must be smaller than the ratio between $1$ and $x_ℓ$,
 unless
 
-\begin{proposition}
+\begin{theorem}
   Let $d ≥ 2$, then
   the determinant decreases by a factor of at least $1/3$ over two iterations
   using the minimum strategy.
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
   Let $x ∈ ℚ^d$.
@@ -65,6 +65,23 @@ unless
   However, then the determinant decreases over two iterations by at least
   \[
     \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\} = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\} ≤ \{x_{ℓ₂}\} - 2 \{x_{ℓ₁}\} < 1/3.
+    \qedhere
+  \]
+\end{proof}
+
+\begin{theorem}
+  For every $ε > 0$, there exists an input $x ∈ ℝ^d$ which achieves a decrease
+  of exactly $1/3 - ε$ over two iterations.
+\end{theorem}
+
+\begin{proof}
+  Set $x₁ = 1 / 3 + ε$ and $x_i = 2/3$ for $i ≠ 1$.
+  We choose $x₁$ first and next one of the $x_i$ with $i ≠ 1$.
+  The total decrease over two iterations is
+  \[
+    x₁ \left\{ \frac{x_i}{x₁} \right\}
+    = x₂ - x₁
+    = \frac{1}{3} - ε.
     \qedhere
   \]
 \end{proof}
