@@ -127,3 +127,10 @@ Hence, the determinant decreases very quickly.
 
 In the following chapters, I analyze both strategies on their speed and what
 worst-case inputs they have.
+
+\begin{itemize}
+  \item Constant: Choose one index until it is integral, $O(1)$.
+  \item Minimum: Choose the smallest fractional value in each iteration, $O(d)$.
+  \item Closest Neighbors: Choose the closest pair of neighbors, $O(d \log d)$.
+  \item Lookahead: Lookahead $k$ levels to find the perfect strategy, $O(d^k)$.
+\end{itemize}
