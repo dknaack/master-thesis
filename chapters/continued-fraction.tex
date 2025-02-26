@@ -29,43 +29,41 @@ choices for the pivot $ℓ$.
 Hence, we can find at least two different representations for this vector.
 
 Not only do we have $d$ sequences $a_1^{(n)}, \dots, a_d^{(n)}$ but also a
-sequence $L = ℓ₁, ℓ₂, \dots$ for the pivots.
+sequence $L ∈ \{0,1\}^*$ for the pivots.
 
 \[
   \begin{array}{rl rl l}
-    r_i^{(0)} & = a_i^{(0)}, &&
+    r_i^{(ε)} & = a_i^{(ε)}, &&
     & \quad (i = 1, \dots, d) \\
-    r_{ℓ_k}^{(k)} & = a_{ℓ_k}^{(k)} + \frac{1}{r_{ℓ_k}^{(k - 1)}},
-    & \quad r_{i}^{(k)} & = a_{i}^{(k)} + \frac{r_i^{(k-1)}}{r_{ℓ_k}^{(k - 1)}},
-    & \quad (i ≠ ℓ_k, k = 1, 2, \dots) \\
+    r_{ℓ}^{(ℓ ∘ L)} & = a_{ℓ}^{(ℓ ∘ L)} + \frac{1}{r_{ℓ}^{(L)}},
+    & \quad r_{i}^{(ℓ ∘ L)} & = a_{i}^{(ℓ ∘ L)} + \frac{r_i^{(L)}}{r_{ℓ}^{(L)}},
+    & \quad (i ≠ ℓ,\, L ∈ \{0, 1\}^*) \\
   \end{array}
 \]
-
-Clearly, for every convergent $r^{(k)}$ we can find integers $p₁^{(k)}, \dots, p_d^{(k)}$
-and $q₁^{(k)}, \dots, q_d^{(k)}$ such that
+Clearly, for every convergent $r^{(L)}$ we can find integers $p₁^{(L)}, \dots, p_d^{(L)}$
+and $q₁^{(L)}, \dots, q_d^{(L)}$ such that
 \[
-  r_i^{(k)} = \frac{p_i^{(k)}}{q_i^{(k)}}.
+  r_i^{(L)} = \frac{p_i^{(L)}}{q_i^{(L)}}.
 \]
 We can use the previous equation to construct the values.
 \[
   \begin{array}{rllll}
-    r_i^{(0)}
-    & = a_i^{(0)}
-    & = \frac{a_i^{(0)}}{1}
-    & = \frac{p_i^{(0)}}{q_i^{(0)}},
+    r_i^{(ε)}
+    & = a_i^{(ε)}
+    & = \frac{a_i^{(ε)}}{1}
+    & = \frac{p_i^{(ε)}}{q_i^{(ε)}},
     & \quad (i = 1, \dots, d), \\
-    r_ℓ^{(k)}
-    & = a_ℓ^{(k)} + \frac{1}{r_ℓ^{(k - 1)}}
-    & = a_ℓ^{(k)} + \frac{q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}
-    & = \frac{a_ℓ^{(k)} p_{ℓ}^{(k - 1)} + q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}, \\
-    r_{i}^{(k)}
-    & = a_{i}^{(k)} + \frac{r_i^{(k-1)}}{r_ℓ^{(k - 1)}}
-    & = a_{i}^{(k)} + \frac{p_i^{(k-1)}}{q_i^{(k - 1)}} \frac{q_ℓ^{(k - 1)}}{p_ℓ^{(k - 1)}}
-    & = \frac{a_{i}^{(k)} q_i^{(k - 1)} p_ℓ^{(k - 1)} + p_i^{(k-1)} q_ℓ^{(k - 1)}}{q_i^{(k - 1)} p_ℓ^{(k - 1)}}.
+    r_ℓ^{(ℓ ∘ L)}
+    & = a_ℓ^{(ℓ ∘ L)} + \frac{1}{r_ℓ^{(L)}}
+    & = a_ℓ^{(ℓ ∘ L)} + \frac{q_ℓ^{(L)}}{p_ℓ^{(L)}}
+    & = \frac{a_ℓ^{(ℓ ∘ L)} p_{ℓ}^{(L)} + q_ℓ^{(L)}}{p_ℓ^{(L)}}, \\
+    r_{i}^{(ℓ ∘ L)}
+    & = a_{i}^{(ℓ ∘ L)} + \frac{r_i^{(L)}}{r_ℓ^{(L)}}
+    & = a_{i}^{(ℓ ∘ L)} + \frac{p_i^{(L)}}{q_i^{(L)}} \frac{q_ℓ^{(L)}}{p_ℓ^{(L)}}
+    & = \frac{a_{i}^{(ℓ ∘ L)} q_i^{(L)} p_ℓ^{(L)} + p_i^{(L)} q_ℓ^{(L)}}{q_i^{(L)} p_ℓ^{(L)}}.
     & \quad (i ≠ ℓ) \\
   \end{array}
 \]
-
 In summary, we have
 \[
   \begin{aligned}
