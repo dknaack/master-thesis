@@ -1,0 +1,169 @@
+from sage.all import *
+
+def frac(x):
+    """
+    Returns the fractional value of x.
+    """
+    return x - floor(RR(x))
+
+def pivot(xs, *indices):
+    for l in indices:
+        ys = [0] * len(xs)
+        xl = xs[l]
+        assert frac(xl) != 0, "xl cannot be zero"
+        for i, xi in enumerate(xs):
+            if i == l:
+                ys[i] = 1 / frac(xi)
+            else:
+                ys[i] = frac(xi) / frac(xl)
+        xs = tuple(ys)
+    return xs
+
+def get_values(xs, indices):
+    for l in indices:
+        yield xs
+        xs = pivot(xs, l)
+
+def get_coeffs(xs, *indices):
+    """
+    Returns a list of coefficients from each iteration.
+    """
+    for xs in get_values(xs, indices):
+        yield tuple(floor(RR(xi)) for xi in xs)
+
+def get_decrease(xs, *indices):
+    """
+    Gets the total decrease when pivoting xs with the specified indices.
+
+    Returns:
+    - decrease: The total decrease over all indices.
+    """
+    decrease = 1
+    for l, ys in zip(indices, get_values(xs, indices)):
+        decrease *= frac(ys[l])
+    return decrease
+
+def get_period(xs, indices):
+    """
+    Returns the period if it exists.
+    """
+    inputs = []
+    for i, ys in enumerate(get_values(xs, indices)):
+        try:
+            repeat_start = inputs.index(ys)
+            init = indices[:repeat_start]
+            repeat = indices[repeat_start:i+1]
+            return init, repeat
+        except ValueError:
+            inputs.append(ys)
+    return [indices, []]
+
+def repeat_list(list, n):
+    """
+    Repeats a list such that it has length n.
+
+    Parameters:
+    - list: The list to repeat.
+    - n: The length of the target list
+
+    Returns:
+    - A list of length n.
+    """
+    return list * (n // len(list)) + list[:n % len(list)]
+
+def increment_nary(number, base, max_digits):
+    """
+    Increments an n-ary number represented as a list.
+
+    Parameters:
+    - number (list): A list of digits representing the number in base `base`.
+    - base (int): The base of the number system.
+    - max_digits (int): The maximum number of digits allowed.
+
+    Returns:
+    - list: The incremented number as a list of digits, or None if overflow occurs.
+    """
+    # Create a copy to avoid modifying the input
+    number = number[:]
+
+    carry = 1
+    for i in range(len(number) - 1, -1, -1):
+        number[i] += carry
+        if number[i] == base:
+            number[i] = 0
+            carry = 1
+        else:
+            carry = 0
+            break
+
+    if carry:
+        if len(number) < max_digits:
+            number.insert(0, 1)
+        else:
+            return None
+
+    return number
+
+def get_leaves(xs, max_depth):
+    if max_depth == 0:
+        return [[]]
+
+    leaves = []
+    fracs = [floor(y) for y in xs]
+    for l in range(len(xs)):
+        if frac(xs[l]) != 0:
+            ys = pivot(xs, l)
+            leaves += [[fracs, *leaf] for leaf in get_leaves(ys, max_depth - 1)]
+    return leaves
+
+#
+# Utility functions for displaying the output
+#
+
+def pivot_table(xs, indices):
+    rows = []
+    values = get_values(xs, indices)
+    coeffs = get_coeffs(xs, indices)
+    for l, xs, c in zip(indices, values, coeffs):
+        rows.append(tuple([l, *xs, *c]))
+
+    header_row = [r'$\ell$', '$x_1$', '$x_2$', '$x_1$', '$x_2$', '$a_1$', '$a_2$']
+    return table(rows, header_row=header_row)
+
+def real_list(values):
+    return [round(RR(a), 4) for a in values]
+
+def real_matrix(matrix):
+    return [real_list(row) for row in matrix]
+
+def pretty_continued_fraction(init, repeat):
+    repeat_str = r'\overline{' + ', '.join([str(e) for e in repeat]) + '}'
+    return LatexExpr('[' + ', '.join([str (e) for e in init] + [repeat_str]) + ']')
+
+def periodic_pivot_table(xs, init, repeat):
+    return pivot_table(xs, init + repeat + [repeat[0]])
+
+#
+# Selection Functions
+#
+
+def select_min(xs):
+    j = None
+    for i in range(len(xs)):
+        if j == None or xs[i] < xs[j]:
+            j = i
+    return j
+
+def select_min2(xs):
+    min_pair = None
+    min_cost = 1
+    for i, xi in enumerate(xs):
+        for j, xj in enumerate(xs):
+            if i == j:
+                cost = frac(xi) * frac(1/frac(xi))
+            else:
+                cost = frac(xi) * frac(frac(xj)/frac(xi))
+            if cost < min_cost:
+                min_cost = cost
+                min_pair = (i, j)
+    return min_pair
