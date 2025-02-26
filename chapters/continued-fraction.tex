@@ -67,22 +67,30 @@ We can use the previous equation to construct the values.
 In summary, we have
 \[
   \begin{aligned}
-    p_i^{(ℓ ∘ L)} &= a_i^{(L)} q_i^{(L)} p_ℓ^{(L)} + p_i^{(L)} q_ℓ^{(L)} \\
-    q_i^{(ℓ ∘ L)} &= q_i^{(L)} p_ℓ^{(L)}
+    p_ℓ^{(ℓ ∘ L)} & = a_ℓ^{(L)} p_ℓ^{(L)} + q_ℓ^{(L)}                     \\
+    p_i^{(ℓ ∘ L)} & = a_i^{(L)} q_i^{(L)} p_ℓ^{(L)} + p_i^{(L)} q_ℓ^{(L)} \\
   \end{aligned}
   \quad \text{ and } \quad
   \begin{aligned}
-    p_ℓ^{(ℓ ∘ L)} &= a_i^{(L)} p_ℓ^{(L)} + q_ℓ^{(L)} \\
-    q_ℓ^{(ℓ ∘ L)} &= p_ℓ^{(L)}
-  \end{aligned}
+    q_ℓ^{(ℓ ∘ L)} & = p_ℓ^{(L)}           \\
+    q_i^{(ℓ ∘ L)} & = q_i^{(L)} p_ℓ^{(L)} \\
+  \end{aligned}.
 \]
 
 \begin{lemma}
-  If $L = 1^*$ or $L = 2^*$, then
+  If $L = ℓ^*$, then
   \[
-    p_i^{(ℓ ∘ ℓ ∘ L)} = a_i^{(ℓ ∘ L)} q_i^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)} + p_i^{(ℓ ∘ L)} p_ℓ^{(L)}, \\
-    q_i^{(ℓ ∘ ℓ ∘ L)} = q_i^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)}
+    \begin{aligned}
+      p_ℓ^{(ℓ ∘ ℓ ∘ L)} & = a_ℓ^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)} + p_ℓ^{(L)}                                 \\
+      p_i^{(ℓ ∘ ℓ ∘ L)} & = a_i^{(ℓ ∘ L)} q_i^{(ℓ ∘ L)} p_ℓ^{(ℓ ∘ L)} + p_i^{(ℓ ∘ L)} q_ℓ^{(ℓ ∘ L)} \\
+    \end{aligned}
+    \quad \text{ and } \quad
+    \begin{aligned}
+      q_ℓ^{(ℓ ∘ ℓ ∘ L)} & = a_ℓ^{(L)} q_ℓ^{(ℓ ∘ L)} + q_ℓ^{(L)} \\
+      q_i^{(ℓ ∘ ℓ ∘ L)} & = q_i^{(ℓ ∘ L)} q_ℓ^{(ℓ ∘ ℓ ∘ L)}     \\
+    \end{aligned},
   \]
+  where $i ≠ ℓ$.
 \end{lemma}
 
 \begin{proposition}
