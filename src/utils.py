@@ -24,12 +24,13 @@ def get_values(xs, indices):
         yield xs
         xs = pivot(xs, l)
 
-def get_coeffs(xs, *indices):
+def get_coeffs(xs, indices):
     """
     Returns a list of coefficients from each iteration.
     """
+    yield tuple([floor(xi) for xi in xs])
     for xs in get_values(xs, indices):
-        yield tuple(floor(RR(xi)) for xi in xs)
+        yield tuple(floor(xi) for xi in xs)
 
 def get_decrease(xs, *indices):
     """
@@ -52,11 +53,30 @@ def get_period(xs, indices):
         try:
             repeat_start = inputs.index(ys)
             init = indices[:repeat_start]
-            repeat = indices[repeat_start:i+1]
+            repeat = indices[repeat_start:i]
             return init, repeat
         except ValueError:
             inputs.append(ys)
     return [indices, []]
+
+def get_convergent(xs, indices):
+    def partial_quotient(indices, coeffs):
+        if len(indices) == 0 or len(coeffs) <= 1:
+            return coeffs[0]
+
+        l, *indices = indices
+        a, *coeffs = coeffs[:]
+        ys = partial_quotient(indices, coeffs)
+        xs = [0] * len(ys)
+        for i, yi in enumerate(ys):
+            if i == l:
+                xs[i] = a[i] + (1 / yi if yi != 0 else 0)
+            else:
+                xs[i] = a[i] + (yi / ys[l] if ys[l] != 0 else 0)
+        return xs
+
+    coeffs = list(get_coeffs(xs, indices))
+    return partial_quotient(indices, coeffs)
 
 def repeat_list(list, n):
     """
