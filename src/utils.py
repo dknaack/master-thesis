@@ -60,23 +60,23 @@ def get_period(xs, indices):
     return [indices, []]
 
 def get_convergent(xs, indices):
-    def partial_quotient(indices, coeffs):
-        if len(indices) == 0 or len(coeffs) <= 1:
-            return coeffs[0]
+    a = [floor(xi) for xi in xs]
+    if len(indices) == 0:
+        return a
 
-        l, *indices = indices
-        a, *coeffs = coeffs[:]
-        ys = partial_quotient(indices, coeffs)
-        xs = [0] * len(ys)
-        for i, yi in enumerate(ys):
-            if i == l:
-                xs[i] = a[i] + (1 / yi if yi != 0 else 0)
-            else:
-                xs[i] = a[i] + (yi / ys[l] if ys[l] != 0 else 0)
-        return xs
+    l, *indices = indices
+    next = get_convergent(pivot(xs, l), indices)
+    curr = [0] * len(xs)
 
-    coeffs = list(get_coeffs(xs, indices))
-    return partial_quotient(indices, coeffs)
+    pl, ql = next[l].numerator(), next[l].denominator()
+    for i, ai in enumerate(a):
+        pi, qi = next[i].numerator(), next[i].denominator()
+        if i == l:
+            curr[i] = (ai * pl + ql) / pl
+        else:
+            curr[i] = (ai * qi * pl + pi * ql) / (qi * pl)
+
+    return curr
 
 def repeat_list(list, n):
     """
