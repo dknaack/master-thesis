@@ -6,6 +6,16 @@ def frac(x):
     """
     return x - floor(RR(x))
 
+def euclidean(A, b, *indices):
+    xs = A.solve_right(b)
+    for l in indices:
+        assert frac(xs[l]) != 0, "pivot cannot be zero"
+        c = A * vector([frac(x) for x in xs])
+        b = A[l]
+        A.set_column(l, c)
+        xs = A.solve_right(b)
+    return (A, xs, b)
+
 def pivot(xs, *indices):
     for l in indices:
         ys = [0] * len(xs)
