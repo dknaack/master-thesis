@@ -142,7 +142,8 @@ using the following recurrence relation:
 The goal is to show that these coefficients are bounded in some way.
 It follows that there must be some triple which repeats and therefore the
 representation must be periodic.
-The first step towards this proof is the discriminant of each polynomial.
+The first step towards this proof is bounding the discriminant of each
+polynomial $pᵢ$.
 
 \begin{lemma}
   \label{lem:same-disc}
@@ -176,8 +177,9 @@ However, this is not the case.
   Suppose $A_i C_i > 0$ for every $i$ after some point.
   We assume WLOG that $A_i > 0$ since the negation of $p_i$ has the same roots.
   Except in the first iteration, every $x_i$ is positive and therefore $B_i$ must be negative.
-  But by the construction of the continued fraction, $B_i$ would be strictly increasing since $A_i$ and $a_i$ are both assumed to be positive.
-  This is a contradiction and there must be infinitely many $p_i$ with $A_i C_i < 0$.
+  But $B_i = 2 A_{i-1} a_{i-1} + B_{i-1}$ would be strictly increasing since
+  $A_i$ and $a_i$ are both assumed to be positive.
+  This is a contradiction and therefore there must be infinitely many $p_i$ with $A_i C_i < 0$.
 \end{proof}
 
 \begin{theorem}
@@ -185,14 +187,13 @@ However, this is not the case.
 \end{theorem}
 
 \begin{proof}
-  By Lemma~\ref{lem:same-disc}, every polynomial~$p_i$ has the same discriminant~$Δ > 0$ independent of the index~$i$.
-  Furthermore, Lemma~\ref{lem:infinite-neg} shows that there are infinitely many polynomials with $A_i C_i < 0$.
-  Recall that the discriminant of each polynomial is defined as
-  \[
-    B_i^2 - 4 A_i C_i = Δ.
-  \]
-  But both $B_i^2$ and $-4 A_i C_i$ are positive and sum to another positive integer.
-  Hence, there are only finitely many triples $(A_i, B_i, C_i)$ which add up to $Δ$
-  and there must be a pair of indices $i ≠ j$ such that $(A_i, B_i, C_i) = (A_j, B_j, C_j)$
-  and therefore $x_i = x_j$.
+  By Lemma~\ref{lem:same-disc}, every polynomial~$p_i$ has the same
+  discriminant~$Δ = B_i^2 - 4 A_i C_i > 0$ independent of the index~$i$
+  and by Lemma~\ref{lem:infinite-neg} there are infinitely many polynomials
+  such that $B_i^2$ and $-4 A_i C_i$ are both positive.
+  But there can only be finitely many positive integers which sum up to another positive integer.
+  Hence, there must be some triple $(A_i, B_i, C_i)$ which repeats, i.e. there
+  exists an integer $i ≠ j$ with $(A_i, B_i, C_i) = (A_j, B_j, C_j)$.
+  These polynomials must have the same root $x_i = x_j$ and by construction of
+  the continued fraction, we have $a_{i+ℓ} = a_{j+ℓ}$ for every $ℓ ≥ 0$.
 \end{proof}
