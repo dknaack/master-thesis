@@ -116,11 +116,83 @@ Continued fractions are fractions of the form
   polynomial $p(x)$ over the rational numbers with degree $2$.
 \end{definition}
 
-\begin{proposition}
-  A number $x ∈ ℝ$ is a quadratic irrational
-  if and only if the Euclidean algorithm is periodic on input $x$.
-\end{proposition}
+Let $x$ be a quadratic irrational with polynomial $p$.
+Furthermore, let $x = [a₀; a₁, \dots]$ be its continued fraction and $x_k = [a_k; a_{k+1}, \dots]$.
+For every $x_i$ we can find a polynomial $p_i$ with $x_i$ as its root.
+We begin by expanding $x$ once as $a₀ + x₁^{-1}$.
+By definition, $a₀ + x₁^{-1}$ is the root of $p$.
+However, this gives us a new polynomial in $x₁$ (if we multiply by $x₁^2$):
+\begin{align*}
+  p₁(x₁) = x₁^2 p(a_0 + x_1^{-1}) = A x₁^2 (a₀ + x₁^{-1})^2 + B x₁^2 (a₀ + x₁^{-1}) + C x₁^2 = 0. \\
+\end{align*}
+Reordering the polynomial into the standard quadratic form results in
+\begin{align*}
+  p₁(x₁) = \underbrace{(A a₀^2 + B a₀ + C)}_{A₁} + \underbrace{(2A a₀ + B)}_{B₁} + \underbrace{A}_{C₁}.
+\end{align*}
+
+We can continue this process for every $i$.
+In particular, the coefficients of each polynomial $p_{i+1}$ is calculated
+using the following recurrence relation:
+\begin{align*}
+  A_{i+1} = A_i a_i^2 + B_i a_i + C_i, \qquad
+  B_{i+1} = 2 A_i a_i + B_i, \qquad
+  C_{i+1} = A_i.
+\end{align*}
+
+The goal is to show that these coefficients are bounded in some way.
+It follows that there must be some triple which repeats and therefore the
+representation must be periodic.
+The first step towards this proof is the discriminant of each polynomial.
+
+\begin{lemma}
+  \label{lem:same-disc}
+  The polynomials $p₁, p₂, …$ have the same discriminant.
+\end{lemma}
 
 \begin{proof}
+  Let $Δ$ be the discriminant of $p₁$.
+  By induction, suppose $p_i$ has discriminant $Δ$.
+  Then the polynomial $p_{i+1}$ has discriminant
+  \begin{align*}
+    \phantom{= {}} B_{i+1}^2 - 4 A_{i+1} C_{i+1}
+    & = (2 A_i a_i + B_i)^2 - 4 (A_i a_i^2 + B_i a_i + C_i) A_i \\
+    & = 4 A_i^2 a_i^2 + 4 A_i B_i a_i + B_i^2 - 4 A_i^2 a_i^2 - 4 B_i A_i a_i - 4 C_i A_i \\
+    & = B_i^2 - 4 A_i C_i \\
+    & = Δ. \qedhere
+  \end{align*}
+\end{proof}
 
+In order for the continued fraction to be periodic, the coefficients $A_i, B_i, C_i$ must be bounded.
+The only way this could not be the case is when $A_i C_i > 0$,
+since then there would be infinitely many values for such that $B_i^2 - 4 A_i C_i$.
+However, this is not the case.
+
+\begin{lemma}
+  \label{lem:infinite-neg}
+  There exists infinitely many polynomials $p_i$ with $A_i C_i < 0$.
+\end{lemma}
+
+\begin{proof}
+  Suppose $A_i C_i > 0$ for every $i$ after some point.
+  We assume WLOG that $A_i > 0$ since the negation of $p_i$ has the same roots.
+  Except in the first iteration, every $x_i$ is positive and therefore $B_i$ must be negative.
+  But by the construction of the continued fraction, $B_i$ would be strictly increasing since $A_i$ and $a_i$ are both assumed to be positive.
+  This is a contradiction and there must be infinitely many $p_i$ with $A_i C_i < 0$.
+\end{proof}
+
+\begin{theorem}
+  If $x$ is a quadratic irrational, then its continued fraction is eventually periodic.
+\end{theorem}
+
+\begin{proof}
+  By Lemma~\ref{lem:same-disc}, every polynomial~$p_i$ has the same discriminant~$Δ > 0$ independent of the index~$i$.
+  Furthermore, Lemma~\ref{lem:infinite-neg} shows that there are infinitely many polynomials with $A_i C_i < 0$.
+  Recall that the discriminant of each polynomial is defined as
+  \[
+    B_i^2 - 4 A_i C_i = Δ.
+  \]
+  But both $B_i^2$ and $-4 A_i C_i$ are positive and sum to another positive integer.
+  Hence, there are only finitely many triples $(A_i, B_i, C_i)$ which add up to $Δ$
+  and there must be a pair of indices $i ≠ j$ such that $(A_i, B_i, C_i) = (A_j, B_j, C_j)$
+  and therefore $x_i = x_j$.
 \end{proof}
