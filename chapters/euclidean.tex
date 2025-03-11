@@ -109,12 +109,51 @@ Continued fractions are fractions of the form
   \]
 \end{definition}
 
+\begin{lemma}
+  \label{lem:cf-1}
+  Let $x = [a₀; a₁, …]$ and $xₖ = [aₖ; a_{k+1}, …]$, then
+  \[
+    x = \frac{p_k x_k + p_{k-1}}{q_k x_k + q_{k-1}}.
+  \]
+\end{lemma}
+
+\begin{proof}
+  We have $x = [a₀; a₁, …, a_{k-1}, x_k]$.
+\end{proof}
+
 \section{Periodicity and Quadratic Irrationals}
 
 \begin{definition}
   A number $x ∈ ℝ$ is said to be a \emph{quadratic irrational} if $x$ is the root of some
   polynomial $p(x)$ over the rational numbers with degree $2$.
 \end{definition}
+
+The interesting connection between the quadratic irrationals and continued
+fraction is that a continued fraction of a number $x ∈ ℝ$ is eventually
+periodic if and only if $x$ is a quadratic irrational.
+We begin with the first direction:
+
+\begin{theorem}[Euler's Theorem]
+  If the continued fraction representation of a number $x ∈ ℝ$ is eventually periodic,
+  then $x$ is a quadratic irrational.
+\end{theorem}
+
+\begin{proof}
+  Let $x$ be a continued fraction $[a₀; a₁, …]$ with a period of length $ℓ ≥ 1$ starting at index $k ≥ 0$,
+  i.e. $x_k = [a_k; a_{k+1}, …] = [a_{k+ℓ}; a_{k+ℓ+1}, …] = x_{k+ℓ}$.
+  By Lemma~\ref{lem:cf-1}, we have
+  \[
+    x
+    = \frac{p_k x_k + p_{k-1}}{q_k x_k + q_{k-1}}
+    = \frac{p_{k+ℓ} x_{k+ℓ} + p_{k+ℓ-1}}{q_{k+ℓ} x_{k+ℓ} + q_{k+ℓ-1}}
+    = \frac{p_{k+ℓ} x_k + p_{k+ℓ-1}}{q_{k+ℓ} x_k + q_{k+ℓ-1}}
+  \]
+  Multiplying by the denominators on both sides results in the quadratic equation
+  \[
+    (q_{k+ℓ} x_k + q_{k+ℓ-1})(p_k x_k + p_{k-1}) - (q_k x_k + q_{k-1}) (p_{k+ℓ} x_k + p_{k+ℓ-1}) = 0.
+  \]
+  Hence, $x_k$ is a quadratic irrational and $x$ must be one, too.
+\end{proof}
 
 Let $x$ be a quadratic irrational with polynomial $p$.
 Furthermore, let $x = [a₀; a₁, \dots]$ be its continued fraction and $x_k = [a_k; a_{k+1}, \dots]$.
