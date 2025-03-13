@@ -75,52 +75,6 @@ Continued fractions are fractions of the form
   \todo[inline]{Finish this proof.}
 \end{proof}
 
-\begin{definition}
-  The \emph{$n$-th convergent} of an infinite continued fraction $[a_0; a_1, \dots]$
-  is defined as the finite continued fraction $[a_0; a_1, \dots, a_n]$.
-\end{definition}
-
-\begin{lemma}
-  For every $n \in \N$ there exists two polynomials $p_n$ and $q_n$ such that the
-  $n$-th convergent of $[a_0; a_1, \dots]$ can be represented by the quotient
-  of the two polynomials:
-  \[
-    [a_0; a_1, \dots, a_n] = \frac{p_n(a_0, a_1, \dots, a_n)}{q_n(a_0, a_1, \dots, a_n)}
-  \]
-\end{lemma}
-
-\begin{proof}
-  For $n = 0$, we have $p_0(a_0) = a_0$ and $q_0(a_0) = 1$.
-  By induction, it follows that
-  \[
-    [a_0; a_1, \dots, a_n] = a_0 + \frac{1}{[a_1; a_2 \dots, a_n]} = a_0 + \frac{q_{n-1}(a_1, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
-  \]
-  From this, we can derive the polynomials $p_n$ and $q_n$:
-  \begin{align*}
-    p_n(a_0, \dots, a_n) & = a_0 p_{n-1}(a_1, \dots, a_n) + p_{n-2}(a_2, \dots, a_n) \\
-    q_n(a_0, \dots, a_n) & = p_{n-1}(a_1, \dots, a_n). \qedhere
-  \end{align*}
-\end{proof}
-
-\begin{definition}
-  The canonical structure of the $n$-th convergent $[a_0; a_1, \dots, a_n]$ is defined as
-  \[
-    [a_0; a_1, \dots, a_n] = \frac{p_n}{q_n} = \frac{p_n(a_0, \dots, a_n)}{p_{n-1}(a_1, \dots, a_n)}.
-  \]
-\end{definition}
-
-\begin{lemma}
-  \label{lem:cf-1}
-  Let $x = [a₀; a₁, …]$ and $xₖ = [aₖ; a_{k+1}, …]$, then
-  \[
-    x = \frac{p_k x_k + p_{k-1}}{q_k x_k + q_{k-1}}.
-  \]
-\end{lemma}
-
-\begin{proof}
-  We have $x = [a₀; a₁, …, a_{k-1}, x_k]$.
-\end{proof}
-
 \section{Periodicity and Quadratic Irrationals}
 
 \begin{definition}
@@ -139,15 +93,72 @@ fraction is that a continued fraction of a number $x ∈ ℝ$ is eventually
 periodic if and only if $x$ is a quadratic irrational.
 We begin with the first direction:
 
-\begin{theorem}[Euler's Theorem]
+\begin{lemma}
+  Let $x ∈ ℝ$, then
+  \[
+    [a₀; a₁, …, a_n, x] = [a₀; a₁, …, a_n + 1/x]
+  \]
+\end{lemma}
+
+\begin{proof}
+  \label{lem:nesting}
+  If $n = 0$, then
+  \[
+    [a₀; x] = a₀ + \frac{1}{[x]} = a₀ + \frac{1}{x} = [a₀ + 1/x].
+  \]
+  Suppose the lemma is true for some $n ≥ 0$, then
+  \begin{align*}
+    [a₀; a₁, …, aₙ, x]
+    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ, x]} \\
+    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ + 1/x]} \\
+    & = [a₀; a₁, …, aₙ, x]. \qedhere
+  \end{align*}
+\end{proof}
+
+We define the following sequences over the sequence $\{a_n\}$:
+\begin{align*}
+  pₙ & = p_{n-1} a_n + p_{n - 2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
+  qₙ & = q_{n-1} a_n + q_{n - 2}, & q_{-1} & = 0, & q_{-2} & = 1.
+\end{align*}
+
+\begin{lemma}
+  \label{lem:wallis}
+  Let $x ∈ ℝ$, then
+  \[
+    [a₀; a₁, …, a_{n-1}, x] = \frac{p_{n-1} x + p_{n-2}}{q_{n-1} x + q_{n-2}}.
+  \]
+\end{lemma}
+
+\begin{proof}
+  If $n = 0$, then
+  \[
+    [x] = x = \frac{1x + 0}{0x + 1} = \frac{p_{-1} x + p_{-2}}{q_{-1} x + q_{-2}}.
+  \]
+  Suppose, the lemma is true for $n ≥ 0$.
+  By Lemma~\ref{lem:nesting}, we have
+  \begin{align*}
+    [a₀; a₁, …, aₙ, x]
+    & = [a₀; a₁, …, aₙ + 1/x].
+  \end{align*}
+  From the induction hypothesis, it follows that
+  \begin{align*}
+    [a₀; a₁, …, aₙ + 1/x]
+    & = \frac{p_{n - 1} (aₙ + 1/x) + p_{n-2}}{q_{n-1} (aₙ + 1/x) + q_{n-2}} \\
+    & = \frac{x (p_{n-1} aₙ + p_{n-2}) + p_{n-1}}{x (q_{n-1} aₙ + q_{n-2}) + q_{n-1}} \\
+    & = \frac{x pₙ + p_{n-1}}{x pₙ + p_{n-1}}. \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{theorem}
   If the continued fraction representation of a number $x ∈ ℝ$ is eventually periodic,
   then $x$ is a quadratic irrational.
 \end{theorem}
 
 \begin{proof}
-  Let $x$ be a continued fraction $[a₀; a₁, …]$ with a period of length $ℓ ≥ 1$ starting at index $k ≥ 0$,
+  Let $x$ be a continued fraction $[a₀; a₁, …]$ with a period of length $ℓ ≥ 1$
+  starting at an index $k ≥ 0$,
   i.e. $x_k = [a_k; a_{k+1}, …] = [a_{k+ℓ}; a_{k+ℓ+1}, …] = x_{k+ℓ}$.
-  By Lemma~\ref{lem:cf-1}, we have
+  By Lemma~\ref{lem:wallis}, we have
   \[
     x
     = \frac{p_k x_k + p_{k-1}}{q_k x_k + q_{k-1}}
@@ -158,12 +169,15 @@ We begin with the first direction:
   \[
     (q_{k+ℓ} x_k + q_{k+ℓ-1})(p_k x_k + p_{k-1}) - (q_k x_k + q_{k-1}) (p_{k+ℓ} x_k + p_{k+ℓ-1}) = 0.
   \]
-  Hence, $x_k$ is a quadratic irrational and $x$ must be one, too.
+  Hence, $x_k$ is a quadratic irrational and $x$ must be one too since $x ∈ ℚ(x_k)$.
 \end{proof}
 
+The converse was originally shown by Lagrange.
+Here I present a proof based on \cite{Northshield11},
+which is much shorter and easier to understand.
 Let $x$ be a quadratic irrational with polynomial $p$.
 Furthermore, let $x = [a₀; a₁, \dots]$ be its continued fraction and $x_k = [a_k; a_{k+1}, \dots]$.
-For every $x_i$ we can find a polynomial $p_i$ with $x_i$ as its root.
+For every $x_i$ we construct a polynomial $p_i$ with $x_i$ as its root.
 We begin by expanding $x$ once as $a₀ + x₁^{-1}$.
 By definition, $a₀ + x₁^{-1}$ is the root of $p$.
 However, this gives us a new polynomial in $x₁$ (if we multiply by $x₁^2$):
@@ -227,7 +241,7 @@ However, this is not the case.
   This is a contradiction and therefore there must be infinitely many $p_i$ with $A_i C_i < 0$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[Lagrange's Theorem]
   If $x$ is a quadratic irrational, then its continued fraction is eventually periodic.
 \end{theorem}
 
