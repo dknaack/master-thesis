@@ -135,3 +135,154 @@ Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}
   \input{tables/period-length.tex}
 \end{table}
 
+\section{Multi-Dimensional Continued Fractions}
+
+\begin{definition}
+  Given a sequence of $d$-dimensional vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
+  indices $\{ℓₙ\}_{n ≥ 0}$, the \emph{multi-dimensional fraction} $[r₀; ℓ₁, r₁; …]$ is defined as
+  \[
+    [r₀] = r₀, \qquad [r₀; ℓ₁, r₁; …; ℓₙ, rₙ] = r₀ + \mathrm{pivot}_{ℓ₁}[r₁; ℓ₂, r₂; …; ℓₙ, rₙ].
+  \]
+\end{definition}
+
+\begin{remark}~
+  \begin{enumerate}
+    \item
+      The first item has no index.
+      The index sequence $ℓₙ$ is always one shorter than the vector sequence $rₙ$.
+    \item
+      For the generalized Euclidean algorithm, the sequence $r_n$ consists solely of integer vectors.
+      However, the MDCF can also be defined over rational or even real vectors.
+      To differentiate the two, a sequence $rₙ$ will denote a sequence of real
+      vectors and $aₙ$ will denote a sequence of integer vectors.
+  \end{enumerate}
+\end{remark}
+
+The concepts from one-dimensional continued fractions naturally carry over to its
+multi-dimensional counterpart.
+
+\begin{definition}[Complete Quotient, Convergent, Periodicity]~
+  \begin{itemize}
+    \item The \emph{$k$-th complete quotient} is defined as $[rₖ; r_{k+1}, …]$.
+    \item The \emph{$k$-th convergent} of $x$ is defined as the finite fraction $[r₀; ℓ₁, r₁; …; ℓ_k, r_k]$.
+    \item The MDCF is \emph{eventually periodic} if there exists $k₀ ≥ 0$ and $ℓ ≥ 1$ such that $rₖ = r_{k+ℓ}$ for every $k ≥ k₀$.
+      The MDCF is \emph{purely periodic} if $k₀ = 0$.
+  \end{itemize}
+\end{definition}
+
+To show that any periodic MDCF contains elements of a field with degree $d + 1$
+over the rationals, we proceed similarly to the one-dimensional continued
+fraction.
+We first show the multi-dimensional analogue of Lemma~\ref{lem:nesting}.
+
+\begin{lemma}[Nesting]
+  \label{lem:mdcf-nesting}
+  Let $x ∈ ℝ^d$, then
+  \[
+    [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
+    = [a₀; ℓ₁, a₁; \cdots; ℓₙ, aₙ + \mathrm{pivot}_{ℓ}(x)]
+  \]
+\end{lemma}
+
+\begin{proof}
+  If $n = 0$, then by definition,
+  \[
+    [a₀; ℓ, x] = a₀ + \mathrm{pivot}_{ℓ}[x] = a₀ + \mathrm{pivot}_{ℓ}(x) = [a₀ + \mathrm{pivot}_ℓ(x)].
+  \]
+  Suppose the lemma holds for any $n ≥ 0$, then
+  \begin{align*}
+    [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
+    & = a₀ + \mathrm{pivot}_{ℓ₀}[a₁; …; ℓₙ, aₙ; ℓ, x] \\
+    & = a₀ + \mathrm{pivot}_{ℓ₀}[a₁; …; ℓₙ, aₙ + \mathrm{pivot}_ℓ(x)] \\
+    & = [a₀; ℓ₁, a₁; …; ℓₙ, aₙ + \mathrm{pivot}_ℓ(x)]. \qedhere
+  \end{align*}
+\end{proof}
+
+In Lemma~\vref{lem:wallis}, we had to define two sequences $pₙ$ and $qₙ$ over
+the sequence of the continued fraction $aₙ$.
+Each sequence would only return a single scalar.
+This time we define two matrix sequences $P^{(n)}, Q^{(n)}$ over the sequences $aₙ$ and $ℓₙ$ as
+\begin{align*}
+  P_{ℓₙ}^{(n)} & = P_{n-1} a_n + p_{n-1}, & P_i^{(n)} & = P_i^{(n)}, & P^{(-1)}   & = I_d, \\
+  Q_{ℓₙ}^{(n)} & = Q_{n-1}^T a_n + q_{n-1}, & Q_i^{(n)} & = Q_i^{(n)}, & Q^{(-1)}_j & = 0,   \\
+  p^{(n)}      & = P_{ℓₙ}^{(n-1)},            &           &              & p^{(-1)}_j & = 0,   \\
+  p^{(n)}      & = P_{ℓₙ}^{(n-1)},            &           &              & q^{(-1)}   & = 1.
+\end{align*}
+where $i ≠ ℓ_n$.
+What this sequence effectively does is reconstructing the lattice from an
+initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
+
+\begin{lemma}[Wallis]
+  \label{lem:mdcf-wallis}
+  Let $x ∈ ℝ^d$, then
+  \[
+    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
+    = \left(P^{(n-1)} x + p^{(n-1)}\right) \oslash \left(Q^{(n-1)} x + q^{(n-1)} \right),
+  \]
+  where $u \oslash v$ denotes the element-wise division of two vectors.
+\end{lemma}
+
+\begin{proof}
+  If $n = 0$, then
+  \[
+    [x] = x = (I_d x + 0) \oslash (0 x + 1).
+  \]
+  Suppose the lemma holds for $n ≥ 0$, then there exists matrices $P$ and $Q$
+  as well as vectors $p$ and $q$ such that
+  \begin{align*}
+    y & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]                              \\
+      & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1} + \mathrm{pivot}_ℓ(x)]              \\
+      & = (P (a + \mathrm{pivot}(x, ℓ)) + p) \oslash (Q (aₙ + \mathrm{pivot}(x, ℓ)) + q) \\
+  \end{align*}
+  We extend each fraction in the vector $y$ by $x_ℓ/x_ℓ$.
+  The numerator has the following form
+  \begin{align*}
+    x_ℓ (P (a + \mathrm{pivot}(x, ℓ)) + p)
+    & = x_ℓ (P a + P_ℓ \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} P_i \frac{x_i}{x_ℓ} + p) \\
+    & = \underbrace{(P a + p)}_{P_ℓ'} x_ℓ + \sum_{i ≠ ℓ} \underbrace{P_i}_{P_i'} x_i + \underbrace{P_ℓ}_{p'} \\
+    & = P' x + p'.
+  \end{align*}
+  The proof for the denominator is analogous.
+  Hence,
+  \begin{align*}
+    y & = (P(a + \mathrm{pivot}(x, ℓ)) + p) \oslash (Q(a + \mathrm{pivot}(x, ℓ)) + q) \\
+      & = (P' x + p') \oslash (Q' x + q'). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Given $r ∈ ℝ$, let $x = (r¹, r², …, r^d)$.
+  If the MDCF of $x$ is purely periodic, then $[ℚ(r) : ℚ] ≤ d + 1$.
+\end{proposition}
+
+\begin{proof}
+  Suppose the algorithm is purely periodic on input $x$ with period $ℓ$.
+  Let $y$ be the $ℓ$-th complete quotient of $x$, then $x = y$.
+  By Lemma~\ref{lem:mdcf-wallis}, there are matrices $P, Q$ and vectors $p, q$ such that
+  \[
+    rⁱ = \frac{\sum_{j=1}^d P_{ij} rʲ + pᵢ}{\sum_{j=1}^d Q_{ij} rʲ + qᵢ}, \text{ for every } i ≤ d.
+  \]
+  Multiplying both sides with the denominator results in the polynomial equation
+  \[
+    \sum_{j=1}^d (Q_{ij} r^{i+j} - P_{ij} r^j) + r^i q_i - p_i = 0.
+  \]
+  For $i = 1$, the maximum degree of this polynomial is $d + 1$.
+  Hence, $[ℚ(r) : ℚ] ≤ d + 1$.
+\end{proof}
+
+\begin{lemma}
+  \todo[inline]{Some lemma which simplifies the system down to degree $d$.}
+\end{lemma}
+
+\begin{theorem}
+  Given $r ∈ ℝ$, let $xᵢ = r^i$ for every $i ≤ d$.
+  If the brute-force algorithm is eventually periodic for $x = (x₁, …, x_d)$,
+  then $[ℚ(r) : ℚ] ≤ d + 1$.
+\end{theorem}
+
+\begin{proof}
+  \[
+    \frac{\sum_{j=1}^d P_{ij} f_j(r) + pᵢ}{\sum_{j=1}^d Q_{ij} f_j(r) + qᵢ}
+    = \frac{\sum_{j=1}^d P_{ij} f_j(r) + pᵢ}{\sum_{j=1}^d Q_{ij} f_j(r) + qᵢ}
+  \]
+\end{proof}
