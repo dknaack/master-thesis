@@ -217,72 +217,186 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
   Let $x ∈ ℝ^d$, then
   \[
     [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
-    = \left(P^{(n-1)} x + p^{(n-1)}\right) \oslash \left(Q^{(n-1)} x + q^{(n-1)} \right),
+    = \frac{P x + p}{Q^T x + q}.
   \]
-  where $u \oslash v$ denotes the element-wise division of two vectors.
 \end{lemma}
 
 \begin{proof}
   If $n = 0$, then
   \[
-    [x] = x = (I_d x + 0) \oslash (0 x + 1).
+    [x] = x = \frac{I_d x + 0}{0^T x + 1}.
   \]
-  Suppose the lemma holds for $n ≥ 0$, then there exists matrices $P$ and $Q$
-  as well as vectors $p$ and $q$ such that
+  Suppose the lemma holds for $n ≥ 0$, then there exists a matrix $P$, vectors
+  $Q, p$ and scalar $q$ such that
   \begin{align*}
     y & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]                              \\
       & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1} + \mathrm{pivot}_ℓ(x)]              \\
-      & = (P (a + \mathrm{pivot}(x, ℓ)) + p) \oslash (Q (aₙ + \mathrm{pivot}(x, ℓ)) + q) \\
+      & = \frac{P (a + \mathrm{pivot}_ℓ(x)) + p}{Q^T (aₙ + \mathrm{pivot}_ℓ(x)) + q} \\
+      & = \frac{x_ℓ}{x_ℓ} · \frac{P (a + \mathrm{pivot}_ℓ(x)) + p}{Q^T (aₙ + \mathrm{pivot}_ℓ(x)) + q}.
   \end{align*}
-  We extend each fraction in the vector $y$ by $x_ℓ/x_ℓ$.
-  The numerator has the following form
+  The numerator has the following form:
   \begin{align*}
     x_ℓ (P (a + \mathrm{pivot}(x, ℓ)) + p)
     & = x_ℓ (P a + P_ℓ \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} P_i \frac{x_i}{x_ℓ} + p) \\
     & = \underbrace{(P a + p)}_{P_ℓ'} x_ℓ + \sum_{i ≠ ℓ} \underbrace{P_i}_{P_i'} x_i + \underbrace{P_ℓ}_{p'} \\
     & = P' x + p'.
   \end{align*}
-  The proof for the denominator is analogous.
+  Analogously, the denominator has the following form:
+  \begin{align*}
+    x_ℓ (Q^T (a + \mathrm{pivot}(x, ℓ)) + q)
+    & = x_ℓ (Q^T a + Q_ℓ \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} Q_i \frac{x_i}{x_ℓ} + q) \\
+    & = \underbrace{(Q^T a + q)}_{Q_ℓ'} x_ℓ + \sum_{i ≠ ℓ} \underbrace{Q_i}_{Q_i'} x_i + \underbrace{Q_ℓ}_{q'} \\
+    & = Q' x + q'.
+  \end{align*}
   Hence,
   \begin{align*}
-    y & = (P(a + \mathrm{pivot}(x, ℓ)) + p) \oslash (Q(a + \mathrm{pivot}(x, ℓ)) + q) \\
-      & = (P' x + p') \oslash (Q' x + q'). \qedhere
+    y & = \frac{P(a + \mathrm{pivot}(x, ℓ)) + p}{Q(a + \mathrm{pivot}(x, ℓ)) + q} \\
+      & = \frac{P' x + p'}{Q'^T x + q'}. \qedhere
   \end{align*}
 \end{proof}
 
 \begin{proposition}
   Given $r ∈ ℝ$, let $x = (r¹, r², …, r^d)$.
-  If the MDCF of $x$ is purely periodic, then $[ℚ(r) : ℚ] ≤ d + 1$.
+  If the MDCF representation of $x$ is purely periodic, then $[ℚ(r) : ℚ] ≤ d + 1$.
 \end{proposition}
 
 \begin{proof}
   Suppose the algorithm is purely periodic on input $x$ with period $ℓ$.
   Let $y$ be the $ℓ$-th complete quotient of $x$, then $x = y$.
-  By Lemma~\ref{lem:mdcf-wallis}, there are matrices $P, Q$ and vectors $p, q$ such that
+  By Lemma~\ref{lem:mdcf-wallis},
   \[
-    rⁱ = \frac{\sum_{j=1}^d P_{ij} rʲ + pᵢ}{\sum_{j=1}^d Q_{ij} rʲ + qᵢ}, \text{ for every } i ≤ d.
+    rⁱ = \frac{\sum_{j=1}^d P_{ij} rʲ + pᵢ}{\sum_{j=1}^d Qⱼ rʲ + qᵢ}, \text{ for every } i ≤ d.
   \]
   Multiplying both sides with the denominator results in the polynomial equation
   \[
-    \sum_{j=1}^d (Q_{ij} r^{i+j} - P_{ij} r^j) + r^i q_i - p_i = 0.
+    \sum_{j=1}^d (Q_j r^{i+j} - P_{ij} r^j) + r^i q_i - p_i = 0.
   \]
   For $i = 1$, the maximum degree of this polynomial is $d + 1$.
   Hence, $[ℚ(r) : ℚ] ≤ d + 1$.
 \end{proof}
 
+\section{Homogeneous Coordinates}
+
+The pivot operation is quite cumbersome to write.
+We'll always need to differentiate the cases $i = ℓ$ and $i ≠ ℓ$.
+Homogeneous coordinates allow us to simplify the whole pivot operation as a single matrix.
+
+Instead of an $d$-dimensional vector space, we project each vector into a $(d+1)$-dimensional vector space.
+Each vector $x = (x₁, …, x_d) ∈ ℝ^d$ is extended by a new coordinate $x₀ = 1$.
+We denote this vector as $\hat x = [1, x₁, …, x_d]$.
+Two such vectors $\hat x, \hat y$ are considered equivalent if they are collinear.
+Stated differently, each vector $[x₀, x₁, …, x_d]$ represents a line in the direction $(x₀, x₁, …, x_d)$.
+
+% TODO: Explain mapping from and back to the original vector space.
+\begin{center}
+  \begin{tikzpicture}
+    \matrix[
+      column sep=2cm,
+      nodes={text width=3cm, align=center},
+    ] {
+      \node (L0) {$\mathbb{R}^d$}; &
+      \node (R0) {$\mathbb{RP}^{d+1}$}; \\
+      \node (L1) {$(x₁, …, x_d)$}; &
+      \node (R1) {$[1, x₁, …, x_d]$}; \\
+      \node (L2) {$(x₁/x₀, …, x_d/x₀)$}; &
+      \node (R2) {$[x₀, x₁, …, x_d]$}; \\
+    };
+
+    \draw[->] (L1) -- node[above] {} (R1);
+    \draw[<-] (L2) -- node[above] {} (R2);
+  \end{tikzpicture}
+\end{center}
+
+For example, consider the vector $[1, x₁, x₂]$ with $0 ≤ x₁, x₂ < 1$.
+A pivot operation with $ℓ = 1$ would result in the vector $[1, 1/x₁, x₂/x₁]$.
+This vector is equivalent to $[x₁, 1, x₂]$.
+Therefore, we can reformulate this operation as a coordinate swap of $x_ℓ$ with
+the new coordinate $x₀$:
+\[
+  \begin{bmatrix}
+    0 & 1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1 \\
+  \end{bmatrix}
+  ·
+  \begin{bmatrix} 1 \\ x₁ \\ x₂ \\ \end{bmatrix}
+  =
+  \begin{bmatrix} x₁ \\ 1 \\ x₂ \\ \end{bmatrix}.
+\]
+Similarly, subtracting the integer part of each value in $[1, x₁, x₂]$ is
+equivalent to a series of skew operations:
+\[
+  \begin{bmatrix}
+    1 & 0 & 0 \\
+    -\floor{x₁} & 1 & 0 \\
+    0 & 0 & 1 \\
+  \end{bmatrix}
+  ·
+  \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    -\floor{x₂} & 0 & 1 \\
+  \end{bmatrix}
+  ·
+  \begin{bmatrix} 1 \\ x₁ \\ x₂ \\ \end{bmatrix}
+  =
+  \begin{bmatrix} 1 \\ x₁ - \floor{x₁} \\ x₂ - \floor{x₂} \\ \end{bmatrix}.
+\]
+Importantly, each of those matrices with
+determinant $1$.
+Therefore, the whole operation can be reversed by inverting the matrix.
+This is the equivalent of the inverse pivot operation in homogeneous
+coordinates.
+
+We can also reformulate the MDCF as a series of matrix multiplications.
+In the following $T(a)$ denotes the translation by a vector $a ∈ ℝ^d$
+and the matrix $S(ℓ)$ denotes the swap of $x_\ell$ with $x_0$.
+The MDCF can then be written as
+\[
+  [a₀] = \hat a₀, \qquad
+  [a₀; ℓ₁, a₁; …; ℓₙ, aₙ] = T(a₀) · S(ℓ_1) · [a₁; ℓ_2, a_2; …; ℓ_n, a_n].
+\]
+
+This allows us to drastically simplify Lemma~\ref{lem:mdcf-wallis}.
+Now, we only have a single matrix sequence $P_n$, defined as follows:
+\begin{align*}
+  P_n = P_{n-1} A_n, \qquad P_0 = I_{d+1}.
+\end{align*}
+
 \begin{lemma}
-  \todo[inline]{Some lemma which simplifies the system down to degree $d$.}
+  \label{lem:mdcf-wallis'}
+  Let $x ∈ ℝ^d$, then
+  \[
+    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x] = P_{n-1} \hat x
+  \]
 \end{lemma}
 
+\begin{proof}
+  For $n = 0$, this is clearly true.
+  Suppose the lemma is true for $n ≥ 0$, then
+  \begin{align*}
+    [a₀; ℓ₁, a₁; …; ℓ_n, a_n; ℓ, x]
+    & = [a₀; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
+    & = P_{n-1}
+    \begin{pmatrix}
+      a_n + \mathrm{pivot}_ℓ(x) \\ 1
+    \end{pmatrix} \\
+    & = P_{n-1} A_n \hat{x} \\
+    & = P_n \hat{x} \qedhere
+  \end{align*}
+\end{proof}
+
 \begin{theorem}
-  Given $r ∈ ℝ$, let $xᵢ = r^i$ for every $i ≤ d$.
-  If the brute-force algorithm is eventually periodic for $x = (x₁, …, x_d)$,
-  then $[ℚ(r) : ℚ] ≤ d + 1$.
+  Let $A ∈ ℤ^{d×d}, B ∈ ℤ^d$ and $C ∈ ℤ$.
+  If $x^\top A x + B x + C = 0$ for some vector $x ∈ ℝ^d$,
+  then the MDCF of $x$ is eventually periodic.
 \end{theorem}
 
 \begin{proof}
-  \[
-    \frac{\sum_{j=1}^d P_{ij} f_j(r) + pᵢ}{\sum_{j=1}^d Q_{ij} f_j(r) + qᵢ}
-    = \frac{\sum_{j=1}^d P_{ij} f_j(r) + pᵢ}{\sum_{j=1}^d Q_{ij} f_j(r) + qᵢ}
-  \]
+
 \end{proof}
+
+\begin{corollary}
+  If $r$ is the root of a polynomial of degree $2d$,
+  then the MDCF of $x = (r^1, …, r^d)$ is eventually periodic.
+\end{corollary}
