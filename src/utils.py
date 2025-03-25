@@ -1,10 +1,59 @@
 from sage.all import *
 
 def frac(x):
-    """
-    Returns the fractional value of x.
-    """
     return x - floor(RR(x))
+
+def pivot(xs, *indices):
+    xs = list(xs)
+    for l in indices:
+        xl = xs[l]
+        assert frac(xl) != 0, "xl cannot be zero"
+        for i in range(d):
+            if i == l:
+                xs[i] = 1 / frac(xs[i])
+            else:
+                xs[i] = frac(x[i]) / frac(xl)
+    return tuple(xs)
+
+def sequences(base, max_digits):
+    """
+    Iterator for all sequences of length `max_digits` with digits in `base`.
+    """
+    seq = []
+    while True:
+        # Increment the sequence
+        carry = 1
+        for i in range(len(seq) - 1, -1, -1):
+            seq[i] += carry
+            if seq[i] == base:
+                seq[i] = 0
+                carry = 1
+            else:
+                carry = 0
+                break
+
+        if carry:
+            if len(seq) < max_digits:
+                seq.insert(0, 1)
+            else:
+                break
+
+        yield seq
+
+def brute_force_search(xs, max_depth):
+    d = len(xs)
+    for L in sequences(d, max_depth):
+        index = {xs: 0}
+        ys = xs
+        for i, l in enumerate(L):
+            ys = pivot(ys, l)
+            if ys in index:
+                j = index[ys]
+                start = seq[:j]
+                period = seq[j:i]
+                return start, period
+            else:
+                index[ys] = i
 
 def euclidean(A, b, *indices):
     xs = A.solve_right(b)
@@ -15,19 +64,6 @@ def euclidean(A, b, *indices):
         A.set_column(l, c)
         xs = A.solve_right(b)
     return (A, xs, b)
-
-def pivot(xs, *indices):
-    for l in indices:
-        ys = [0] * len(xs)
-        xl = xs[l]
-        assert frac(xl) != 0, "xl cannot be zero"
-        for i, xi in enumerate(xs):
-            if i == l:
-                ys[i] = 1 / frac(xi)
-            else:
-                ys[i] = frac(xi) / frac(xl)
-        xs = tuple(ys)
-    return xs
 
 def get_values(xs, indices):
     for l in indices:
