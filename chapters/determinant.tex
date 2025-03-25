@@ -17,76 +17,41 @@
   \]
 \end{proof}
 
-The decrease can actually be slightly improved in higher dimensions.
-In higher dimensions, there must be some variable in between the smallest value $\{x_ℓ\}$
-and $1$.
-Therefore, the fractional ratio between those two variables must be smaller than the ratio between $1$ and $x_ℓ$,
-unless
+Unfortunately, the decrease cannot be improved beyond this point even in higher dimensions.
+To see this, we construct an input which achieves a decrease very close to $1/2$.
+For this input we choose $x₁$ to be very close to $1/2$ and we shove the rest of the variables very close to $1$.
+The total decrease is then very close to $1/2$.
 
-\begin{theorem}
-  Let $d ≥ 2$, then
-  the determinant decreases by a factor of at least $1/3$ over two iterations
-  using the minimum strategy.
-\end{theorem}
+\begin{proposition}
+  For every (sufficiently small) $ε > 0$,
+  there exists an input $x ∈ ℝ^d$
+  which achieves a decrease of exactly $1/2 - ε$ over two iterations.
+\end{proposition}
 
 \begin{proof}
-  Let $x ∈ ℚ^d$.
-  Suppose we do not achieve a decrease of one third in the first iteration, i.e. $\{x_ℓ\} > 1/3$.
-  We differentiate between two cases.
-  First, assume we chose the same index $ℓ$ in both iterations, i.e.
-  \begin{align*}
-    \{x_ℓ\} ≤ \{x_i\}
-    \text{ and }
-    \left\{\frac{1}{\{x_ℓ\}}\right\} ≤ \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\}
-    \text{ for }
-    i ≠ ℓ.
-  \end{align*}
-  Because fractional values are always positive, we have for all indices $i ≠ ℓ$ and suitable numbers $a_1, \dots, a_d ∈ ℕ$,
-  \begin{align*}
-    \{x_ℓ\} \left\{\frac{1}{\{x_ℓ\}}\right\} = 1 - a_ℓ \{x_ℓ\} ≤ \{x_ℓ\} \left\{\frac{\{x_i\}}{\{x_ℓ\}}\right\} ≤ \{x_i\} - a_i \{x_ℓ\}.
-  \end{align*}
-  Because we chose $x_ℓ$ as our pivot, it must be the smallest element.
-  It follows that we cannot choose $a_ℓ = a_i$.
-  Hence, $a_ℓ ≥ 2$.
-  But if $x_ℓ > 1/3$, then the determinant decreases by at least
+  For $d = 1$, let $x₁ = 1/2 + ε$.
+  Over two iterations, the determinant decreases by
   \[
-    \{x_ℓ\} \left\{ \frac{1}{\{x_ℓ\}} \right\} ≤ 1 - 2\{x_ℓ\} < 1/3.
+    x₁ \left\{\frac{1}{x₁}\right\} = 1 - (1/2 + ε) = 1/2 - ε.
   \]
 
-  Next, suppose we chose $ℓ₁ ≠ ℓ₂$ and $\{x_{ℓ₁}\} > 1/3$.
-  Again, there are numbers $a_{ℓ₁}, a_{ℓ₂} ∈ ℕ$ such that
-  \begin{align*}
-    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\}
-    = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\}
-    ≤ \{x_{ℓ₁}\} \left\{\frac{1}{\{x_{ℓ₁}\}}\right\}
-    = 1 - a_{ℓ₁} \{x_{ℓ₁}\}.
-  \end{align*}
-  Because $\{x_{ℓ₂}\} ≠ 1$, we must have $a_{ℓ_2} > a_{ℓ₁} ≥ 1$.
-  However, then the determinant decreases over two iterations by at least
+
+  For $d > 1$, let $x₁ = (1 + ε)/2$ and $xᵢ = 1 - ε/2$ for $i > 1$.
+  Clearly, $x₁$ is chosen in the first iteration.
+  In the second iteration, the choice does not matter as $\{xᵢ/x₁\}$ is the same for every $i > 1$.
+  Hence, the total decrease over two iterations is
   \[
-    \{x_{ℓ₁}\} \left\{\frac{\{x_{ℓ₂}\}}{\{x_{ℓ₁}\}}\right\} = \{x_{ℓ₂}\} - a_{ℓ₂} \{x_{ℓ₁}\} ≤ \{x_{ℓ₂}\} - 2 \{x_{ℓ₁}\} < 1/3.
-    \qedhere
+    x₁ \left\{\frac{xᵢ}{x₁}\right\}
+    = xᵢ - x₁
+    = 1 - \frac{ε}{2} - \frac{1 + ε}{2}
+    = \frac{1}{2} - ε. \qedhere
   \]
 \end{proof}
 
-\begin{theorem}
-  For every $ε > 0$, there exists an input $x ∈ ℝ^d$ which achieves a decrease
-  of exactly $1/3 - ε$ over two iterations.
-\end{theorem}
 
-\begin{proof}
-  Set $x₁ = 1 / 3 + ε$ and $x_i = 2/3$ for $i ≠ 1$.
-  We choose $x₁$ first and next one of the $x_i$ with $i ≠ 1$.
-  The total decrease over two iterations is
-  \[
-    x₁ \left\{ \frac{x_i}{x₁} \right\}
-    = x₂ - x₁
-    = \frac{1}{3} - ε.
-    \qedhere
-  \]
-\end{proof}
-
+% ==============================================================================
 \section{Choosing the Closest Pair of Values}
+% ==============================================================================
 
 The second strategy works as follows:
 \begin{enumerate}
