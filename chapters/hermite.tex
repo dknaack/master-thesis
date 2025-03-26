@@ -160,12 +160,14 @@ We first show the multi-dimensional analogue of Lemma~\ref{lem:nesting}.
 In Lemma~\vref{lem:wallis}, we had to define two sequences $pₙ$ and $qₙ$ over
 the sequence of the continued fraction $aₙ$.
 Each sequence would only return a single scalar.
-This time we define two matrix sequences $P^{(n)}, Q^{(n)}$ over the sequences $aₙ$ and $ℓₙ$ as
+In total, we define four sequences:
+A matrix sequence $P^{(n)}$, two vector sequences $Q^{(n)}$ and $p^{(n)}$ as well as a scalar sequence $q^{(n)}$.
+Their are defined as follows:
 \begin{align*}
-  P_{ℓₙ}^{(n)} & = P_{n-1} a_n + p_{n-1}, & P_i^{(n)} & = P_i^{(n)}, & P^{(-1)}   & = I_d, \\
-  Q_{ℓₙ}^{(n)} & = Q_{n-1}^T a_n + q_{n-1}, & Q_i^{(n)} & = Q_i^{(n)}, & Q^{(-1)}_j & = 0,   \\
+  P_{ℓₙ}^{(n)} & = P^{(n-1)} a_n + p^{(n-1)}, & P_i^{(n)} & = P_i^{(n)}, & P^{(-1)}   & = I_d, \\
+  Q_{ℓₙ}^{(n)} & = Q^{(n-1)} a_n + q^{(n-1)}, & Q_i^{(n)} & = Q_i^{(n)}, & Q^{(-1)}_j & = 0,   \\
   p^{(n)}      & = P_{ℓₙ}^{(n-1)},            &           &              & p^{(-1)}_j & = 0,   \\
-  p^{(n)}      & = P_{ℓₙ}^{(n-1)},            &           &              & q^{(-1)}   & = 1.
+  q^{(n)}      & = Q_{ℓₙ}^{(n-1)},            &           &              & q^{(-1)}   & = 1.
 \end{align*}
 where $i ≠ ℓ_n$.
 What this sequence effectively does is reconstructing the lattice from an
