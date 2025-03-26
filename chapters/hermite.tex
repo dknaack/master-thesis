@@ -65,6 +65,20 @@ the Jacobi-Perron algorithm must also be periodic for the brute-force algorithm.
 
 \section{Finding a Periodic Representation through Brute-Force}
 
+\begin{Pseudocode}
+algorithm $\textsc{brute-force-search}(x, N)$
+  for $L ∈ \{1, …, d\}^{≤ N}$ do
+    $x₀ ← x$
+    for $i ∈ \{1, …, |L|\}$ do
+      $x_i ← \mathrm{pivot}_{L[i]}(x_{i-1})$
+      if $x_i$ occurred twice then
+        Find the index $j ≠ i$ where $x_j = x_i$
+        $S ← L[1] \,…\, L[j]$
+        $P ← L[j+1] \,…\, L[i]$
+        return $(S, P)$
+  return $ε$
+\end{Pseudocode}
+
 We use the generalized Euclidean algorithm to find a representation for $r ∈ ℝ$.
 More specifically, we use the update rule from the algorithm to find the representation.
 The update rule takes a vector and not a real number, so we use the vector $x_i = r^i$ for $i ≤ d$.
