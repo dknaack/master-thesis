@@ -94,52 +94,6 @@ As our pivot sequence we use the path from the root to the this node.
   The brute-force algorithm is periodic if and only if $α$ is a cubic irrational.
 \end{conjecture}
 
-\begin{lemma}
-  \label{lem:consecutive-same}
-  For every $k ∈ ℕ$, there exists a number $n ∈ ℕ$,
-  such that $\sqrt[3]{n}$ and $\sqrt[3]{n + 1}$ have the same first $k$ terms in
-  their pivot sequences.
-\end{lemma}
-
-\begin{corollary}
-  Any strategy which only compares the fractional values does not produce the
-  same pivot sequence as the brute-force algorithm.
-\end{corollary}
-
-\begin{corollary}
-  The minimum strategy does not produce the same pivot sequence as the
-  brute-force algorithm.
-\end{corollary}
-
-\iffalse
-\begin{theorem}
-  There exists no algorithm which given $x ∈ ℝ^d$ can determine the same
-  strategy as the brute-force search using only $f(d)$ comparison, addition
-  and subtraction operations, for some computable function $f \colon ℕ → ℕ$.
-\end{theorem}
-
-\begin{proof}
-  Idea: A constant-number of additions and subtraction only compare the integer
-  parts of each $x_i$ when the values are chosen close enough to an integer.
-  Because the trees are the same for the first level, the output for both
-  inputs must be the same.
-
-  We choose $x₁ = f(d)$ and $x₂ = \sqrt{f(d) + 1}$ where $n^3 > f(d)$.
-  In particular, $x₁$ is an integer and $x₂$ is between $x₁$ and the next integer.
-  Suppose the algorithm compares $a₁ x₁$ with $a₂ x₂$ for $|a₁|, |a₂| ≤ f(d)$.
-  \[
-    a₂ x₂
-    = a₂ \sqrt{(f(d))^2 + i + 1}
-    ≤ a₂ \left( f(d) + \frac{1}{3 f(d)} \right)
-    = a₂ · f(d) + \frac{a₂}{3 f(d)} \right)
-  \]
-  Furthermore, $a₂ x₂ ≥ a₂ · f(d)$.
-  Therefore, the integer part of $a₂ x₂$ is equal to $a₂ x₁$,
-  even if $a₂ = f(d)$.
-  Hence, any algorithm can only compare the integer parts of $x₁$ and $x₂$.
-\end{proof}
-\fi
-
 \section{Multi-Dimensional Continued Fractions}
 
 \begin{definition}
