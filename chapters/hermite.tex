@@ -76,26 +76,6 @@ The brute-force algorithm performs a breadth-first search over this tree to
 find a node which points to a higher node in the tree, i.e. the path forms a loop.
 As our pivot sequence we use the path from the root to the this node.
 
-\begin{example}
-  The sequences for the prime numbers are:
-  \begin{itemize}
-    \item $2^{1/3}$: $0\overline{10}$.
-    \item $3^{1/3}$: $01\overline{01}$.
-    \item $5^{1/3}$: $0\overline{00111000}$.
-    \item $7^{1/3}$: $0\overline{010100}$.
-    \item $11^{1/3}$: $0\overline{1100}$.
-    \item $13^{1/3}$: $00\overline{010000}$.
-    \item $17^{1/3}$: $000\overline{11110000}$.
-    \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
-  \end{itemize}
-\end{example}
-
-\begin{remark}
-  The first number that has a leading $1$ as the pivot is $12$,
-  which has the pivot sequence $1\overline{0111011101}$.
-  However, there are other possible choices where it does not have a leading $0$.
-\end{remark}
-
 We can likely rule out alternating pivot sequences since this corresponds to
 the Jacobi-Perron algorithm and for this algorithm it is conjectured
 \cite{Karpenkov2024} that the algorithm is not periodic for $\sqrt[3]{4}$.
@@ -157,19 +137,6 @@ Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}
   Hence, any algorithm can only compare the integer parts of $x₁$ and $x₂$.
 \end{proof}
 \fi
-
-\begin{table}[t]
-  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
-  \label{table:cube-root-4}
-  \centering
-  \input{tables/cube-root-4.tex}
-\end{table}
-
-\begin{table}[t]
-  \caption{Period Length of the first $28$ numbers.}
-  \centering
-  \input{tables/period-length.tex}
-\end{table}
 
 \section{Multi-Dimensional Continued Fractions}
 

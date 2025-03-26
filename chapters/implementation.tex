@@ -1,21 +1,42 @@
-\chapter{Notes on the Implementation}
+\chapter{Experimental Analysis on the Periodicity}
 
-\section{Using an Out-of-the-Box Solver}
+\section{Implementation Details}
 
-\begin{itemize}
-  \item Algorithm technically only requires one fractional bit to determine how to round.
-  \item Problem: Solving a system of linear equations requires exact fractional solutions.
-    Using floating-point numbers leads to inaccurate results.
-  \item Could be solved by using an iterative method? However, does a method
-    exist, which is accurate up to one fractional bit?
-\end{itemize}
+\section{Periodic Representations of Cubic Irrationals}
 
-\section{Custom Implementation}
+\begin{example}
+  The sequences for the prime numbers are:
+  \begin{itemize}
+    \item $2^{1/3}$: $0\overline{10}$.
+    \item $3^{1/3}$: $01\overline{01}$.
+    \item $5^{1/3}$: $0\overline{00111000}$.
+    \item $7^{1/3}$: $0\overline{010100}$.
+    \item $11^{1/3}$: $0\overline{1100}$.
+    \item $13^{1/3}$: $00\overline{010000}$.
+    \item $17^{1/3}$: $000\overline{11110000}$.
+    \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
+  \end{itemize}
+\end{example}
 
-\begin{itemize}
-  \item Uses custom \texttt{ratio} datatype which implements rational numbers.
-  \item Linear system solver implemented using Gaussian elimination and pivoting.
-  \item Only the basic algorithm is implemented, so far.
-\end{itemize}
+\begin{remark}
+  The first number that has a leading $1$ as the pivot is $12$,
+  which has the pivot sequence $1\overline{0111011101}$.
+  However, there are other possible choices where it does not have a leading $0$.
+\end{remark}
 
+\begin{table}[t]
+  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
+  \label{table:cube-root-4}
+  \centering
+  \input{tables/cube-root-4.tex}
+\end{table}
 
+\begin{table}[t]
+  \caption{Period Length of the first $28$ numbers.}
+  \centering
+  \input{tables/period-length.tex}
+\end{table}
+
+\section{Finding an Efficient Search Strategy}
+
+\section{Quartic Irrationals and Higher Degrees}
