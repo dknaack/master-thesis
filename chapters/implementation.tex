@@ -39,4 +39,16 @@
 
 \section{Finding an Efficient Search Strategy}
 
+We can likely rule out alternating pivot sequences since this corresponds to
+the Jacobi-Perron algorithm and for this algorithm it is conjectured
+\cite{Karpenkov2024} that the algorithm is not periodic for $\sqrt[3]{4}$.
+However, the brute-force algorithm is periodic for this input (see Table~\ref{table:cube-root-4}).
+
+The choice of the initial input also matters.
+We generally choose $x = (α, q(α))$, where $q$ is some polynomial of degree $2$.
+But different choices of $q$ produce different sequences.
+For example, $(\sqrt[3]{2}, \sqrt[3]{4})$ produces a different sequence of coefficients than $(\sqrt[3]{2}, \sqrt[3]{6})$.
+Even though both inputs represent the same number $\sqrt[3]{2}$.
+Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}$ and $\sqrt[3]{4}$.
+
 \section{Quartic Irrationals and Higher Degrees}
