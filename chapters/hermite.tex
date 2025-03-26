@@ -80,15 +80,18 @@ algorithm $\textsc{brute-force-search}(x, N)$
 \end{Pseudocode}
 
 We use the generalized Euclidean algorithm to find a representation for $r ∈ ℝ$.
-More specifically, we use the update rule from the algorithm to find the representation.
-The update rule takes a vector and not a real number, so we use the vector $x_i = r^i$ for $i ≤ d$.
+More specifically, we use the update rule from the algorithm to find the
+representation.
+The update rule takes a vector and not a real number, so we use the initial
+vector $x_i = q_i(r)$ for $i ≤ d$, where $q_i$ is an arbitrary polynomial of
+degree $i$.
 
-For our input $x ∈ ℝ^d$, we can build up a $d$-ary tree where $x$ is the root and any
-two nodes of this tree $x', x''$ are connected if $\mathrm{pivot}(x, i) = x''$
-for some $i$.
+For our input $x ∈ ℝ^d$, we can build up a $d$-ary tree where the initial input
+vector $x$ is the root and any two nodes of this tree $x', x'' ∈ ℝ^d$ are
+connected if $\mathrm{pivot}(x', ℓ) = x''$ for some index $ℓ$.
 The brute-force algorithm performs a breadth-first search over this tree to
-find a node which points to a higher node in the tree, i.e. the path forms a loop.
-As our pivot sequence we use the path from the root to the this node.
+find a node which points to a higher node in the tree.
+This means that we have found a periodic representation of our real number $r$.
 
 \begin{conjecture}
   The brute-force algorithm is periodic if and only if $α$ is a cubic irrational.
