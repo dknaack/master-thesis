@@ -4,7 +4,8 @@ def frac(x):
     return x - floor(RR(x))
 
 def pivot(xs, *indices):
-    xs = list(xs)
+    xs = list(xs[:])
+    d = len(xs)
     for l in indices:
         xl = xs[l]
         assert frac(xl) != 0, "xl cannot be zero"
@@ -12,7 +13,7 @@ def pivot(xs, *indices):
             if i == l:
                 xs[i] = 1 / frac(xs[i])
             else:
-                xs[i] = frac(x[i]) / frac(xl)
+                xs[i] = frac(xs[i]) / frac(xl)
     return tuple(xs)
 
 def sequences(base, max_digits):
@@ -49,11 +50,11 @@ def brute_force_search(xs, max_depth):
             ys = pivot(ys, l)
             if ys in index:
                 j = index[ys]
-                start = seq[:j]
-                period = seq[j:i]
+                start = L[:j]
+                period = L[j:i+1]
                 return start, period
             else:
-                index[ys] = i
+                index[ys] = i + 1
 
 def euclidean(A, b, *indices):
     xs = A.solve_right(b)
