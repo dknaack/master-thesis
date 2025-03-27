@@ -106,31 +106,62 @@ where the numerator has no more negation:
     always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
 \end{figure}
 
-\section{Two Different Pivoting Strategies}
+\section{Higher-Order Fibonacci Numbers}
 
-In this thesis, I analyze two different possible strategies for the choice of the pivot $ℓ$.
-The first strategy is choosing the minimum fractional value in each iteration.
-This guarantees that we choose the locally optimal value in each iteration.
-However it might not guarantee an optimal solution globally across all iterations.
+In higher dimensions, different notions of Fibonacci numbers exist.
+The generalized algorithm has one more degree of freedom by choosing different indices for the pivot element.
+Therefore, there does not exist a single definite Fibonacci numbers in
+higher dimensions, but a multitude of different types of Fibonacci numbers.
 
-The second strategy is more involved.
-Instead of choosing the minimum, we choose the closest pair of values in $x$.
-More specifically, we do the following:
-\begin{enumerate}
-  \item Sort the vector $x$ in increasing order.
-  \item Find the index $ℓ$ which minimizes $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
-  \item Choose $ℓ$ in the first iteration and $ℓ + 1$ in the second iteration.
-\end{enumerate}
-The idea behind this strategy is that if one value $x_i$ is very close to the
-next value $x_{i+1}$, then the ratio between them is very close to $1$.
-Hence, the determinant decreases very quickly.
+For example, one possible strategy is to choose the minimum fractional value
+$\{x_i\}$ in each iteration as the pivot element.
+The Fibonacci numbers for this strategy are defined as
+\begin{align*}
+  F(0) = F(1) = ⋯ = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d).
+\end{align*}
+We choose our initial input as
+\begin{align*}
+  B & =
+  \begin{pmatrix}
+    F(n + 1) & 0        & ⋯ & 0 \\
+    0        & F(n + 1) & ⋯ & 0 \\
+    ⋮        & ⋮        & ⋱ & ⋮ \\
+    0 & 0 & ⋯ & F(n + 1) \\
+  \end{pmatrix}, \\
+  c & =
+  \begin{pmatrix}
+    F(n) \\
+    F(n) + F(n - 1) \\
+    ⋮ \\
+    F(n) + F(n - 1) + ⋯ + F(n + 1 - d) \\
+  \end{pmatrix},
+\end{align*}
+which gives us the solution vector
+\[
+  x =
+  \left(
+    \frac{F(n)}{F(n + 1)},\;
+    \frac{F(n) + F(n - 1)}{F(n + 1)},\;
+    ⋯,\;
+    \frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - d)}{F(n + 1)}\;
+  \right).
+\]
+The smallest fractional value in this vector is $x₁$, so we pivot with $ℓ = 1$ first.
+\begin{align*}
+  \{x₁'\}
+  & = \left\{\frac{1}{\{x₁\}}\right\}
+  = \left\{\frac{F(n + 1)}{F(n)}\right\}
+  = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}, \\
+  \{xᵢ'\}
+  & = \left\{\frac{\{xᵢ\}}{\{x₁\}}\right\} \\
+  & = \left\{\frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - i)}{F(n + 1)} · \frac{F(n + 1)}{F(n)}\right\} \\
+  & = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
+\end{align*}
 
-In the following chapters, I analyze both strategies on their speed and what
-worst-case inputs they have.
+Another example would be the opposite strategy: Choosing the maximum in each iteration.
+In this case, the Fibonacci numbers are defined as
+\begin{align*}
+  F(0) = \dots = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - d).
+\end{align*}
 
-\begin{itemize}
-  \item Constant: Choose one index until it is integral, $O(1)$.
-  \item Minimum: Choose the smallest fractional value in each iteration, $O(d)$.
-  \item Closest Neighbors: Choose the closest pair of neighbors, $O(d \log d)$.
-  \item Lookahead: Lookahead $k$ levels to find the perfect strategy, $O(d^k)$.
-\end{itemize}
+\section{Extension to Real Numbers}
