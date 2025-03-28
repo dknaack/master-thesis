@@ -1,0 +1,55 @@
+\chapter{Geometrical Interpretation of Continued Fractions}
+
+\section{Quadratic Fields as a Vector Space}
+
+\begin{itemize}
+  \item Quadratic field extensions can be seen as a vector space over $ℚ$ with dimension $2$.
+  \item A vector consists of a rational part and a multiplicative of the root part.
+  \item Conjugate: Flip the sign before the root
+  \item Norm: Given $a + b\sqrt{r}$, the norm is $N(a + b \sqrt{r}) = a^2 - r b^2$.
+  \item Related to Pell's Equation
+  \item Inverse: Conjugate divided by the norm
+  \item Number of vectors is finite when considering the continued fraction,
+    but not when considering the Euclidean algorithm
+\end{itemize}
+
+\section{Conic Sections}
+
+\begin{itemize}
+  \item
+    Everything is in some way related to a cone
+  \item
+    Norm:
+    Vertical cross section of a cone
+  \item
+    Projection from vector space to real numbers:
+    Horizontal cross-section of a cone
+  \item
+    Parabola: Parallel cross-section of a cone
+  \item
+    In higher dimensions, we also get somewhat of a conic section.
+    The problem is that this means the degree increases to $2d$ instead of $d+1$.
+\end{itemize}
+
+\section{Klein Polyhedrons}
+
+\begin{itemize}
+  \item Considers the convergents of a continued fraction as homogeneous coordinates,
+    i.e. when we have $p / q$, then this corresponds to the vector $(p, q)$.
+  \item Simplical cone: Given basis $B$, the simplical cone $C$ is defined as
+    the set of all positive linear combinations.
+  \item
+    The odd and even convergents are each contained in two different simplical cones
+    and connecting them forms the convex hull of the integer points contained in the cones.
+  \item
+    There exists a geometrical analogue of Lagrange's Theorem for Klein Polyhedron,
+    which states that the following two statements are equivalent:
+    \begin{itemize}
+      \item
+        There exists a non-identity operator $A ∈ \mathrm{SL}_2(ℤ)$ with
+        distinct real eigenvalues under which the cone is invariant.
+      \item
+        The integer lengths of consecutive segments in the Klein polygon are periodic.
+    \end{itemize}
+  \item The generalization is much more complicated.
+\end{itemize}
