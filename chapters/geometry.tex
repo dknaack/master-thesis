@@ -53,3 +53,31 @@
     \end{itemize}
   \item The generalization is much more complicated.
 \end{itemize}
+
+Notes on the generalization:
+\begin{itemize}
+  \item
+    A \emph{star} $\mathrm{St}_v$ is the set of edges incident to a vertex.
+    They should form a basis in the respective vector space.
+  \item
+    We construct a set $V_k$ which contains chains of vertices with length $k$.
+  \item
+    We construct a graph $G_k$ where the chains are the vertices and two
+    vertices are connected if their union forms a chain of length $k + 1$.
+  \item
+    Given $\mathcal A ⊆ \mathrm{Aff}_n(ℤ)$,
+    in an \emph{$\mathcal A$-coloring},
+    two nodes $U, V ∈ V_k$ have the same color if there is an operator $A ∈ \mathcal A$,
+    which maps $\bigcup_{u ∈ U} \mathrm{St}_u$ to $\bigcup_{v ∈ V} \mathrm{St}_v$.
+  \item
+    A chain $\{v_i\}_{i ∈ ℤ}$ is \emph{$\mathcal A$-periodic} if and only if
+    \begin{itemize}
+      \item Every $n-1$ consecutive vertices are affinely independent
+        and lie in an $(n-1)$-dimensional face of a sail.
+      \item
+        The images of this chain in $G_n$ and $G_{n+1}$ have $\mathcal A$-colorings.
+      \item
+        For any two distinct operators $A, B ∈ \mathcal A$ establishing the
+        coloring, the operator $AB^{-1}$ also belongs to $\mathcal A$.
+    \end{itemize}
+\end{itemize}
