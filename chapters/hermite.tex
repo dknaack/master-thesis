@@ -99,11 +99,29 @@ This means that we have found a periodic representation of our real number $r$.
 
 \section{Multi-Dimensional Continued Fractions}
 
+\[
+  \begin{array}{lcrlcr}
+    \displaystyle x_i' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ}, &
+    \displaystyle x_ℓ' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ} \\[1em]
+    \displaystyle x_i & = & a_i + \displaystyle \frac{x_i}{x_ℓ}, &
+    \displaystyle x_ℓ & = & a_ℓ + \displaystyle \frac{1}{x_ℓ}
+  \end{array}
+\]
+
+\[
+  \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}_ℓ^{-1}(a, x') = x.
+\]
+
 \begin{definition}
   Given a sequence of $d$-dimensional vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
-  indices $\{ℓₙ\}_{n ≥ 0}$, the \emph{multi-dimensional fraction} $[r₀; ℓ₁, r₁; …]$ is defined as
+  indices $\{ℓₙ\}_{n ≥ 0}$, the \emph{multi-dimensional continued fraction} $[r₀; ℓ₁, r₁; …]$
+  is defined as
   \[
-    [r₀] = r₀, \qquad [r₀; ℓ₁, r₁; …; ℓₙ, rₙ] = r₀ + \mathrm{pivot}_{ℓ₁}[r₁; ℓ₂, r₂; …; ℓₙ, rₙ].
+    [r₀; ℓ₁, r₁; …] = \lim_{n → ∞} [r₀; ℓ₁, r₁; …; ℓₙ, rₙ],
+  \]
+  where the finite continued fractions are defined as
+  \[
+    [r₀] = r₀, \qquad [r₀; ℓ₁, r₁; …; ℓₙ, rₙ] = \mathrm{pivot}_{ℓ₁}^{-1}\big(r₀, [r₁; ℓ₂, r₂; …; ℓₙ, rₙ]\big).
   \]
 \end{definition}
 
