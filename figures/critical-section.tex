@@ -1,0 +1,50 @@
+\documentclass[tikz]{standalone}
+
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=2]
+    % Axes
+    \draw[->] (-0.5,0) -- (2.5,0) node[right] {\( x \)};
+    \draw[->] (0,-0.5) -- (0,2.5) node[above] {\( y \)};
+    \clip (0, 0) rectangle (2.5, 2.5);
+
+    % Hyperbola branch
+    \draw[thick] (-1,{-1/sqrt(2)}) -- (3,{3/sqrt(2)}) node[above right] {$x/y = \sqrt{2}$};
+    \draw[name path=positive hyperbola, domain=0:10, samples=100, smooth, variable=\t]
+      plot ({cosh(\t/5)}, {sinh(\t/5)/sqrt(2)});
+    \draw[name path=negative hyperbola, domain=0:10, samples=100, smooth, variable=\t]
+      plot ({sinh(\t/5)}, {cosh(\t/5)/sqrt(2)});
+    \path[name path=negative line]
+      (-2-0.8,{-2/sqrt(2)}) -- (3-0.8,{3/sqrt(2)});
+    \path[name path=positive line]
+      (-2+0.8,{-2/sqrt(2)}) -- (2+0.8,{2/sqrt(2)});
+
+    \path[name intersections={of=positive hyperbola and positive line, by={positive point}}];
+    \path[name path=reflection line] (positive point) -- ++(-{1/sqrt(2)}, 1);
+    \path[name intersections={of=reflection line and negative line, by={negative point}}];
+
+    \draw[thick] (positive point) -- ++(2, 0);
+    \draw[name path={y line}, thick] (positive point) -- ++(0, 2);
+    \path[name intersections={of=y line and negative line,by={reflection end}}];
+
+    \draw[dashed] (positive point) -- (negative point);
+    \draw[dotted] (positive point) -- (2+0.8,{2/sqrt(2)});
+    \draw[dotted] (reflection end) -- (3-0.8,{3/sqrt(2)});
+    \draw (-2+0.8,{-2/sqrt(2)}) -- (positive point);
+    \draw (-2-0.8,{-2/sqrt(2)}) -- (reflection end);
+
+    \fill (negative point) circle (1pt);
+    \fill (positive point) circle (1pt);
+
+
+    \begin{scope}[on background layer]
+      \clip (-1-0.8,{-1/sqrt(2)}) -- (reflection end) -- (positive point) -- (-2+0.8,{-2/sqrt(2)});
+      \fill[color=black!15] (0, 0) rectangle (3, 3);
+      \clip[domain=0:6, samples=100, smooth, variable=\t]
+      plot ({sinh(\t/5)}, {cosh(\t/5)/sqrt(2)}) -- (3, 3) -- (0, 3);
+      \fill[color=red!50] (0, 0) rectangle (3, 3);
+    \end{scope}
+\end{tikzpicture}
+\end{document}
+
