@@ -43,6 +43,79 @@
     The gray area cannot contain an integral point since the norm would be fractional.}
 \end{figure}
 
+\begin{figure}[b]
+  \centering
+  \includestandalone{figures/parallelogram-cover}
+  \caption{
+    The parallelogram spanned by $B$ and $B'$ contains only $0$ as an integral point.
+    The rest of the surface can be covered by identical parallelograms.
+    Therefore, the surface can only contain an integral point at $B$.
+  }
+\end{figure}
+
+\[
+  B_n = a_n B_{n-1} + B_{n-2}
+\]
+
+\begin{definition}
+  A point $(x, y) ∈ ℤ^2$ is a \emph{relative minimum} of $ω$,
+  if $|x - ω y| ≤ |x' - ω y'|$ for any point $(x', y') ∈ ℤ^2$ with $x' ≤ x$ or $y' ≤ y$.
+\end{definition}
+
+\begin{theorem}
+  All points $(x, y)$ which satisfy Pell's equation are relative minima.
+\end{theorem}
+
+\begin{proof}
+  Suppose there exists a point $(x', y')$ with smaller distance.
+  In the first case, the point lies below the original point, i.e. $x' ≤ x$.
+  Because the point must be integral, we have $x'^2 - ω^2 y'^2 ≥ 1$.
+\end{proof}
+
+\begin{theorem}
+  Every point $B_i$ is a relative minimum.
+\end{theorem}
+
+\begin{proof}
+  For the points $B_1 = (1, 0)$ and $B_2 = (0, 1)$ this is clearly true.
+  Suppose that the lemma is true for $n$ and $n - 1$.
+  Let $B_{n-1}, B_n$ and $B_{n+1}$ be convergents of $ω$.
+  Let $B_n'$ be the point reflected across the $ω$-line.
+  The point $B_{n+1}$ is not a relative minimum,
+  if the parallelogram spanned by $B_n - B_n'$ and $B_{n+1} - B_n'$ contains an integral point.
+  This parallelogram is entirely contained by another parallelogram spanned by
+  $B_n - B_{n-1}$ and $B_{n+1} - B_{n-1}$.
+  The parallelogram contains
+  \[
+    \det(B_n - B_{n-1}, B_{n+1} - B_{n-1})
+    = \det(B_n - B_{n-1}, a_n B_n)
+    = (-1)^n a_n
+  \]
+  integral points.
+  But those points can only be an intermediate point or a convergent.
+  Since intermediate points are not relative minima,
+  the convergent must be a relative minimum.
+\end{proof}
+
+\begin{lemma}
+  Intermediate points cannot be relative minima.
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}
+  Every relative minimum is a convergent $B_i$.
+\end{theorem}
+
+\begin{proof}
+  Suppose there exists a relative minimum $P = (P₀, P₁)$ which is not a convergent.
+  Let $B = (B₀, B₁)$ be the smallest convergent such that $P₀ ≤ B₀$ or $P₁ ≤ B₁$
+  and $B = (B₀, B₁)$ the previous convergent.
+  By construction the parallelogram of $B$ and $B'$ contains $\det(B, B') = 1$ integral point.
+\end{proof}
+
 \begin{itemize}
   \item Considers the convergents of a continued fraction as homogeneous coordinates,
     i.e. when we have $p / q$, then this corresponds to the vector $(p, q)$.
