@@ -139,3 +139,112 @@ We define the following sequences over the sequence $\{a_n\}$:
 
 \section{Continued Fractions of Quadratic Irrationals}
 
+The converse was originally proven by Lagrange \cite{Lagrange70}.
+
+\begin{figure}[tb]
+  \centering
+  \includestandalone{figures/critical-section}
+  \caption{
+    The hyperbolas each contain only elements with norm $±1$.
+    The red area could contain an integral point, in which case this point
+    would be closer than the initial point.
+    The gray area cannot contain an integral point since the norm would be
+    fractional.
+  }
+\end{figure}
+
+\begin{figure}[tb]
+  \centering
+  \includestandalone{figures/parallelogram-cover}
+  \caption{
+    The parallelogram spanned by $B$ and $B'$ contains only $0$ as an integral point.
+    The rest of the surface can be covered by identical parallelograms.
+    Therefore, the surface can only contain an integral point at $B$.
+  }
+\end{figure}
+
+\begin{align*}
+  B_n =
+  \begin{pmatrix}
+    p_n \\ q_n
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    p_{n-1} \\ q_{n-1}
+  \end{pmatrix}
+  a_n
+  +
+  \begin{pmatrix}
+    p_{n-2} \\ q_{n-2}
+  \end{pmatrix}
+  = B_{n-1} a_n + B_{n-2}
+\end{align*}
+
+\begin{align*}
+  T = \begin{pmatrix}
+    1 & 1 \\
+    0 & 1 \\
+  \end{pmatrix},
+  S = \begin{pmatrix}
+    0 & 1 \\
+    1 & 0 \\
+  \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+  \det S_1 = \det\begin{pmatrix}
+    1 & 1 \\
+    0 & 1 \\
+  \end{pmatrix} = 1,
+  \det S = \det\begin{pmatrix}
+    0 & 1 \\
+    1 & 0 \\
+  \end{pmatrix} = -1,
+\end{align*}
+
+\begin{align*}
+  B_n & = T^{a₀} S T^{a₁} S T^{a₂} … S T^{aₙ} B_1 \\
+      & = T^{a₀} \underbrace{S T^{a₁} S}_{S_2^{a_1}} T^{a₂} … S T^{aₙ} B_1
+\end{align*}
+
+\begin{align*}
+  S_2^a = R S_1 \underbrace{R R}_{I} S_1 \underbrace{R R}_I S_1\, R … R\, S_1 R = R S_1^{a} R.
+\end{align*}
+
+\begin{definition}
+  A point $(x, y)$ is a \emph{relative minimum} with respect to a line $x - α y = 0$,
+  if for every point $(x', y')$ with $x' ≤ x$ \emph{or} $y' ≤ y$, we have
+  \[
+    |x - α y| ≤ |x' - α y'|.
+  \]
+\end{definition}
+
+\begin{lemma}
+  Every convergent is a relative minimum.
+\end{lemma}
+
+\begin{lemma}
+  Every relative minimum is a convergent.
+\end{lemma}
+
+Pell's equation is defined as
+\[
+  x^2 - n y^2 = 1.
+\]
+
+\begin{lemma}
+  There are integer points which satisfy Pell's equation.
+\end{lemma}
+
+\begin{lemma}
+  Every integer point which satisfies Pell's equation is a relative minimum.
+\end{lemma}
+
+\begin{theorem}
+  If $x$ is a quadratic irrational,
+  then the continued fraction of $x$ is eventually periodic.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
