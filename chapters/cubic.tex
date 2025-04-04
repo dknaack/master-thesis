@@ -14,7 +14,14 @@ irrationals.
 \section{Finding a Periodic Representation through Brute-Force}
 % ==============================================================================
 
-\begin{Pseudocode}
+The generalized Euclidean algorithm allows us for one additional degree of
+freedom.
+We have already seen that in the case of Fibonacci numbers,
+that different strategies in the choice of our pivot element will only allow
+certain irrationals.
+Therefore, to find a strategy for \emph{all} irrationals we simply try all strategies.
+
+\begin{Pseudocode}[caption={The brute-force search algorithm for finding a periodic representation.}]
 algorithm $\textsc{brute-force-search}(x, N)$
   for $L ∈ \{1, …, d\}^{≤ N}$ do
     $x₀ ← x$
@@ -28,40 +35,84 @@ algorithm $\textsc{brute-force-search}(x, N)$
   return $ε$
 \end{Pseudocode}
 
-We use the generalized Euclidean algorithm to find a representation for $r ∈ ℝ$.
-More specifically, we use the update rule from the algorithm to find the
-representation.
-The update rule takes a vector and not a real number, so we use the initial
-vector $x_i = q_i(r)$ for $i ≤ d$, where $q_i$ is an arbitrary polynomial of
-degree $i$.
+Given a real number $r ∈ ℝ$, we use the update rule from the generalized
+algorithm to find its representation.
+Of course, the update rule does not take a real number but a vector as input,
+so we use the initial vector $x_i = q_i(r)$ for $i ≤ d$, where $q_i$ is an
+arbitrary polynomial of degree $i$.
+Most of the time we will use $q_i(r) = r^i$ as our polynomials.
 
-For our input $x ∈ ℝ^d$, we can build up a $d$-ary tree where the initial input
-vector $x$ is the root and any two nodes of this tree $x', x'' ∈ ℝ^d$ are
-connected if $\mathrm{pivot}(x', ℓ) = x''$ for some index $ℓ$.
-The brute-force algorithm performs a breadth-first search over this tree to
-find a node which points to a higher node in the tree.
-This means that we have found a periodic representation of our real number $r$.
+Now that we have our input vector $x ∈ ℝ^d$, we need to find a possible
+sequence of indices $ℓ_1, ℓ_2, …, ℓ_N$, where updating $x$ with those
+indices leads to one vector occurring twice.
+In order to find this sequence, we try every possible sequence
+$ℓ_1, ℓ_2, … ∈ \{1, …, d\}^*$ until we find some duplicate vector.
+In particular, we use a breadth-first search over the sequences.
+We begin with all sequences of length $1$ and see if any vector occurs twice.
+If not, then we continue with all sequences of length $2$ and check again if
+any previous vector has occurred twice.
+We continue this process indefinitely until we hopefully find a duplicate vector.
 
-\begin{conjecture}
-  The brute-force algorithm is periodic if and only if $α$ is a cubic irrational.
-\end{conjecture}
+% Example?
+\begin{example}
+  Given $r = \sqrt[3]{2}$, we construct the input vector $x = \left(\sqrt[3]{2}, \sqrt[3]{4}\right)$.
+  For this input, the algorithm finds the sequence $0\overline{10}$.
+
+  % TODO: Include the whole example.
+\end{example}
+
+% Wait, how would we represent non-cubic irrationals? I guess we could include
+% the whole tree. There should be a discussion about representing non-cubic
+% irrationals and also that the end goal would be to find the actual strategy
+% behind the brute-force search or at least one possible strategy, it might not
+% have to be the optimal one which returns the result from the brute force
+% search exactly.
+
+% I think for this discussion it would be good to present the case for a
+% minimum continued fraction or even the ternary continued fractions. This
+% would sort of present the brute-force search more as a meta-proof on all
+% Jacobi-Perron type algorithm which could be periodic.
+
+If we do find a duplicate, then the representation for that number will be unambiguous.
+However, if we don't, then it is unclear how we will represent that number.
+One possible solution is to simply include everything, the whole tree.
+The aim of this algorithm is not to find a representation in and of itself,
+but to aid in finding one possible strategy for our goal.
+In the end, we might only need to look at all sequences of length $d$ at every
+iteration to find the optimal choice.
+In the worst case, there would be no strategy we can follow to determine a
+periodic representation for cubic irrationals.
 
 % ==============================================================================
-\section{Multi-Dimensional Continued Fractions}
+\section{Multi-Dimensional Continued Fractions (MDCF)}
 % ==============================================================================
 
+The multi-dimensional extension of the continued fractions is based on the update rule.
+Recall that given a vector $x ∈ ℝ^d$ and index $ℓ ≤ d$, we update the input vector over one iteration by
 \[
   \begin{array}{lcrlcr}
     \displaystyle x_i' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ}, &
     \displaystyle x_ℓ' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ} \\[1em]
-    \displaystyle x_i & = & a_i + \displaystyle \frac{x_i}{x_ℓ}, &
-    \displaystyle x_ℓ & = & a_ℓ + \displaystyle \frac{1}{x_ℓ}
   \end{array}
 \]
-
+where $a = \floor{x}$ and $i ≠ ℓ$.
+We can reverse this process by rearranging the equations
+\[
+  \begin{array}{lcrlcr}
+    \displaystyle x_i & = & a_i + \displaystyle \frac{x_i'}{x_ℓ'}, &
+    \displaystyle x_ℓ & = & a_ℓ + \displaystyle \frac{1}{x_ℓ'}
+  \end{array}
+\]
+This allows us to calculate the previous vector $x$ from the next vector $x'$,
+if we know the integer vector $a$.
+Let $\mathrm{pivot}_ℓ^{-1}$ denote this inverse function.
+We have
 \[
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}_ℓ^{-1}(a, x') = x.
 \]
+
+Independently of the Euclidean algorithm,
+we can look at what happens when $a$ is not necessarily an integer vector.
 
 \begin{definition}
   Given a sequence of $d$-dimensional vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
@@ -93,6 +144,8 @@ The concepts from one-dimensional continued fractions naturally carry over to it
 multi-dimensional counterpart.
 
 \begin{definition}[Complete Quotient, Convergent, Periodicity]~
+  Given a multi-dimensional continued fraction $[r₀; ℓ_1, r_1; ℓ_2, r_2; …]$,
+  we define the following:
   \begin{itemize}
     \item The \emph{$k$-th complete quotient} is defined as $[rₖ; r_{k+1}, …]$.
     \item The \emph{$k$-th convergent} of $x$ is defined as the finite fraction $[r₀; ℓ₁, r₁; …; ℓ_k, r_k]$.
@@ -101,10 +154,12 @@ multi-dimensional counterpart.
   \end{itemize}
 \end{definition}
 
+\section{Periodic MDCFs}
+
 To show that any periodic MDCF contains elements of a field with degree $d + 1$
 over the rationals, we proceed similarly to the one-dimensional continued
 fraction.
-We first show the multi-dimensional analogue of Lemma~\ref{lem:nesting}.
+We first show the multi-dimensional analogue of Lemma~\vref{lem:nesting}.
 
 \begin{lemma}[Nesting]
   \label{lem:mdcf-nesting}
@@ -335,6 +390,14 @@ Now, we only have a single matrix sequence $P_n$, defined as follows:
   If $r$ is the root of a polynomial of degree $2d$,
   then the MDCF of $x = (r^1, …, r^d)$ is eventually periodic.
 \end{corollary}
+
+% ==============================================================================
+\section{MDCFs of Cubic Irrationals}
+% ==============================================================================
+
+\begin{conjecture}
+  The brute-force algorithm for $d = 2$ is periodic if and only if $α$ is a cubic irrational.
+\end{conjecture}
 
 % ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
