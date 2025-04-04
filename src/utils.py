@@ -1,7 +1,7 @@
 from sage.all import *
 
 def frac(x):
-    return x - floor(RR(x))
+    return x - floor(x)
 
 def pivot(xs, *indices):
     xs = list(xs[:])
