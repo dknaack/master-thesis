@@ -107,15 +107,43 @@ Let $\mathrm{pivot}_ℓ(x) = x'$.
     always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
 \end{figure}
 
-\section{Higher-Order Fibonacci Numbers}
+\section{Higher-Order Fibonacci Numbers and Their Golden Ratios}
 
-In higher dimensions, different notions of Fibonacci numbers exist.
-The generalized algorithm has one more degree of freedom by choosing different indices for the pivot element.
-Therefore, there does not exist a single definite Fibonacci numbers in
-higher dimensions, but a multitude of different types of Fibonacci numbers.
+We have already seen that the worst-case input for the one-dimensional
+Euclidean algorithm are the Fibonacci numbers.
+Plugging in two Fibonacci numbers always requires at least n steps for the
+algorithm.
+This leads to the question whether such numbers also exist in higher dimensions
+and what their golden ratios look like.
 
-For example, one possible strategy is to choose the minimum fractional value
-$\{x_i\}$ in each iteration as the pivot element.
+% I would like a better explanation of what the goal of this section is
+
+The answer to this question does not lead to a single definition of the
+Fibonacci numbers per dimension, but many different types of Fibonacci numbers.
+The generalized Euclidean algorithm allows for one additional degree of freedom
+by choosing which column vector we swap with.
+Therefore, there cannot be just one definitive Fibonacci number, there are
+different ones depending on the choice of our swap/pivot.
+
+The first strategy one may think of is to choose the index ell with the
+smallest fractional value.
+After all, this gives us the largest decrease in the determinant over one
+iteration.
+So locally, this would be the highest decrease we can achieve. But what would a
+Fibonacci number look like in this case?
+
+First, we are indeed talking about just numbers and not vectors.
+The Euclidean algorithm takes one-dimensional integers as input, so one would
+expect that the generalized algorithm would take Fibonacci vectors as input.
+But the numbers of steps that the algorithm requires only depends on the
+initial solution vector x.
+In fact, the entire execution of the algorithm only depends on this vector.
+There are infinitely many possible linear systems which have the same solution
+vector x, and hence there would be infinitely many "Fibonacci vectors".
+Therefore, we look instead only for the numbers inside the rational vector.
+
+% TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
+
 The Fibonacci numbers for this strategy are defined as
 \begin{align*}
   F(0) = F(1) = ⋯ = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d).
@@ -152,17 +180,31 @@ The smallest fractional value in this vector is $x₁$, so we pivot with $ℓ = 
   \{x₁'\}
   & = \left\{\frac{1}{\{x₁\}}\right\}
   = \left\{\frac{F(n + 1)}{F(n)}\right\}
-  = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}, \\
+  = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
+\end{align*}
+This gives us the value for $x_d$, if we would have started with $F(n)$ instead of $F(n+1)$.
+The other values in our input vector $x$ are calculated as follows:
+\begin{align*}
   \{xᵢ'\}
   & = \left\{\frac{\{xᵢ\}}{\{x₁\}}\right\} \\
   & = \left\{\frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - i)}{F(n + 1)} · \frac{F(n + 1)}{F(n)}\right\} \\
   & = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
 \end{align*}
+So in the next iteration the value $x_i$ has the same value as $x_{i+1}$ if we
+would have started with $F(n)$.
+Therefore, in the next iteration the smallest fractional value must be $x_2$.
+We continue this until we have cycled through all variables.
 
 Another example would be the opposite strategy: Choosing the maximum in each iteration.
 In this case, the Fibonacci numbers are defined as
 \begin{align*}
   F(0) = \dots = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - d).
 \end{align*}
+
+The golden ratios for each definition is the limit of consecutive Fibonacci numbers
+\[
+  φ = \lim_{n → ∞} \frac{F(n + 1)}{F(n)},
+\]
+where $F(n)$ can be any of the previously defined Fibonacci numbers.
 
 \section{Extension to Real Numbers}
