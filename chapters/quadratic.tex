@@ -7,6 +7,29 @@
 
 \section{Continued Fractions}
 
+\begin{definition}
+  % TODO: Include definition for continued fractions
+\end{definition}
+
+\begin{definition}
+  The \emph{$n$-th convergent} of an infinite continued fraction $[a₀; a₁, …]$ is
+  defined as the finite continued fraction $[a₀; a₁, …, aₙ]$.
+\end{definition}
+
+For a continued fraction with only one entry, the convergent is simply $a₀/1$.
+The convergent of longer continued fractions can be calculated inductively as follows:
+\[
+  [a₀; a₁, …, aₙ]
+  = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
+  = a₀ + \frac{\tilde q_{n-1}}{\tilde p_{n-1}}
+  = \frac{\tilde p_{n-1} a₀ + \tilde q_{n-1}}{\tilde p_{n-1}},
+\]
+where $\tilde p_{n-1} / \tilde q_{n-1}$ is the convergent of $[a₁; a₂, …, aₙ]$.
+
+\begin{example}
+  % TODO: Add example for some continued fraction here
+\end{example}
+
 \section{Periodic Continued Fractions}
 
 \begin{definition}
