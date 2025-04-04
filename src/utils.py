@@ -41,7 +41,7 @@ def sequences(base, max_digits):
 
         yield seq
 
-def brute_force_search(xs, max_depth):
+def periodic_sequences(xs, max_depth):
     d = len(xs)
     for L in sequences(d, max_depth):
         index = {xs: 0}
@@ -52,9 +52,13 @@ def brute_force_search(xs, max_depth):
                 j = index[ys]
                 start = L[:j]
                 period = L[j:i+1]
-                return start, period
+                yield start, period
             else:
                 index[ys] = i + 1
+
+def brute_force_search(xs, max_depth):
+    for start, period in periodic_sequences(xs, max_depth):
+        return start, period
 
 def euclidean(A, b, *indices):
     xs = A.solve_right(b)
