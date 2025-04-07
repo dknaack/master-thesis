@@ -18,14 +18,46 @@ the real numbers, just like the original single-dimensional algorithm.
   \caption{A two-dimensional lattice with vectors $B_1 = (2, 1)$ and $B_2 = (1, 3)$.}
 \end{figure}
 
+\begin{itemize}
+  \item Vector space as the linear combination over a basis
+  \item Lattices as an integral combination over a basis
+\end{itemize}
+
 \begin{definition}
   Given a basis $B ∈ ℤ^{d × n}$, the \emph{lattice} over the basis $B$ is defined as
   \[
-    \mathcal{L}(B) = \left\{\, B₁z₁ + \dots + B_n z_n \mid z_1, \dots, z_n ∈ ℤ \,\right\}.
+    \mathcal{L}(B) = \left\{\, B₁z₁ + \dots + B_n z_n \mid z_1, \dots, z_n ∈ ℤ^d \,\right\}.
   \]
   The \emph{rank} of $\mathcal{L}(B)$ is $n$ and its \emph{dimension} is $d$.
   If $n = d$, then $\mathcal{L}(B)$ is a \emph{full rank} lattice.
 \end{definition}
+
+\begin{problem}[Lattice Basis Reduction]~
+  \begin{itemize}
+    \item \textbf{Input}: A matrix $A ∈ ℤ^{d × n}$ with $\text{rank}(A) = d$.
+    \item \textbf{Output}: A matrix $B ∈ ℤ^{d × d}$ with $\mathcal{L}(B) = \mathcal{L}(A)$.
+  \end{itemize}
+\end{problem}
+
+In this thesis, I only consider the case for one additional vector, i.e. $n = d + 1$.
+
+% TODO: Example for an over-defined basis and what the reduced basis is.
+\begin{example}
+  Consider $A = \begin{pmatrix}
+    2 & 1 & 3 \\
+    1 & 3 & 4 \\
+  \end{pmatrix}$.
+  The matrix $B = \begin{pmatrix}
+    2 & 1 \\
+    1 & 3 \\
+  \end{pmatrix}$
+  spans the same lattice,
+  since $A_3 = A_1 + A_2$.
+  Therefore, $B$ would is the reduced basis of $\mathcal L(A)$.
+\end{example}
+
+% TODO: Another example which shows that you can't just take a submatrix of the
+% original matrix.
 
 \begin{definition}
   The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
