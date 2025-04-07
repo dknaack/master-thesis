@@ -130,12 +130,25 @@ This update rule follows from
   r \frac{1}{\{x_ℓ\}} - \sum_{i ≠ ℓ} B_i \frac{\{x_i\}}{\{x_ℓ\}} = B_ℓ.
 \]
 
-I propose a slight modification to the generalized algorithm
-which makes the analysis in the following sections easier.
-Not only do we replace $B_ℓ$ with $c$,
-but we also flip all vectors $B_i$ with $i ≠ ℓ$.
-This leads to the modified update rule
-where the numerator has no more negation:
+% TODO: Should we add a citation for Northshield and explain that continued
+% fractions map positive to positive values which seems to be a fundamental
+% requirement for the continued fractions to be periodic?
+
+% I think a better wording would be, that the update rule makes the negation
+% visible, which is not optimal. The update rule itself doesn't negate the
+% variables, even without the update rule we would still have negated
+% variables, since the update rule is just an improvement of the original
+% algorithm.
+
+Although the update rule speeds up the algorithm considerably, it is not
+optimal for the analysis in the following sections.
+The rule flips the sign of all elements inside the solution vector in each
+iteration.
+Instead, I propose a slight modification to the generalized algorithm which
+maps each $xᵢ$ to another positive value.
+After we replace $B_ℓ$ with $c$, we flip the signs of all vectors $B_i$ with $i ≠ ℓ$.
+This leads to the modified update rule, where the values $x_i$ for $i ≠ ℓ$ are
+no longer negated:
 \begin{align*}
   x_i' =
   \begin{cases}
