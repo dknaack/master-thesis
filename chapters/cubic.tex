@@ -167,21 +167,21 @@ We first show the multi-dimensional analogue of Lemma~\vref{lem:nesting}.
   Let $x ∈ ℝ^d$, then
   \[
     [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
-    = [a₀; ℓ₁, a₁; \cdots; ℓₙ, aₙ + \mathrm{pivot}_{ℓ}(x)]
+    = [a₀; ℓ₁, a₁; \cdots; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)]
   \]
 \end{lemma}
 
 \begin{proof}
   If $n = 0$, then by definition,
   \[
-    [a₀; ℓ, x] = a₀ + \mathrm{pivot}_{ℓ}[x] = a₀ + \mathrm{pivot}_{ℓ}(x) = [a₀ + \mathrm{pivot}_ℓ(x)].
+    [a₀; ℓ, x] = \mathrm{pivot}_{ℓ}^{-1}(a₀, [x]) = \mathrm{pivot}_{ℓ}^{-1}(a₀, x) = [\mathrm{pivot}_{ℓ}^{-1}(a₀, x)].
   \]
   Suppose the lemma holds for any $n ≥ 0$, then
   \begin{align*}
     [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
-    & = a₀ + \mathrm{pivot}_{ℓ₀}[a₁; …; ℓₙ, aₙ; ℓ, x] \\
-    & = a₀ + \mathrm{pivot}_{ℓ₀}[a₁; …; ℓₙ, aₙ + \mathrm{pivot}_ℓ(x)] \\
-    & = [a₀; ℓ₁, a₁; …; ℓₙ, aₙ + \mathrm{pivot}_ℓ(x)]. \qedhere
+    & = \mathrm{pivot}_{ℓ₁}^{-1}(a₀, [a₁; …; ℓₙ, aₙ; ℓ, x]) \\
+    & = \mathrm{pivot}_{ℓ₁}^{-1}(a₀, [a₁; …; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)] \\
+    & = [a₀; ℓ₁, a₁; …; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)]. \qedhere
   \end{align*}
 \end{proof}
 
