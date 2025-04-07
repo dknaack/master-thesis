@@ -156,7 +156,21 @@ no longer negated:
     \frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise.}
   \end{cases}
 \end{align*}
-Let $\mathrm{pivot}_ℓ(x) = x'$.
+By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
+The modified algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
+In the algorithm, first $B_ℓ$ is flipped and then the whole matrix $B$ is flipped,
+This is the same as only flipping the vectors $B_i$ for $i ≠ ℓ$.
+
+\begin{Pseudocode}[float=tb, caption={The Modified Algorithm.}, label={lst:modified-generalized-euclidean}]
+solve $Bx = c$
+while $x$ is not integral do
+  find index $ℓ$ for which $x_ℓ$ is not integral
+  $c ← B_ℓ$
+  $B_ℓ ← -B\{x\}$
+  $B ← -B$
+  $x ← \mathrm{pivot}_ℓ(x)$
+end
+\end{Pseudocode}
 
 \begin{lemma}
   The determinant of $B$ decreases by $\{x_ℓ\}$ in each iteration.
