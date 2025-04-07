@@ -86,15 +86,15 @@ Consider the matrix $A = ?$.
 In this case, $A_3 = ? + ?$, which is clearly not an integral combination.
 So $A' = ?$ does not span the same lattice as $A$.
 
-Each point $x ∈ ℝ^d$ can be represented as a combination of a lattice point $z
+Each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
 ∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
 Specifically,
 \[
-  x = z + r = B\floor{x} + B\{x\}.
+  a = z + r = B\floor{x} + B\{x\}.
 \]
 
 \[
-  x \pmod{Π(B)} := x - B\floor{x}.
+  a \pmod{Π(B)} := a - B\floor{B^{-1} x}.
 \]
 
 \begin{Pseudocode}[float=tb,caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
