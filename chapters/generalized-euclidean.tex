@@ -107,17 +107,21 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-The solve operation inside the loop can be replaced by the following update
-rule:
+The algorithm requires solving a linear system in each iteration.
+However, we do not have to do this in every iteration.
+We only have to do this in the first iteration and in the following iterations
+we simply update this solution from the old solution.
+If $x = (x₁, …, x_d)$ is the solution in the previous iteration,
+then $x' = (x₁', …, x_d')$ with
 \begin{align*}
   x_i' =
   \begin{cases}
     \frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
-    -\frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise.}
+    -\frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise,}
   \end{cases}
 \end{align*}
-
-This follows from
+is the solution in the next iteration.
+This update rule follows from
 \[
   B_ℓ \{x_ℓ\} + \sum_{i ≠ ℓ} B_i \{x_i\} = r
   \iff
