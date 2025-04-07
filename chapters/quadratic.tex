@@ -80,11 +80,36 @@ We begin with the first direction:
   \end{align*}
 \end{proof}
 
-We define the following sequences over the sequence $\{a_n\}$:
-\begin{align*}
-  pₙ & = p_{n-1} a_n + p_{n - 2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
-  qₙ & = q_{n-1} a_n + q_{n - 2}, & q_{-1} & = 0, & q_{-2} & = 1.
-\end{align*}
+% TODO: Should we have this proof?
+\begin{lemma}
+  Given a continued fractions $[a₀; a₁, …, aₙ]$, its convergents $p_n/q_n$ satisfy the recurrence relation
+  \begin{align*}
+    pₙ & = p_{n-1} a_n + p_{n - 2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
+    qₙ & = q_{n-1} a_n + q_{n - 2}, & q_{-1} & = 0, & q_{-2} & = 1.
+  \end{align*}
+\end{lemma}
+
+\begin{proof}
+  For $n = 0$, we have
+  \begin{align*}
+    \frac{p₀}{q₀} = \frac{a₀}{1} = \frac{1 · a₀ + 0}{0 · a₀ + 1} = \frac{p_{-1} a₀ + p_{-2}}{q_{-1} a₀ + q_{-2}}.
+  \end{align*}
+  Suppose the lemma is true for $n ≥ 0$.
+  By the previous lemma,
+  \begin{align*}
+    \frac{p_{n+1}}{q_{n+1}}
+    = [a₀; a₁, …, a_n, a_{n+1}]
+    = [a₀; a₁, …, a_n + 1/a_{n+1}].
+  \end{align*}
+  For this continued fraction, the first $n - 1$ convergents are the same as for $[a₀; a₁, …, aₙ]$.
+  By our induction hypothesis,
+  \begin{align*}
+    \frac{p_{n+1}}{q_{n+1}}
+    & = [a₀; a₁, …, a_n + 1/a_{n+1}] \\
+    & = \frac{a_{n+1}}{a_{n+1}} · \frac{p_{n-1} \left(a_n + \frac{1}{a_{n+1}}\right) + p_{n-2}}{q_{n-1} \left(a_n + \frac{1}{a_{n+1}}\right) + q_{n-2}} \\
+    & = \frac{p_n a_{n+1} + p_{n-1}}{q_n a_{n+1} + q_{n-1}}. \qedhere
+  \end{align*}
+\end{proof}
 
 \begin{lemma}
   \label{lem:wallis}
