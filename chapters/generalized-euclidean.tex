@@ -66,30 +66,38 @@ In this thesis, I only consider the case for one additional vector, i.e. $n = d 
   \]
 \end{definition}
 
-If $B$ is a $d × d$ integer matrix,
-then the volume of the parallelepiped $Π(B)$ and the number of integer points
-in $Π(B)$ is exactly $\mathrm{det}(B)$, i.e.
+A useful fact about the fundamental parallelepiped of a lattice $\mathcal L(B)$ is that
+if $B$ is a square integer matrix,
+then the volume of the parallelepiped $Π(B)$ and
+the number of integer points $ℤ^n$ contained in $Π(B)$ is determined by $\mathrm{det}(B)$,
+i.e.
 \[
-  \text{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = \mathrm{det}(B).
+  \mathrm{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = |\det(B)|.
 \]
-
-\begin{problem}[Lattice Basis Reduction]~
-  \begin{itemize}
-    \item \textbf{Input}: A matrix $A ∈ ℤ^{d × n}$ with $\text{rank}(A) = d$.
-    \item \textbf{Output}: A matrix $B ∈ ℤ^{d × d}$ with $\mathcal{L}(B) = \mathcal{L}(A)$.
-  \end{itemize}
-\end{problem}
 
 \section{Description of the Algorithm}
 
+In the previous example,
+we saw that we could represent the last column vector as an integral
+combination of the previous two,
+which allows us to reduce the basis for the lattice to only those two column vectors.
+However, in general it is not as easy as this.
+Consider the matrix $A = ?$.
+In this case, $A_3 = ? + ?$, which is clearly not an integral combination.
+So $A' = ?$ does not span the same lattice as $A$.
+
 Each point $x ∈ ℝ^d$ can be represented as a combination of a lattice point $z
-∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ \Pi(B)$.
+∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
 Specifically,
 \[
   x = z + r = B\floor{x} + B\{x\}.
 \]
 
-\begin{Pseudocode}[caption={The Generalized Euclidean Algorithm.}]
+\[
+  x \pmod{Π(B)} := x - B\floor{x}.
+\]
+
+\begin{Pseudocode}[float=tb,caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
 solve $Bx = c$
 while $x$ is not integral do
   find $x_ℓ$ which is not integral
