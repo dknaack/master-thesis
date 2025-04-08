@@ -77,6 +77,16 @@ i.e.
 
 \section{Description of the Algorithm}
 
+\begin{Pseudocode}[float=tb,caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
+solve $Bx = c$
+while $x$ is not integral do
+  find $x_ℓ$ which is not integral
+  $c ← B_ℓ$
+  $B_ℓ ← B\{x\}$
+  solve $Bx = c$
+end
+\end{Pseudocode}
+
 In the previous example,
 we saw that we could represent the last column vector as an integral
 combination of the previous two,
@@ -97,16 +107,6 @@ It allows us to define a modulo operation on the lattice:
 \[
   a \pmod{Π(B)} := a - B\floor{B^{-1} x}.
 \]
-
-\begin{Pseudocode}[float=tb,caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
-solve $Bx = c$
-while $x$ is not integral do
-  find $x_ℓ$ which is not integral
-  $c ← B_ℓ$
-  $B_ℓ ← B\{x\}$
-  solve $Bx = c$
-end
-\end{Pseudocode}
 
 The algorithm requires solving a linear system in each iteration.
 However, we do not have to do this in every iteration.
