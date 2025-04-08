@@ -92,7 +92,8 @@ Specifically,
 \[
   a = z + r = B\floor{x} + B\{x\}.
 \]
-
+This is essentially a division with remainder inside a lattice.
+It allows us to define a modulo operation on the lattice:
 \[
   a \pmod{Π(B)} := a - B\floor{B^{-1} x}.
 \]
@@ -209,21 +210,45 @@ algorithm.
 This leads to the question whether such numbers also exist in higher dimensions
 and what their golden ratios look like.
 
-% I would like a better explanation of what the goal of this section is
+% TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
 
-The answer to this question does not lead to a single definition of the
-Fibonacci numbers per dimension, but many different types of Fibonacci numbers.
-The generalized Euclidean algorithm allows for one additional degree of freedom
-by choosing which column vector we swap with.
-Therefore, there cannot be just one definitive Fibonacci number, there are
-different ones depending on the choice of our swap/pivot.
+First, we have to understand what Fibonacci numbers in higher dimensions would
+look like.
+Fibonacci numbers have two properties which make them special for the Euclidean algorithm.
+The first is that applying one iteration of the Euclidean algorithm on two
+consecutive Fibonacci numbers~$(F(n + 1), F(n))$ yields the previous Fibonacci numbers~$(F(n), F(n - 1))$.
+So the Euclidean algorithm requires exactly $n$ steps on this input.
 
-The first strategy one may think of is to choose the index ell with the
-smallest fractional value.
-After all, this gives us the largest decrease in the determinant over one
-iteration.
-So locally, this would be the highest decrease we can achieve. But what would a
-Fibonacci number look like in this case?
+The second property is that they are minimal with respect to this.
+There are other sequences, which fulfill the first property, but the Fibonacci
+numbers are special, in that they fit exactly once inside the next number.
+This means that in the Euclidean algorithm there is a multiplicative factor of $1$ at each step (except the last):
+\[
+  \begin{array}{rcl}
+    F(n + 1) & = & 1 · F(n) + F(n - 1),     \\
+    F(n)     & = & 1 · F(n - 1) + F(n - 2), \\
+             & ⋮ &                          \\
+    F(2)     & = & 2 · F(1).
+  \end{array}
+\]
+Other numbers may have higher factors -- for example, the silver ratio has a
+factor of $2$ at each step -- but the Fibonacci numbers have the smallest factor.
+
+This property is also reflected in the fractions $a/b$ for a given input $(a, b)$.
+At each step (except the last) the fraction always has an integer part of $1$:
+\[
+  \begin{array}{rcl}
+    \frac{F(n + 1)}{F(n)} & = & 1 + \frac{F(n - 1)}{F(n)},     \\
+    \frac{F(n)}{F(n - 1)} & = & 1 + \frac{F(n - 2)}{F(n - 1)}, \\
+                          & ⋮ &                                \\
+    \frac{F(2)}{F(1)}     & = & 2.                              \\
+  \end{array}
+\]
+So, a higher-dimensional Fibonacci number would also need to have a fraction
+with integer part $1$ at each step.
+
+% TODO: We should also discuss the thing about idempotence under the choice of the pivot.
+% TODO: Should we have a discussion about why we choose this particular linear system.
 
 First, we are indeed talking about just numbers and not vectors.
 The Euclidean algorithm takes one-dimensional integers as input, so one would
@@ -235,30 +260,58 @@ There are infinitely many possible linear systems which have the same solution
 vector x, and hence there would be infinitely many "Fibonacci vectors".
 Therefore, we look instead only for the numbers inside the rational vector.
 
+There are many different possibilities for choosing a linear system which has the solution $x$.
+We use a simple construction, which
+given a rational vector $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$,
+constructs the linear system $Bx = c$ with
+\begin{equation}
+  \label{eq:linear-system-construction}
+  B =
+  \begin{pmatrix}
+    q & 0 & ⋯ & 0 \\
+    0 & q & ⋯ & 0 \\
+    ⋮ & ⋮ & ⋱ & ⋮ \\
+    0 & 0 & ⋯ & q \\
+  \end{pmatrix},
+  \quad
+  c =
+  \begin{pmatrix}
+    p₁ \\
+    p₂ \\
+    ⋮ \\
+    p_d
+  \end{pmatrix}.
+\end{equation}
+
+% I would like a better explanation of what the goal of this section is
+
+Although we have reduced the problem just to the vector $x$, there is still
+some ambiguity left, when extending Fibonacci numbers to higher dimensions.
+The generalized Euclidean algorithm allows for an additional degree of freedom
+by choosing which column vector $B_ℓ$ we swap our vector $c$ with.
+Therefore, there cannot be just one definitive Fibonacci number, there are
+different ones depending on the choice of our index $ℓ$.
+
+The first strategy one may think of is to choose the index $ℓ$ with the
+smallest fractional value.
+After all, this gives us the largest decrease in the determinant over one
+iteration.
+Locally, this would be the highest decrease we can achieve.
+So we begin with this strategy and try to find a generalization of Fibonacci
+numbers under this strategy.
+
 % TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
+% TODO: Should we have a table for the Fibonacci numbers?
+% TODO: What about adding references to their OEIS number?
 
 The Fibonacci numbers for this strategy are defined as
 \begin{align*}
   F(0) = F(1) = ⋯ = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d).
 \end{align*}
-We choose our initial input as
-\begin{align*}
-  B & =
-  \begin{pmatrix}
-    F(n + 1) & 0        & ⋯ & 0 \\
-    0        & F(n + 1) & ⋯ & 0 \\
-    ⋮        & ⋮        & ⋱ & ⋮ \\
-    0 & 0 & ⋯ & F(n + 1) \\
-  \end{pmatrix}, \\
-  c & =
-  \begin{pmatrix}
-    F(n) \\
-    F(n) + F(n - 1) \\
-    ⋮ \\
-    F(n) + F(n - 1) + ⋯ + F(n + 1 - d) \\
-  \end{pmatrix},
-\end{align*}
-which gives us the solution vector
+For $d = 2, 3, 4$, they are also called the Tribonacci, Tetranacci and Pentanacci numbers.
+In general, they are known as the $d$-bonacci numbers.
+For these numbers,
+We use the solution vector
 \[
   x =
   \left(
@@ -266,8 +319,11 @@ which gives us the solution vector
     \frac{F(n) + F(n - 1)}{F(n + 1)},\;
     ⋯,\;
     \frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - d)}{F(n + 1)}\;
-  \right).
+  \right)
 \]
+and we can use the construction from Equation~\ref{eq:linear-system-construction}
+for the actual input to the generalized Euclidean algorithm.
+
 The smallest fractional value in this vector is $x₁$, so we pivot with $ℓ = 1$ first.
 \begin{align*}
   \{x₁'\}
