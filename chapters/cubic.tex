@@ -437,6 +437,23 @@ Now, we only have a single matrix sequence $P_n$, defined as follows:
 \end{conjecture}
 
 % ==============================================================================
+\section{Klein Polyhedron}
+% ==============================================================================
+
+A vector $x ∈ ℝ^d$ is smaller than another vector $y ∈ ℝ^d$, denoted as $x ≤ y$, if $xᵢ ≤ yᵢ$ for at least one index $i ≥ 1$.
+
+\begin{definition}
+  A vector $\hat x$ is a \emph{relative minimum} with respect to a line $[\hat ω]$ if
+  \[
+    \|\hat ω - \hat x\| ≤ \|\hat ω - \hat y\| \text{ for every } \hat y ≤ \hat x,
+  \]
+  or equivalently,
+  \[
+    \left\|ω - \frac{x}{x₀} \right\| ≤ \left\|ω - \frac{y}{y₀}\right\| \text{ for every } \hat y ≤ \hat x.
+  \]
+\end{definition}
+
+% ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
 % ==============================================================================
 
