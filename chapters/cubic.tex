@@ -369,30 +369,64 @@ Now, we only have a single matrix sequence $P_n$, defined as follows:
   Suppose the lemma is true for $n ≥ 0$, then
   \begin{align*}
     [a₀; ℓ₁, a₁; …; ℓ_n, a_n; ℓ, x]
-    & = [a₀; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
-    & = P_{n-1}
+    & ≡ [a₀; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
+    & ≡ P_{n-1}
     \begin{pmatrix}
       a_n + \mathrm{pivot}_ℓ(x) \\ 1
     \end{pmatrix} \\
-    & = P_{n-1} A_n \hat{x} \\
-    & = P_n \hat{x} \qedhere
+    & ≡ P_{n-1} A_n \hat{x} \\
+    & ≡ P_n \hat{x} \qedhere
   \end{align*}
 \end{proof}
 
+\begin{lemma}
+  \label{lem:mdcf-purely-periodic}
+  If there exists a purely periodic MDCF for $x ∈ ℝ^d$,
+  then $x_i$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
+\end{lemma}
+
+% TODO: Should we use x ≡ y or [x] = [y]?
+\begin{proof}
+  If the MDCF is purely periodic, then by Lemma~\ref{lem:mdcf-wallis'} there exists an integer matrix $P$ such that
+  \[
+    \hat x ≡ P \hat x \iff λ₁ \hat x = λ₂ P \hat x \iff λ \hat x = P \hat x,
+  \]
+  for some $λ₁, λ₂ ∈ ℝ \setminus \{0\}$ and $λ = λ₁/λ₂$.
+  Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $P$.
+  The characteristic polynomial $\det(P - λ I)$ can have a degree of at most $d+1$,
+  therefore the eigenvalue $λ$ is an algebraic number of degree $d+1$.
+
+  % TODO: Finish this proof
+  For the eigenvector $\hat x$, we have to find a nontrivial solution to the
+  homogeneous linear system
+  \[
+    (P - λ I) \hat x = 0.
+  \]
+
+  Finally, every $x_i = \hat x_i / \hat x₀$ must be an algebraic number of degree $≤ d+1$,
+  because $x_i$ is a rational expression of two algebraic numbers of degree $≤ d+1$.
+\end{proof}
+
 \begin{theorem}
-  Let $A ∈ ℤ^{d×d}, B ∈ ℤ^d$ and $C ∈ ℤ$.
-  If $x^\top A x + B x + C = 0$ for some vector $x ∈ ℝ^d$,
-  then the MDCF of $x$ is eventually periodic.
+  If there exists a periodic MDCF for $x ∈ ℝ^d$,
+  then $x_i$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
 \end{theorem}
 
 \begin{proof}
-
+  Let $x^{(k)}$ be the complete quotients of $x$.
+  Suppose there exists a period $ℓ$ such that $x_k = x_{k+ℓ}$.
+  By Lemma~\ref{lem:mdcf-wallis'},
+  \[
+    \hat x = P^{(k)} \hat x^{(k)} = P^{(k+ℓ)} \hat x^{(k+ℓ)} = P^{(k+ℓ)} \hat x^{(k)}.
+  \]
+  The algebraic numbers in $\hat x_k$ must have degree $≤ d+1$.
+  Since every element in $x$ is a linear rational expression of the form
+  \[
+    x_i = \frac{∑_{j=1}^d P_{ij}^{(k)} x_j^{(k)} + P_{i0}^{(k)}}{\sum_{j=1}^d P_{0j}^{(k)} x_j^{(k)} + P_{00}^{(k)}},
+  \]
+  where $x_j^{(k)}$ is an algebraic number of degree $≤ d+1$ and the elements of $P^{(k)}$ are integers,
+  every element in $x$ must also be an algebraic number of degree $≤ d+1$.
 \end{proof}
-
-\begin{corollary}
-  If $r$ is the root of a polynomial of degree $2d$,
-  then the MDCF of $x = (r^1, …, r^d)$ is eventually periodic.
-\end{corollary}
 
 % ==============================================================================
 \section{MDCFs of Cubic Irrationals}
