@@ -2,6 +2,50 @@
 
 \section{Finding a Periodic Representation through Brute Force}
 
+% TODO: Maybe replace this with the pseudocode instead?
+\begin{minipage}{0.48\textwidth}
+\begin{Python}[basicstyle=\small\ttfamily, frame={}]
+def brute_force_search(xs, max_depth):
+    d = len(xs)
+    for L in sequences(d, max_depth):
+        ys = tuple(xs)
+        index = {ys: 0}
+        for i, l in enumerate(L):
+            ys = pivot(ys, l)
+            if ys in index:
+                j = index[ys]
+                start = L[:j]
+                period = L[j:i+1]
+                return start, period
+            else:
+                index[ys] = i + 1
+\end{Python}
+\end{minipage}
+\vrule width 1pt
+\hfill
+\begin{minipage}{0.48\textwidth}
+\begin{Python}[basicstyle=\small\ttfamily, frame={}]
+def sequences(base, max_digits):
+    seq = []
+    while True:
+        carry = 1
+        for i in range(len(seq) - 1, -1, -1):
+            seq[i] += carry
+            if seq[i] == base:
+                seq[i] = 0
+                carry = 1
+            else:
+                carry = 0
+                break
+        if carry:
+            if len(seq) < max_digits:
+                seq.insert(0, 1)
+            else:
+                break
+        yield seq[1:]
+\end{Python}
+\end{minipage}
+
 \section{Results for Cubic Irrationals}
 
 \begin{example}
