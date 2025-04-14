@@ -1,8 +1,8 @@
-\chapter{Experimental Analysis on the Periodicity}
+\chapter{Experimental Analysis of the Periodicity}
 
-\section{Implementation Details}
+\section{Finding a Periodic Representation through Brute Force}
 
-\section{Periodic Representations of Cubic Irrationals}
+\section{Results for Cubic Irrationals}
 
 \begin{example}
   The sequences for the prime numbers are:
@@ -37,7 +37,9 @@
   \input{tables/period-length.tex}
 \end{table}
 
-\section{Finding an Efficient Search Strategy}
+\section{Results for Quartic and Higher-Degree Irrationals}
+
+\section{Evaluation of More Efficient Search Strategies}
 
 We can likely rule out alternating pivot sequences since this corresponds to
 the Jacobi-Perron algorithm and for this algorithm it is conjectured
@@ -50,5 +52,3 @@ But different choices of $q$ produce different sequences.
 For example, $(\sqrt[3]{2}, \sqrt[3]{4})$ produces a different sequence of coefficients than $(\sqrt[3]{2}, \sqrt[3]{6})$.
 Even though both inputs represent the same number $\sqrt[3]{2}$.
 Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}$ and $\sqrt[3]{4}$.
-
-\section{Quartic Irrationals and Higher Degrees}
