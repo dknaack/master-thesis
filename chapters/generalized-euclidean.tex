@@ -357,3 +357,56 @@ The golden ratios for each definition is the limit of consecutive Fibonacci numb
 where $F(n)$ can be any of the previously defined Fibonacci numbers.
 
 \section{Extension to Real Numbers}
+
+% ==============================================================================
+\section{Comparison to the Jacobi-Perron Algorithm}
+% ==============================================================================
+
+Many generalizations to the Euclidean algorithm have been considered.
+One of them was proposed by Jacobi to answer Hermite's question.
+In his version, he computes the GCD of three numbers by successively dividing
+the smallest number from the larger numbers.
+This algorithm was later extended by Oskar Perron to arbitrarily many numbers.
+The algorithm works as follows:
+
+Given a list of positive integers $a₀, a₁, …, aₙ$, take the smallest number $a_ℓ$
+and compute the remainder $a_i'$ resulting from the division of $a_i$ with $a_ℓ$.
+The value $a_ℓ$ is kept until the next iteration, i.e. $a_ℓ' = a_ℓ$.
+Continue this process until all but one value remains.
+\begin{align*}
+  a₀' = a₀ \bmod a_ℓ, a₁ = a₁ \bmod a_ℓ, …, a_ℓ' = a_ℓ, …, aₙ' = aₙ \bmod a_ℓ; \\
+\end{align*}
+
+Perron modified this algorithm for the purposes of his analysis.
+The integers $a₁, …, aₙ$ are kept in a list.
+We remove the first element from the list, calculate the remainders for each
+remaining element and append the element to the end of the list.
+One iteration in this modified version produces the values:
+\begin{align*}
+  a₀' = a₁ \bmod a₀, a₁' = a₂ \bmod a₀, …, a_{n-1}' = a_n \bmod a₀, aₙ = a₀. \\
+\end{align*}
+This process is repeated until the first element is zero.
+
+Of course, the termination condition is not sufficient.
+When this algorithm terminates, the remaining elements might not all be zero.
+Therefore, we remove the first element from the list and continue with the
+remaining list.
+
+By allowing real numbers as inputs, this algorithm proceeds infinitely but
+always converges to zero.
+
+The Jacobi-Perron algorithm is actually a subset of the generalized Euclidean algorithm.
+The generalized Euclidean algorithm is periodic for all real numbers where the Jacobi-Perron algorithm is periodic.
+This comes from the fact, that the Jacobi-Perron algorithm is really the
+generalized Euclidean algorithm with the specific sequence of pivots $L = \overline{12…d}$.
+So in the $i$th iteration, we are choosing index $(i \bmod d) + 1$ as our pivot.
+
+This has the convenient property that if the all inputs which are periodic for
+the Jacobi-Perron algorithm must also be periodic for the brute-force algorithm.
+
+\begin{theorem}
+  The brute-force algorithm is periodic on input $(1, r, r^2)$ if
+  \[
+    r = \sqrt[n]{D + d}, \text{ where } d | D.
+  \]
+\end{theorem}
