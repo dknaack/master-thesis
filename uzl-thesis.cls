@@ -1944,6 +1944,7 @@
 \uzldeflanguageshorthand{C++}{style=code,language=c++}
 \uzldeflanguageshorthand{Cpp}{style=code,language=c++}
 \uzldeflanguageshorthand{Java}{style=code,language=java}
+\uzldeflanguageshorthand{Python}{style=code,language=python}
 \uzldeflanguageshorthand{Pseudocode}{style=pseudocode}
 \uzldeflanguageshorthand{Latex}{style=code,language={[LaTeX]tex},moretexcs={chapter}}
 \uzldeflanguageshorthand{Matlab}{style=code,language=Matlab}
