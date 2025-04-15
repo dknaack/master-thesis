@@ -145,6 +145,18 @@ the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
 Deriving the sequence is more involved than the one-dimensional case since
 there is an additional index $ℓ$ at each step.
 
+The sequence is essentially the generalized Euclidean algorithm, but in reverse.
+Just like the MDCF is the application of the inverse pivot operation.
+In the algorithm, we begin with a basis $B ∈ ℤ^{d×d}$ and a vector $c ∈ ℤ^d$.
+First, we find a solution $x$ to $Bx = c$ and then we exchange $c$ with $B_ℓ$
+and $B_ℓ$ with the remainder $B\{x\} = Bx - Ba_i$.
+We continue this process until $x$ is entirely integral.
+For the sequence, we reverse this process.
+We begin with an already reduced basis $B'$ and a vector $c'$, which is an
+integral combination of $B'$.
+Then, we exchange $B'_{ℓ}$ with $c'$ and $c'$ with $B' a_i + B'_{ℓ}$.
+We continue this process until $B x = c$.
+
 In total, we define four sequences:
 A matrix sequence $P^{(n)}$, two vector sequences $Q^{(n)}$ and $p^{(n)}$ as well as a scalar sequence $q^{(n)}$.
 Their are defined as follows:
