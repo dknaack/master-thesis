@@ -1,30 +1,62 @@
-\chapter{Periodic Representation of Cubic Irrationals}
+\chapter{Periodic Representation of Higher Degree Irrationals}
 
-For quadratic irrationals, we saw that the Euclidean algorithm can be used to
-derive a periodic representation for the quadratic irrationals.
-Naturally this leads to the question, whether the generalized Euclidean
-algorithm can be used to represent cubic irrationals or irrationals of even
-higher degree.
-In the previous chapter, we have already seen that the algorithm is periodic
-for a generalization of the golden ratios to a higher degree.
-In this chapter, we will analyze the algorithm on its periodicity on cubic
-irrationals.
+We have already seen that continued fractions are periodic if and only if the
+value is a quadratic irrational.
+We constructed the continued fraction for a given number using the Euclidean
+algorithm.
+Naturally, we can extend this notion of continued fractions to higher
+dimensions using the generalized Euclidean algorithm.
+This leads to a concept of multi-dimensional continued fractions, which could
+potentially lead to an answer of Hermite's question.
+
+This chapter introduces the concept of MDCFs.
+We begin by defining what they are and deriving many properties similar to
+continued fractions.
+Subsequently, we look at numbers represented by periodic MDCFs and whether they
+must be algebraic numbers of degree $d+1$.
+Finally, we discuss the geometry behind the multi-dimensional continued fractions.
+The other direction -- Whether algebraic numbers of degree $d+1$ admit periodic
+MDCFs -- will be discussed in the next chapter.
 
 % ==============================================================================
-\section{Definition}
+\section{Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
-The multi-dimensional extension of the continued fractions is based on the
-update rule. Recall that given a vector $x ∈ ℝ^d$ and index $ℓ ≤ d$, we update
-the input vector over one iteration by
+To derive the continued fraction for a real number, we have used the Euclidean algorithm.
+In particular, we looked at the ratio $a/b$ between the two inputs $a$ and $b$,
+and we have used the integer part of that ratio as a coefficient in the
+continued fraction.
+Iterating the Euclidean algorithm then gave us a unique representation for
+every real number.
+The Euclidean algorithm can also be viewed as the generalized algorithm when $d = 1$.
+In this case, the ratio $a/b$ represents the solution $x$ of the linear system $bx = a$.
+So the integer part of the solution $x$ also represents a coefficient in the
+continued fraction.
+We can then use the pivot operation to iterate over this solution and gain the
+rest of the coefficients.
+
+The multi-dimensional continued fraction can now be easily derived from the
+solution vector $x$ in higher dimensions.
+Specifically, given a vector $x ∈ ℝ^d$, we take the integer part of each
+element $\floor{x}$ as a coefficient of the multi-dimensional continued
+fraction.
+Then, we get the subsequent coefficients by iterating over this vector using
+the pivot operation.
+This gives us a top-down construction of MDCFs, but typically continued
+fractions are defined in a bottom-up fashion.
+For a bottom-up definition of the MDCFs, we simply reverse the pivot operation.
+The inverse operation can be derived as follows:
+Let $x ∈ ℝ^d$ and $a = \floor{x}$.
+If $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ$, then
 \[
   \begin{array}{lcrlcr}
     \displaystyle x_i' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ}, &
     \displaystyle x_ℓ' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ} \\[1em]
   \end{array}
 \]
-where $a = \floor{x}$ and $i ≠ ℓ$.
-We can reverse this process by rearranging the equations
+for all $i ≠ ℓ$.
+For the inverse operation, we have to derive every element of $x$ from $x'$,
+which can be done by the following equations:
 \[
   \begin{array}{lcrlcr}
     \displaystyle x_i & = & a_i + \displaystyle \frac{x_i'}{x_ℓ'}, &
@@ -38,56 +70,48 @@ We have
 \[
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}_ℓ^{-1}(a, x') = x.
 \]
+This operation leads directly to a definition of MDCFs.
 
-Independently of the Euclidean algorithm,
-we can look at what happens when $a$ is not necessarily an integer vector.
+Although, we initially used integer vectors $a ∈ ℤ^d$ for the definition of the inverse operation,
+we can also look at what happens when $a$ is not necessarily an integer vector.
+For subsequent lemmas, we will need a definition of MDCFs which allows rational
+or even real vectors as coefficients.
 
 \begin{definition}
-  Given a sequence of $d$-dimensional vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
+  Given a sequence of $d$-dimensional real vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
   indices $\{ℓₙ\}_{n ≥ 0}$, the \emph{multi-dimensional continued fraction} $[r₀; ℓ₁, r₁; …]$
   is defined as
   \[
     [r₀; ℓ₁, r₁; …] = \lim_{n → ∞} [r₀; ℓ₁, r₁; …; ℓₙ, rₙ],
   \]
-  where the finite continued fractions are defined as
+  where the finite continued fractions $[r₀; ℓ₁, r₁; …; ℓₙ, rₙ]$ are defined as
   \[
     [r₀] = r₀, \qquad [r₀; ℓ₁, r₁; …; ℓₙ, rₙ] = \mathrm{pivot}_{ℓ₁}^{-1}\big(r₀, [r₁; ℓ₂, r₂; …; ℓₙ, rₙ]\big).
   \]
 \end{definition}
 
-\begin{remark}~
-  \begin{enumerate}
-    \item
-      The first item has no index.
-      The index sequence $ℓₙ$ is always one shorter than the vector sequence $rₙ$.
-    \item
-      For the generalized Euclidean algorithm, the sequence $r_n$ consists solely of integer vectors.
-      However, the MDCF can also be defined over rational or even real vectors.
-      To differentiate the two, a sequence $rₙ$ will denote a sequence of real
-      vectors and $aₙ$ will denote a sequence of integer vectors.
-  \end{enumerate}
-\end{remark}
-
-The concepts from one-dimensional continued fractions naturally carry over to its
+The terminology from one-dimensional continued fractions naturally carry over to its
 multi-dimensional counterpart.
+Given an infinite MDCF representation~$[a₀; ℓ_1, a_1; …]$ of a vector $x ∈ ℝ^d$, we define the following:
 
-\begin{definition}[Complete Quotient, Convergent, Periodicity]~
-  Given a multi-dimensional continued fraction $[r₀; ℓ_1, r_1; ℓ_2, r_2; …]$,
-  we define the following:
-  \begin{itemize}
-    \item The \emph{$k$-th complete quotient} is defined as $[rₖ; r_{k+1}, …]$.
-    \item The \emph{$k$-th convergent} of $x$ is defined as the finite fraction $[r₀; ℓ₁, r₁; …; ℓ_k, r_k]$.
-    \item The MDCF is \emph{eventually periodic} if there exists $k₀ ≥ 0$ and $ℓ ≥ 1$ such that $rₖ = r_{k+ℓ}$ for every $k ≥ k₀$.
-      The MDCF is \emph{purely periodic} if $k₀ = 0$.
-  \end{itemize}
-\end{definition}
+\begin{itemize}
+  \item The \emph{$k$-th convergent} of $x$ is the finite MDCF $[a₀; ℓ₁, a₁; …; ℓ_k, a_k]$.
+  \item The \emph{$k$-th complete quotient} is the MDCF $[aₖ; a_{k+1}, …]$.
+  \item The MDCF is \emph{eventually periodic} if there exists an index~$n₀ ≥ 0$
+    and a period~$k ≥ 1$ such that $aₙ = a_{n+k}$ and $ℓₙ = ℓ_{n+k}$
+    for every $n ≥ n₀$.
+    The MDCF is \emph{purely periodic} if $n₀ = 0$.
+\end{itemize}
 
-\section{Periodic MDCFs}
+\section{Periodic Multi-Dimensional Continued Fractions}
 
-To show that any periodic MDCF contains elements of a field with degree $d + 1$
-over the rationals, we proceed similarly to the one-dimensional continued
-fraction.
-We first show the multi-dimensional analogue of Lemma~\vref{lem:nesting}.
+In this section I will show that if the MDCF of a vector $x ∈ ℝ^d$ is periodic,
+then the elements of $x$ must be all algebraic numbers of degree $d+1$.
+The proof requires two additional lemmas, which are multi-dimensional analogues
+of Lemma~\ref{lem:nesting} and Lemma~\ref{lem:wallis}.
+In the following, $aₙ$ will always denote a sequence of integers and $ℓₙ$ a
+sequence of indices between $1$ and $d$.
+We begin with a generalization of Lemma~\ref{lem:nesting}.
 
 \begin{lemma}[Nesting]
   \label{lem:mdcf-nesting}
@@ -112,9 +136,15 @@ We first show the multi-dimensional analogue of Lemma~\vref{lem:nesting}.
   \end{align*}
 \end{proof}
 
-In Lemma~\vref{lem:wallis}, we had to define two sequences $pₙ$ and $qₙ$ over
-the sequence of the continued fraction $aₙ$.
-Each sequence would only return a single scalar.
+% TODO: Explain how to derive the sequences
+The second lemma is a generalization of Lemma~\vref{lem:wallis},
+where we defined the convergents of a continued fraction~$pₙ/qₙ$
+based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
+For MDCFs, we can similarly derive a recursive formula to derive the values of
+the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
+Deriving the sequence is more involved than the one-dimensional case since
+there is an additional index $ℓ$ at each step.
+
 In total, we define four sequences:
 A matrix sequence $P^{(n)}$, two vector sequences $Q^{(n)}$ and $p^{(n)}$ as well as a scalar sequence $q^{(n)}$.
 Their are defined as follows:
@@ -165,11 +195,12 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
     & = Q' x + q'.
   \end{align*}
   Hence,
-  \begin{align*}
-    y & = \frac{P(a + \mathrm{pivot}(x, ℓ)) + p}{Q(a + \mathrm{pivot}(x, ℓ)) + q} \\
-      & = \frac{P' x + p'}{Q'^T x + q'}. \qedhere
-  \end{align*}
+  \[
+    y = \frac{P(a + \mathrm{pivot}(x, ℓ)) + p}{Q(a + \mathrm{pivot}(x, ℓ)) + q} = \frac{P' x + p'}{Q'^T x + q'}. \qedhere
+  \]
 \end{proof}
+
+With these two lemmas proven, we can now turn our attention to periodic MDCFs.
 
 \begin{proposition}
   Given $r ∈ ℝ$, let $x = (r¹, r², …, r^d)$.
@@ -192,7 +223,7 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
 \end{proof}
 
 % ==============================================================================
-\section{Homogeneous Coordinates}
+\section{The Geometry behind Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
 The pivot operation is quite cumbersome to write.
@@ -354,14 +385,6 @@ Now, we only have a single matrix sequence $P_n$, defined as follows:
   where $x_j^{(k)}$ is an algebraic number of degree $≤ d+1$ and the elements of $P^{(k)}$ are integers,
   every element in $x$ must also be an algebraic number of degree $≤ d+1$.
 \end{proof}
-
-% ==============================================================================
-\section{MDCFs of Cubic Irrationals}
-% ==============================================================================
-
-\begin{conjecture}
-  The brute-force algorithm for $d = 2$ is periodic if and only if $α$ is a cubic irrational.
-\end{conjecture}
 
 % ==============================================================================
 \section{Klein Polyhedron}
