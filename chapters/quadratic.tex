@@ -1,14 +1,28 @@
 \chapter{Periodic Representation of Quadratic Irrationals}
 
-\begin{definition}
-  A number $x ∈ ℝ$ is said to be a \emph{quadratic irrational} if $x$ is the root of some
-  polynomial $p(x)$ over the rational numbers with degree $2$.
-\end{definition}
+We begin with the case of quadratic irrationals.
+A quadratic irrational is any real number which is a root of a polynomial with degree $2$.
+For quadratic irrationals, it is already well known that they can be
+represented using periodic continued fractions,
+where continued fractions are fractions of the form
+\[
+  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}}.
+\]
+In this chapter we will prove that continued fractions are periodic if and only
+if they represent a quadratic irrational.
+Periodic continued fractions were first analyzed by Euler,
+who has shown that such continued fractions must be quadratic irrationals.
+Later, Lagrange \cite{Lagrange70} has proven the other direction, that
+quadratic irrationals must always have periodic continued fractions.
 
 \section{Continued Fractions}
 
 \begin{definition}
-  % TODO: Include definition for continued fractions
+  A continued fraction is defined as
+  \[
+    [r₀] = r₀, \qquad
+    [r₀; r₁, …, rₙ] = r₀ + \frac{1}{[r₁; r₂, …, rₙ]}.
+  \]
 \end{definition}
 
 \begin{definition}
