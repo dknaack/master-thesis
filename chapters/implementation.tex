@@ -1,13 +1,31 @@
 \chapter{Experimental Analysis on the Periodicity}
 
+In this chapter, we consider the problem of finding a periodic MDCF for an algebraic number of degree $d+1$.
+Finding a proof, that algebraic numbers of degree $≤ d+1$ always admit periodic MDCFs, is much more difficult.
+We have already seen that the golden ratios are periodic, when running the
+generalized Euclidean algorithm on them.
+In this chapter, I present my empirical results on some cubic roots.
+I have implemented the generalized Euclidean algorithm and used it to look for
+cubic roots.
+In this chapter, I present the results of my analysis.
+
 \section{Experiment Setup}
 
-The generalized Euclidean algorithm allows us for one additional degree of
-freedom.
-We have already seen that in the case of Fibonacci numbers,
-that different strategies in the choice of our pivot element will only allow
-certain irrationals.
-Therefore, to find a strategy for \emph{all} irrationals we simply try all strategies.
+Recall that Hermite's original question asks about the representation of a
+single number $r ∈ ℝ$, but the generalized Euclidean algorithm expects a vector
+as input.
+So we first need a mapping from a real number $r$ to a real vector $x$.
+One solution is to apply a set of $d$ polynomials $q₁, …, q_d$ on the
+given number $r$ giving us the vector $x = (q₁(r), …, q_d(r))$.
+Not all choices work equally well -- a trivial example, which won't work, would
+be choosing constant polynomials, i.e. $qᵢ(r) = c_i$ for $c_i ∈ ℚ$.
+Therefore, the polynomials should be chosen such that when $r$ is an algebraic
+number of degree $≥d+1$, the elements of $x$ are linearly independent with
+rational coefficients.
+An easy way to achieve this is to choose polynomials with different degrees or
+more specifically $\deg(q_i) = i$.
+In my analysis, I have always chosen the polynomials $qᵢ(r) = r^i$.
+Unless stated otherwise, the following analysis will always use this vector as the input.
 
 \begin{Pseudocode}[float=tbp, label={lst:bfs}, caption={The brute-force search algorithm for finding a periodic representation.}]
 algorithm $\textsc{brute-force-search}(x, N)$
@@ -23,20 +41,11 @@ algorithm $\textsc{brute-force-search}(x, N)$
   return $ε$
 \end{Pseudocode}
 
-Given a real number $r ∈ ℝ$, we use the update rule from the generalized
-algorithm to find its representation.
-Of course, the update rule does not take a real number but a vector as input,
-so we use the initial vector $x_i = q_i(r)$ for $i ≤ d$, where $q_i$ is an
-arbitrary polynomial of degree $i$.
-Most of the time we will use $q_i(r) = r^i$ as our polynomials.
-
-Now that we have our input vector $x ∈ ℝ^d$, we need to find a possible
-sequence of indices $ℓ_1, ℓ_2, …, ℓ_N$, where updating $x$ with those
-indices leads to one vector occurring twice.
-In order to find this sequence, we try every possible sequence
-$ℓ_1, ℓ_2, … ∈ \{1, …, d\}^*$ until we find some duplicate vector.
-In particular, we use a breadth-first search over the sequences.
-We begin with all sequences of length $1$ and see if any vector occurs twice.
+Now that we have a vector $x$, we can begin the search.
+The pseudocode for the search algorithm I implemented is shown in Listing~\ref{lst:bfs}.
+The algorithm is a brute-force search over all possible sequences $\{1,\dots,d\}^*$.
+We simply try every sequence of possible pivot indices in a breadth-first manner.
+So we begin with all sequences of length $1$ and see if any vector occurs twice.
 If not, then we continue with all sequences of length $2$ and check again if
 any previous vector has occurred twice.
 We continue this process indefinitely until we hopefully find a duplicate vector.
