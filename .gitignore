@@ -1,6 +1,7 @@
 /main.pdf
 /main-bibtex-entries.bib
 /tags
+*.sage.py
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
