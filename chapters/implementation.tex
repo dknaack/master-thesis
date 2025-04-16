@@ -70,60 +70,60 @@ We continue this process indefinitely until we hopefully find a duplicate vector
 % would sort of present the brute-force search more as a meta-proof on all
 % Jacobi-Perron type algorithm which could be periodic.
 
-If we do find a duplicate, then the representation for that number will be unambiguous.
-However, if we don't, then it is unclear how we will represent that number.
-One possible solution is to simply include everything, the whole tree.
-The aim of this algorithm is not to find a representation in and of itself,
-but to aid in finding one possible strategy for our goal.
-In the end, we might only need to look at all sequences of length $d$ at every
-iteration to find the optimal choice.
-In the worst case, there would be no strategy we can follow to determine a
-periodic representation for cubic irrationals.
+% If we do find a duplicate, then the representation for that number will be unambiguous.
+% However, if we don't, then it is unclear how we will represent that number.
+% One possible solution is to simply include everything, the whole tree.
+% The aim of this algorithm is not to find a representation in and of itself,
+% but to aid in finding one possible strategy for our goal.
+% In the end, we might only need to look at all sequences of length $d$ at every
+% iteration to find the optimal choice.
+% In the worst case, there would be no strategy we can follow to determine a
+% periodic representation for cubic irrationals.
 
 
 % TODO: Maybe replace this with the pseudocode instead?
-\begin{minipage}{0.48\textwidth}
-\begin{Python}[basicstyle=\tiny\ttfamily, frame={}]
-def brute_force_search(xs, max_depth):
-    d = len(xs)
-    for L in sequences(d, max_depth):
-        ys = tuple(xs)
-        index = {ys: 0}
-        for i, l in enumerate(L):
-            ys = pivot(ys, l)
-            if ys in index:
-                j = index[ys]
-                start = L[:j]
-                period = L[j:i+1]
-                return start, period
-            else:
-                index[ys] = i + 1
-\end{Python}
-\end{minipage}
-\vrule width 1pt
-\hfill
-\begin{minipage}{0.48\textwidth}
-\begin{Python}[basicstyle=\tiny\ttfamily, frame={}]
-def sequences(base, max_digits):
-    seq = []
-    while True:
-        carry = 1
-        for i in range(len(seq)-1, -1, -1):
-            seq[i] += carry
-            if seq[i] == base:
-                seq[i] = 0
-                carry = 1
-            else:
-                carry = 0
-                break
-        if carry:
-            if len(seq) < max_digits:
-                seq.insert(0, 1)
-            else:
-                break
-        yield seq[1:]
-\end{Python}
-\end{minipage}
+%\begin{minipage}{0.48\textwidth}
+%\begin{Python}[basicstyle=\tiny\ttfamily, frame={}]
+%def brute_force_search(xs, max_depth):
+%    d = len(xs)
+%    for L in sequences(d, max_depth):
+%        ys = tuple(xs)
+%        index = {ys: 0}
+%        for i, l in enumerate(L):
+%            ys = pivot(ys, l)
+%            if ys in index:
+%                j = index[ys]
+%                start = L[:j]
+%                period = L[j:i+1]
+%                return start, period
+%            else:
+%                index[ys] = i + 1
+%\end{Python}
+%\end{minipage}
+%\vrule width 1pt
+%\hfill
+%\begin{minipage}{0.48\textwidth}
+%\begin{Python}[basicstyle=\tiny\ttfamily, frame={}]
+%def sequences(base, max_digits):
+%    seq = []
+%    while True:
+%        carry = 1
+%        for i in range(len(seq)-1, -1, -1):
+%            seq[i] += carry
+%            if seq[i] == base:
+%                seq[i] = 0
+%                carry = 1
+%            else:
+%                carry = 0
+%                break
+%        if carry:
+%            if len(seq) < max_digits:
+%                seq.insert(0, 1)
+%            else:
+%                break
+%        yield seq[1:]
+%\end{Python}
+%\end{minipage}
 
 \section{Results for Cubic Irrationals}
 
