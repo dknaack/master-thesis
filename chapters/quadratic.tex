@@ -6,32 +6,60 @@ For quadratic irrationals, it is already well known that they can be
 represented using periodic continued fractions,
 where continued fractions are fractions of the form
 \[
-  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}}.
+  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}}
 \]
-In this chapter we will prove that continued fractions are periodic if and only
-if they represent a quadratic irrational.
+with $a₀, a₁, a₂, … ∈ ℕ$ and they are periodic when the sequence $a₀, a₁, a₂, …$ eventually repeats.
+In this chapter we will prove that the continued fractions of a number are
+periodic if and only if the number is a quadratic irrational.
 Periodic continued fractions were first analyzed by Euler,
 who has shown that such continued fractions must be quadratic irrationals.
 Later, Lagrange \cite{Lagrange70} has proven the other direction, that
 quadratic irrationals must always have periodic continued fractions.
+For the proof, we require many properties from the continued fractions.
+Specifically, we will show that continued fractions are always the best
+rational approximation of a real number.
+The continued fractions can also be interpreted geometrically.
+This was initially proposed by Klein \cite{Klein95},
+who viewed the continued fractions as points of a lattice.
+A similar geometrical interpretation will be used in a later chapter for the
+generalization of the continued fractions to higher dimensions.
+His interpretation was also used to derive an analogue of Lagrange's theorem in
+higher dimensions \cite{German08}. % TODO: Should this citation really be here?
 
 \section{Continued Fractions}
 
+We begin with a more precise definition of what a continued fraction is and in
+particular how infinite continued fractions are defined.
+Although continued fractions are typically defined over a sequence of positive integers,
+we extend the definition to allow for real numbers.
+This will be useful for the theorems which follow.
+In general,
+$r₀, r₁, …$ will denote a sequence of real numbers
+and $a₀, a₁, …$ will denote a sequence of integers
+with the exception of the first entry $a₀$,
+which can be any integer.
+
 \begin{definition}
-  A continued fraction is defined as
+  Given a sequence $r₀, r₁, … ∈ ℝ$, the finite continued
+  fractions over $rₙ$ are defined inductively as
   \[
     [r₀] = r₀, \qquad
     [r₀; r₁, …, rₙ] = r₀ + \frac{1}{[r₁; r₂, …, rₙ]}.
   \]
+  The infinite continued fraction $[r₀; r₁, r₂, …]$ is then defined if the limit
+  \[
+    \lim_{n → ∞} [r₀; r₁, …, rₙ]
+  \]
+  exists.
+  The fractions $[r₀; r₁, …, rₙ]$ are also called the
+  \emph{convergents} of the infinite continued fraction $[r₀; r₁, …]$.
 \end{definition}
 
-\begin{definition}
-  The \emph{$n$-th convergent} of an infinite continued fraction $[a₀; a₁, …]$ is
-  defined as the finite continued fraction $[a₀; a₁, …, aₙ]$.
-\end{definition}
-
-For a continued fraction with only one entry, the convergent is simply $a₀/1$.
-The convergent of longer continued fractions can be calculated inductively as follows:
+If the sequence consists of positive integers,
+then each convergent $[a₀; a₁, …, aₙ]$ has a unique rational value $pₙ/qₙ$.
+This value can be calculated as follows:
+For a convergent with only one entry, the convergent is simply $[a₀] = a₀ = a₀/1$.
+The convergent of a longer fraction can be calculated by the following:
 \[
   [a₀; a₁, …, aₙ]
   = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
@@ -175,7 +203,8 @@ We begin with the first direction:
   \[
     (q_{k+ℓ} x_k + q_{k+ℓ-1})(p_k x_k + p_{k-1}) - (q_k x_k + q_{k-1}) (p_{k+ℓ} x_k + p_{k+ℓ-1}) = 0.
   \]
-  Hence, $x_k$ is a quadratic irrational and $x$ must be one too since $x ∈ ℚ(x_k)$.
+  Hence, the complete quotient $x_k$ is a quadratic irrational and
+  since $x$ is a rational expression of $x_k$ it must also be a quadratic irrational.
 \end{proof}
 
 % ==============================================================================
