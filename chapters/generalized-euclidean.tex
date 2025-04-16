@@ -203,6 +203,22 @@ end
 \section{Extension to Real Numbers}
 % ==============================================================================
 
+The last step needed for the analysis is an extension of the algorithm to real
+numbers.
+Instead of integer matrices, we allow the algorithm to take real matrices, too.
+The solution vector $x$ will also be real.
+This causes the algorithm to continue infinitely as long as the input is not rational.
+For rational matrices, a scaling ensures that they are integral again, which
+means that the algorithm terminates at some point.
+But for real matrices, this is not the case.
+
+% TODO: Proof that the solution vector converges to zero?
+
+% TODO: Example for some cubic roots?
+\begin{example}
+
+\end{example}
+
 % ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
 % ==============================================================================
