@@ -261,6 +261,14 @@ This update rule follows from the fact that
 % variables, since the update rule is just an improvement of the original
 % algorithm.
 
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/pivot-choice}
+  \caption{
+    Different choices for the remainder of vector $c$. The original algorithm
+    always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
+\end{figure}
+
 Although the update rule speeds up the algorithm considerably, it is not
 optimal for the construction of a generalized continued fraction.
 The problem is that the rule flips the sign of all elements inside the solution
@@ -292,21 +300,6 @@ while $x$ is not integral do
   $x ← \mathrm{pivot}_ℓ(x)$
 end
 \end{Pseudocode}
-
-\begin{figure}[t]
-  \centering
-  \includestandalone{figures/pivot-choice}
-  \caption{
-    Different choices for the remainder of vector $c$. The original algorithm
-    always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
-\end{figure}
-
-% TODO: Proof that the solution vector converges to zero?
-
-% TODO: Example for some cubic roots?
-\begin{example}
-
-\end{example}
 
 % ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
