@@ -1,0 +1,68 @@
+\documentclass[tikz]{standalone}
+
+\usetikzlibrary{arrows.meta}
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.5]
+  \def\xOffset{0}
+  \def\rows{7}      % Number of rows per column
+
+  \foreach \n [count=\i] in {\rows, 19, 23, 18, 14} {
+    % Parameters
+    \def\boxSize{1}   % size of each box
+    \def\padding{0.1} % Optional padding
+
+    % Compute number of columns needed
+    \pgfmathtruncatemacro{\cols}{floor(\n/\rows)+1}
+    \ifnum\i=1
+      \pgfmathtruncatemacro{\cols}{floor(\n/\rows)}
+    \fi
+
+    % Draw bounding box around entire layout
+    \pgfmathsetmacro{\totalWidth}{\cols*\boxSize+2*\padding}
+    \pgfmathsetmacro{\totalHeight}{\rows*\boxSize+2*\padding}
+    \draw[thick] (\xOffset-\padding,-\padding) rectangle ++(\totalWidth,\totalHeight);
+    %\draw[thick, fill=blue!30] ({\xOffset+(\cols-1)*\boxSize},-\padding) rectangle ++(\boxSize,\totalHeight);
+    \ifnum\i=1
+      \node[anchor=east] (number) at (\xOffset, \totalHeight*0.5) {$a₁ = \n$};
+    \else
+      \node[anchor=south] (number) at ({\xOffset+\totalWidth*0.5}, \totalHeight) {$a_{\i} = \n$};
+    \fi
+
+    % Draw boxes
+    \foreach \j in {0,...,\numexpr\rows*\cols - 1} {
+      \pgfmathtruncatemacro{\col}{floor(\j/\rows)}
+      \pgfmathtruncatemacro{\row}{mod(\j,\rows)}
+
+      \pgfmathsetmacro{\x}{\xOffset + \col * \boxSize}
+      \pgfmathsetmacro{\y}{(\rows - \row - 1) * \boxSize}
+
+      \ifnum\col=\numexpr\cols-1\relax
+        \ifnum\j>\numexpr\n-1\relax
+          \def\boxFill{white}
+          \def\boxStyle{dotted}
+        \else
+          \def\boxFill{green!30}
+          \def\boxStyle{}
+        \fi
+      \else
+        \def\boxFill{black!20}
+        \def\boxStyle{}
+      \fi
+
+      \draw[fill=\boxFill,\boxStyle]
+        ({\x + \padding}, {\y + \padding})
+      rectangle
+        ({\x + \boxSize - \padding}, {\y + \boxSize - \padding});
+    }
+
+    \ifnum\i=1
+      \pgfmathsetmacro{\nextOffset}{\xOffset+\totalWidth+0.5}
+    \else
+      \pgfmathsetmacro{\nextOffset}{\xOffset+\totalWidth}
+    \fi
+    \xdef\xOffset{\nextOffset}
+  }
+\end{tikzpicture}
+\end{document}

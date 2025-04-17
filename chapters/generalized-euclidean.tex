@@ -306,11 +306,19 @@ end
 % ==============================================================================
 
 Many generalizations to the Euclidean algorithm have been considered.
-One of them was proposed by Jacobi to answer Hermite's question.
+One of the first was proposed by Jacobi to directly answer Hermite's question.
 In his version, he computes the GCD of three numbers by successively dividing
 the smallest number from the larger numbers.
 This algorithm was later extended by Oskar Perron to arbitrarily many numbers.
 The algorithm works as follows:
+
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/jacobi-perron}
+  \caption{
+    Illustration of the Jacobi-Perron algorithm.
+  }
+\end{figure}
 
 Given a list of positive integers $a₀, a₁, …, aₙ$, take the smallest number $a_ℓ$
 and compute the remainder $a_i'$ resulting from the division of $a_i$ with $a_ℓ$.
@@ -338,8 +346,10 @@ remaining list.
 By allowing real numbers as inputs, this algorithm proceeds infinitely but
 always converges to zero.
 
-The Jacobi-Perron algorithm is actually a subset of the generalized Euclidean algorithm.
-The generalized Euclidean algorithm is periodic for all real numbers where the Jacobi-Perron algorithm is periodic.
+The Jacobi-Perron algorithm is actually a subset of the generalized Euclidean
+algorithm.
+The generalized Euclidean algorithm is periodic for all real numbers where the
+Jacobi-Perron algorithm is periodic.
 This comes from the fact, that the Jacobi-Perron algorithm is really the
 generalized Euclidean algorithm with the specific sequence of pivots $L = \overline{12…d}$.
 So in the $i$th iteration, we are choosing index $(i \bmod d) + 1$ as our pivot.
