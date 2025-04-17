@@ -1,60 +1,91 @@
 \chapter{The Generalized Euclidean Algorithm}
 
-In this chapter, we analyze the generalized version of the Euclidean algorithm
-by Klein and Reuter \cite{Klein24}.
-While the original algorithm works on integer,
-the generalized version works with vectors and lattices.
+For a real number, we used the Euclidean algorithm to construct its continued
+fraction.
+We saw that a continued fractions is periodic if and only if the number used in
+its construction is a quadratic irrational.
+Naturally, we can ask for a generalization of the Euclidean algorithm,
+which can be used to construct higher-dimensional continued fractions
+and potentially leads to an answer of Hermite's question.
+
+In this chapter, we will analyze one such possible candidate,
+which is a generalization of the Euclidean algorithm by Klein and Reuter~\cite{Klein24}.
+While the Euclidean algorithm works with integers,
+the generalized version works with vectors.
+It solves the problem of lattice basis computation,
+which can be seen as a multi-dimensional analogue of computing the greatest
+common divisor.
 
 % ==============================================================================
 \section{Basics of Lattice Theory}
 % ==============================================================================
 
-\begin{figure}[b]
+One of the fundamental structures in linear algebra is the vector space.
+Given a set of vectors $A = \{A_1, …, A_n\} ∈ ℝ^d$, the span of $A$ is the set
+of all linear combinations of the basis vectors $A_i$.
+A lattice is similarly defined over a set of vectors $A$, but instead of linear
+combinations of vectors, a lattice consists of only integral linear
+combinations.
+Formally, a lattice is defined as follows:
+
+\begin{definition}
+  Given a matrix $A ∈ ℤ^{d × n}$, the \emph{lattice} over the basis $B$ is defined as
+  \[
+    \mathcal{L}(A) = \left\{\, A₁z₁ + \dots + A_n z_n \mid z_1, \dots, z_n ∈ ℤ^d \,\right\}.
+  \]
+  The \emph{rank} of $\mathcal{L}(A)$ is $n$ and its \emph{dimension} is $d$.
+  If $n = d$, then $\mathcal{L}(A)$ is a \emph{full rank} lattice and $A$ is a \emph{basis}.
+\end{definition}
+
+In a vector space, an over-defined set of vectors $A = \{A₁, …, Aₙ\}$ with $n > d$
+can be easily reduced to a basis $B$ with exactly $d$ vectors by taking $d$
+linearly independent vectors from the set $A$.
+In a lattice, it is not as simple.
+Taking only $d$ linearly independent vectors produces a different lattice than
+the whole set, in general.
+For example, consider the matrix
+\[
+  A = \begin{pmatrix}
+    3 & 0 & 2 \\
+    0 & 2 & 1 \\
+  \end{pmatrix}.
+\]
+Taking any two columns $A_i, A_j$ of the matrix produces a linearly independent
+set, but no set produces the same lattice as the whole matrix.
+The missing vector $A_k$ cannot be reached by an integral combination of the
+other two vectors $A_i, A_j$.
+
+% TODO: Shouldn't it be the rank instead of n > d?
+This problem is typically known as \emph{lattice basis computation}.
+The input is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal is to find a
+basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
+The problem can also be seen as a multi-dimensional analogue of
+computing the greatest common divisor of a set of numbers.
+Indeed, we can view a set of numbers $a₁, a₂, …, aₙ ∈ ℤ$ as the basis vectors
+of the one-dimensional lattice
+\[
+  a₁ℤ + a₂ ℤ + \dots + aₙ ℤ.
+\]
+The greatest common divisor represents a reduced basis in this lattice.
+
+Previous approaches for computing such bases either used a variant of the LLL
+algorithm~\cite{Lenstra82} or computed the Hermite normal form of the
+matrix~\cite{Storjohann96}.
+The generalized Euclidean algorithm uses a fundamentally different approach.
+
+\begin{figure}[tbp]
   \centering
   \includestandalone{figures/lattice}
-  \caption{A two-dimensional lattice with vectors $B_1 = (2, 1)$ and $B_2 = (1, 3)$.}
+  \caption{
+    A two-dimensional lattice $\mathcal L(B)$ with the basis vectors $B_1 = (2,
+    1)$ and $B_2 = (1, 3)$. The fundamental parallelepiped $Π(B)$ is colored in
+    {\color{cyan}cyan}.
+  }
 \end{figure}
 
 \begin{itemize}
-  \item Vector space as the linear combination over a basis
-  \item Lattices as an integral combination over a basis
+  \item Applications? \cite{Ajtai96,Gentry08}
 \end{itemize}
-
-\begin{definition}
-  Given a basis $B ∈ ℤ^{d × n}$, the \emph{lattice} over the basis $B$ is defined as
-  \[
-    \mathcal{L}(B) = \left\{\, B₁z₁ + \dots + B_n z_n \mid z_1, \dots, z_n ∈ ℤ^d \,\right\}.
-  \]
-  The \emph{rank} of $\mathcal{L}(B)$ is $n$ and its \emph{dimension} is $d$.
-  If $n = d$, then $\mathcal{L}(B)$ is a \emph{full rank} lattice.
-\end{definition}
-
-\begin{problem}[Lattice Basis Reduction]~\\
-  \begin{tabular}{l p{9cm}}
-    \emph{Input}: & A matrix $A ∈ ℤ^{d × n}$ with $\text{rank}(A) = d$. \\
-    \emph{Output}: & A matrix $B ∈ ℤ^{d × d}$ with $\mathcal{L}(B) = \mathcal{L}(A)$. \\
-  \end{tabular}
-\end{problem}
-
-In this thesis, I only consider the case for one additional vector, i.e. $n = d + 1$.
-
-% TODO: Example for an over-defined basis and what the reduced basis is.
-\begin{example}
-  Consider $A = \begin{pmatrix}
-    2 & 1 & 3 \\
-    1 & 3 & 4 \\
-  \end{pmatrix}$.
-  The matrix $B = \begin{pmatrix}
-    2 & 1 \\
-    1 & 3 \\
-  \end{pmatrix}$
-  spans the same lattice,
-  since $A_3 = A_1 + A_2$.
-  Therefore, $B$ would is the reduced basis of $\mathcal L(A)$.
-\end{example}
-
-% TODO: Another example which shows that you can't just take a submatrix of the
-% original matrix.
 
 \begin{definition}
   The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
@@ -75,7 +106,10 @@ $Π(B)$ is entirely determined by $\mathrm{det}(B)$, i.e.
 \section{Description of the Algorithm}
 % ==============================================================================
 
-\begin{Pseudocode}[float=tb,caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
+\begin{Pseudocode}[
+    float=tb,
+    label={lst:generalized-euclidean},
+    caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
 solve $Bx = c$
 while $x$ is not integral do
   find $x_ℓ$ which is not integral
@@ -85,32 +119,120 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-In the previous example,
-we saw that we could represent the last column vector as an integral
-combination of the previous two,
-which allows us to reduce the basis for the lattice to only those two column vectors.
-However, in general it is not as easy as this.
-Consider the matrix $A = ?$.
-In this case, $A_3 = ? + ?$, which is clearly not an integral combination.
-So $A' = ?$ does not span the same lattice as $A$.
+The algorithm is shown in Listing~\ref{lst:generalized-euclidean}.
+It takes a matrix $B ∈ ℤ^{d × d}$ and a vector $c ∈ ℤ^d$ as input and finds a
+new basis $B'$ such that $\mathcal L(B) = \mathcal L(B ∪ \{c\})$.
+Its basic structure consists of two steps:
+A modulo operation and an exchange operation.
+The operations are similar to the Euclidean algorithm, where we first compute
+the modulo $a \bmod b$ and then swap the two inputs.
 
-Each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
+First, we look at the modulo operation.
+Suppose we have a basis $B ∈ ℤ^{d×d}$, any vector $a ∈ ℝ^d$ can be represented
+as a linear combination of the basis vectors.
+In general, the linear combination will not be an integral combination.
+% TODO
+In a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
 ∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
 Specifically,
 \[
-  a = z + r = B\floor{x} + B\{x\}.
+  a = z + r.
 \]
 This is essentially a division with remainder inside a lattice.
-It allows us to define a modulo operation on the lattice:
+It allows us to define a modulo operation on the lattice as follows:
 \[
-  a \pmod{Π(B)} := a - B\floor{B^{-1} x}.
+  a \pmod{Π(B)} := a - B\floor{B^{-1} a}.
 \]
 
-The algorithm requires solving a linear system in each iteration.
-However, we do not have to do this in every iteration.
-We only have to do this in the first iteration and in the following iterations
-we simply update this solution from the old solution.
-If $x = (x₁, …, x_d)$ is the solution in the previous iteration,
+\begin{lemma}
+  Given a set of vectors $A = \{A_1, \dots, A_n\}$ with $A_i ∈ ℤ^d$
+  and a linearly independent subset $B$,
+  let $r = c \pmod{Π(B)}$ for any vector $c ∈ A \setminus B$.
+  Then,
+  \[
+    \mathcal L(A) = \mathcal L(A \setminus \{c\} ∪ \{r\}).
+  \]
+\end{lemma}
+
+\begin{proof}
+  By definition of the modulo operation $c'$ is an integral combination of $c'$ and $B$,
+  specifically $c' = c - B \floor{B^{-1} c}$.
+  Therefore, $c' ∈ \mathcal L(A)$ and $\mathcal L(A) ⊆ \mathcal L(A \setminus \{c\} ∪ \{c'\})$.
+  Similarly, we can reach $c$ by the integral combination $c' + B \floor{B^{-1} c}$,
+  so $c ∈ \mathcal L(A \setminus \{c\} ∪ \{c'\})$.
+  Therefore applying the modulo operation does not change the lattice.
+\end{proof}
+
+With the modulo operation done, we turn our attention to the exchange operation.
+On one side we have the basis $B$ and on the other we have the vector $c$.
+So a swap of the two inputs will not work.
+Instead, we swap $c$ with a single column $B_ℓ$ of the basis $B$,
+where the specific index $ℓ$ depends on the result from the modulo operation.
+For the modulo we solve a linear system $Bx = c$.
+If one element $x_i$ is integral, then $c$ is already contained in the
+sub-lattice $\mathcal L(B_i)$.
+In the one-dimensional case, this means that $c$ is a multiple of $B_i$,
+so it wouldn't make sense to swap with $B_i$.
+Instead, we only exchange $c$ with a vector $B_ℓ$, where $x_ℓ$ is not integral
+and we swap $B_ℓ$ with the remainder $c \pmod{Π(B)}$.
+
+The exchange operation also leads directly to the stop condition.
+The algorithm terminates when all the vector $x$ is entirely integral.
+In this case, the vector $c$ is an integral combination of the basis vectors,
+so we can leave it out of the basis.
+
+\begin{lemma}
+  The algorithm terminates in at most $\det(B)$ iterations.
+\end{lemma}
+
+\begin{proof}
+  By Cramer's rule, $\{x_ℓ\} = \frac{\det B'}{\det B}$
+  and therefore the determinant decreases by a factor of $\{x_ℓ\} < 1$.
+  Since the vectors in $B$ and $B'$ are integral, the determinant must also be integral.
+  Therefore, the determinant decreases by at least one and in total it
+  decreases at most $\det(B)$ iterations.
+\end{proof}
+
+In summary, the algorithm requires the following steps:
+\begin{itemize}
+  \item \textbf{Modulo}: $c \pmod{\Pi(B)} = c - B \floor{B^{-1} c}$.
+  \item \textbf{Exchange}: $c = B_ℓ$
+  \item \textbf{Termination}: $B^{-1} c ∈ ℤ^d$
+\end{itemize}
+and the previous two lemmas lead to the following theorem:
+
+\begin{theorem}
+  The generalized Euclidean algorithm solves the lattice basis reduction problem.
+\end{theorem}
+
+% ==============================================================================
+\section{Extension to Real Numbers}
+% ==============================================================================
+
+% TODO: There should be some explanation on the fact that the solution vector
+% kind of represents the ratio between the inputs just like in the Euclidean
+% algorithm.
+The last step needed for the analysis is an extension of the algorithm to real
+numbers.
+In the original Euclidean algorithm,
+we used the ratio $b^{-1}a$ between the two inputs to derive a variant,
+which works on real numbers.
+In a sense, we use the solution vector $x = B^{-1}a$ as a ratio between the inputs
+and we allow $x$ to be a real vector.
+In the original lattice reduction problem, this means that we allow the
+algorithm to take in real vectors as input.
+Just like with the Euclidean algorithm, this causes the algorithm to continue
+infinitely as long as the vector $x$ is not rational.
+
+One problem is that calculating the next solution vector requires solving a
+linear system.
+However, there is a more direct way to calculate the solution vector $x$.
+In the original paper, the authors proceed to apply various optimization
+to speed up the basic algorithm presented here.
+One of those optimizations, removes the need to solve a linear system in each iteration.
+Instead of recomputing a solution each time,
+we can update the current solution to gain the solution for the next iteration.
+If $x = (x₁, …, x_d)$ is the solution in the current iteration,
 then $x' = (x₁', …, x_d')$ with
 \begin{align*}
   x_i' =
@@ -120,7 +242,7 @@ then $x' = (x₁', …, x_d')$ with
   \end{cases}
 \end{align*}
 is the solution in the next iteration.
-This update rule follows from
+This update rule follows from the fact that
 \[
   B_ℓ \{x_ℓ\} + \sum_{i ≠ ℓ} B_i \{x_i\} = r
   \iff
@@ -140,11 +262,11 @@ This update rule follows from
 % algorithm.
 
 Although the update rule speeds up the algorithm considerably, it is not
-optimal for the analysis in the following sections.
-The rule flips the sign of all elements inside the solution vector in each
-iteration.
-Instead, I propose a slight modification to the generalized algorithm which
-maps each $xᵢ$ to another positive value.
+optimal for the construction of a generalized continued fraction.
+The problem is that the rule flips the sign of all elements inside the solution
+vector in each iteration, so it ends up producing negative values.
+Instead, I have slightly modified the rule such that it maps each $xᵢ$ to
+another positive value.
 After we replace $B_ℓ$ with $c$, we flip the signs of all vectors $B_i$ with $i ≠ ℓ$.
 This leads to the modified update rule, where the values $x_i$ for $i ≠ ℓ$ are
 no longer negated:
@@ -171,26 +293,6 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-\begin{lemma}
-  The algorithm terminates in at most $\det(B)$ steps.
-\end{lemma}
-
-\begin{proof}
-
-\end{proof}
-
-\begin{lemma}
-  In each iteration, $\mathcal L(B ∪ c) = \mathcal L(B' ∪ c')$.
-\end{lemma}
-
-\begin{proof}
-
-\end{proof}
-
-\begin{theorem}
-  The generalized Euclidean algorithm solves the lattice basis reduction problem.
-\end{theorem}
-
 \begin{figure}[t]
   \centering
   \includestandalone{figures/pivot-choice}
@@ -198,19 +300,6 @@ end
     Different choices for the remainder of vector $c$. The original algorithm
     always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
 \end{figure}
-
-% ==============================================================================
-\section{Extension to Real Numbers}
-% ==============================================================================
-
-The last step needed for the analysis is an extension of the algorithm to real
-numbers.
-Instead of integer matrices, we allow the algorithm to take real matrices, too.
-The solution vector $x$ will also be real.
-This causes the algorithm to continue infinitely as long as the input is not rational.
-For rational matrices, a scaling ensures that they are integral again, which
-means that the algorithm terminates at some point.
-But for real matrices, this is not the case.
 
 % TODO: Proof that the solution vector converges to zero?
 
