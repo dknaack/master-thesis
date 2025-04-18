@@ -56,9 +56,9 @@ The missing vector $A_k$ cannot be reached by an integral combination of the
 other two vectors $A_i, A_j$.
 
 % TODO: Shouldn't it be the rank instead of n > d?
-This problem is typically known as \emph{lattice basis computation}.
-The input is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal is to find a
-basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
+The problem of finding a basis for a lattice is typically known as \emph{lattice basis computation}.
+For this problem, the input is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
+is to find a basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
 The problem can also be seen as a multi-dimensional analogue of
 computing the greatest common divisor of a set of numbers.
 Indeed, we can view a set of numbers $a₁, a₂, …, aₙ ∈ ℤ$ as the basis vectors
@@ -86,21 +86,6 @@ The generalized Euclidean algorithm uses a fundamentally different approach.
 \begin{itemize}
   \item Applications? \cite{Ajtai96,Gentry08}
 \end{itemize}
-
-\begin{definition}
-  The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
-  \[
-    Π(B) = \left\{\, B₁ x₁ + \dots + B_n x_n \mid x_1, \dots, x_n ∈ [0, 1) \,\right\}
-  \]
-\end{definition}
-
-A useful fact about the fundamental parallelepiped of a lattice $\mathcal L(B)$
-is that if $B$ is a square integer matrix, then the volume of the
-parallelepiped $Π(B)$ and the number of integer points $ℤ^n$ contained in
-$Π(B)$ is entirely determined by $\mathrm{det}(B)$, i.e.
-\[
-  \mathrm{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = |\det(B)|.
-\]
 
 % ==============================================================================
 \section{Description of the Algorithm}
