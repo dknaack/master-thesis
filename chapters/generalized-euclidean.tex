@@ -113,21 +113,51 @@ The operations are similar to the Euclidean algorithm, where we first compute
 the modulo $a \bmod b$ and then swap the two inputs.
 
 First, we look at the modulo operation.
-Suppose we have a basis $B ∈ ℤ^{d×d}$, any vector $a ∈ ℝ^d$ can be represented
-as a linear combination of the basis vectors.
-In general, the linear combination will not be an integral combination.
-% TODO
-In a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
+Suppose we have a basis $B$ with vectors $B₁, …, B_d$, any vector $a ∈ ℝ^d$ can
+easily be represented as a linear combination $B₁x₁ + \dots + B_d x_d$ of the
+basis vectors.
+However, linear combinations are not integral combinations,
+so the vector $a$ might not be in the lattice $\mathcal L(B)$.
+But the vector $z = B₁ \floor{x₁} + \dots + B_d \floor{x_d}$
+is a lattice point.
+We could say that $z = B\floor{x}$ is the integer part of the vector.
+The fractional part of $a$ would then be $r = a - z$.
+The fractional part is actually contained in what is known as the \emph{fundamental parallelepiped} of the lattice.
+
+\begin{definition}
+  The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
+  \[
+    Π(B) = \left\{\, B₁ x₁ + \dots + B_n x_n \mid x_1, \dots, x_n ∈ [0, 1) \,\right\}
+  \]
+  The volume of the parallelepiped is
+  \[
+    \mathrm{vol}(Π(B)) = |\det(B)|.
+  \]
+\end{definition}
+
+\iffalse
+A useful fact about the fundamental parallelepiped of a lattice $\mathcal L(B)$
+is that if $B$ is a square integer matrix, then the volume of the
+parallelepiped $Π(B)$ and the number of integer points $ℤ^n$ contained in
+$Π(B)$ is entirely determined by $\mathrm{det}(B)$, i.e.
+\[
+  \mathrm{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = |\det(B)|.
+\]
+\fi
+
+So in a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
 ∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
 Specifically,
 \[
   a = z + r.
 \]
-This is essentially a division with remainder inside a lattice.
-It allows us to define a modulo operation on the lattice as follows:
+This is essentially a multi-dimensional division with remainder operation inside a lattice.
+It allows us to define a modulo operation for the algorithm as follows:
 \[
   a \pmod{Π(B)} := a - B\floor{B^{-1} a}.
 \]
+It remains to show that applying this modulo operation on $a$ does not affect
+the underlying lattice $\mathcal L(B ∪ \{a\})$.
 
 \begin{lemma}
   Given a set of vectors $A = \{A_1, \dots, A_n\}$ with $A_i ∈ ℤ^d$
