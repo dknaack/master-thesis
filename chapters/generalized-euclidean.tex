@@ -284,6 +284,25 @@ This update rule follows from the fact that
     always uses $r$ as the remainder, but the modified update rule would also consider $r'$.}
 \end{figure}
 
+\begin{Pseudocode}[
+    float=tbp,
+    label={lst:modified-generalized-euclidean},
+    caption={
+      The modified algorithm, where the solution $x$ remains entirely positive in each iterations.
+      The linear system from the original algorithm is replaced by the update rule.
+      The two negations ensure that the vectors represent the correct solution,
+      when the modified update rule from Equation~\ref{eq:modified-update-rule} is used.
+    }]
+solve $Bx = c$
+while $x$ is not integral do
+  find $x_ℓ$ which is not integral
+  $c ← B_ℓ$
+  $B_ℓ ← -B\{x\}$
+  $B ← -B$
+  $x ← \mathrm{pivot}_ℓ(x)$
+end
+\end{Pseudocode}
+
 Although the update rule speeds up the algorithm considerably, it is not
 optimal for the construction of a generalized continued fraction.
 The problem is that the rule flips the sign of all elements inside the solution
@@ -293,88 +312,83 @@ another positive value.
 After we replace $B_ℓ$ with $c$, we flip the signs of all vectors $B_i$ with $i ≠ ℓ$.
 This leads to the modified update rule, where the values $x_i$ for $i ≠ ℓ$ are
 no longer negated:
-\begin{align*}
+\begin{align}
+  \label{eq:modified-update-rule}
   x_i' =
   \begin{cases}
     \frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
     \frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise.}
   \end{cases}
-\end{align*}
+\end{align}
 By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
 The modified algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
 In the algorithm, first $B_ℓ$ is flipped and then the whole matrix $B$ is flipped,
 This is the same as only flipping the vectors $B_i$ for $i ≠ ℓ$.
 
-\begin{Pseudocode}[float=tb, caption={The Modified Algorithm.}, label={lst:modified-generalized-euclidean}]
-solve $Bx = c$
-while $x$ is not integral do
-  find index $ℓ$ for which $x_ℓ$ is not integral
-  $c ← B_ℓ$
-  $B_ℓ ← -B\{x\}$
-  $B ← -B$
-  $x ← \mathrm{pivot}_ℓ(x)$
-end
-\end{Pseudocode}
-
 % ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
 % ==============================================================================
 
-Many generalizations to the Euclidean algorithm have been considered.
-One of the first was proposed by Jacobi to directly answer Hermite's question.
-In his version, he computes the GCD of three numbers by successively dividing
-the smallest number from the larger numbers.
-This algorithm was later extended by Oskar Perron to arbitrarily many numbers.
-The algorithm works as follows:
+When Jacobi \cite{Jacobi68} initially tried answering Hermite's question,
+he developed his own generalization of the Euclidean algorithm.
+His version computed the GCD of three numbers in a distinctly different way
+than the Euclidean algorithm would.
+However, he was unable to answer Hermite's question.
+Later, Perron \cite{Perron07} extended Jacobi's algorithm to $n$ numbers for any $n ≥ 2$,
+which is now known as the Jacobi-Perron algorithm.
+He showed that when the algorithm is periodic, then the input consists of
+algebraic numbers with degree $n$.
+But even with his generalization, he was unable to show the other direction.
 
 \begin{figure}[tbp]
   \centering
   \includestandalone{figures/jacobi-perron}
   \caption{
-    Illustration of the Jacobi-Perron algorithm.
+    One round of the Jacobi-Perron algorithm.
+    The smallest number in the input is $7$,
+    so it is used as the modulus.
+    In the next iteration, $a_5$ is removed since it has remainder zero.
   }
+  \label{fig:jacobi-perron}
 \end{figure}
 
-Given a list of positive integers $a₀, a₁, …, aₙ$, take the smallest number $a_ℓ$
-and compute the remainder $a_i'$ resulting from the division of $a_i$ with $a_ℓ$.
-The value $a_ℓ$ is kept until the next iteration, i.e. $a_ℓ' = a_ℓ$.
-Continue this process until all but one value remains.
-\begin{align*}
-  a₀' = a₀ \bmod a_ℓ, a₁ = a₁ \bmod a_ℓ, …, a_ℓ' = a_ℓ, …, aₙ' = aₙ \bmod a_ℓ; \\
-\end{align*}
+The input to the Jacobi-Perron algorithm is a list of numbers $a₁, …, aₙ$ and
+it returns the GCD of these numbers.
+The algorithm works in multiple rounds.
+In each round, the algorithm takes the smallest number $a_ℓ$ and calculates the
+remainder $aᵢ' = aᵢ \bmod a_ℓ$ for every $i ≠ ℓ$.
+See Figure~\ref{fig:jacobi-perron} for an example of one round.
+In the next round, the algorithm continues with the values $a₁', …, aₙ'$ where $a_ℓ' = a_ℓ$.
+If any value $aᵢ$ is zero, then we remove the value from the input and continue
+with the remaining numbers.
+This process continues until all values have a remainder of zero.
+The last modulus is the GCD for all numbers of the original input.
 
-Perron modified this algorithm for the purposes of his analysis.
-The integers $a₁, …, aₙ$ are kept in a list.
-We remove the first element from the list, calculate the remainders for each
-remaining element and append the element to the end of the list.
-One iteration in this modified version produces the values:
-\begin{align*}
-  a₀' = a₁ \bmod a₀, a₁' = a₂ \bmod a₀, …, a_{n-1}' = a_n \bmod a₀, aₙ = a₀. \\
-\end{align*}
-This process is repeated until the first element is zero.
+% TODO: Explain this better
+The next step is extending the algorithm to real numbers,
+which can simply be done by allowing real numbers in the input.
+In this case, the numbers no longer reach zero, but approach it.
+Therefore, we look at the ratios between the inputs starting with the ratios $x₁ = a₁/1, …, xₙ = aₙ/1$.
+Given the ratios $x₁, …, x_d$ for the current iteration,
+the ratios in the next iteration can be calculated by
+\[
+  x_i' = \frac{x_i}{x_ℓ}, \qquad x_ℓ' = \frac{1}{x_ℓ}.
+\]
+This is identical to the pivot operation!
+The only difference is that the Jacobi-Perron prescribes the strategy:
+We always take the smallest element in each iteration.
 
-Of course, the termination condition is not sufficient.
-When this algorithm terminates, the remaining elements might not all be zero.
-Therefore, we remove the first element from the list and continue with the
-remaining list.
-
-By allowing real numbers as inputs, this algorithm proceeds infinitely but
-always converges to zero.
-
-The Jacobi-Perron algorithm is actually a subset of the generalized Euclidean
-algorithm.
-The generalized Euclidean algorithm is periodic for all real numbers where the
-Jacobi-Perron algorithm is periodic.
-This comes from the fact, that the Jacobi-Perron algorithm is really the
-generalized Euclidean algorithm with the specific sequence of pivots $L = \overline{12…d}$.
-So in the $i$th iteration, we are choosing index $(i \bmod d) + 1$ as our pivot.
-
-This has the convenient property that if the all inputs which are periodic for
-the Jacobi-Perron algorithm must also be periodic for the brute-force algorithm.
-
-\begin{theorem}
-  The brute-force algorithm is periodic on input $(1, r, r^2)$ if
-  \[
-    r = \sqrt[n]{D + d}, \text{ where } d | D.
-  \]
-\end{theorem}
+So the Jacobi-Perron algorithm is one possible strategy of the generalized
+Euclidean algorithm.
+This has the unintended benefit that cubic roots proven to be periodic for the
+Jacobi-Perron algorithm~\cite{Bernstein64,Bernstein71} are automatically
+periodic for the generalized Euclidean algorithm.
+On the other hand,
+the generalized Euclidean algorithm is more flexible than the Jacobi-Perron
+algorithm, since we can choose different indices in each iteration.
+This is particularly advantageous since computations for the Jacobi-Perron
+seem to indicate that the algorithm is not periodic for some
+cases.
+Elsner and Hasse \cite{Elsner67} ran different variations of the algorithm on
+the input $x = (\sqrt[3]{4}, \sqrt[3]{16})$ and after 80 iterations, they have
+found no period.
