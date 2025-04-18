@@ -223,11 +223,11 @@ The converse was originally proven by Lagrange \cite{Lagrange70}.
 
 \begin{proof}
   \begin{align*}
-    x - \frac{pₙ}{qₙ}
-    & = \frac{r_n p_{n-1} + p_{n-2}}{r_n q_{n-1} + q_{n-2}} - \frac{a_n p_{n-1} + p_{n-2}}{a_n q_{n-1} + q_{n-2}} \\
-    & = \frac{(r_n p_{n-1} + p_{n-2})(a_n q_{n-1} + q_{n-2}) - (r_n q_{n-1} + q_{n-2})(a_n p_{n-1} + p_{n-2})}{(r_n q_{n-1} + q_{n-2})(a_n q_{n-1} + q_{n-2})} \\
-    & = \frac{(p_{n-1} q_{n-2} + q_{n-1} p_{n-2})(r_n - a_n)}{((r_n - a_n) q_{n-1} + q_n) q_n} \\
-    & = \frac{(-1)^{n+1} (r_n - a_n)}{q_n^2 + (r_n - a_n) q_{n-1} q_n} < \frac{1}{q_n^2}. \qedhere
+    \left| x - \frac{pₙ}{qₙ} \right|
+    & = \left| \frac{r_n p_{n-1} + p_{n-2}}{r_n q_{n-1} + q_{n-2}} - \frac{a_n p_{n-1} + p_{n-2}}{a_n q_{n-1} + q_{n-2}} \right| \\
+    & = \left| \frac{(r_n p_{n-1} + p_{n-2})(a_n q_{n-1} + q_{n-2}) - (r_n q_{n-1} + q_{n-2})(a_n p_{n-1} + p_{n-2})}{(r_n q_{n-1} + q_{n-2})(a_n q_{n-1} + q_{n-2})} \right| \\
+    & = \left| \frac{(p_{n-1} q_{n-2} + q_{n-1} p_{n-2})(r_n - a_n)}{((r_n - a_n) q_{n-1} + q_n) q_n} \right| \\
+    & = \left| \frac{(-1)^{n+1} (r_n - a_n)}{q_n^2 + (r_n - a_n) q_{n-1} q_n} < \frac{1}{q_n^2} \right|. \qedhere
   \end{align*}
 \end{proof}
 
