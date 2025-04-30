@@ -5,12 +5,18 @@
 \begin{Pseudocode}
 algorithm Euclidean(a, b)
   while $b ≠ 0$ do
-    $(a, b) ← (b, a \bmod b)$
+    $b' ← a \bmod b$ // modulo
+    $(a, b) ← (b', a)$ // exchange
   end
-
   return $a$
 end
 \end{Pseudocode}
+
+\begin{itemize}
+  \item \textbf{Modulo}: $b' ← a \bmod b$.
+  \item \textbf{Exchange}: $(a, b) ← (b', a)$.
+  \item \textbf{Termination}: $b = 0$
+\end{itemize}
 
 \begin{proposition}
   The ratio $b/a$ decreases by at least $1/2$ over two iterations.
