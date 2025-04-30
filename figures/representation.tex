@@ -1,0 +1,57 @@
+\documentclass[tikz]{standalone}
+
+\begin{document}
+\tikzset{>=stealth}
+\begin{tikzpicture}
+  \graph [tree layout, name separator=-, sibling distance=5mm, level distance=1.25cm, nodes={draw, circle, fill=white, font=\tiny, inner sep=1pt, minimum size=5mm}] {
+    a0/1 -- {
+      b0/2 -- { c0/5, c1/6, c2/7 },
+      b1/3 -- { c3/8, c4/9, c5/10 },
+      b2/4 -- { c6/11, c7/12, c8/13 }
+    }
+  };
+
+  \begin{scope}[on background layer]
+    \draw [ultra thick, green!50!black, rounded corners, ->]
+      ($(a0) - (1, 0)$)
+      -- ($(a0) + (1, 0)$)
+      -- ($(a0)!0.5!(b1) + (1, 0)$)
+      -- ($(a0)!0.5!(b1) - (b1) + (b0) - (1, 0)$)
+      -- ($(b0) - (1, 0)$)
+      -- ($(b2) + (1, 0)$)
+      -- ($(b2)!0.5!(c7) + (1, 0)$)
+      -- ($(b2)!0.5!(c7) - (c7) + (c0) - (1, 0)$)
+      -- ($(c0) - (1, 0)$)
+      -- ($(c8) + (1, 0)$);
+  \end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}
+  \graph [tree layout, name separator=-, sibling distance=5mm, level distance=1.25cm, nodes={draw, circle, fill=white, font=\tiny, inner sep=1pt, minimum size=5mm}] {
+    a0/1 -- {
+      b0/2 -- { c0/5, c1/6, c2/7 },
+      b1/3 -- { c3/8, c4/9, c5/10 },
+      b2/4 -- { c6/11, c7/12, c8/13 }
+    }
+  };
+
+  \draw [ultra thick, green!50!black, rounded corners, ->]
+    (b1) -- (c5)
+  \begin{scope}[on background layer]
+    \draw [ultra thick, green!50!black, rounded corners, ->]
+      ($(a0) - (1, 0)$)
+      -- ($(a0) + (1, 0)$)
+      -- ($(a0)!0.5!(b1) + (1, 0)$)
+      -- ($(a0)!0.5!(b1) - (b1) + (b0) - (1, 0)$)
+      -- ($(b0) - (1, 0)$)
+      -- ($(b2) + (1, 0)$)
+      -- ($(b2)!0.5!(c7) + (1, 0)$)
+      -- ($(b2)!0.5!(c7) - (c7) + (c0) - (1, 0)$)
+      -- ($(c0) - (1, 0)$)
+      -- (c5);
+    \draw [ultra thick, green!50!black, rounded corners, ->]
+      (c5) edge[bend right] (b1);
+  \end{scope}
+\end{tikzpicture}
+\end{document}
+
+
