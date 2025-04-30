@@ -26,34 +26,43 @@ generalization of the continued fractions to higher dimensions.
 His interpretation was also used to derive an analogue of Lagrange's theorem in
 higher dimensions \cite{German08}. % TODO: Should this citation really be here?
 
-\section{Continued Fractions}
+\section{Continued Fractions and their Construction using the Euclidean Algorithm}
 
 We begin with a more precise definition of what a continued fraction is and in
 particular how infinite continued fractions are defined.
 Although continued fractions are typically defined over a sequence of positive integers,
 we extend the definition to allow for real numbers.
 This will be useful for the theorems which follow.
-In general,
-$r₀, r₁, …$ will denote a sequence of real numbers
-and $a₀, a₁, …$ will denote a sequence of integers
-with the exception of the first entry $a₀$,
-which can be any integer.
+In general, $r₀, r₁, …$ will denote a sequence of real numbers
+and $a₀, a₁, …$ will denote a sequence of positive integers with the exception
+of the first entry $a₀$, which can be any integer.
 
 \begin{definition}
-  Given a sequence $r₀, r₁, … ∈ ℝ$, the finite continued
-  fractions over $rₙ$ are defined inductively as
+  Given a sequence $\{r_n\}_{n ∈ ℕ}$ of real numbers, the finite continued
+  fractions over this sequence are defined inductively as
   \[
     [r₀] = r₀, \qquad
     [r₀; r₁, …, rₙ] = r₀ + \frac{1}{[r₁; r₂, …, rₙ]}.
   \]
   The infinite continued fraction $[r₀; r₁, r₂, …]$ is then defined if the limit
   \[
-    \lim_{n → ∞} [r₀; r₁, …, rₙ]
+    r = \lim_{n → ∞} [r₀; r₁, …, rₙ]
   \]
   exists.
-  The fractions $[r₀; r₁, …, rₙ]$ are also called the
-  \emph{convergents} of the infinite continued fraction $[r₀; r₁, …]$.
+  The fractions $[r₀; r₁, …, rₙ]$ are called the
+  \emph{convergents} of the infinite continued fraction $[r₀; r₁, r₂, …]$.
 \end{definition}
+
+To construct a continued fraction for a particular number $x ∈ ℝ$,
+we use the real extension of the Euclidean algorithm.
+In the extension, we had two steps: First calculating the fractional value and second inverting the result.
+The definition of $[r₀; r₁, …, rₙ]$ can similarly be split into two steps.
+The first is an inversion of $[r₁, …, rₙ]$ and the second is an addition of $r₀$ to the result.
+If we are given a continued fraction $[a₀; a₁, …, aₙ]$ with only integers,
+then the integer part of it is exactly $a₀$, since $[a₁, …, aₙ]$ is greater than $1$.
+So the Euclidean algorithm removes $a₀$ from the continued fraction.
+Afterwards, we perform an exchange of the numerator with the denominator
+corresponding to an inversion.
 
 If the sequence consists of positive integers,
 then each convergent $[a₀; a₁, …, aₙ]$ has a unique rational value $pₙ/qₙ$.
