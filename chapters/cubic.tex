@@ -175,8 +175,8 @@ integral combination of $B'$.
 Then, we exchange $B'_{ℓ}$ with $c'$ and $c'$ with $B' a_i + B'_{ℓ}$.
 We continue this process until $B x = c$.
 
-In total, we define four sequences:
-A matrix sequence $P^{(n)}$, two vector sequences $Q^{(n)}$ and $p^{(n)}$ as well as a scalar sequence $q^{(n)}$.
+In total, we define two sequences:
+A matrix sequence $\{P^{(n)}\}_{n ≥ 0}$ and a vector sequences $\{Q^{(n)}\}_{n ≥ 0}$.
 Their are defined as follows:
 \begin{align*}
   P_{ℓₙ}^{(n)} & = P^{(n-1)} a_n + p^{(n-1)}, & P_i^{(n)} & = P_i^{(n)}, & P^{(-1)}   & = I_d, \\
@@ -193,7 +193,7 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
   Let $x ∈ ℝ^d$, then
   \[
     [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
-    = \frac{P x + p}{Q^T x + q}.
+    = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}} = \frac{P^{(n-1)} x + p^{(n-1)}}{Q^{(n-1)} x + q^{(n-1)}}.
   \]
 \end{lemma}
 
@@ -233,8 +233,9 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
 With these two lemmas proven, we can now turn our attention to periodic MDCFs.
 
 \begin{proposition}
-  Given $r ∈ ℝ$, let $x = (r¹, r², …, r^d)$.
-  If the MDCF representation of $x$ is purely periodic, then $[ℚ(r) : ℚ] ≤ d + 1$.
+  Given $α ∈ ℝ$, let $x = (α¹, α², …, α^d)$.
+  If the MDCF representation of $x$ is purely periodic, then $α$ is a root of a
+  polynomial with degree $≤ d+1$.
 \end{proposition}
 
 \begin{proof}
