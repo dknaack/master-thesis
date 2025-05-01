@@ -243,14 +243,122 @@ With these two lemmas proven, we can now turn our attention to periodic MDCFs.
   Let $y$ be the $ℓ$-th complete quotient of $x$, then $x = y$.
   By Lemma~\ref{lem:mdcf-wallis},
   \[
-    rⁱ = \frac{\sum_{j=1}^d P_{ij} rʲ + pᵢ}{\sum_{j=1}^d Qⱼ rʲ + qᵢ}, \text{ for every } i ≤ d.
+    αⁱ = \frac{\sum_{j=1}^d P_{ij} αʲ + pᵢ}{\sum_{j=1}^d Qⱼ αʲ + qᵢ}, \text{ for every } i ≤ d.
   \]
   Multiplying both sides with the denominator results in the polynomial equation
   \[
-    \sum_{j=1}^d (Q_j r^{i+j} - P_{ij} r^j) + r^i q_i - p_i = 0.
+    \sum_{j=1}^d (Q_j α^{i+j} - P_{ij} α^j) + α^i q_i - p_i = 0.
   \]
   For $i = 1$, the maximum degree of this polynomial is $d + 1$.
-  Hence, $r$ is an algebraic number of degree $d+1$.
+\end{proof}
+
+% ==============================================================================
+\section{Convergence}
+% ==============================================================================
+
+For proof of convergence, we need further requirements for the MDCF:
+\begin{itemize}
+  \item The first $d$ indices in $ℓ_n$ are distinct; no index occurs twice at the start.
+  \item Every index occurs infinitely often in the sequence $ℓₙ$.
+  \item The values $1/a_{ℓₙ}^{(n)}$ and $a_i^{(n)}/a_{ℓₙ}^{(n)}$ are bounded
+    between $0$ and some constant $c ≥ 0$ for every $n ≥ 0$.
+    % TODO: Does $n$ really have to be greater than zero or should it be one?
+\end{itemize}
+In the following, we assume that we have an MDCF of a vector $α = (α₁, …, α_d)$
+where the convergent of that MDCF is denoted by
+\[
+  r_j^{(n)} = (r_{1j}^{(n)}, …, r_{dj}^{(n)}) = \left(  \frac{P_{1j}^{(n)}}{Q_j^{(n)}}, \dots, \frac{P_{dj}^{(n)}}{Q_j^{(n)}} \right).
+\]
+Each column vector $P_i$ divided by $Q_i$ represents one possible convergent.
+The goal is to show that each convergent approaches the same value $α_i$.
+The proof is an application of the squeeze theorem:
+We show that the two sequences $m_i^{(n)}$ and $M_i^{(n)}$ are converging.
+They are defined as the minimum and maximum of $r_{i1}^{(n)}, …, r_{id}^{(n)}$, respectively.
+Clearly, the values $r_{i1}^{(n)}, …, r_{id}^{(n)}$ are bounded between the two,
+so it remains to show that the two sequences are converging to the same value.
+For the proof, we show that the sequences are increasing and decreasing, respectively,
+and that they converge to the same value.
+It follows that the convergents also approach the same value.
+
+\begin{lemma}
+  The sequence $m_i^{(n)}$ is monotonically increasing and $M_i^{(n)}$ is decreasing.
+\end{lemma}
+
+\begin{proof}
+  Let $ℓ = ℓ_n$ be the smallest index such that for each $k ∈ \{1, …, d\}$
+  there exists a previous index $ℓ_m = k$ with $m < n$,
+  i.e. $n$ is the first index at which point every index has occurred at least once.
+  By Lemma~\ref{lem:mdcf-wallis},
+  \begin{align*}
+    P_{iℓ}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)} \\
+    \iff
+    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
+  \end{align*}
+  Using $λ_i = \frac{a_k^{(n)} Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ i ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
+  we can reformulate the convergent as a convex combination of the form
+  \begin{align*}
+    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d λⱼ \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}.
+  \end{align*}
+  Because of the requirement that every index has occurred at least once,
+  $Q_k^{(n-1)} ≠ 0$ for every $k ≤ d$.
+  By the definition of $Q_ℓ^{(n)}$, we have $λ₀ + λ₁ + \dots + λ_d = 1$.
+  The sequence $M_i^{(n-1)}$ denotes the largest fraction and $m_i^{(n-1)}$ the smallest
+  fraction of $\frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}, …, \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}$.
+  Hence, we can bound the convergent by
+  \[
+    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} ≥ \sum_{k=1}^d λⱼ m_i^{(n-1)} + λ₀ m_i^{(n-1)} = m_i^{(n-1)}.
+  \]
+  and for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ the bound is even easier since
+  \[
+    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ m_i^{(n-1)}.
+  \]
+  Similarly, we can bound the convergent from above by $M_i^{(n-1)}$.
+  Therefore, in each iteration the fractions the values $\frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}$ are
+  bounded between the previous minimum $m_i^{(n-1)}$ and the previous maximum
+  $M_i^{(n-1)}$.
+\end{proof}
+
+\iffalse
+  From the proof of the previous lemma, we can easily deduce that the sequences
+  $m_i^{(n)}$ and $M_i^{(n)}$ must be converging to some number $m_i$ and $M_i$,
+  respectively.
+  However, it does not necessarily follow that the ratios in $r^{(n)}$ are also converging.
+  This is because the minimum $m_i^{(n)}$ and the maximum $M_i^{(n)}$ might converge to different numbers $m ≠ M$
+  and the ratios could therefore oscillate between a set of values between $m_i$ and $M_i$.
+  For example, suppose the minimum $m^{(i)}$ is $r_j^{(n)}$ for some index $j$.
+  The minimum changes only when $ℓ_{n'} = j$ for some $n' ≥ n$.
+  But it might be the case that the other values in $r^{(n)}$ are still smaller
+  than $r_j^{(n')}$ even after updating.
+  Therefore, the minimum always tracks the same value in $r^{(n)}$.
+  The same argument can be made for the maximum.
+  But then these values don't necessarily have to assume the same value.
+  The following lemma shows that this is not the case:
+\fi
+
+The idea behind the proof is that we can reformulate each coordinate of a
+convergent as a as a convex combination of all coordinates in the previous
+convergent.
+There must be two coefficients in the combination which are not zero
+and therefore the next convergent moves inside the convex hull spanned by the previous convergent.
+The convex hull shrinks at each step.
+
+\begin{lemma}
+  The minimum $m_i^{(n)}$ and maximum $M_i^{(n)}$ are converging to the same
+  number $α_i$, if every index occurs infinitely often in $ℓ_n$.
+\end{lemma}
+
+\begin{proof}
+  Let $m_i = \lim_{n → ∞} m_i^{(n)}$
+  and $M_i = \lim_{n → ∞} M_i^{(n)}$.
+  Suppose $m_i < M_i$.
+  For $m_i$, there must exist an $ε > 0$ and an index $N$ such that for every $n ≥ N$,
+  \[
+    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ m_i^{(n-1)} > m_i - ε.
+  \]
+  Hence,
+  \[
+    \frac{P_{iℓ}^{(n)}}{Q_j^{(n)}} > (λ₀ + λ₁ + \dots + λ_d) (m_i - ε).
+  \]
 \end{proof}
 
 % ==============================================================================
