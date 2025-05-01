@@ -79,16 +79,26 @@ or even real vectors as coefficients.
 
 \begin{definition}
   Given a sequence of $d$-dimensional real vectors $\{rₙ\}_{n ≥ 0}$ and a sequence of
-  indices $\{ℓₙ\}_{n ≥ 0}$, the \emph{multi-dimensional continued fraction} $[r₀; ℓ₁, r₁; …]$
+  indices $\{ℓₙ\}_{n ≥ 1}$, the \emph{multi-dimensional continued fraction} $[r₀; ℓ₁, r₁; …]$
   is defined as
   \[
-    [r₀; ℓ₁, r₁; …] = \lim_{n → ∞} [r₀; ℓ₁, r₁; …; ℓₙ, rₙ],
+    [r^{(0)}; ℓ₁, r^{(1)}; …] = \lim_{n → ∞} [r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}],
   \]
-  where the finite continued fractions $[r₀; ℓ₁, r₁; …; ℓₙ, rₙ]$ are defined as
+  where the finite continued fractions $[r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}]$ are defined as
   \[
-    [r₀] = r₀, \qquad [r₀; ℓ₁, r₁; …; ℓₙ, rₙ] = \mathrm{pivot}_{ℓ₁}^{-1}\big(r₀, [r₁; ℓ₂, r₂; …; ℓₙ, rₙ]\big).
+    [r^{(0)}] = r^{(0)},
+    \qquad
+    [r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}]
+    = \mathrm{pivot}_{ℓ₁}^{-1}\big(r^{(0)}, [r^{(1)}; ℓ₂, r^{(2)}; …; ℓₙ, r^{(n)}]\big).
   \]
 \end{definition}
+
+For the representation to be correct, we require $r_{ℓₙ}^{(n)} ≠ 0$ for $n ≥ 1$.
+This is similar to the continued fractions, where only the first value could be zero,
+while all subsequent values had to be positive.
+For the multi-dimensional counterpart we only require that the value chosen by
+$ℓₙ$ is not zero.
+The other values in the vector $r^{(n)}$ can assume any non-negative value.
 
 The terminology from one-dimensional continued fractions naturally carry over to its
 multi-dimensional counterpart.
