@@ -1,0 +1,15 @@
+\documentclass[tikz]{standalone}
+
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=3]
+  \draw[fill=cyan!30] (0, 0) rectangle (1.6180339887, 1);
+  \draw[fill=blue!30] (0, 0) rectangle (1, 1);
+
+  \node[left] at (0, 0.5) {$1$};
+  \node[below] at (0.5*1.6180339887, 0) {$φ$};
+  \node[above] at (0.5*1, 1) {$1$};
+  \node[above] at (0.5*1.6180339887+0.5, 1) {$φ - 1$};
+\end{tikzpicture}
+\end{document}
