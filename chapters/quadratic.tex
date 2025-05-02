@@ -232,6 +232,31 @@ the input.
   This corresponds to the continued fraction $\sqrt{7} = [2; 1, 1, 1, 4, …]$.
 \end{example}
 
+\begin{example}
+  Consider the golden ratio $φ$.
+  It is the positive real root of the polynomial $p(x) = x^2 - x - 1$,
+  which means that it satisfies $φ = 1 + 1/φ$.
+  This makes the construction of the continued fraction particularly simple since
+  \[
+    φ = 1 + \cfrac{1}{1 + \cfrac{1}{1 + \cfrac{1}{⋱}}}.
+  \]
+  So the golden ratio $φ$ is represented by $[1; \overline{1}]$.
+\end{example}
+
+For the golden ratio, there is also a geometric interpretation via the golden
+rectangle as shown in Figure~\ref{fig:golden-rectangle}.
+The golden rectangle has side lengths of $1$ and $φ$,
+and the Euclidean algorithm tries to remove as many unit squares inside the
+golden rectangle as possible.
+In this case, only one square is removed
+and we get a new rectangle with side lengths $1$ and $φ - 1$.
+But the ratios between the longer and shorter sides remain the same since
+\[
+  φ^2 - φ - 1 = 0 ⇔ φ(φ - 1) = 1 ⇔ \frac{φ}{1} = \frac{1}{φ - 1}.
+\]
+Therefore, in the next rectangle only one square of length $φ - 1$ will be
+removed again.
+
 \begin{lemma}
   \label{lem:cf-approx}
   Let $p_n/q_n$ be the convergents of $x ∈ ℝ$, then
