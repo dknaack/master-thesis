@@ -1,71 +1,42 @@
 \chapter{Jacobi-Perron Algorithm}
 
-\section{Notes on the Book}
-
-\begin{itemize}
-  \item
-    \textbf{Input}: Three numbers $u₀, v₀, w₀ ∈ ℝ$.
-  \item
-    \textbf{Output}:
-    \begin{align*}
-      u_{i + 1} &= v_i - ℓ_i u_i, \\
-      v_{i + 1} &= v_i - m_i u_i, \\
-      w_{i + 1} &= u_i,
-    \end{align*}
-  \item Non-homogenous form:
-    \begin{align*}
-      \frac{v_{i+1}}{u_{i+1}} & = \frac{{w_i}{u_i} - m_i}{\frac{v_i}{u_i} - ℓ_i}, \\
-      \frac{w_{i+1}}{u_{i+1}} & = \frac{1}{\frac{v_i}{u_i} - ℓ_i},
-    \end{align*}
-\end{itemize}
-
-The set $E_{n-1}$ denotes the $(n-1)$-dimensional Euclidean vector space of
-$(n-1)$-tuples as real numbers in the book.
-Essentially, $E_{n-1} = ℝ^n$.
 \[
-  a^{(k)} = (a₁^{(k)}, a₂^{(k)}, \dots, a_{n-1}^{(k)}) ∈ E_{n-1}
+  α_1 = a₁ + \frac{1}{α_d'}, α₂ = a₂ + \frac{α₁'}{α_d'}, …, αₙ = aₙ + \frac{α_{d-1}'}{α_d'}.
 \]
 
-\begin{definition}
-  Let $f \colon ℝ^n → ℝ^n$ be a function such that for every $x ∈ ℝ^n$
-  \[
-    y = f(x) \text{ and } y_i ≠ x_i \text{ for every } i ≤ n.
-  \]
-  Then the transformation $T$ on any vector $x ∈ ℝ^n$ is defined as
-  \[
-    x T = (x₁ - y₁)^{-1} · (x₂ - y₂, \dots, x_{n-1} - y_{n-1}).
-  \]
-  The function $f$ is called a $T$-function or a function associated with $T$.
-\end{definition}
+\[
+  α_i =
+  \frac{A_i^{(n)} + A_i^{(n+1)} α_1^{(n)} + \dots + A_i^{(n+d)} α_d^{(n)}}
+       {A_0^{(n)} + A_0^{(n+1)} α_1^{(n)} + \dots + A_0^{(n+d)} α_d^{(n)}}
+\]
 
-\begin{example}
-  Let $f(x) = 1/2 · x$, then
-  \[
-    x T = x₁^{-1} (x₂, \dots, x_n, 2).
-  \]
-\end{example}
+For $n ≤ d$,
+\[
+  A_i^{(i)} = 1, A_i^{(n)} = 0, \text{ if } i ≠ n,
+\]
+and for larger indices,
+\[
+  A_i^{(n+d+1)} = A_i^{(n)} + a_1^{(n)} A_i^{(n+1)} + \dots + a_d^{(n)} A_i^{(n+d)}.
+\]
 
-\section{Periodic Cases}
+\section{Convergence}
 
 \begin{theorem}
-  The Jacobi-Perron algorithm is periodic for
+  The ratios $\frac{A_1^{(n)}}{A_0^{(n)}}, …, \frac{A_d^{(n)}}{A_0^{(n)}}$ converge if
   \[
-    α = \sqrt[d]{(bc)^d + c} \text{ with } 1 ≤ c ≤ bc / (n - 2) \text{ and } n ≥ 3.
+    a₀ > 0, 0 < \frac{1}{a_d^{(n)}} ≤ C, 0 ≤ \frac{a_i^{(n)}}{a_d^{(n)}} ≤ C
   \]
+  for some constant $C$.
 \end{theorem}
 
-Let $f(a, k, m)$ be a function with
+If $α₁ = \sqrt[3]{D}$ and $α₂ = \sqrt[3]{D^2}$ for a positive non-perfect cube $D$
+and the algorithm is periodic, then
 \[
-  f(a, k, m) = ∑_{i=0}^k \binom{m + i - 1}{i} a^{k - i} (bc)^i
+  \left| α_i - \frac{A_i^{(n)}}{A_0^{(n)}} \right| < \frac{k}{A_0^{(n)} \sqrt{A_0^{(n)}}}
 \]
 
-\begin{lemma}
-  Let $b$ and $c$ be numbers satisfying the conditions of the previous theorem.
-  Then for $k ≤ n - 1$ and for $m ≤ n - k$,
-  \[
-    \floor{f(α, k, m)} = f(bc, k, m) = \binom{m + k}{k} (bc)^k,
-  \]
-\end{lemma}
+\section{Uniqueness}
 
-\begin{proof}
-\end{proof}
+\section{Approximation}
+
+\section{Periodic Inputs}
