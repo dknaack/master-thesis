@@ -104,3 +104,13 @@ But different choices of $q$ produce different sequences.
 For example, $(\sqrt[3]{2}, \sqrt[3]{4})$ produces a different sequence of coefficients than $(\sqrt[3]{2}, \sqrt[3]{6})$.
 Even though both inputs represent the same number $\sqrt[3]{2}$.
 Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}$ and $\sqrt[3]{4}$.
+
+The strategy is given the initial input $x ∈ ℝ^d$ and a sequence of indices $L ∈ \{1, …, d\}^*$ and must
+return all valid indices which can be appended to the current sequence to form
+a new sequence.
+For the brute-force search, the strategy always outputs the entire set; any index is allowed.
+The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
+the minimum fractional value, if $n$ is the length of the list $L$.
+\[
+  \text{next} \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), \text{next}(x, L) = \{ℓ_1, …, ℓ_k\}.
+\]
