@@ -112,5 +112,62 @@ For the brute-force search, the strategy always outputs the entire set; any inde
 The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
 the minimum fractional value, if $n$ is the length of the list $L$.
 \[
-  \text{next} \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), \text{next}(x, L) = \{ℓ_1, …, ℓ_k\}.
+  S \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
 \]
+
+The main goal of the brute-force search was to find a periodic representation for a cubic root at all.
+The hope is that the sequences share something in common such that we can find
+a more optimized search strategy, ideally one which can be decided without
+trying every possible combination.
+Therefore, two more types of searches were studied.
+The first type is a deterministic search,
+which only looks at one possible path in the tree.
+For example, the minimum strategy would only look at one possible path.
+The other type is a non-deterministic search,
+which looks at multiple paths simultaneously.
+For this type of search, the main point of interest was the approximation rate of the convergents
+and whether convergents are the best rational approximations of the original input vector $x$,
+i.e. whether they fulfill
+\[
+  |x_i - \frac{p_i^{(n)}}{q^{(n)}}| < \frac{1}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d
+\]
+at each step.
+The idea would be that this could be one possible optimization to the brute-force search.
+Instead of trying every possible candidate, we only choose paths which lead to good approximations.
+For $d = 1$, this is already known by Lemma~\ref{lem:cf-approx},
+but for higher dimensions it is not known whether the convergents are good
+approximations, yet.
+
+For the deterministic search, a strategy $s$ is a function $R^d → \{1, …, d\}$
+which takes in the complete quotient $x^{(n)} ∈ ℝ^d$ of the input vector $x ∈ R^d$
+and the number of iterations $n$.
+The strategy outputs only a single index $ℓ$,
+which is used to find the next complete quotient by $x^{(n+1)} =
+\mathrm{pivot}_ℓ(x^{(n)})$.
+For example, the minimum strategy would be defined as
+\[
+  s(x, n) = \underset{\substack{ℓ ∈ \{1, …, d\} \\ \{x_ℓ\} ≠ 0}}{\text{arg min}} \{x_ℓ\}.
+\]
+The additional index $n$ is used for example in the Jacobi-Perron algorithm,
+which chooses always the next index in the sequence.
+So,
+\[
+  s(x, n) = (n \bmod d) + 1.
+\]
+
+In summary, the following deterministic strategies were tried:
+\begin{itemize}
+  \item Minimum fractional value
+  \item Maximum fractional value
+  \item Strategies which are regular: $s(x, n) = ((n + k) \bmod d) + 1$ for all $k ≤ d$.
+    This includes the Jacobi-Perron algorithm which sets $k = 0$.
+  \item Some other paper, which decides the next candidate
+    based on the algebraic norm of the underlying field. % TODO: Find the paper
+\end{itemize}
+
+For the non-deterministic search, only the approximation criterion was tested,
+but with different rates, i.e. whether for some constant $c ≥ 1$,
+\[
+  |x_i - \frac{p_i^{(n)}}{q^{(n)}}| < \frac{c}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d.
+\]
+
