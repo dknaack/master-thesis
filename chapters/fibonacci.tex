@@ -185,7 +185,6 @@ The golden ratios for each definition is the limit of consecutive Fibonacci numb
 \]
 where $F(n)$ can be any of the previously defined Fibonacci numbers.
 
-
 % ==============================================================================
 \section{Higher-Order Fibonacci Sequence for the Maximum Strategy}
 % ==============================================================================
@@ -196,6 +195,18 @@ where $F(n)$ can be any of the previously defined Fibonacci numbers.
   \centering
   \input{tables/max-fibonacci}
 \end{table}
+
+Next, we look at the opposite strategy:
+Always taking the index with the maximum fractional value at each step.
+
+The Fibonacci numbers are defined by the following recurrence relation:
+\begin{align*}
+  F(0) = F(1) = \dots = F(d) = 1, \qquad F(n + d + 1) = F(n + d) + F(n).
+\end{align*}
+The respective golden ratio $φ$ for this sequence is the positive root of the polynomial
+\begin{align*}
+  p(x) = x^{d+1} - x^d - 1.
+\end{align*}
 
 % ==============================================================================
 \section{Generalized Fibonacci Sequences}
