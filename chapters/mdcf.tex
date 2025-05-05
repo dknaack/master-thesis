@@ -383,6 +383,14 @@ The convex hull shrinks at each step.
 \section{The Geometry behind Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
+For the geometrical interpretation of continued fractions,
+we represented each convergent $pₙ/qₙ$ as a 2D vector $(pₙ, qₙ)$.
+For multi-dimensional continued fractions,
+each convergent is a $d$-dimensional rational vector,
+which we now represent as a $(d+1)$-dimensional integer vector.
+Given a vector $(p₁/q₁, …, p_d/q_d)$, we map it to $(q, p₁', …, p_d')$
+where $q = \lcm(q₁, …, q_d)$ and $p_i' = q p_i / q_i$.
+
 The pivot operation is quite cumbersome to write.
 We'll always need to differentiate the cases $i = ℓ$ and $i ≠ ℓ$.
 Homogeneous coordinates allow us to simplify the whole pivot operation as a single matrix.
