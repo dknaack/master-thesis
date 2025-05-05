@@ -385,21 +385,35 @@ The convex hull shrinks at each step.
 
 For the geometrical interpretation of continued fractions,
 we represented each convergent $pₙ/qₙ$ as a 2D vector $(pₙ, qₙ)$.
-For multi-dimensional continued fractions,
-each convergent is a $d$-dimensional rational vector,
-which we now represent as a $(d+1)$-dimensional integer vector.
-Given a vector $(p₁/q₁, …, p_d/q_d)$, we map it to $(q, p₁', …, p_d')$
-where $q = \lcm(q₁, …, q_d)$ and $p_i' = q p_i / q_i$.
+This vector approaches an irrational line spanned by the vector $(1, α)$ where
+$α$ is some irrational number.
+For the generalization of this interpretation to multi-dimensional continued
+fractions, we represent each convergent, which is a $d$-dimensional rational vector,
+as a $(d+1)$-dimensional integer vector.
+Specifically, given a vector $(p₁/q₁, …, p_d/q_d) ∈ ℚ^d$, first we find a
+common denominator $(p₁'/q, …, p_d'/q_d)$ and then we map it to the vector
+$(q, p₁, …, p_d) ∈ ℤ^{d+1}$.
+We can go back from the integer vector to a rational vector by dividing each
+coordinate with the first and removing the first coordinate from the integer
+vector:
+Given $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$, we map it back to $(x₁/x₀, …, x_d/x₀) ∈ ℚ^d$.
 
-The pivot operation is quite cumbersome to write.
-We'll always need to differentiate the cases $i = ℓ$ and $i ≠ ℓ$.
-Homogeneous coordinates allow us to simplify the whole pivot operation as a single matrix.
+In this space, the representation for a particular convergent is not unique,
+there can be multiple integer vectors representing the same convergent.
+For example, if we have a vector $c ∈ ℤ^d$ for a convergent,
+then we can multiply with some scalar $λ ∈ ℤ$ and get a new vector $c' = λ c$
+which represents the same convergent.
+This is because the scalar is eliminated when mapping back to the rational vector:
+\[
+  λ (c₀, c₁, …, c_d) ↦  \left(\frac{λ c₁}{λ c₀}, …, \frac{λ c_d}{λ c_0} \right).
+\]
+Therefore, two vectors $a, b ∈ ℤ^{d+1}$ are equivalent, denoted as $a ≡ b$,
+if $a = λ b$ or $b = λ a$ for some $λ ∈ ℤ$.
 
-Instead of an $d$-dimensional vector space, we project each vector into a $(d+1)$-dimensional vector space.
-Each vector $x = (x₁, …, x_d) ∈ ℝ^d$ is extended by a new coordinate $x₀ = 1$.
-We denote this vector as $\hat x = [1, x₁, …, x_d]$.
-Two such vectors $\hat x, \hat y$ are considered equivalent if they are collinear.
-Stated differently, each vector $[x₀, x₁, …, x_d]$ represents a line in the direction $(x₀, x₁, …, x_d)$.
+% TODO: Are the convergents calculated by the recurrence relation in this
+% section always minimal/irreducible?
+
+
 
 % TODO: Explain mapping from and back to the original vector space.
 \begin{center}
@@ -421,7 +435,7 @@ Stated differently, each vector $[x₀, x₁, …, x_d]$ represents a line in th
   \end{tikzpicture}
 \end{center}
 
-For example, consider the vector $[1, x₁, x₂]$ with $0 ≤ x₁, x₂ < 1$.
+For example, consider the vector $[1, x₁, x₂]$ and suppose that $0 ≤ x₁, x₂ < 1$.
 A pivot operation with $ℓ = 1$ would result in the vector $[1, 1/x₁, x₂/x₁]$.
 This vector is equivalent to $[x₁, 1, x₂]$.
 Therefore, we can reformulate this operation as a coordinate swap of $x_ℓ$ with
@@ -458,9 +472,9 @@ equivalent to a series of skew operations:
   =
   \begin{bmatrix} 1 \\ x₁ - \floor{x₁} \\ x₂ - \floor{x₂} \\ \end{bmatrix}.
 \]
-Importantly, each of those matrices with
-determinant $1$.
-Therefore, the whole operation can be reversed by inverting the matrix.
+Importantly, each of those matrices has
+determinant $±1$.
+Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in homogeneous
 coordinates.
 
@@ -473,79 +487,97 @@ The MDCF can then be written as
   [a₀; ℓ₁, a₁; …; ℓₙ, aₙ] = T(a₀) · S(ℓ_1) · [a₁; ℓ_2, a_2; …; ℓ_n, a_n].
 \]
 
-This allows us to drastically simplify Lemma~\ref{lem:mdcf-wallis}.
-Now, we only have a single matrix sequence $P_n$, defined as follows:
+This allows us to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
+Instead of several matrix and vector sequences, we simplify it to a single matrix sequence $\{B^{(n)}\}_{n ≥ 0}$,
+where one matrix $B^{(n)}$ consists of the column vectors $B₀^{(n)}, B₁^{(n)}, …, B_d^{(n)}$.
+We begin with $B^{(0)} = I_d$ and update the matrix according to
 \begin{align*}
-  P_n = P_{n-1} A_n, \qquad P_0 = I_{d+1}.
+  B_{ℓₙ}^{(n)} = B^{(n-1)} \hat a^{(n)},
+  \qquad B_i^{(n)} = B_i^{(n-1)},
+  \qquad B_0^{(n)} = B_{ℓₙ}^{(n-1)}.
 \end{align*}
+By construction, $B^{(n)}$ is the combined matrix of the sequences $P^{(n)}, Q^{(n)}, p^{(n)}$ and $q^{(n)}$:
+\[
+  B^{(n)} = \begin{pmatrix}
+    p^{(n)} & P^{(n)} \\
+    q^{(n)} & Q^{(n)} \\
+  \end{pmatrix}.
+\]
 
 \begin{lemma}
   \label{lem:mdcf-wallis'}
   Let $x ∈ ℝ^d$, then
   \[
-    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x] ≡ P_{n-1} \hat x
+    [a^{(0)}; ℓ₁, a^{(1)}; …; ℓ_{n-1}, a^{(n-1)}; ℓ, x] ≡ B^{(n-1)} \hat x
   \]
 \end{lemma}
 
+% TODO
 \begin{proof}
   For $n = 0$, this is clearly true.
   Suppose the lemma is true for $n ≥ 0$, then
   \begin{align*}
-    [a₀; ℓ₁, a₁; …; ℓ_n, a_n; ℓ, x]
-    & ≡ [a₀; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
-    & ≡ P_{n-1}
-    \begin{pmatrix}
-      a_n + \mathrm{pivot}_ℓ(x) \\ 1
-    \end{pmatrix} \\
-    & ≡ P_{n-1} A_n \hat{x} \\
-    & ≡ P_n \hat{x} \qedhere
+    [a^{(0)}; ℓ₁, a₁; …; ℓ_n, a_n; ℓ, x]
+    & ≡ [a^{(0)}; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
+    & ≡ B^{(n-1)}
+    \begin{bmatrix}
+      a^{(n)} + \mathrm{pivot}_ℓ(x) \\ 1
+    \end{bmatrix} \\
+    & ≡ B^{(n-1)} (\hat a^{(n)} + \hat{x}) \\
+    & ≡ B^{(n)} \hat{x} \qedhere
   \end{align*}
 \end{proof}
 
 \begin{lemma}
   \label{lem:mdcf-purely-periodic}
   If there exists a purely periodic MDCF for $x ∈ ℝ^d$,
-  then $x_i$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
+  then $xᵢ$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
 \end{lemma}
 
 % TODO: Should we use x ≡ y or [x] = [y]?
 \begin{proof}
-  If the MDCF is purely periodic, then by Lemma~\ref{lem:mdcf-wallis'} there exists an integer matrix $P$ such that
+  If the MDCF is purely periodic, then there is some $n ≥ 1$ such that $x = x^{(n)}$.
+  By Lemma~\ref{lem:mdcf-wallis'},
   \[
-    \hat x ≡ P \hat x \iff λ₁ \hat x = λ₂ P \hat x \iff λ \hat x = P \hat x,
+    \hat x ≡ B^{(n)} \hat x^{(n)} ≡ B^{(n)} \hat x \iff λ₁ \hat x = λ₂ B^{(n)} \hat x \iff λ \hat x = B^{(n)} \hat x,
   \]
-  for some $λ₁, λ₂ ∈ ℝ \setminus \{0\}$ and $λ = λ₁/λ₂$.
-  Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $P$.
-  The characteristic polynomial $\det(P - λ I)$ can have a degree of at most $d+1$,
+  for some $λ₁, λ₂ ∈ ℝ \setminus \{0\}$ with $λ = λ₁/λ₂$.
+  Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $B^{(n)}$.
+  The characteristic polynomial $\det(B^{(n)} - λ I)$ can have a degree of at most $d+1$,
   therefore the eigenvalue $λ$ is an algebraic number of degree $d+1$.
 
-  % TODO: Finish this proof
   For the eigenvector $\hat x$, we have to find a nontrivial solution to the
   homogeneous linear system
   \[
-    (P - λ I) \hat x = 0.
+    (B^{(n)} - λ I) \hat x = 0.
   \]
+  Each coefficient in the linear system is either an algebraic
+  number of degree $≤ d+1$ or an integer.
+  Therefore, the eigenvectors solely consists of algebraic numbers which have a
+  degree of $≤ d+1$.
 
-  Finally, every $x_i = \hat x_i / \hat x₀$ must be an algebraic number of degree $≤ d+1$,
-  because $x_i$ is a rational expression of two algebraic numbers of degree $≤ d+1$.
+  Finally, the eigenvector $\hat x$ has to be projected back from homogeneous coordinates $x$.
+  But every $xᵢ = \hat xᵢ / \hat x₀$ is an algebraic number of degree $≤ d+1$,
+  since $xᵢ$ is a rational expression of two such algebraic numbers.
 \end{proof}
 
 \begin{theorem}
+  \label{thm:mdcf-periodic}
   If there exists a periodic MDCF for $x ∈ ℝ^d$,
-  then $x_i$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
+  then each $x_i$ is a root of some polynomial with degree $≤ d+1$ for every $i ≤ d$.
 \end{theorem}
 
 \begin{proof}
   Let $x^{(k)}$ be the complete quotients of $x$.
-  Suppose there exists a period $ℓ$ such that $x_k = x_{k+ℓ}$.
+  Suppose there exists a period $ℓ$ such that $x^{(k)} = x^{(k+ℓ)}$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
-    \hat x = P^{(k)} \hat x^{(k)} = P^{(k+ℓ)} \hat x^{(k+ℓ)} = P^{(k+ℓ)} \hat x^{(k)}.
+    \hat x = B^{(k)} \hat x^{(k)} = B^{(k+ℓ)} \hat x^{(k+ℓ)} = B^{(k+ℓ)} \hat x^{(k)}.
   \]
   The algebraic numbers in $\hat x_k$ must have degree $≤ d+1$.
   Since every element in $x$ is a linear rational expression of the form
   \[
-    x_i = \frac{∑_{j=1}^d P_{ij}^{(k)} x_j^{(k)} + P_{i0}^{(k)}}{\sum_{j=1}^d P_{0j}^{(k)} x_j^{(k)} + P_{00}^{(k)}},
+    x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}},
   \]
   where $x_j^{(k)}$ is an algebraic number of degree $≤ d+1$ and the elements of $P^{(k)}$ are integers,
   every element in $x$ must also be an algebraic number of degree $≤ d+1$.
