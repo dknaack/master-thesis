@@ -116,23 +116,9 @@ Given an infinite MDCF representation~$[a₀; ℓ_1, a_1; …]$ of a vector $x �
     The MDCF is \emph{purely periodic} if $n₀ = 0$.
 \end{itemize}
 
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/representation}
-  \caption{
-    Representation of a periodic and non-periodic real number.
-  }
-\end{figure}
-
-\section{Periodic Multi-Dimensional Continued Fractions}
-
-In this section I will show that if the MDCF of a vector $x ∈ ℝ^d$ is periodic,
-then the elements of $x$ must be all algebraic numbers of degree $d+1$.
-The proof requires two additional lemmas, which are multi-dimensional analogues
-of Lemma~\ref{lem:nesting} and Lemma~\ref{lem:wallis}.
-In the following, $aₙ$ will always denote a sequence of integers and $ℓₙ$ a
-sequence of indices between $1$ and $d$.
-We begin with a generalization of Lemma~\ref{lem:nesting}.
+For the analysis of MDCFs,
+we begin with two lemmas, which are generalization of
+Lemma~\ref{lem:cf-nesting} and Lemma~\vref{lem:cf-wallis}.
 
 \begin{lemma}[Nesting]
   \label{lem:mdcf-nesting}
@@ -158,9 +144,11 @@ We begin with a generalization of Lemma~\ref{lem:nesting}.
 \end{proof}
 
 % TODO: Explain how to derive the sequences
-The second lemma is a generalization of Lemma~\vref{lem:wallis},
-where we defined the convergents of a continued fraction~$pₙ/qₙ$
-based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
+The second lemma is more complicated.
+In the lemma for continued fractions,
+we defined the convergents of a continued fraction~$pₙ/qₙ$
+using a fractional transformation based on the previous two
+terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
 For MDCFs, we can similarly derive a recursive formula to derive the values of
 the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
 Deriving the sequence is more involved than the one-dimensional case since
@@ -205,33 +193,50 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
   \[
     [x] = x = \frac{I_d x + 0}{0^T x + 1}.
   \]
-  Suppose the lemma holds for $n ≥ 0$, then there exists a matrix $P$, vectors
-  $Q, p$ and scalar $q$ such that
+  Suppose the lemma holds for $n ≥ 0$.
+  Then,
   \begin{align*}
     y & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]                              \\
       & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1} + \mathrm{pivot}_ℓ(x)]              \\
-      & = \frac{P (a + \mathrm{pivot}_ℓ(x)) + p}{Q^T (aₙ + \mathrm{pivot}_ℓ(x)) + q} \\
-      & = \frac{x_ℓ}{x_ℓ} · \frac{P (a + \mathrm{pivot}_ℓ(x)) + p}{Q^T (aₙ + \mathrm{pivot}_ℓ(x)) + q}.
+      & = \frac{P^{(n-1)} (a + \mathrm{pivot}_ℓ(x)) + p^{(n-1)}}{Q^{(n-1)} (aₙ + \mathrm{pivot}_ℓ(x)) + q^{(n-1)}} \\
+      & = \frac{x_ℓ}{x_ℓ} · \frac{P^{(n-1)} (a + \mathrm{pivot}_ℓ(x)) + p^{(n-1)}}{Q^{(n-1)} (aₙ + \mathrm{pivot}_ℓ(x)) + q^{(n-1)}}.
   \end{align*}
   The numerator has the following form:
   \begin{align*}
-    x_ℓ (P (a + \mathrm{pivot}(x, ℓ)) + p)
-    & = x_ℓ (P a + P_ℓ \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} P_i \frac{x_i}{x_ℓ} + p) \\
-    & = \underbrace{(P a + p)}_{P_ℓ'} x_ℓ + \sum_{i ≠ ℓ} \underbrace{P_i}_{P_i'} x_i + \underbrace{P_ℓ}_{p'} \\
-    & = P' x + p'.
+    & \hphantom{{} = {}} x_ℓ (P^{(n-1)} (a + \mathrm{pivot}(x, ℓ)) + p^{(n-1)}) \\
+    & = x_ℓ (P^{(n-1)} a + P_ℓ^{(n-1)} \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} P_i^{(n-1)} \frac{x_i}{x_ℓ} + p^{(n-1)}) \\
+    & = \underbrace{(P^{(n-1)} a + p^{(n-1)})}_{P_ℓ^{(n)}} x_ℓ
+        + \sum_{i ≠ ℓ} \underbrace{P_i^{(n-1)}}_{P_i^{(n)}} x_i
+        + \underbrace{P_ℓ^{(n-1)}}_{p^{(n)}} \\
+    & = P^{(n)} x + p^{(n)}.
   \end{align*}
   Analogously, the denominator has the following form:
   \begin{align*}
-    x_ℓ (Q^T (a + \mathrm{pivot}(x, ℓ)) + q)
-    & = x_ℓ (Q^T a + Q_ℓ \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} Q_i \frac{x_i}{x_ℓ} + q) \\
-    & = \underbrace{(Q^T a + q)}_{Q_ℓ'} x_ℓ + \sum_{i ≠ ℓ} \underbrace{Q_i}_{Q_i'} x_i + \underbrace{Q_ℓ}_{q'} \\
-    & = Q' x + q'.
+    & \hphantom{{} = {}} x_ℓ (Q^{(n-1)} (a + \mathrm{pivot}(x, ℓ)) + q^{(n-1)}) \\
+    & = x_ℓ (Q^{(n-1)} a + Q_ℓ^{(n-1)} \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} Q_i^{(n-1)} \frac{x_i}{x_ℓ} + q^{(n-1)}) \\
+    & = \underbrace{(Q^{(n-1)} a + q^{(n-1)})}_{Q_ℓ^{(n)}} x_ℓ + \sum_{i ≠ ℓ} \underbrace{Q_i^{(n-1)}}_{Q_i^{(n)}} x_i + \underbrace{Q_ℓ^{(n-1)}}_{q^{(n)}} \\
+    & = Q^{(n)} x + q^{(n)}.
   \end{align*}
   Hence,
   \[
-    y = \frac{P(a + \mathrm{pivot}(x, ℓ)) + p}{Q(a + \mathrm{pivot}(x, ℓ)) + q} = \frac{P' x + p'}{Q'^T x + q'}. \qedhere
+    y
+    = \frac{P^{(n-1)}(a + \mathrm{pivot}(x, ℓ)) + p^{(n-1)}}{Q^{(n-1)}(a + \mathrm{pivot}(x, ℓ)) + q^{(n-1)}}
+    = \frac{P^{(n)} x + p^{(n)}}{Q^{(n)} x + q^{(n)}}. \qedhere
   \]
 \end{proof}
+
+\section{Periodic Multi-Dimensional Continued Fractions}
+
+% TODO: This is always under the assumption that the convergents are converging
+
+In this section I will show that if the MDCF of a vector $x ∈ ℝ^d$ is periodic,
+then the elements of $x$ must be all algebraic numbers of degree $d+1$.
+The proof requires two additional lemmas, which are multi-dimensional analogues
+of Lemma~\ref{lem:nesting} and Lemma~\ref{lem:wallis}.
+In the following, $aₙ$ will always denote a sequence of integers and $ℓₙ$ a
+sequence of indices between $1$ and $d$.
+We begin with a generalization of Lemma~\ref{lem:nesting}.
+
 
 With these two lemmas proven, we can now turn our attention to periodic MDCFs.
 
@@ -258,6 +263,16 @@ With these two lemmas proven, we can now turn our attention to periodic MDCFs.
 % ==============================================================================
 \section{Convergence}
 % ==============================================================================
+
+\begin{figure}[tb]
+  \centering
+  \includestandalone{figures/representation}
+  \caption{
+    Representation of a periodic and non-periodic real number.
+  }
+\end{figure}
+
+% TODO: Idea for sentence "Do the convergents fulfill their duty and provide convergence?"
 
 For proof of convergence, we need further requirements for the MDCF:
 \begin{itemize}
