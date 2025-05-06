@@ -1,25 +1,30 @@
 \chapter{Higher-Order Fibonacci Sequences and their Golden Ratios}
 
 % TODO: Add reference to Fibonacci numbers in the continued fraction chapter
-The simplest periodic continued fraction is $[1; \overline{1}]$.
+One of the simplest periodic continued fraction is $[1; \overline{1}]$.
 This fraction evaluates to the golden ratio and its convergents are ratios of
 consecutive Fibonacci numbers.
 Naturally, we can consider the simplest vectors $x ∈ ℝ^d$ for the generalized
 Euclidean algorithm, where the integer part in each iteration is $1$.
-Such vectors can be seen as a multi-dimensional generalization of the golden
-ratio and Fibonacci numbers.
+Such vectors can be seen as a generalization of the golden
+ratio to higher dimensions and their approximation can be seen as a
+generalization of Fibonacci numbers.
 However, there does not exist a single definitive golden ratio,
-Since the algorithm has an additional freedom in the choice of the pivot.
+Since the generalized algorithm allows an additional freedom in the choice of the pivot.
 So there are actually multiple different possible definitions.
 Some of these are well known, like the supergolden ratio or the plastic ratio,
 which are both roots of cubic polynomials.
 
 Since the definition of the golden ratios depends entirely on the choice of our
-pivot element $x_ℓ$, we consider only two strategies in this chapter: First
-choosing the smallest fractional value $\{x_ℓ\}$ and second choosing the largest
-fractional value $\{x_ℓ\}$.
-From these two strategies we will then derive a general definition of
-higher-order Fibonacci sequences and their golden ratios.
+pivot element $x_ℓ$, we consider two strategies for choosing $x_ℓ$ in this
+chapter: First choosing the smallest fractional value $\{x_ℓ\}$ and second
+choosing the largest fractional value $\{x_ℓ\}$.
+Both of these strategies have a respective golden ratio for which the algorithm
+becomes periodic and they each have a corresponding linear recurrence, which
+can be seen as a generalization of the Fibonacci numbers.
+In the end, we will derive a general definition of higher-order Fibonacci
+sequences and show that the generalized Euclidean algorithm is periodic for
+their golden ratios.
 
 % ==============================================================================
 \section{Higher-Order Fibonacci Sequence for the Minimum Strategy}
@@ -208,6 +213,20 @@ The respective golden ratio $φ$ for this sequence is the positive root of the p
   p(x) = x^{d+1} - x^d - 1.
 \end{align*}
 
+The golden ratio for this sequence also shows up for a different strategy.
+When we choose two indices $ℓ$ and $ℓ'$ such that they minimize the ratio
+$\{x_{ℓ'}\}/\{x_{ℓ}\}$, then we can bound the decrease of the determinant over
+two iterations using the golden ratio $φ$.
+
+\begin{theorem}
+  The determinant decreases by at least $φ$ over two iterations,
+  when choosing the closest pair of values.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
 % ==============================================================================
 \section{Generalized Fibonacci Sequences}
 % ==============================================================================
@@ -217,36 +236,6 @@ The golden ratio is a solution to the equation $x^2 - x - 1 = 0$.
 For higher dimensions, we will encounter similar polynomial equations with higher degree.
 The goal of this section is to generalize the relationship between linear
 recurrences like the Fibonacci sequence with their respective golden ratio.
-
-Since the algorithm expects $x_i$ between $0$ and $1$, we have to use $1/\phi$ instead of $\phi$.
-The value $1/\phi$ is the root of another polynomial $x^2 + x - 1$, which is the reciprocal
-of the polynomial $x^2 - x - 1$.
-
-\begin{definition}
-  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
-  denoted as $p^*$, is defined as
-  \[
-    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
-  \]
-\end{definition}
-
-\begin{example}
-  The reciprocal of the golden ratio polynomial $x^2 - x - 1$ is
-  \begin{align*}
-    x^2 + x - 1,
-  \end{align*}
-  which has a root at $\psi = 1/\phi$.
-\end{example}
-
-\begin{lemma}
-  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
-\end{lemma}
-
-\begin{proof}
-  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
-  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
-  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
-\end{proof}
 
 \begin{definition}
   A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
@@ -271,40 +260,150 @@ of the polynomial $x^2 - x - 1$.
   \end{align*}
 \end{example}
 
-% TODO: Show that this converges! We're still missing the convergence criteria
+Next, we will show that the ratios of consecutive terms
+\[
+  r_n = \frac{F(n+1)}{F(n)} = \frac{a_0 F(n - d)}{F(n)} + \frac{a₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{a_{d-1} F(n-1)}{F(n)} + 1.
+\]
+is converging to the only positive real root of the characteristic polynomial $p_F$.
+Each ratio in the sum can be rewritten as a product of consecutive ratios $r_{n-i}$:
+\begin{align*}
+  \frac{F(n - d + i)}{F(n)}
+  & = \frac{F(n - d + i + 1)}{F(n - d + i)} \frac{F(n - d + i + 2)}{F(n - d + i + 1)} \dots \frac{F(n-1)}{F(n)} \\
+  & = \frac{1}{r_{n - d + i}} · \frac{1}{r_{n - d + i + 1}} · \dots · \frac{1}{r_{n-1}}.
+\end{align*}
+So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$ as follows:
+\[
+  r_n = 1 + \frac{a_d}{r_{n-1}} + \frac{a_{d-1}}{r_{n-1} r_{n-2}} + ⋯ + \frac{a₀}{r_{n-1} r_{n-2} \dots r_{n-d}}.
+\]
+
+
 \begin{lemma}
-  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d$.
-  If its characteristic polynomial has a real positive root $\phi$
-  and the sequence $F(n+1)/F(n)$ is converging, then
-  \[
-    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = \phi.
-  \]
+  The ratios $r_n$ are bounded between $1$ and $d+1$.
 \end{lemma}
 
 \begin{proof}
-  By assumption, the ratios approach some limit $L$. It follows:
+  The first $d - 1$ ratios are all $1$.
+  The ratio $r_d$ is equal to
   \[
-    L
-    = \lim_{n \to \infty} \frac{F(n + 1)}{F(n)}
-    = \lim_{n \to \infty} a_0 + \sum_{i = 1}^d \frac{a_i F(n - d + i)}{F(n)}
+    \frac{F(d+1)}{F(d)} = \frac{F(0) + F(1) + ⋯ + F(d)}{F(d)} = \frac{1 + 1 + ⋯ + 1}{1} = d + 1,
   \]
-  Each term in the sum can be rewritten as a product of consecutive terms:
+  which also satisfies the bounds.
+  By induction, suppose that the ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$ all satisfy the bound between $1$ and $d+1$.
+  The ratio $r_n$ can be reformulated as follows:
   \[
-    \frac{F(n - 1 - d + i)}{F(n - 1)}
-    = \frac{F(n - 1 - d + i)}{F(n - d + i)} \frac{F(n - d + i)}{F(n - d + i + 1)} \dots \frac{F(n - 2)}{F(n-1)}.
+    r_n = 1 + \frac{a₁}{r_{n-1}} + \frac{a₂}{r_{n-1} r_{n-2}} + \dots + \frac{a_d}{r_{n-1} r_{n-2} \dots r_{n-d}}.
   \]
-  Hence, each term in the sum approaches $L^{-i}$,
+  Since $r_{n-i} ≤ d+1$, we can bound $r_n$ from below by
+  \[
+    r_n ≥ 1 + \frac{a₁}{d+1} + \frac{a₂}{(d+1)^2} + \dots + \frac{a_d}{(d+1)^d} ≥ 1
+  \]
+  and since $r_{n-i} ≥ 1$, we can bound $r_n$ from above by
+  \[
+    r_n ≤ 1 + \frac{a₁}{1} + \frac{a₂}{1} + \dots + \frac{a_d}{1} ≤ d+1.
+  \]
+  Hence, $1 ≤ r_n ≤ d+1$ for every $n ≥ 0$.
+\end{proof}
+
+The next step to prove the convergence of the ratios would be to show that the
+ratios are monotonically increasing or decreasing.
+That is clearly not the case, however.
+For $d=1$, the only sequence is the Fibonacci sequence and its ratios are
+always alternating between increasing and decreasing.
+But they do approach the golden ratio.
+For the convergence of the generalized sequence $r_n$,
+we will instead apply the squeeze theorem.
+We show that the sequences
+\[
+  s_n = \min\{r_n, r_{n-1}, …, r_{n-d} \}, \qquad t_n = \max\{r_n, r_{n-1}, …, r_{n-d}\}
+\]
+converge to the same limit.
+Because $r_n$ lies between the two sequences, it must also converge to the same limit as $s_n$ and $t_n$.
+For these sequences, we already know from the previous lemma that they are bounded,
+so it only remains to be shown that they are increasing and decreasing,
+respectively.
+
+\begin{lemma}
+  The sequences $s_n$ and $t_n$ are increasing and decreasing, respectively.
+\end{lemma}
+
+\begin{proof}
+  Each ratio can be represented as a convex combination of the previous ratios, i.e.
+  \[
+    r_{n+1} = λ₀ r_n + λ₁ r_{n-1} + \dots + λ_d r_{n-d}
+  \]
+  using $λ_i = F(n - i) / F(n + 1)$.
+  To show that this is indeed a convex combination, all coefficients $λ_i$
+  need to be non-negative and $λ₀ + λ₁ + \dots + \lambda_d = 1$.
+  The former follows from the fact that Fibonacci numbers are always increasing,
+  while the latter follows simply from the definition of the Fibonacci numbers.
+  Because $s_n$ is the minimum and $t_n$ the maximum of $r_n, r_{n-1}, …, r_{n-d}$,
+  we can bound the next maximum by
+  \[
+    t_{n+1} ≤ r_{n+1} = λ₀ r_n + λ₁ r_{n-1} + \dots + λ_d r_{n-d} ≤ λ₀ t_n + λ₁ t_n + ⋯ + λ_d t_n = t_n.
+  \]
+  and the next minimum by
+  \[
+    s_{n+1} ≥ r_{n+1} = λ₀ r_n + λ₁ r_{n-1} + \dots + λ_d r_{n-d} ≥ λ₀ s_n + λ₁ s_n + ⋯ + λ_d s_n = s_n.
+  \]
+  Therefore, $s_n ≤ s_{n+1} ≤ t_{n+1} ≤ t_n$.
+\end{proof}
+
+\begin{lemma}
+  The sequences $s_n$ and $t_n$ are converging to the same limit.
+\end{lemma}
+
+% TODO: Finish this proof
+\begin{proof}
+  For a contradiction, suppose there exists some $δ > 0$ such that $t_n - s_n > δ$ for every $n ≥ 0$.
+  Out of the previous ratios, there must be one ratio $r_k$ exactly equals to $t_n$.
+  Therefore,
+  \begin{align*}
+    s_{n+1} ≥ r_n & = λ₀ r_{n-d-1} + λ₁ r_{n-d} + ⋯ + λ_d r_{n-1} \\
+                  & ≥ λ_k t_n + \sum_{i ≠ k} λ_i s_n \\
+                  & = λ_k t_n + (1 - λ_k) s_n = s_n + λ_k (t_n - s_n) ≥ s_n + λ_k δ.
+  \end{align*}
+  We have
+  \[
+    λ_k = \frac{F(n+k)}{F(n+d+1)} = \frac{1}{r_{n+k} r_{n+k+1} \dots r_{n+d+1}} ≥ \frac{1}{(d+1)^{d+1-k}}.
+  \]
+  Hence, $λ_k$ is always greater than some constant $c > 0$ for every $k ≥ 0$.
+  But then
+  \[
+    s_{n+i} ≥ s_{n+i-1} + c δ ≥ s_{n+i-2} + 2c δ ≥ \dots ≥ s_n + i c δ
+  \]
+  and $s_{n+i}$ would increase indefinitely as $i$ approaches infinity,
+  which contradicts the previous lemma.
+  Therefore, $δ = 0$ and it follows that $s_n$ and $t_n$ are approaching the same limit.
+\end{proof}
+
+% TODO: Show that this converges! We're still missing the convergence criteria
+\begin{theorem}
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d ∈ \{0,1\}$.
+  Then,
+  \[
+    \lim_{n \to \infty} \frac{F(n + 1)}{F(n)} = φ.
+  \]
+\end{theorem}
+
+\begin{proof}
+  By the previous lemma, the ratios $r_n$ approach some limit $r$. It follows:
+  \[
+    r
+    = \lim_{n → ∞} r_n
+    = \lim_{n → ∞} 1 + \frac{a_d}{r_{n-1}} + \frac{a_{d-1}}{r_{n-1} r_{n-2}} + ⋯ + \frac{a₀}{r_{n-1} r_{n-2} \dots r_{n-d}}.
+  \]
+  Hence, each denominator in the sum approaches $r^i$,
   which results in the following polynomial:
   \[
-    L = a_0 + \sum_{i = 1}^d a_{d - i} L^{-i},
-    \quad \text{or equivalently} \quad
-    L^{d+1} = a_0 + a_1 L + \dots + a_d L^d,
+    r = a₀ + \sum_{i = 1}^d \frac{a_{d - i}}{r^i}
+    \iff
+    r^{d+1} = a₀ + a₁ r + \dots + a_d r^d,
   \]
   which directly corresponds to a root of its characteristic polynomial.
 \end{proof}
 
 \begin{corollary}
-  Under the same conditions, $\lim_{n \to \infty} F(n + i) / F(n) = \phi^i$ for $i > 1$.
+  For the same recurrence $F$, $\lim_{n → ∞} F(n + i) / F(n) = φ^i$ for $i > 1$.
 \end{corollary}
 
 Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
@@ -351,24 +450,7 @@ and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
 However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
 where $x^{(n)}$ is the solution, in the following way:
 \[
-  B^{(n)} =
-  \begin{pmatrix}
-    F(n) & 0 & \dots & 0 & 0 \\
-    0 & F(n) & \dots & 0 & 0 \\
-    \vdots & \vdots & \ddots & \vdots & \vdots \\
-    0 & 0 & \dots & F(n) & 0 \\
-    0 & 0 & \dots & 0 & F(n) \\
-  \end{pmatrix},
-\]
-\[
-  c^{(n)} =
-  \begin{pmatrix}
-    F(n - 1) \\
-    F(n - 2) + a_{d-1} F(n - 1) \\
-    \vdots \\
-    F(n - d + 1) + \sum_{k=1}^{d-2} a_{d-k} F(n - k) \\
-    F(n - d) + \sum_{k=1}^{d-1} a_{d-k} F(n - k) \\
-  \end{pmatrix}.
+  B^{(n)} = F(n) I_d, \qquad c^{(n)}_k = \sum_{i=0}^k a_{d-i} F(n - i) \text{ for } k ≤ d.
 \]
 
 \begin{lemma}
@@ -377,27 +459,83 @@ where $x^{(n)}$ is the solution, in the following way:
 \end{lemma}
 
 \begin{proof}
-  Follows directly from the definition of $x^{(n)}$.
+  Each row in the linear system is of the form
+  \[
+    F(n) x_k = \sum_{i = 0}^k a_{d-i} F(n - i).
+  \]
+  Rearranging the equation gives the definition of $x^{(n)}_k$.
 \end{proof}
 
+\begin{definition}
+  Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
+  denoted as $p^*$, is defined as
+  \[
+    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
+  \]
+\end{definition}
+
+\begin{example}
+  The reciprocal of the golden ratio polynomial $x^2 - x - 1$ is
+  \begin{align*}
+    x^2 + x - 1,
+  \end{align*}
+  which has a root at $ψ = 1/φ$.
+\end{example}
+
+\begin{lemma}
+  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
+\end{lemma}
+
+\begin{proof}
+  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
+  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
+  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
+\end{proof}
+
+% ==============================================================================
+\section{Metallic Ratios}
+% ==============================================================================
+
+The result from the previous section can be generalized to an even larger class
+of polynomials by allowing $a_1, a_2, …, a_d ∈ \Z_{≥ 0}$ instead of only binary
+values.
+The roots of these polynomials can be seen as a generalization of the metallic ratios.
+Indeed, for the one-dimensional case the polynomials are
+\[
+  x^2 - a₁ x - 1,
+\]
+which characterizes all possible metallic ratios, like the silver ratio ($a₁ = 2$) or
+the bronze ratio ($a₁ = 3$).
+The generalization considers higher-degree polynomials of the form
+\[
+  x^{d+1} - a_d x^d - \dots - a_1 x - 1
+\]
+with non-negative integer coefficients $a_1, a_2, …, a_d$.
+Each of these polynomials has a corresponding linear recurrence,
+which can be reconstructed by the characteristic polynomial.
+For the linear recurrence,
+the ratios of consecutive terms approaches the real positive root of the
+polynomial again.
+
+\iffalse
 % ==============================================================================
 \section{An Idempotent Solution for Two Dimensions}
 % ==============================================================================
 
-Let $\vec x = (\psi, 1 - \psi)$, where $\psi$ is the only real positive root of $x^2 + x - 1$.
+Let $\vec x = (ψ, 1 - ψ)$, where $ψ$ is the only real positive root of $x^2 + x - 1$.
 For this solution, it does not matter which element we choose to pivot with, it will always
 yield the same result.
 
 Pivoting with $x_1$:
 \begin{align*}
-  \frac{1}{x_1} - 1 & = \frac{1}{\psi} - 1 = \psi, \\
-  1 - \frac{x_2}{x_1} & = 1 - \frac{1 - \psi}{\psi} = 1 - \psi.
+  \frac{1}{x_1} - 1 & = \frac{1}{ψ} - 1 = ψ, \\
+  1 - \frac{x_2}{x_1} & = 1 - \frac{1 - ψ}{ψ} = 1 - ψ.
 \end{align*}
 
 Pivoting with $x_2$:
 \begin{align*}
-  \frac{1}{x_2} - 2 & = \frac{1}{1 - \psi} - 2 = \psi, \\
-  1 - \frac{x_1}{x_2} & = 1 - \frac{\psi}{1 - \psi} = 1 - \psi.
+  \frac{1}{x_2} - 2 & = \frac{1}{1 - ψ} - 2 = ψ, \\
+  1 - \frac{x_1}{x_2} & = 1 - \frac{ψ}{1 - ψ} = 1 - ψ.
 \end{align*}
 
 \begin{align*}
@@ -408,3 +546,4 @@ Pivoting with $x_2$:
   \end{array}
   \right)
 \end{align*}
+\fi
