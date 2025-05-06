@@ -517,33 +517,3 @@ For the linear recurrence,
 the ratios of consecutive terms approaches the real positive root of the
 polynomial again.
 
-\iffalse
-% ==============================================================================
-\section{An Idempotent Solution for Two Dimensions}
-% ==============================================================================
-
-Let $\vec x = (ψ, 1 - ψ)$, where $ψ$ is the only real positive root of $x^2 + x - 1$.
-For this solution, it does not matter which element we choose to pivot with, it will always
-yield the same result.
-
-Pivoting with $x_1$:
-\begin{align*}
-  \frac{1}{x_1} - 1 & = \frac{1}{ψ} - 1 = ψ, \\
-  1 - \frac{x_2}{x_1} & = 1 - \frac{1 - ψ}{ψ} = 1 - ψ.
-\end{align*}
-
-Pivoting with $x_2$:
-\begin{align*}
-  \frac{1}{x_2} - 2 & = \frac{1}{1 - ψ} - 2 = ψ, \\
-  1 - \frac{x_1}{x_2} & = 1 - \frac{ψ}{1 - ψ} = 1 - ψ.
-\end{align*}
-
-\begin{align*}
-  \left(
-  \begin{array}{cc|c}
-    F(n) & 0    & F(n-1) \\
-    0    & F(n) & F(n) - F(n-1) \\
-  \end{array}
-  \right)
-\end{align*}
-\fi
