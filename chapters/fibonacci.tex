@@ -218,13 +218,65 @@ When we choose two indices $ℓ$ and $ℓ'$ such that they minimize the ratio
 $\{x_{ℓ'}\}/\{x_{ℓ}\}$, then we can bound the decrease of the determinant over
 two iterations using the golden ratio $φ$.
 
+% TODO: I feel like this was using $ψ = φ^{-1}$ instead of $φ$.
 \begin{theorem}
-  The determinant decreases by at least $φ$ over two iterations,
-  when choosing the closest pair of values.
+  The determinant decreases by at least $φ^{d+1}$ over two iterations with $d ≥ 2$.
 \end{theorem}
 
 \begin{proof}
+  We assume WLOG that the vector is sorted in increasing order and
+  $0 ≤ x_i ≤ 1$ for every $i ≤ d$.
+  For a contradiction, assume the algorithm yields a smaller decrease than $φ^{d+1}$ on input $x$.
+  We must have $x_i > φ^{d+1-i}$ for every $i = 1, \dots, d$.
+  For the first value, we have $x₁ > φ^d$, because otherwise we have a total decrease of
+  \[
+    x₁ \left\{ \frac{x₂}{x₁} \right\} ≤ φ^{d-1} - φ^d = φ^{2d+1} < φ^d.
+  \]
+  Suppose $x_i > φ^{d+1-i}$ and $x_{i+1} ≤ φ^{d-i}$.
+  Then we can achieve a total decrease of
+  \[
+    x_i · \left\{ \frac{x_{i+1}}{x_i} \right\} ≤ x_{i+1} - x_i < φ^{d-i} - φ^{d+1-i} = φ^{2d+1-i} < φ^d.
+  \]
+  It follows that $x_i > φ^{d+1-i}$ for every $i ≤ d$.
+  But then
+  \[
+    x_d \left\{ \frac{1}{x_d} \right\} ≤ 1 - x_d < 1 - φ = φ^{d+1}.
+  \]
+  Hence, we achieve a decrease of at least $φ^{d+1}$ over two iterations.
+\end{proof}
 
+The bound for this strategy is tight.
+We can construct an input that moves arbitrarily close to this bound.
+Formally, for every sufficiently small $ε > 0$, we can find an input $x$ which
+achieves a decrease of at most $φ^{d+1} - ε$.
+The idea is to choose $x_d$ to be just over $φ$ and all other variables as a multiple of $x_d$
+such that we have to choose $x_d$.
+But choosing $x_d$ only gives us a decrease of $φ^{d+1} - ε$ in total.
+
+% TODO: Explain what sufficiently small means
+\begin{theorem}
+  For every (sufficiently small) $ε > 0$,
+  there exists an input $x ∈ ℝ^d$ with $d ≥ 2$,
+  which achieves a decrease in the determinant of exactly $φ^{d+1} - ε$ over two
+  iterations.
+\end{theorem}
+
+\begin{proof}
+  We choose $x_i = φ^{d+1-i} (1 + ε)$ for $i = 1, \dots, d$.
+  The strategy chooses between
+  \[
+    \left\{ \frac{x_{i+1}}{x_i} \right\}
+    = \frac{φ^{d-i} (1 + ε)}{φ^{d+1-i} (1 + ε)} - 1 = \frac{1}{φ} - 1,
+    \text{ and }
+    \left\{ \frac{1}{x_d} \right\}
+    = \frac{1}{φ + ε} - 1
+  \]
+  Clearly, the strategy chooses $x_d$ since its ratio $\{1/x_d\}$ is the smallest.
+  Therefore, the total decrease over two iterations is
+  \[
+    (φ + ε) \left\{ \frac{1}{φ + ε} \right\} = 1 - φ - ε = φ^{d+1} - ε.
+    \qedhere
+  \]
 \end{proof}
 
 % ==============================================================================
