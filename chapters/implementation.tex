@@ -1,14 +1,23 @@
 \chapter{Experimental Analysis on the Periodicity}
 \label{ch:implementation}
 
-In this chapter, we consider the problem of finding a periodic MDCF for an algebraic number of degree $d+1$.
-Finding a proof, that algebraic numbers of degree $≤ d+1$ always admit periodic MDCFs, is much more difficult.
-We have already seen that the golden ratios are periodic, when running the
-generalized Euclidean algorithm on them.
-In this chapter, I present my empirical results on some cubic roots.
-I have implemented the generalized Euclidean algorithm and used it to look for
-cubic roots.
-In this chapter, I present the results of my analysis.
+We have already seen in Chapter~\ref{ch:fibonacci},
+that the simplest periodic MDCFs compose a special class of polynomials,
+which can be interpreted as a generalization of the metallic ratios in higher
+dimensions.
+There is also a particular class of polynomials for the Jacobi-Perron algorithm,
+which are periodic for that algorithm and in turn have periodic MDCFs.
+However, this still leaves the question, whether all algebraic numbers of degree $d+1$
+have a periodic $d$-dimensional continued fraction.
+Within the scope of this thesis, I was unable to prove this question in
+general, but I will nevertheless present my evidence for the conjecture.
+
+% TODO: Rewrite this part
+The main focus of this chapter lies on cubic irrationals,
+but there is a small discussion on algebraic numbers with higher degree.
+The chapter begins by outlining how the MDCFs for the particular roots were found
+I then present the results, followed by a discussion of their significance and
+implications for further research.
 
 \section{Experiment Setup}
 
