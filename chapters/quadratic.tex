@@ -445,6 +445,70 @@ We begin with the first direction:
 \end{proof}
 
 The converse was originally proven by Lagrange \cite{Lagrange70}.
+We construct the continued fraction for a particular quadratic irrational using
+the Euclidean algorithm.
+When running the Euclidean algorithm,
+the only possible numbers it can produce must be of the form
+\[
+  p + \sqrt{D} q
+\]
+since the Euclidean algorithm can only subtract a constant factor of either an
+integer or the quadratic irrational.
+These numbers lie in a special field called a quadratic field.
+A quadratic field, denoted as $ℚ(\sqrt{D})$, is a field extension of the rational numbers.
+It is the smallest field that contains $\Q$ as a subfield and $\sqrt{D}$.
+This means that it must contain all numbers $p + \sqrt{D} q$ with $p, q ∈ ℚ$.
+
+A different interpretation of the field extension would be as a two-dimensional
+vector space over the rational numbers.
+An element $p + \sqrt{D} q ∈ ℚ(\sqrt{D})$ would be seen as the vector $(p, q) ∈ ℚ^2$.
+Addition of two elements would correspond to vector addition
+and multiplication with a rational number would correspond to a scalar multiplication.
+Multiplication of two elements $a, b ∈ ℚ(\sqrt{D})$ is more complicated.
+If we fix one element $a = a₀ + \sqrt{D} a₁$, then multiplication is a linear operation:
+\[
+  (a₀ + \sqrt{D} a₁)(b₀ + \sqrt{D} b₁) = (a₀ b₀ + D a₁ b₁) + \sqrt{D} (a₀ b₁ + a₁ b₀)
+\]
+which is equivalent to
+\[
+  \begin{pmatrix}
+    a₀ & D a₁ \\
+    a₁ & a₀ \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    b₀ \\
+    b₁ \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    a₀ b₀ + D a₁ b₁ \\
+    a₀ b₁ + a₁ b₀ \\
+  \end{pmatrix}.
+\]
+
+\begin{definition}
+  The norm $N(α)$ of an number $α$ in a quadratic field $ℚ(\sqrt{D})$ is defined as
+  the determinant of the multiplication matrix of $α$.
+\end{definition}
+
+The norm is an instance of Pell's equation.
+
+\begin{lemma}
+  The norm $N(α_n)$ is bounded by some constant $c$ independent of $n$.
+\end{lemma}
+
+\begin{proof}
+  By Lemma~\ref{lem:cf-approx}, there exists some $δₙ ∈ ℝ$ with $|δₙ| < 1$
+  such that $pₙ = qₙ \sqrt{D} + \frac{δₙ}{qₙ}$.
+  Therefore, we can bound the norm by
+  \begin{align*}
+    |N(αₙ)|
+    & = |pₙ^2 - D qₙ^2| \\
+    & = \left|\left(qₙ \sqrt{D} + \frac{δₙ}{qₙ} \right)^2 - Dqₙ^2\right| \\
+    & = \Biggl|qₙ^2 D + 2δ \sqrt{D} + \underbrace{\frac{δₙ^2}{qₙ^2}}_{\le 1} - Dqₙ^2\Biggr| \\
+    & \le 2 \sqrt{D} + 1 \qedhere
+  \end{align*}
+\end{proof}
 
 \begin{theorem}
   If $x$ is a quadratic irrational,
@@ -452,53 +516,10 @@ The converse was originally proven by Lagrange \cite{Lagrange70}.
 \end{theorem}
 
 \begin{proof}
-  Let $x$ be a quadratic irrational which satisfies $ax^2 + bx + c = 0$.
-  Furthermore, let $x = [a₀; a₁, a₂, …]$ and $x_n = [a_n; a_{n+1}, …]$ for every $n ≥ 0$.
-  By Lemma~\ref{lem:cf-wallis}, we must have
+  By the previous lemma, the norm of any convergent is always bounded.
+  Therefore, there must be at least two different convergents $αᵢ$ and $αⱼ$ which have the same norm.
+  It follows that there exists some fundamental unit $ε ∈ ℚ(\sqrt{D})$ such that
   \[
-    a \left(\frac{x_n p_{n-1} + p_{n-2}}{x_n q_{n-1} + q_{n-2}}\right)^2
-    + b \left(\frac{x_n p_{n-1} + p_{n-2}}{x_n q_{n-1} + q_{n-2}}\right)
-    + c = 0.
+    ε αᵢ = αⱼ.
   \]
-  We rearrange the polynomial into the form
-  \[
-    A_n x_n^2 + B_n x_n + C_n = 0
-  \]
-  with
-  \begin{align*}
-    A_n & = a p_{n-1}^2 + b p_{n-1} q_{n-1} + c q_{n-1}^2, \\
-    B_n & = 2a p_{n-1} p_{n-2} + b p_{n-1} q_{n-2} + b p_{n-2} q_{n-1} + 2c q_{n-1} q_{n-2}, \\
-    C_n & = a p_{n-2}^2 + b p_{n-2} q_{n-2} + c q_{n-2}^2 = A_{n-1}.
-  \end{align*}
-  The goal is to show that $A_n, B_n, C_n$ are bounded independently of $n$.
-  First, we note that the discriminant $D_n = B_n^2 - 4 A_n C_n$ is still $b^2 - 4ac$.
-  If $A_n$ and $C_n$ are bounded, then $B_n$ is bounded.
-  Furthermore, since $C_n = A_{n-1}$, it suffices to show that $A_n$ is bounded.
-
-  By Lemma~\ref{lem:cf-approx}, we have
-  \[
-    \left| x - \frac{p_{n-1}}{q_{n-1}} \right| < \frac{1}{q_{n-1}^2}
-    \Rightarrow
-    p_{n-1} = q_{n-1} x + \frac{δ_{n-1}}{q_{n-1}}, \quad \text{ for some } |δ_{n-1}| < 1,
-  \]
-  from which it follows that
-  \begin{align*}
-    A_n & = a p_{n-1}^2 + b p_{n-1} q_{n-1} + c q_{n-1}^2, \\
-    & = a \left( q_{n-1} x + \frac{δ_{n-1}}{q_{n-1}} \right)^2 + b \left( q_{n-1} x + \frac{δ_{n-1}}{q_{n-1}} \right) q_{n-1} + c q_{n-1}^2 \\
-    & = \underbrace{(ax^2 + bx + c)}_{ = 0} q_{n-1}^2 + (2ax + b) δ_{n-1} + a \frac{δ_{n-1}^2}{q_{n-1}^2}.
-  \end{align*}
-  This allows us to bound $A_n$ by
-  \begin{align*}
-    |A_n| ≤ 2|a||x| + |b| + |a| = (2 |x| + 1) |a| + |b|.
-  \end{align*}
-  Because $C_n = A_{n-1}$ and the discriminant $D_n$ stays the same, we can
-  bound $B_n$ by
-  \begin{align*}
-    B_n^2 ≤ D_k + 4 |A_n| |C_n| ≤ b^2 + 4 |a| |c| + ((2 |x| + 1)|a| + |b|)^2.
-  \end{align*}
-
-  We have shown that for every polynomial the coefficients $A_n, B_n, C_n$ are all bounded,
-  therefore there must be some triple $(A_n, B_n, C_n)$ which repeats.
-  But the construction of the continued fraction is the same for the same polynomials.
-  Hence, the continued fraction of $x$ must be eventually periodic.
 \end{proof}
