@@ -13,107 +13,22 @@ Within the scope of this thesis, I was unable to prove this question in
 general, but I will nevertheless present my evidence for the conjecture.
 
 % TODO: Rewrite this part
-The main focus of this chapter lies on cubic irrationals,
-but there is a small discussion on algebraic numbers with higher degree.
-The chapter begins by outlining how the MDCFs for the particular roots were found
-I then present the results, followed by a discussion of their significance and
-implications for further research.
+In this chapter, I present more examples of periodic MDCFs for common algebraic numbers.
+These were all found using a special program, which implements part of the generalized Euclidean algorithm.
+The chapter begins by outlining how the program was implemented and which search strategies were used.
+I then present the results for the periodic MDCFs, followed by a discussion of
+their significance and implications for further research.
+The main focus of this analysis has been on cubic irrationals,
+but there is a small discussion on algebraic numbers with higher degree at the end of the chapter.
 
-\section{Experiment Setup}
+\section{Methodology}
 
-Recall that Hermite's original question asks about the representation of a
-single number $r ∈ ℝ$, but the generalized Euclidean algorithm expects a vector
-as input.
-So we first need a mapping from a real number $r$ to a real vector $x$.
-One solution is to apply a set of $d$ polynomials $q₁, …, q_d$ on the
-given number $r$ giving us the vector $x = (q₁(r), …, q_d(r))$.
-Not all choices work equally well -- a trivial example, which won't work, would
-be choosing constant polynomials, i.e. $qᵢ(r) = c_i$ for $c_i ∈ ℚ$.
-Therefore, the polynomials should be chosen such that when $r$ is an algebraic
-number of degree $≥d+1$, the elements of $x$ are linearly independent with
-rational coefficients.
-An easy way to achieve this is to choose polynomials with different degrees or
-more specifically $\deg(q_i) = i$.
-In my analysis, I have always chosen the polynomials $qᵢ(r) = r^i$.
-Unless stated otherwise, the following analysis will always use this vector as the input.
-
-\begin{Pseudocode}[float=tbp, label={lst:bfs}, caption={The brute-force search algorithm for finding a periodic representation.}]
-algorithm $\textsc{brute-force-search}(x, N)$
-  for $L ∈ \{1, …, d\}^{≤ N}$ do
-    $x₀ ← x$
-    for $i ∈ \{1, …, |L|\}$ do
-      $x_i ← \mathrm{pivot}_{L[i]}(x_{i-1})$
-      if $x_i$ occurred twice then
-        Find the index $j ≠ i$ where $x_j = x_i$
-        $S ← L[1] \,…\, L[j]$
-        $P ← L[j+1] \,…\, L[i]$
-        return $(S, P)$
-  return $ε$
-\end{Pseudocode}
-
-Now that we have a vector $x$, we can begin the search.
-The pseudocode for the search algorithm I implemented is shown in Listing~\ref{lst:bfs}.
-The algorithm is a brute-force search over all possible sequences $\{1,\dots,d\}^*$.
-We simply try every sequence of possible pivot indices in a breadth-first manner.
-So we begin with all sequences of length $1$ and see if any vector occurs twice.
-If not, then we continue with all sequences of length $2$ and check again if
-any previous vector has occurred twice.
-We continue this process indefinitely until we hopefully find a duplicate vector.
-
-\section{Results for Cubic Irrationals}
-
-For cubic irrationals there are $2^n$ possible sequences,
-so the search is already quite expensive.
-The search for the first 30 cube roots took roughly one hour to complete.
-
-\begin{example}
-  The sequences for the prime numbers are:
-  \begin{itemize}
-    \item $2^{1/3}$: $0\overline{10}$.
-    \item $3^{1/3}$: $01\overline{01}$.
-    \item $5^{1/3}$: $0\overline{00111000}$.
-    \item $7^{1/3}$: $0\overline{010100}$.
-    \item $11^{1/3}$: $0\overline{1100}$.
-    \item $13^{1/3}$: $00\overline{010000}$.
-    \item $17^{1/3}$: $000\overline{11110000}$.
-    \item Another choice for $5^{1/3}$ with shorter period: $00110\overline{101010}$.
-  \end{itemize}
-\end{example}
-
-\begin{remark}
-  The first number that has a leading $1$ as the pivot is $12$,
-  which has the pivot sequence $1\overline{0111011101}$.
-  However, there are other possible choices where it does not have a leading $0$.
-\end{remark}
-
-\begin{table}[t]
-  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
-  \label{table:cube-root-4}
-  \centering
-  \input{tables/cube-root-4.tex}
-\end{table}
-
-\begin{table}[t]
-  \caption{Period Length of the first $28$ numbers.}
-  \centering
-  \input{tables/period-length.tex}
-\end{table}
-
-\section{Results for Quartic and Higher-Degree Irrationals}
-
-\section{Evaluation of More Efficient Search Strategies}
-
-We can likely rule out alternating pivot sequences since this corresponds to
-the Jacobi-Perron algorithm and for this algorithm it is conjectured
-\cite{Karpenkov21} that the algorithm is not periodic for $\sqrt[3]{4}$.
-However, the brute-force algorithm is periodic for this input (see Table~\ref{table:cube-root-4}).
-
-The choice of the initial input also matters.
-We generally choose $x = (α, q(α))$, where $q$ is some polynomial of degree $2$.
-But different choices of $q$ produce different sequences.
-For example, $(\sqrt[3]{2}, \sqrt[3]{4})$ produces a different sequence of coefficients than $(\sqrt[3]{2}, \sqrt[3]{6})$.
-Even though both inputs represent the same number $\sqrt[3]{2}$.
-Choosing $q(α) = α^2 - α$ makes the sequence purely periodic for $\sqrt[3]{3}$ and $\sqrt[3]{4}$.
+The goal is to find a periodic MDCF for some algebraic number $α$.
+As previously mentioned, the representation for each algebraic number was found
+using a special program.
+This program is an implementation of the generalized Euclidean algorithm
+in Python and SageMath.
+Although Python is not the fastest language, the implementation is short.
 
 The strategy is given the initial input $x ∈ ℝ^d$ and a sequence of indices $L ∈ \{1, …, d\}^*$ and must
 return all valid indices which can be appended to the current sequence to form
@@ -181,3 +96,104 @@ but with different rates, i.e. whether for some constant $c ≥ 1$,
   |x_i - \frac{p_i^{(n)}}{q^{(n)}}| < \frac{c}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d.
 \]
 
+\begin{Pseudocode}[float=tbp, label={lst:bfs}, caption={The brute-force search algorithm for finding a periodic representation.}]
+algorithm $\textsc{brute-force-search}(x, N)$
+  for $L ∈ \{1, …, d\}^{≤ N}$ do
+    $x₀ ← x$
+    for $i ∈ \{1, …, |L|\}$ do
+      $x_i ← \mathrm{pivot}_{L[i]}(x_{i-1})$
+      if $x_i$ occurred twice then
+        Find the index $j ≠ i$ where $x_j = x_i$
+        $S ← L[1] \,…\, L[j]$
+        $P ← L[j+1] \,…\, L[i]$
+        return $(S, P)$
+  return $ε$
+\end{Pseudocode}
+
+Now that we have a vector $x$, we can begin the search.
+The pseudocode for the search algorithm I implemented is shown in Listing~\ref{lst:bfs}.
+The algorithm is a brute-force search over all possible sequences $\{1,\dots,d\}^*$.
+We simply try every sequence of possible pivot indices in a breadth-first manner.
+So we begin with all sequences of length $1$ and see if any vector occurs twice.
+If not, then we continue with all sequences of length $2$ and check again if
+any previous vector has occurred twice.
+We continue this process indefinitely until we hopefully find a duplicate vector.
+
+\section{Results for Cubic Irrationals}
+
+The index sequence for each root is listed in Table~\ref{tbl:cubics}.
+For cubic irrationals there are $2^n$ possible sequences,
+so the search is already quite expensive.
+The search for the first 30 cube roots took over two hours to complete.
+Almost half of the time was spent on the root for $\sqrt[3]{29}$.
+For this case specifically, I was unable to find a periodic representation
+after $20$ iterations. % TODO: Can we do more iterations?
+
+At first glance, the table does not really indicate any patterns between the
+number itself and the length of its sequence.
+Between the roots, the period always has an even length
+and furthermore the period always contains both indices.
+There is no periodic sequence which consists of only ones or twos.
+
+There is one more pattern that shows up.
+There seems to be one set of numbers which has a very short sequence.
+In particular, $\sqrt[3]{2}, \sqrt[3]{3}, \sqrt[3]{9}$ and $\sqrt[3]{28}$ have
+the shortest period out of all roots.
+That is because they have the special form of $\sqrt[3]{D^3 + 1}$ for any integer $D$.
+In fact, Bernstein \cite{Bernstein71} has shown that the Jacobi-Perron
+algorithm is periodic for any root of the form
+% TODO: Is the period length always 1?
+% TODO: Check the correct conditions. Specifically is c < D correct?
+\[
+  \sqrt[3]{D^3 + c} \text{ with } c < D \text{ and } c|D.
+\]
+So other roots with a short periodic sequence are $\sqrt[3]{65}, \sqrt[3]{66}$,
+for example.
+
+Although the Jacobi-Perron algorithm provides a solution for some of these
+roots, it does not provide a solution for every root.
+In particular, $\sqrt[3]{4}$ does not seem to have a periodic solution for the
+Jacobi-Perron algorithm, but it does have one with the generalized Euclidean
+algorithm.
+
+\begin{table}[t]
+  \caption{
+    The shortest periodic index sequences for cube roots found using the
+    brute-force search algorithm. The maximum search depth was set to $20$ and
+    only the sequence for $29$ was not found. The roots for $8$ and $27$ are
+    omitted since they are perfect cubes.}
+  \label{tbl:cubics}
+  \centering
+  \input{tables/cubics.tex}
+\end{table}
+
+\begin{table}[t]
+  \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
+  \label{table:cube-root-4}
+  \centering
+  \input{tables/cube-root-4.tex}
+\end{table}
+
+\section{Results for Higher Dimensions}
+
+Finding periodic MDCFs for higher dimensions is even more difficult than two dimensions.
+There are now $O(d^N)$ possible sequences with a maximum depth of $N$.
+So each search is exponentially more expensive than the cubic case.
+
+\section{Evaluation of More Efficient Search Strategies}
+
+Considering the difficulty in finding higher-dimensional MDCFs,
+a more efficient search strategy is needed.
+The optimal strategy would be deterministic
+and give only the next for any given real vector.
+We could then follow the chain by evaluating it at every complete convergent to
+see which index comes next.
+However, even a non-deterministic strategy that eliminates possible candidates
+from the search space would be better than brute force.
+Therefore, I have analyzed different candidates, both deterministic and
+non-deterministic, that could replace the brute-force search.
+
+We can likely rule out alternating pivot sequences since this corresponds to
+the Jacobi-Perron algorithm and for this algorithm it is conjectured
+\cite{Karpenkov21} that the algorithm is not periodic for $\sqrt[3]{4}$.
+However, the brute-force algorithm is periodic for this input (see Table~\ref{table:cube-root-4}).
