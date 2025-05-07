@@ -289,8 +289,8 @@ where the convergent of that MDCF is denoted by
 \]
 Each column vector $P_i$ divided by $Q_i$ represents one possible convergent.
 The goal is to show that each convergent approaches the same value $α_i$.
-The proof is an application of the squeeze theorem:
-We show that the two sequences $m_i^{(n)}$ and $M_i^{(n)}$ are converging.
+The proof is another application of the squeeze theorem:
+We show that the two sequences $s_i^{(n)}$ and $t_i^{(n)}$ are converging.
 They are defined as the minimum and maximum of $r_{i1}^{(n)}, …, r_{id}^{(n)}$, respectively.
 Clearly, the values $r_{i1}^{(n)}, …, r_{id}^{(n)}$ are bounded between the two,
 so it remains to show that the two sequences are converging to the same value.
@@ -299,7 +299,7 @@ and that they converge to the same value.
 It follows that the convergents also approach the same value.
 
 \begin{lemma}
-  The sequence $m_i^{(n)}$ is monotonically increasing and $M_i^{(n)}$ is decreasing.
+  The sequence $s_i^{(n)}$ is monotonically increasing and $t_i^{(n)}$ is decreasing.
 \end{lemma}
 
 \begin{proof}
@@ -320,38 +320,21 @@ It follows that the convergents also approach the same value.
   Because of the requirement that every index has occurred at least once,
   $Q_k^{(n-1)} ≠ 0$ for every $k ≤ d$.
   By the definition of $Q_ℓ^{(n)}$, we have $λ₀ + λ₁ + \dots + λ_d = 1$.
-  The sequence $M_i^{(n-1)}$ denotes the largest fraction and $m_i^{(n-1)}$ the smallest
+  The sequence $t_i^{(n-1)}$ denotes the largest fraction and $s_i^{(n-1)}$ the smallest
   fraction of $\frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}, …, \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}$.
   Hence, we can bound the convergent by
   \[
-    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} ≥ \sum_{k=1}^d λⱼ m_i^{(n-1)} + λ₀ m_i^{(n-1)} = m_i^{(n-1)}.
+    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} ≥ \sum_{k=1}^d λⱼ s_i^{(n-1)} + λ₀ s_i^{(n-1)} = s_i^{(n-1)}.
   \]
   and for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ the bound is even easier since
   \[
-    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ m_i^{(n-1)}.
+    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)}.
   \]
-  Similarly, we can bound the convergent from above by $M_i^{(n-1)}$.
+  Similarly, we can bound the convergent from above by $t_i^{(n-1)}$.
   Therefore, in each iteration the fractions the values $\frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}$ are
-  bounded between the previous minimum $m_i^{(n-1)}$ and the previous maximum
-  $M_i^{(n-1)}$.
+  bounded between the previous minimum $s_i^{(n-1)}$ and the previous maximum
+  $t_i^{(n-1)}$.
 \end{proof}
-
-\iffalse
-  From the proof of the previous lemma, we can easily deduce that the sequences
-  $m_i^{(n)}$ and $M_i^{(n)}$ must be converging to some number $m_i$ and $M_i$,
-  respectively.
-  However, it does not necessarily follow that the ratios in $r^{(n)}$ are also converging.
-  This is because the minimum $m_i^{(n)}$ and the maximum $M_i^{(n)}$ might converge to different numbers $m ≠ M$
-  and the ratios could therefore oscillate between a set of values between $m_i$ and $M_i$.
-  For example, suppose the minimum $m^{(i)}$ is $r_j^{(n)}$ for some index $j$.
-  The minimum changes only when $ℓ_{n'} = j$ for some $n' ≥ n$.
-  But it might be the case that the other values in $r^{(n)}$ are still smaller
-  than $r_j^{(n')}$ even after updating.
-  Therefore, the minimum always tracks the same value in $r^{(n)}$.
-  The same argument can be made for the maximum.
-  But then these values don't necessarily have to assume the same value.
-  The following lemma shows that this is not the case:
-\fi
 
 The idea behind the proof is that we can reformulate each coordinate of a
 convergent as a as a convex combination of all coordinates in the previous
@@ -361,21 +344,22 @@ and therefore the next convergent moves inside the convex hull spanned by the pr
 The convex hull shrinks at each step.
 
 \begin{lemma}
-  The minimum $m_i^{(n)}$ and maximum $M_i^{(n)}$ are converging to the same
+  The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same
   number $α_i$, if every index occurs infinitely often in $ℓ_n$.
 \end{lemma}
 
 \begin{proof}
-  Let $m_i = \lim_{n → ∞} m_i^{(n)}$
-  and $M_i = \lim_{n → ∞} M_i^{(n)}$.
-  Suppose $m_i < M_i$.
-  For $m_i$, there must exist an $ε > 0$ and an index $N$ such that for every $n ≥ N$,
+  Let $s_i = \lim_{n → ∞} s_i^{(n)}$
+  and $t_i = \lim_{n → ∞} t_i^{(n)}$.
+  Suppose $s_i < t_i$.
+  For $s_i$, there must exist an $ε > 0$ and an index $N$ such that for every $n ≥ N$,
   \[
-    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ m_i^{(n-1)} > m_i - ε.
+    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)} > s_i - ε.
   \]
   Hence,
   \[
-    \frac{P_{iℓ}^{(n)}}{Q_j^{(n)}} > (λ₀ + λ₁ + \dots + λ_d) (m_i - ε).
+    \frac{P_{iℓ}^{(n)}}{Q_j^{(n)}} > (λ₀ + λ₁ + \dots + λ_d) (s_i - ε).
+    \qedhere
   \]
 \end{proof}
 
