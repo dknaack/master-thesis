@@ -334,7 +334,7 @@ It follows that the convergents also approach the same value.
   Similarly, we can bound the convergent from above by $t_i^{(n-1)}$.
   Therefore, in each iteration the fractions the values $\frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}$ are
   bounded between the previous minimum $s_i^{(n-1)}$ and the previous maximum
-  $t_i^{(n-1)}$.
+  $t_i^{(n-1)}$, or equivalently $s_i^{(n-1)} ≤ s_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}$.
 \end{proof}
 
 The idea behind the proof is that we can reformulate each coordinate of a
@@ -355,7 +355,7 @@ The convex hull shrinks at each step.
   Suppose $s_i < t_i$.
   For $s_i$, there must exist an $ε > 0$ and an index $N$ such that for every $n ≥ N$,
   \[
-    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)} > s_i - ε.
+    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
   Hence,
   \[
