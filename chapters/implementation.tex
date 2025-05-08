@@ -21,26 +21,68 @@ their significance and implications for further research.
 The main focus of this analysis has been on cubic irrationals,
 but there is a small discussion on algebraic numbers with higher degree at the end of the chapter.
 
-\section{Methodology}
+% ==============================================================================
+\section{Implementation details}
+% ==============================================================================
+
+% ==============================================================================
+\begin{Python}[
+    float=tbp,
+    numbers=left,
+    label={lst:bfs},
+    caption={
+      The implementation of the brute-force search for finding a periodic representation.
+      The program iterates over all sequences with a maximum length of $N$
+      until it finds a duplicate vector.
+    }
+  ]
+def brute_force_search(x, N):
+  d = len(x)
+  indices = list(range(d))
+  for n in range(N):
+    for L in product(indices, repeat=n):
+      y = x
+      seen = {y: 0}
+      for i in range(n):
+        y = pivot(y, L[i])
+        if y in seen:
+          j = seen[y]
+          start = L[:j]
+          period = L[j:i+1]
+          return start, period
+        seen[y] = i + 1
+\end{Python}
+% ==============================================================================
 
 The goal is to find a periodic MDCF for some algebraic number $α$.
-As previously mentioned, the representation for each algebraic number was found
-using a special program.
-This program is an implementation of the generalized Euclidean algorithm
+For an MDCF, we require a sequence of indices $ℓ₁, ℓ₂, …$ which determine the
+element to pivot with.
+To find this sequence, different types of searches were constructed.
+
+The program is an implementation of the generalized Euclidean algorithm
 in Python and SageMath.
-Although Python is not the fastest language, the implementation is short.
+More specifically, only the pivot operation from the algorithm was implemented,
+since this the actual part that is relevant for the construction of an MDCF.
 
-The strategy is given the initial input $x ∈ ℝ^d$ and a sequence of indices $L ∈ \{1, …, d\}^*$ and must
-return all valid indices which can be appended to the current sequence to form
-a new sequence.
-For the brute-force search, the strategy always outputs the entire set; any index is allowed.
-The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
-the minimum fractional value, if $n$ is the length of the list $L$.
-\[
-  S \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
-\]
+The actual code for the search I implemented is shown in Listing~\ref{lst:bfs}.
+The input to the algorithm is a vector $x$ containing algebraic numbers of
+degree $≤ d+1$ and a maximum search depth $N$.
+If possible, it outputs two index sequences of the start and period for a periodic MDCF,
+which represents the original input vector.
+To find this sequence, the algorithm uses a simple brute-force search over all
+possible sequences $\{1,\dots,d\}^*$ with a maximum length of $N$.
+We simply try every sequence of possible pivot indices in a breadth-first manner.
+So we begin with all sequences of length $1$ and see if any vector occurs twice.
+If not, then we continue with all sequences of length $2$ and check again if
+any previous vector has occurred twice.
+We continue this process indefinitely until we hopefully find a duplicate vector.
+To keep track of duplicates, the dictionary \verb|seen| maps vectors to the index,
+where they first occurred.
 
-The main goal of the brute-force search was to find a periodic representation for a cubic root at all.
+The main goal of the brute-force search is to find a periodic representation for a cubic root at all.
+The problem is that the search is quite expensive.
+For a given maximum search depth, the search will take $O(d^n)$ steps,
+so even for the lowest dimension $d = 2$, the search is already expensive.
 The hope is that the sequences share something in common such that we can find
 a more optimized search strategy, ideally one which can be decided without
 trying every possible combination.
@@ -54,7 +96,7 @@ For this type of search, the main point of interest was the approximation rate o
 and whether convergents are the best rational approximations of the original input vector $x$,
 i.e. whether they fulfill
 \[
-  |x_i - \frac{p_i^{(n)}}{q^{(n)}}| < \frac{1}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d
+  \left|x_i - \frac{p_i^{(n)}}{q^{(n)}}\right| < \frac{1}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d
 \]
 at each step.
 The idea would be that this could be one possible optimization to the brute-force search.
@@ -62,6 +104,81 @@ Instead of trying every possible candidate, we only choose paths which lead to g
 For $d = 1$, this is already known by Lemma~\ref{lem:cf-approx},
 but for higher dimensions it is not known whether the convergents are good
 approximations, yet.
+
+% ==============================================================================
+\begin{Python}[
+    float=tbp,
+    numbers=left,
+    caption={
+      The implementation of the nondeterministic search.
+      The search begins with the empty sequence and then queries the strategy
+      for the next valid sequences.
+      At the same time, it checks whether any vector has occurred twice
+      and stops once it has found a duplicate.
+    },
+    label={lst:nondet-search},
+  ]
+def ndsearch(x, N, strat):
+  d = len(x)
+  sequences = [[]]
+  for n in range(N):
+    new_sequences = []
+    for L in sequences:
+      y = x
+      seen = {y: 0}
+      for l in L:
+        y = pivot(y, l)
+        seen[y] = i + 1
+      for l in strat(x, L):
+        z = pivot(y, l)
+        if z in seen:
+          j = seen[z]
+          start = L[:j]
+          period = L[j:i+1]
+          return start, period
+        new_sequences.append(L + [l])
+    sequences = new_sequences
+\end{Python}
+% ==============================================================================
+
+The strategy is given the initial input $x ∈ ℝ^d$ and a sequence of indices $L
+∈ \{1, …, d\}^*$ and must return all valid indices which can be appended to the
+current sequence to form a new sequence.
+For the brute-force search, the strategy always outputs the entire set; any index is allowed.
+The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
+the minimum fractional value, if $n$ is the length of the list $L$.
+\[
+  S \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
+\]
+
+% ==============================================================================
+\begin{Python}[
+    float=tbp,
+    numbers=left,
+    caption={
+      The implementation of the deterministic search.
+      The strategy \texttt{strat} only outputs a single index, which is used
+      for pivoting.
+      The search stops once a duplicate vector $x$ has been found and returns
+      the preperiod and period once found.
+    },
+    label={lst:det-search},
+  ]
+def dsearch(x, N, strat):
+  d = len(x)
+  seen = {x: 0}
+  for n in range(N):
+    l = strat(x)
+    x = pivot(x, l)
+    if x in seen:
+      j = seen[x]
+      start = L[:j]
+      period = L[j:i+1]
+      return start, period
+    else:
+      seen[y] = i + 1
+\end{Python}
+% ==============================================================================
 
 For the deterministic search, a strategy $s$ is a function $R^d → \{1, …, d\}$
 which takes in the complete quotient $x^{(n)} ∈ ℝ^d$ of the input vector $x ∈ R^d$
@@ -93,33 +210,20 @@ In summary, the following deterministic strategies were tried:
 For the non-deterministic search, only the approximation criterion was tested,
 but with different rates, i.e. whether for some constant $c ≥ 1$,
 \[
-  |x_i - \frac{p_i^{(n)}}{q^{(n)}}| < \frac{c}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d.
+  \left|x_i - \frac{p_i^{(n)}}{q^{(n)}}\right| < \frac{c}{q^{(n)} \sqrt[d]{q^{(n)}}}, \text{ for every } i ≤ d.
 \]
 
-\begin{Pseudocode}[float=tbp, label={lst:bfs}, caption={The brute-force search algorithm for finding a periodic representation.}]
-algorithm $\textsc{brute-force-search}(x, N)$
-  for $L ∈ \{1, …, d\}^{≤ N}$ do
-    $x₀ ← x$
-    for $i ∈ \{1, …, |L|\}$ do
-      $x_i ← \mathrm{pivot}_{L[i]}(x_{i-1})$
-      if $x_i$ occurred twice then
-        Find the index $j ≠ i$ where $x_j = x_i$
-        $S ← L[1] \,…\, L[j]$
-        $P ← L[j+1] \,…\, L[i]$
-        return $(S, P)$
-  return $ε$
-\end{Pseudocode}
+In summary,
+there are three different types of searches.
+The first is the brute-force search, which is used to find a periodic MDCF at all.
+The second is the nondeterministic search, which is used to see how well the
+convergents approximate the original input vector.
+The third is the deterministic search, which is used to compare the different
+strategies.
 
-Now that we have a vector $x$, we can begin the search.
-The pseudocode for the search algorithm I implemented is shown in Listing~\ref{lst:bfs}.
-The algorithm is a brute-force search over all possible sequences $\{1,\dots,d\}^*$.
-We simply try every sequence of possible pivot indices in a breadth-first manner.
-So we begin with all sequences of length $1$ and see if any vector occurs twice.
-If not, then we continue with all sequences of length $2$ and check again if
-any previous vector has occurred twice.
-We continue this process indefinitely until we hopefully find a duplicate vector.
-
-\section{Results for Cubic Irrationals}
+% ==============================================================================
+\section{Results for Periodic MDCFs}
+% ==============================================================================
 
 The index sequence for each root is listed in Table~\ref{tbl:cubics}.
 For cubic irrationals there are $2^n$ possible sequences,
@@ -145,7 +249,7 @@ algorithm is periodic for any root of the form
 % TODO: Is the period length always 1?
 % TODO: Check the correct conditions. Specifically is c < D correct?
 \[
-  \sqrt[3]{D^3 + c} \text{ with } c < D \text{ and } c|D.
+  \sqrt[3]{D^3 + c}, \qquad \text{ where } c < D \text{ and } c|D.
 \]
 So other roots with a short periodic sequence are $\sqrt[3]{65}, \sqrt[3]{66}$,
 for example.
@@ -164,23 +268,56 @@ algorithm.
     omitted since they are perfect cubes.}
   \label{tbl:cubics}
   \centering
-  \input{tables/cubics.tex}
+  \input{tables/cubics2.tex}
 \end{table}
 
 \begin{table}[t]
   \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
   \label{table:cube-root-4}
   \centering
+  \footnotesize
   \input{tables/cube-root-4.tex}
 \end{table}
-
-\section{Results for Higher Dimensions}
 
 Finding periodic MDCFs for higher dimensions is even more difficult than two dimensions.
 There are now $O(d^N)$ possible sequences with a maximum depth of $N$.
 So each search is exponentially more expensive than the cubic case.
+Some of the easier ones to find were again the roots identified by Bernstein.
 
-\section{Evaluation of More Efficient Search Strategies}
+% ==============================================================================
+\section{Results for the Approximation Rate of MDCFs}
+% ==============================================================================
+
+The second type of search was to see how well the different sequences
+approximate the original input vector.
+For continued fractions, we can always achieve a quadratic approximation, i.e.
+\[
+  \left| x - \frac{p}{q} \right| < \frac{1}{q^2}.
+\]
+But in this case, we only have to approximate a single irrational number $x$.
+If we have to approximate multiple irrational numbers $x₁, …, x_d$ simultaneously,
+the best approximation $p₁/q, …, p_d/q$ that we can achieve satisfies
+\[
+  \left|x_i - \frac{p_i}{q}\right| < \frac{1}{q \, \sqrt[d]{q}} \qquad \text{ for every } i ≤ d.
+\]
+So for the second search I tested, whether the convergents of the MDCFs
+generated by the algorithm satisfy this constraint.
+
+Unfortunately, this is not the case even for cubic irrationals.
+In the search, only convergents which satisfy the approximation rate make it to the next round.
+So it is possible that no convergents make it
+and for some cubic roots this is actually the case.
+One example is $\sqrt[3]{5}$.
+In this case, the number of convergents starts out growing but quickly drops
+after only a few number of iterations.
+
+% TODO: Add plot for growth
+
+% TODO: Add table for numbers which admit good approximations
+
+% ==============================================================================
+\section{Comparison of More Efficient Search Strategies}
+% ==============================================================================
 
 Considering the difficulty in finding higher-dimensional MDCFs,
 a more efficient search strategy is needed.
