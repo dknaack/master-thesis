@@ -21,9 +21,44 @@ with $aᵢ ∈ ℤ$ and $p$ is irreducible.
 
 A rational expression of a number $α$ is a fraction of two polynomials, i.e.
 \[
-  \frac{p(α)}{q(α)} = \frac{pₙ x^n + \dots + p₁ x + p₀}{qₙ x^n + \dots + q₁ x + q₀}.
+  \frac{p(α)}{q(α)} = \frac{pₙ α^n + \dots + p₁ α + p₀}{qₙ α^n + \dots + q₁ α + q₀}.
 \]
 The set of all rational expressions of an algebraic number $α$ is denoted as $ℚ(α)$.
+
+\begin{definition}
+  Let $L/K$ be a field extension and $α ∈ L$.
+  If $α$ satisfies
+  \[
+    α^n + c_{n-1} α^{n-1} + ⋯ + c_1 α + c_0 = 0
+  \]
+  with $c₀, c₁, …, c_{n-1} ∈ K$,
+  then $α$ is called \emph{algebraic over $K$}.
+  Furthermore, if every $α ∈ L$ is \emph{algebraic over $K$}, then $L$ is called
+  algebraic over $K$ and $L/K$ is an \emph{algebraic field extension}.
+\end{definition}
+
+Although, elements of a field $L$ can only be algebraic over another field $K$,
+we will only look at elements which are algebraic over $ℚ$.
+In this thesis, an \emph{algebraic number} will mean any number $x ∈ ℝ$, which
+is algebraic over $ℚ$.
+
+\begin{definition}
+  Let $L/K$ be a field extension.
+  The degree $[L : K]$ is defined as the dimension of the vector space $L$ over $K$.
+  A field extension is finite if its degree $[L : K]$ is finite.
+\end{definition}
+
+A basis for this vector space would be $(1, α, …, α^{n-1})$, for example.
+
+If we fix a particular element $α ∈ L$, then multiplication with $α$ is a linear operation:
+\[
+  M_α : L → L, M_α(x) = α · x.
+\]
+
+\begin{definition}
+  Let $L/K$ be an algebraic field extension.
+  The norm of an element $α ∈ L$ is defined as the determinant of $M_α$.
+\end{definition}
 
 \section{The Euclidean Algorithm}
 
