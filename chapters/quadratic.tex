@@ -67,34 +67,48 @@ The convergent of a longer fraction can be calculated by the following:
   = \frac{\tilde p_{n-1} a₀ + \tilde q_{n-1}}{\tilde p_{n-1}},
 \]
 where $\tilde p_{n-1} / \tilde q_{n-1}$ is the convergent of $[a₁; a₂, …, aₙ]$.
+Of course, this requires calculating a convergent of a different continued
+fraction.
+Instead, we can use a more direct way to calculate the convergent $pₙ/qₙ$ from
+the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ of the same
+continued fractions.
+To prove this, we will first need the following lemma.
 
 \begin{lemma}
-  \label{lem:nesting}
+  \label{lem:cf-nesting}
   Let $x ∈ ℝ$, then
   \[
-    [a₀; a₁, …, a_n, x] = [a₀; a₁, …, a_n + 1/x]
+    [r₀; a₁, …, r_n, x] = [r₀; r₁, …, r_n + 1/x]
   \]
 \end{lemma}
 
 \begin{proof}
   If $n = 0$, then
   \[
-    [a₀; x] = a₀ + \frac{1}{[x]} = a₀ + \frac{1}{x} = [a₀ + 1/x].
+    [r₀; x] = r₀ + \frac{1}{[x]} = r₀ + \frac{1}{x} = [r₀ + 1/x].
   \]
   Suppose the lemma is true for some $n ≥ 0$, then
   \begin{align*}
-    [a₀; a₁, …, aₙ, x]
-    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ, x]} \\
-    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ + 1/x]} \\
-    & = [a₀; a₁, …, aₙ, x]. \qedhere
+    [r₀; r₁, …, rₙ, x]
+    & = r₀ + \frac{1}{[r₁; r₂, …, rₙ, x]} \\
+    & = r₀ + \frac{1}{[r₁; r₂, …, rₙ + 1/x]} \\
+    & = [r₀; a₁, …, rₙ, x]. \qedhere
   \end{align*}
 \end{proof}
+
+We can use the following recurrence relation to calculate the convergents of a
+continued fraction $[a₀; a₁, …, aₙ]$:
+\begin{align*}
+  p_n & = p_{n-1} a_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
+  q_n & = q_{n-1} a_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0
+\end{align*}
+The correctness is shown by the following lemma.
 
 \begin{lemma}
   \label{lem:cf-wallis}
   Let $x ∈ ℝ$, then
   \[
-    [a₀; a₁, …, a_{n-1}, x] = \frac{p_{n-1} x + p_{n-2}}{q_{n-1} x + q_{n-2}}.
+    [a₀; a₁, …, a_{n-1}, x] = \frac{pₙ}{qₙ} = \frac{p_{n-1} x + p_{n-2}}{q_{n-1} x + q_{n-2}}.
   \]
 \end{lemma}
 
