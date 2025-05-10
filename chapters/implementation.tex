@@ -79,6 +79,43 @@ We continue this process indefinitely until we hopefully find a duplicate vector
 To keep track of duplicates, the dictionary \verb|seen| maps vectors to the index,
 where they first occurred.
 
+% ==============================================================================
+\begin{Python}[
+    float=tbp,
+    numbers=left,
+    caption={
+      The implementation of the nondeterministic search.
+      The search begins with the empty sequence and then queries the strategy
+      for the next valid sequences.
+      At the same time, it checks whether any vector has occurred twice
+      and stops once it has found a duplicate.
+    },
+    label={lst:nondet-search},
+  ]
+def nondeterministic_search(x, N, strat):
+  d = len(x)
+  sequences = [[]]
+  for n in range(N):
+    new_sequences = []
+    for L in sequences:
+      y = x
+      seen = {y: 0}
+      for l in L:
+        y = pivot(y, l)
+        seen[y] = i + 1
+      for l in strat(x, L):
+        z = pivot(y, l)
+        if z in seen:
+          j = seen[z]
+          start = L[:j]
+          period = L[j:i+1]
+          return start, period
+        new_sequences.append(L + [l])
+    sequences = new_sequences
+\end{Python}
+% ==============================================================================
+
+% Nondeterministic search
 The main goal of the brute-force search is to find a periodic representation for a cubic root at all.
 The problem is that the search is quite expensive.
 For a given maximum search depth, the search will take $O(d^n)$ steps,
@@ -105,42 +142,6 @@ For $d = 1$, this is already known by Lemma~\ref{lem:cf-approx},
 but for higher dimensions it is not known whether the convergents are good
 approximations, yet.
 
-% ==============================================================================
-\begin{Python}[
-    float=tbp,
-    numbers=left,
-    caption={
-      The implementation of the nondeterministic search.
-      The search begins with the empty sequence and then queries the strategy
-      for the next valid sequences.
-      At the same time, it checks whether any vector has occurred twice
-      and stops once it has found a duplicate.
-    },
-    label={lst:nondet-search},
-  ]
-def ndsearch(x, N, strat):
-  d = len(x)
-  sequences = [[]]
-  for n in range(N):
-    new_sequences = []
-    for L in sequences:
-      y = x
-      seen = {y: 0}
-      for l in L:
-        y = pivot(y, l)
-        seen[y] = i + 1
-      for l in strat(x, L):
-        z = pivot(y, l)
-        if z in seen:
-          j = seen[z]
-          start = L[:j]
-          period = L[j:i+1]
-          return start, period
-        new_sequences.append(L + [l])
-    sequences = new_sequences
-\end{Python}
-% ==============================================================================
-
 The strategy is given the initial input $x ∈ ℝ^d$ and a sequence of indices $L
 ∈ \{1, …, d\}^*$ and must return all valid indices which can be appended to the
 current sequence to form a new sequence.
@@ -148,7 +149,11 @@ For the brute-force search, the strategy always outputs the entire set; any inde
 The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
 the minimum fractional value, if $n$ is the length of the list $L$.
 \[
-  S \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
+  \texttt{strat} \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
+\]
+For example,
+\[
+  \texttt{strat}(x, L) = \mathrm{arg\,min}_{ℓ ∈ \{1,…,d\}} \{ y_i(ℓ) - x_i \}
 \]
 
 % ==============================================================================
