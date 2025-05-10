@@ -354,18 +354,14 @@ we directly know that the vectors $B_n$ can be calculated as follows:
   \end{pmatrix}
   = B_{n-1} a_n + B_{n-2}
 \end{align*}
-
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/critical-section}
-  \caption{
-    The hyperbolas each contain only elements with norm $±1$.
-    The red area could contain an integral point, in which case this point
-    would be closer than the initial point.
-    The gray area cannot contain an integral point since the norm would be
-    fractional.
-  }
-\end{figure}
+This can also be interpreted geometrically, as shown in Figure~\ref{fig:klein-polygon}.
+We begin with the unit vectors $(1, 0)$ and $(0, 1)$.
+Then, we start at the point $B_{-2} = (0, 1)$ and draw a line using the vector $B_{-1} = (1, 0)$.
+This line intersects the irrational line $(1, α)$ at some point
+and the next vector $B_0$ is the integer lattice point on the line before the
+intersection.
+We continue with $B_{-1}$ and draw a line using the vector $B_0$.
+The next vector $B_2$ is the integer lattice point before the intersection with $(1, α)$, again.
 
 \begin{figure}[tb]
   \centering
