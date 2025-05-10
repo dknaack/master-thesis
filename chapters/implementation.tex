@@ -169,7 +169,7 @@ For example,
     },
     label={lst:det-search},
   ]
-def dsearch(x, N, strat):
+def deterministic_search(x, N, strat):
   d = len(x)
   seen = {x: 0}
   for n in range(N):
@@ -185,6 +185,7 @@ def dsearch(x, N, strat):
 \end{Python}
 % ==============================================================================
 
+% Deterministic search
 For the deterministic search, a strategy $s$ is a function $R^d → \{1, …, d\}$
 which takes in the complete quotient $x^{(n)} ∈ ℝ^d$ of the input vector $x ∈ R^d$
 and the number of iterations $n$.
@@ -193,13 +194,13 @@ which is used to find the next complete quotient by $x^{(n+1)} =
 \mathrm{pivot}_ℓ(x^{(n)})$.
 For example, the minimum strategy would be defined as
 \[
-  s(x, n) = \underset{\substack{ℓ ∈ \{1, …, d\} \\ \{x_ℓ\} ≠ 0}}{\text{arg min}} \{x_ℓ\}.
+  \texttt{strat}(x, n) = \underset{\substack{ℓ ∈ \{1, …, d\} \\ \{x_ℓ\} ≠ 0}}{\text{arg min}} \{x_ℓ\}.
 \]
 The additional index $n$ is used for example in the Jacobi-Perron algorithm,
 which chooses always the next index in the sequence.
 So,
 \[
-  s(x, n) = (n \bmod d) + 1.
+  \texttt{strat}(x, n) = (n \bmod d) + 1.
 \]
 
 In summary, the following deterministic strategies were tried:
