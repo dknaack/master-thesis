@@ -134,11 +134,22 @@ The correctness is shown by the following lemma.
 
 \begin{lemma}
   \label{lem:cf-det}
-  $p_n q_{n-1} - q_n p_{n-1} = (-1)^n$.
+  $p_n q_{n-1} - q_n p_{n-1} = (-1)^{n+1}$ for $n ≥ -1$.
 \end{lemma}
 
 \begin{proof}
-
+  For $n = -1$, we have
+  \[
+    p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
+  \]
+  Suppose that the lemma holds for $n ≥ -1$, then
+  \begin{align*}
+    p_{n+1} q_n - q_{n+1} p_n
+    & = (p_n a_{n+1} + p_{n-1}) q_n - (q_n a_{n+1} + q_{n-1}) p_n \\
+    & = p_{n-1} q_n - q_{n-1} p_n \\
+    & = (-1) (p_n q_{n-1} - q_n p_{n-1}) \\
+    & = (-1)^{n+1}. \qedhere
+  \end{align*}
 \end{proof}
 
 % ==============================================================================
