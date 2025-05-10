@@ -1,0 +1,49 @@
+\documentclass[tikz]{standalone}
+
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.7]
+  \tikzset{font=\footnotesize, >=stealth}
+  % Axes
+  \draw[black!20] (-0.5, -0.5) grid (8.5, 8.5);
+  \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,8.5) node[above] {$y$};
+  \node[above left]  at (0, 1) {$B_{-2}$};
+  \node[below right] at (1, 0) {$B_{-1}$};
+  \node[above] at (1, 1) {$B₀$};
+  \node[below right] at (3, 2) {$B₁$};
+  \node[above] at (7, 5) {$B₂$};
+  \node[right] at (8, {8/sqrt(2)}) {$x/y = \sqrt{2}$};
+
+  \clip (0, 0) rectangle (8.5, 8.5);
+
+  \fill[blue!50!black] (1, 1) circle[radius=3pt];
+  \fill[blue!50!black] (0, 1) circle[radius=3pt];
+  \fill[blue!50!black] (4, 3) circle[radius=2pt];
+  \fill[blue!50!black] (7, 5) circle[radius=3pt];
+
+  \fill[red!50!black] (1, 0) circle[radius=3pt];
+  \fill[red!50!black] (2, 1) circle[radius=2pt];
+  \fill[red!50!black] (3, 2) circle[radius=3pt];
+  \fill[red!50!black] (10, 7) circle[radius=2pt];
+
+  \iffalse
+  \draw[thick, red!50!black, ->] (0, 0) -- (1, 0);
+  \draw[thick, blue!50!black, ->] (0, 0) -- (0, 1);
+  \fi
+
+  \draw[dashed] (0, 0) -- (8.5, {8.5/sqrt(2)});
+  \draw[thick, blue!50!black] (0, 1) -- (1, 1) -- (7, 5) -- (41, 29);
+  \draw[thick, red!50!black] (1, 0) -- (3, 2) -- (17, 12);
+
+  % Hyperbola branch
+  \begin{scope}[on background layer]
+    \clip (0, 0) rectangle (8.5, 8.5);
+    \fill[blue!20] (0, 0) -- (0, 1) -- (1, 1) -- (7, 5) -- (41, 29) -- (0, 29);
+    \fill[red!20] (0, 0) -- (1, 0) -- (3, 2) -- (17, 12) -- (17, 0);
+  \end{scope}
+\end{tikzpicture}
+\end{document}
+
+
