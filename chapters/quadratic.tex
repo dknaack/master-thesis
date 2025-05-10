@@ -373,39 +373,68 @@ The next vector $B_2$ is the integer lattice point before the intersection with 
   }
 \end{figure}
 
-We can also begin with a real number $x$ and find its continued fraction using
-the vector representation.
-We map the vector $x$ to its homogeneous version $\hat x = (x, 1)$.
-To find the continued fraction for $x$,
-we subtract the integer part $a = \floor{x}$ and invert the fraction.
-In the vector representation, this amounts to a translation $T$ of the vector in
-the first coordinate and a swap $S$ of the coordinates.
-These operations are done with the two matrices:
-\begin{align*}
-  T_a = \begin{pmatrix}
-    1 & a \\
-    0 & 1 \\
-  \end{pmatrix},
-  S = \begin{pmatrix}
-    0 & 1 \\
-    1 & 0 \\
-  \end{pmatrix}
-\end{align*}
+In his original lecture notes \cite{Klein95},
+Klein showed that the closest points to the irrational line $α$ are convergents and
+vice-versa.
 
-Importantly, both operations are unimodular; they do not change the underlying lattice.
+\begin{definition}
+  A nonzero point $(x, y) ∈ ℤ^2$ is a \emph{relative minimum} with respect to a
+  line $(1, α)$, if for every point $(x', y') ∈ ℤ^2$ with $x' ≤ x$ or $y ≤ y'$,
+  \[
+    |x α - y| ≤ |x' α - y'|.
+  \]
+\end{definition}
 
-\begin{align*}
-  B_n & = T^{a₀} S T^{a₁} S T^{a₂} … S T^{aₙ} B_1 \\
-  & = T^{a₀} \underbrace{S T^{a₁} S}_{S_2^{a_1}} T^{a₂} … S T^{aₙ} B_1
-\end{align*}
+\begin{theorem}
+  \label{thm:conv-is-relmin}
+  Every convergent is a relative minimum.
+\end{theorem}
 
-\begin{align*}
-  S_2^a = R S_1 \underbrace{R R}_{I} S_1 \underbrace{R R}_I S_1\, R … R\, S_1 R = R S_1^{a} R.
-\end{align*}
+\begin{proof}
+  For the first two convergents, this is obviously true.
+  By induction, suppose that the convergent $B_{n-1}$ and $B_n$ are relative minima.
+  Reflecting $B_{n+1}$ across the line $α$ produces two parallel lines:
+  One going through $B_{n+1}$ and one going through the reflected point.
+  Any point which is closer must lie in the cylinder between the two lines.
+  The parallelogram constructed from the points $B_{n-1}, B_n$ and $B_{n+1}$
+  covers this entire cylinder, because $B_{n-1}$ and $B_n$ are both further
+  away from the line than $B_n$.
+  But the parallelogram only contains
+  \begin{align*}
+    |\det \begin{pmatrix}
+      B_{n+1} - B_{n-1} & B_n - B_{n-1} \\
+    \end{pmatrix}|
+    & = |\det \begin{pmatrix}
+      B_n a_{n+1} & B_n - B_{n-1} \\
+    \end{pmatrix}| \\
+    & = a_{n+1} |\det \begin{pmatrix}
+      B_n & B_n \\
+    \end{pmatrix} - \det \begin{pmatrix}
+      B_n & B_{n-1} \\
+    \end{pmatrix}| \\
+    & = a_{n+1} |0 - 1| = a_{n+1}
+  \end{align*}
+  integer lattice points
+  and all of these point are on the line between $B_{n-1}$ and $B_{n+1}$.
+  Therefore, $B_{n+1}$ is also a relative minimum.
+\end{proof}
+
+% TODO: Technically, they can also be a lattice point between two convergents.
+\begin{theorem}
+  \label{thm:relmin-is-conv}
+  Every relative minimum is a convergent.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
 
 % ==============================================================================
 \section{Continued Fractions of Quadratic Irrationals}
 % ==============================================================================
+
+% TODO: There are still some issues with this section, like what about
+% quadratic irrationals which aren't square roots?
 
 \begin{definition}
   A continued fraction $[a₀; a₁, …]$ is called \emph{eventually periodic}
