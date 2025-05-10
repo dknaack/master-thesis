@@ -232,40 +232,46 @@ strategies.
 \section{Results for Periodic MDCFs}
 % ==============================================================================
 
-The index sequence for each root is listed in Table~\ref{tbl:cubics}.
+% TODO: Measure the times for each MDCF and list them!
+For the first search, the cube roots $\sqrt[3]{2}$ to $\sqrt[3]{32}$ were tested.
+The MDCFs for these roots is listed in Table~\ref{tbl:cubics}.
 For cubic irrationals there are $2^n$ possible sequences,
 so the search is already quite expensive.
-The search for the first 30 cube roots took over two hours to complete.
+The search for the first 30 cube roots had a maximum search depth of $24$ and
+this already took over two hours to complete.
 Almost half of the time was spent on the root for $\sqrt[3]{29}$.
-For this case specifically, I was unable to find a periodic representation
-after $20$ iterations. % TODO: Can we do more iterations?
+For this case specifically, I was unable to find a periodic representation.
+I tried searching for this case specifically with a larger search depth of $30$,
+but it still found no representation.
+Since the length of the period can vary greatly between the roots, it is
+difficult to say whether the search depth is too small or whether
+$\sqrt[3]{29}$ has no representation at all.
 
-At first glance, the table does not really indicate any patterns between the
-number itself and the length of its sequence.
-Between the roots, the period always has an even length
-and furthermore the period always contains both indices.
-There is no periodic sequence which consists of only ones or twos.
+Regarding the representation of the roots,
+there is no perceivable patterns between the roots and their length.
+However, this is to be expected since continued fractions also follow no simple
+pattern between square roots and their length.
+What the MDCFs share in common is that their periods always have an even length
+and the period always contains both indices;
+that is, there is no periodic sequence consisting solely of one repeated index
+(e.g., only ones or only twos).
 
-There is one more pattern that shows up.
-There seems to be one set of numbers which has a very short sequence.
-In particular, $\sqrt[3]{2}, \sqrt[3]{3}, \sqrt[3]{9}$ and $\sqrt[3]{28}$ have
-the shortest period out of all roots.
-That is because they have the special form of $\sqrt[3]{D^3 + 1}$ for any integer $D$.
-In fact, Bernstein \cite{Bernstein71} has shown that the Jacobi-Perron
-algorithm is periodic for any root of the form
+Apart from the even length, there is one specific set of roots which have a
+predetermined period length
+and they are the roots with the shortest period, i.e. $\sqrt[3]{2},
+\sqrt[3]{3}, \sqrt[3]{9}$ and $\sqrt[3]{28}$.
+Out of all observed roots, they have the shortest period with only two indices.
+The reason comes from a theorem proven by Bernstein \cite{Bernstein71}.
+In his analysis of the Jacobi-Perron algorithm,
+he has shown that Jacobi-Perron algorithm is periodic for any root of the form
 % TODO: Is the period length always 1?
 % TODO: Check the correct conditions. Specifically is c < D correct?
 \[
   \sqrt[3]{D^3 + c}, \qquad \text{ where } c < D \text{ and } c|D.
 \]
+and that the period length is exactly $2$ in the case of cubic irrationals.
 So other roots with a short periodic sequence are $\sqrt[3]{65}, \sqrt[3]{66}$,
 for example.
-
-Although the Jacobi-Perron algorithm provides a solution for some of these
-roots, it does not provide a solution for every root.
-In particular, $\sqrt[3]{4}$ does not seem to have a periodic solution for the
-Jacobi-Perron algorithm, but it does have one with the generalized Euclidean
-algorithm.
 
 \begin{table}[t]
   \caption{
