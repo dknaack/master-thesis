@@ -637,6 +637,17 @@ By construction, $B^{(n)}$ is the combined matrix of the sequences $P^{(n)}, Q^{
   \end{align*}
 \end{proof}
 
+% ==============================================================================
+\section{Periodic Multi-Dimensional Continued Fractions}
+% ==============================================================================
+
+The proof for periodic MDCFs is based on the same theorem for the Jacobi-Perron
+algorithm, originally proven by Perron \cite{Perron07}.
+We begin with the purely periodic case.
+The idea behind this proof is that in a purely periodic MDCF of a vector $x ∈ ℝ^d$,
+the vector itself is an eigenvector for one of the matrices $B^{(k)}$.
+Furthermore, the elements of this eigenvector can only be algebraic numbers with degree $≤ d+1$.
+
 \begin{lemma}
   \label{lem:mdcf-purely-periodic}
   If there exists a purely periodic MDCF for $x ∈ ℝ^d$,
@@ -654,40 +665,50 @@ By construction, $B^{(n)}$ is the combined matrix of the sequences $P^{(n)}, Q^{
   Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $B^{(n)}$.
   The characteristic polynomial $\det(B^{(n)} - λ I)$ can have a degree of at most $d+1$,
   therefore the eigenvalue $λ$ is an algebraic number of degree $d+1$.
-
   For the eigenvector $\hat x$, we have to find a nontrivial solution to the
   homogeneous linear system
   \[
     (B^{(n)} - λ I) \hat x = 0.
   \]
-  Each coefficient in the linear system is either an algebraic
-  number of degree $≤ d+1$ or an integer.
-  Therefore, the eigenvectors solely consists of algebraic numbers which have a
-  degree of $≤ d+1$.
+  Each coefficient in this linear system is either an integer or $λ$ and is
+  therefore contained in the field $ℚ(λ)$.
+  Hence, the elements of $\hat x$ must come from the same
+  field $ℚ(λ)$ and they must be algebraic numbers with the same degree.
 
   Finally, the eigenvector $\hat x$ has to be projected back from homogeneous coordinates $x$.
-  But every $xᵢ = \hat xᵢ / \hat x₀$ is an algebraic number of degree $≤ d+1$,
-  since $xᵢ$ is a rational expression of two such algebraic numbers.
+  Since $xᵢ = \hat xᵢ / \hat x₀$ and the values $\hat xᵢ$ and $\hat x₀$ are members of the field $ℚ(λ)$,
+  the projected value $xᵢ$ must also be contained in the same field.
+  Therefore, each element in $x$ is an algebraic number of degree $≤ d+1$.
 \end{proof}
 
 \begin{theorem}
   \label{thm:mdcf-periodic}
-  If there exists a periodic MDCF for $x ∈ ℝ^d$,
+  If there exists a periodic MDCF for a given vector $x ∈ ℝ^d$,
   then each $x_i$ is a root of some polynomial with degree $≤ d+1$ for every $i ≤ d$.
 \end{theorem}
 
 \begin{proof}
-  Let $x^{(k)}$ be the complete quotients of $x$.
-  Suppose there exists a period $ℓ$ such that $x^{(k)} = x^{(k+ℓ)}$.
+  Given such a MDCF for $x$, let $x^{(k)}$ denote the $k$-th complete quotient
+  of this fraction.
+  Suppose that the MDCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
+  $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
     \hat x = B^{(k)} \hat x^{(k)} = B^{(k+ℓ)} \hat x^{(k+ℓ)} = B^{(k+ℓ)} \hat x^{(k)}.
   \]
-  The algebraic numbers in $\hat x_k$ must have degree $≤ d+1$.
-  Since every element in $x$ is a linear rational expression of the form
+  Every element in $x$ can be represented as a linear rational expression of $x^{(k)}$:
   \[
     x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}},
   \]
-  where $x_j^{(k)}$ is an algebraic number of degree $≤ d+1$ and the elements of $P^{(k)}$ are integers,
-  every element in $x$ must also be an algebraic number of degree $≤ d+1$.
+  % TODO: I think we should be more precise here since the elements could be
+  % inside different fields. They are not, but this sentence does not indicate
+  % that.
+  From the previous lemma, it follows that the elements of $\hat x^{(k)}$
+  are contained in some field $ℚ(λ)$, where $λ$ is an algebraic number of degree $≤ d+1$.
+  Furthermore, $B^{(k)}$ consists solely of integers.
+  Therefore, every element in $x$ is contained in the same field $ℚ(λ)$
+  and they must also be an algebraic numbers of degree $≤ d+1$.
 \end{proof}
+
+% TODO: There should be a discussion about the potential for answering
+% Hermite's question here...
