@@ -205,165 +205,265 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
   \end{align*}
   The numerator has the following form:
   \begin{align*}
-    & \hphantom{{} = {}} x_ℓ (P^{(n-1)} (a + \mathrm{pivot}(x, ℓ)) + p^{(n-1)}) \\
-    & = x_ℓ (P^{(n-1)} a + P_ℓ^{(n-1)} \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} P_i^{(n-1)} \frac{x_i}{x_ℓ} + p^{(n-1)}) \\
-    & = \underbrace{(P^{(n-1)} a + p^{(n-1)})}_{P_ℓ^{(n)}} x_ℓ
-        + \sum_{i ≠ ℓ} \underbrace{P_i^{(n-1)}}_{P_i^{(n)}} x_i
-        + \underbrace{P_ℓ^{(n-1)}}_{p^{(n)}} \\
-    & = P^{(n)} x + p^{(n)}.
+    & x_ℓ \left( P_0^{(n-2)} + P_ℓ^{(n-2)} \left( a_ℓ + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ} P_i^{(n-2)} \left(a_i + \frac{x_i}{x_ℓ} \right) \right) \\
+    & = P_0^{(n-2)} x_ℓ + P_ℓ^{(n-2)} a_ℓ x_ℓ + P_ℓ^{(n-2)} + \sum_{i ≠ ℓ} P_i^{(n-2)} a_i x_ℓ + P_i^{(n-2)} x_i \\
+    & = \underbrace{\left( P_0^{(n-2)} + P_ℓ^{(n-2)} a_ℓ + \sum_{i ≠ ℓ} P_i^{(n-2)} a_i \right)}_{P_ℓ^{(n-1)} a} x_ℓ
+      + \underbrace{P_ℓ^{(n-2)}}_{P_0^{(n-1)}} x_ℓ
+      + \sum_{i ≠ ℓ} \underbrace{P_i^{(n-1)}}_{P_i^{(n-1)}} x_i \\
+    & = P_0^{(n-1)} + P_1^{(n-1)} a_1 + ⋯ + P_d^{(n-1)} a_d.
   \end{align*}
   Analogously, the denominator has the following form:
   \begin{align*}
-    & \hphantom{{} = {}} x_ℓ (Q^{(n-1)} (a + \mathrm{pivot}(x, ℓ)) + q^{(n-1)}) \\
-    & = x_ℓ (Q^{(n-1)} a + Q_ℓ^{(n-1)} \frac{1}{x_ℓ} + \sum_{i ≠ ℓ} Q_i^{(n-1)} \frac{x_i}{x_ℓ} + q^{(n-1)}) \\
-    & = \underbrace{(Q^{(n-1)} a + q^{(n-1)})}_{Q_ℓ^{(n)}} x_ℓ + \sum_{i ≠ ℓ} \underbrace{Q_i^{(n-1)}}_{Q_i^{(n)}} x_i + \underbrace{Q_ℓ^{(n-1)}}_{q^{(n)}} \\
-    & = Q^{(n)} x + q^{(n)}.
+    & x_ℓ \left( Q_0^{(n-2)} + Q_ℓ^{(n-2)} \left( a_ℓ + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ} Q_i^{(n-2)} \left(a_i + \frac{x_i}{x_ℓ} \right) \right) \\
+    & = Q_0^{(n-2)} x_ℓ + Q_ℓ^{(n-2)} a_ℓ x_ℓ + Q_ℓ^{(n-2)} + \sum_{i ≠ ℓ} Q_i^{(n-2)} a_i x_ℓ + Q_i^{(n-2)} x_i \\
+    & = \underbrace{\left( Q_0^{(n-2)} + Q_ℓ^{(n-2)} a_ℓ + \sum_{i ≠ ℓ} Q_i^{(n-2)} a_i \right)}_{Q_ℓ^{(n-1)} a} x_ℓ
+      + \underbrace{Q_ℓ^{(n-2)}}_{Q_0^{(n-1)}} x_ℓ
+      + \sum_{i ≠ ℓ} \underbrace{Q_i^{(n-1)}}_{Q_i^{(n-1)}} x_i \\
+    & = Q_0^{(n-1)} + Q_1^{(n-1)} a_1 + ⋯ + Q_d^{(n-1)} a_d.
   \end{align*}
   Hence,
   \[
-    y
-    = \frac{P^{(n-1)}(a + \mathrm{pivot}(x, ℓ)) + p^{(n-1)}}{Q^{(n-1)}(a + \mathrm{pivot}(x, ℓ)) + q^{(n-1)}}
-    = \frac{P^{(n)} x + p^{(n)}}{Q^{(n)} x + q^{(n)}}. \qedhere
+    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
+    = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}.
+    \qedhere
   \]
 \end{proof}
 
-\section{Periodic Multi-Dimensional Continued Fractions}
-
-% TODO: This is always under the assumption that the convergents are converging
-
-In this section I will show that if the MDCF of a vector $x ∈ ℝ^d$ is periodic,
-then the elements of $x$ must be all algebraic numbers of degree $d+1$.
-The proof requires two additional lemmas, which are multi-dimensional analogues
-of Lemma~\ref{lem:nesting} and Lemma~\ref{lem:wallis}.
-In the following, $aₙ$ will always denote a sequence of integers and $ℓₙ$ a
-sequence of indices between $1$ and $d$.
-We begin with a generalization of Lemma~\ref{lem:nesting}.
-
-
-With these two lemmas proven, we can now turn our attention to periodic MDCFs.
-
-\begin{proposition}
-  Given $α ∈ ℝ$, let $x = (α¹, α², …, α^d)$.
-  If the MDCF representation of $x$ is purely periodic, then $α$ is a root of a
-  polynomial with degree $≤ d+1$.
-\end{proposition}
-
-\begin{proof}
-  Suppose the algorithm is purely periodic on input $x$ with period $ℓ$.
-  Let $y$ be the $ℓ$-th complete quotient of $x$, then $x = y$.
-  By Lemma~\ref{lem:mdcf-wallis},
-  \[
-    αⁱ = \frac{\sum_{j=1}^d P_{ij} αʲ + pᵢ}{\sum_{j=1}^d Qⱼ αʲ + qᵢ}, \text{ for every } i ≤ d.
-  \]
-  Multiplying both sides with the denominator results in the polynomial equation
-  \[
-    \sum_{j=1}^d (Q_j α^{i+j} - P_{ij} α^j) + α^i q_i - p_i = 0.
-  \]
-  For $i = 1$, the maximum degree of this polynomial is $d + 1$.
-\end{proof}
-
 % ==============================================================================
-\section{Convergence}
+\section{Convergence of Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/representation}
-  \caption{
-    Representation of a periodic and non-periodic real number.
-  }
-\end{figure}
-
-% TODO: Idea for sentence "Do the convergents fulfill their duty and provide convergence?"
-
-For proof of convergence, we need further requirements for the MDCF:
-\begin{itemize}
-  \item The first $d$ indices in $ℓ_n$ are distinct; no index occurs twice at the start.
-  \item Every index occurs infinitely often in the sequence $ℓₙ$.
-  \item The values $1/a_{ℓₙ}^{(n)}$ and $a_i^{(n)}/a_{ℓₙ}^{(n)}$ are bounded
-    between $0$ and some constant $c ≥ 0$ for every $n ≥ 0$.
-    % TODO: Does $n$ really have to be greater than zero or should it be one?
-\end{itemize}
-In the following, we assume that we have an MDCF of a vector $α = (α₁, …, α_d)$
-where the convergent of that MDCF is denoted by
+% TODO: The indices here are wrong...
+In the following, we assume that we have an MDCF $[a^{(0)}; ℓ_1, a^{(1)}; ℓ_2, a^{(2)}; …]$
+of an irrational vector $α = (α₁, …, α_d)$.
+The convergent of this MDCF is denoted by
 \[
-  r_j^{(n)} = (r_{1j}^{(n)}, …, r_{dj}^{(n)}) = \left(  \frac{P_{1j}^{(n)}}{Q_j^{(n)}}, \dots, \frac{P_{dj}^{(n)}}{Q_j^{(n)}} \right).
+  r^{(n)}
+  = (r_1^{(n)}, …, r_d^{(n)})
+  = \left( \frac{P_{1ℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}}, \dots, \frac{P_{dℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}} \right).
 \]
-Each column vector $P_i$ divided by $Q_i$ represents one possible convergent.
-The goal is to show that each convergent approaches the same value $α_i$.
-The proof is another application of the squeeze theorem:
-We show that the two sequences $s_i^{(n)}$ and $t_i^{(n)}$ are converging.
-They are defined as the minimum and maximum of $r_{i1}^{(n)}, …, r_{id}^{(n)}$, respectively.
-Clearly, the values $r_{i1}^{(n)}, …, r_{id}^{(n)}$ are bounded between the two,
-so it remains to show that the two sequences are converging to the same value.
-For the proof, we show that the sequences are increasing and decreasing, respectively,
-and that they converge to the same value.
-It follows that the convergents also approach the same value.
+The aim of this section is to show that the convergents actually fulfill their
+duty and converge towards the vector $α$.
+The proof is based on Perron's proof for the convergence of his
+algorithm \cite{Perron07}.
+For the proof we need two more requirements:
+The first comes from Perron's original proof.
+In his version, he required that there exists some constant $c > 0$ such that
+\[
+  0 < \frac{1}{a_{ℓ_{n-1}}^{(n)}} ≤ c \text{ and } 0 ≤ \frac{a_i^{(n)}}{a_{ℓ_{n-1}}^{(n)}} ≤ c \text{ for every } i ≠ ℓₙ.
+\]
+In addition to his requirement, we also need that the sequence $ℓ_n$
+contains every index infinitely often.
+This is already given in the Jacobi-Perron algorithm,
+but not in the generalized Euclidean algorithm.
+So we need this additional requirement for the convergence.
+
+The vector $r^{(n)}$ is only one possible convergent,
+the other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ_n$ are also possible convergent vectors.
+The first step for the proof is to show that each convergent $r^{(n)}$ is a
+linear combination of the previous vectors $P_i^{(n-1)}/Q_i^{(n-1)}$.
 
 \begin{lemma}
-  The sequence $s_i^{(n)}$ is monotonically increasing and $t_i^{(n)}$ is decreasing.
+  \label{lem:conv-conv}
+  There exists $λ₀, λ₁, …, λ_d ∈ [0, 1]$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
+  \[
+    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}}.
+  \]
 \end{lemma}
 
 \begin{proof}
-  Let $ℓ = ℓ_n$ be the smallest index such that for each $k ∈ \{1, …, d\}$
-  there exists a previous index $ℓ_m = k$ with $m < n$,
-  i.e. $n$ is the first index at which point every index has occurred at least once.
-  By Lemma~\ref{lem:mdcf-wallis},
+  We choose $n ≥ 0$ such that every index in $\{1, …, d\}$ has occurred at least once.
+  By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ_n}^{(n)}$ using the previous values as follows:
   \begin{align*}
-    P_{iℓ}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)} \\
-    \iff
+    P_{iℓ_n}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)} \\
+  \end{align*}
+  Dividing by $Q_{ℓ_n}^{(n)}$ gives us
+  \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
   \end{align*}
-  Using $λ_k = \frac{a_k^{(n)} Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ k ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
-  we can reformulate the convergent as a convex combination of the form
-  \begin{align*}
-    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d λⱼ \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}.
-  \end{align*}
+  Using $λ_k = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ k ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
+  we can reformulate the convergent as the linear combination for this lemma.
   Because of the requirement that every index has occurred at least once,
-  $Q_k^{(n-1)} ≠ 0$ for every $k ≤ d$.
-  By the definition of $Q_ℓ^{(n)}$, we have $λ₀ + λ₁ + \dots + λ_d = 1$.
-  The sequence $t_i^{(n-1)}$ denotes the largest fraction and $s_i^{(n-1)}$ the smallest
-  fraction of $\frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}, …, \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}$.
-  Hence, we can bound the convergent by
+  the denominators $Q_k^{(n-1)}$ of the linear combination cannot be zero.
+  Therefore, this is a valid representation of the convergent $r_i^{(n)}$.
+  For the coefficients $λ_i$, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
+  The first property follows from the definition of $Q_ℓ^{(n)}$:
   \[
-    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} ≥ \sum_{k=1}^d λⱼ s_i^{(n-1)} + λ₀ s_i^{(n-1)} = s_i^{(n-1)}.
+    Q_ℓ^{(n)} = Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}
   \]
-  and for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ the bound is even easier since
+  which is equivalent to
+  \[
+    1 = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}} + \frac{Q_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)} + ⋯ + \frac{Q_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)} = λ₀ + λ₁ + ⋯ + λ_d.
+  \]
+  The second property follows from the fact that $a^{(n)}$ is non-negative.
+  Therefore, $Q_ℓ^{(n)}$ is always less than or equal to $a_i^{(n)}
+  Q_i^{(n-1)}$ for every index $i ≤ d$ and $λ_i$ is always bounded
+  between $0$ and $1$.
+\end{proof}
+
+To prove the convergence, we will apply the squeeze theorem, again.
+We use the two sequences $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
+\[
+  s_i^{(n)} = \min\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}
+\]
+and
+\[
+  t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}.
+\]
+The convergent $r^{(n)}$ clearly lies between the sequences $s^{(n)}$ and $t^{(n)}$.
+So if $s^{(n)}$ and $t^{(n)}$ converge to the same limit, then $r^{(n)}$ also
+converges to the same limit.
+For the convergence of $s^{(n)}$ and $t^{(n)}$, we show that they are monotone
+and bounded.
+By the monotone-convergence theorem, they must converge.
+
+\begin{lemma}
+  The sequences $s_i^{(n)}$ and $t_i^{(n)}$ are monotone and bounded.
+\end{lemma}
+
+\begin{proof}
+  We can bound the new convergent $r^{(n)}$ from below using $s^{(n-1)}$.
+  For the previous iteration, we already have $P_{ij}^{(n-1)}/Q_j^{(n-1)} ≥ s_i^{(n-1)}$
+  for every $0 ≤ j ≤ d$ by construction of the sequence~$s_i^{(n-1)}$.
+  Using Lemma~\ref{lem:conv-conv},
+  \begin{align*}
+    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}}
+    & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & ≥ λ₀ s_i^{(n-1)} + λ₁ s_i^{(n-1)} + ⋯ + λ_d s_i^{(n-1)} = s_i^{(n-1)}.
+  \end{align*}
+  The bound for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ is even easier since
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)}.
   \]
-  Similarly, we can bound the convergent from above by $t_i^{(n-1)}$.
-  Therefore, in each iteration the fractions the values $\frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}$ are
-  bounded between the previous minimum $s_i^{(n-1)}$ and the previous maximum
-  $t_i^{(n-1)}$, or equivalently $s_i^{(n-1)} ≤ s_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}$.
+  Using the same argument, we can bound each convergent from above by $t_i^{(n-1)}$.
+  Therefore, in each iteration the convergent $r_i^{(n)}$ is
+  bounded between the previous minimum~$s_i^{(n-1)}$ and the previous maximum~$t_i^{(n-1)}$,
+  or equivalently $s_i^{(n-1)} ≤ s_i^{(n)} ≤ r_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}$.
 \end{proof}
 
-The idea behind the proof is that we can reformulate each coordinate of a
-convergent as a as a convex combination of all coordinates in the previous
-convergent.
-There must be two coefficients in the combination which are not zero
-and therefore the next convergent moves inside the convex hull spanned by the previous convergent.
-The convex hull shrinks at each step.
+The previous lemma only shows that the sequences are converging,
+not that they are converging to the same limit.
+To show the second part, we first need this crucial lemma
+about the coefficients $λ₀, λ₁, …, λ_d$ in the linear combination from Lemma~\ref{lem:conv-conv}.
+This is also the crucial property, that Perron requires for the convergence of his algorithm.
 
 \begin{lemma}
+  \label{lem:lambda-pos}
+  There exists one index $k$ with $λ_k > 0$.
+\end{lemma}
+
+\begin{proof}
+  We choose $k = ℓ_{n-1}$.
+  Using the initial requirements for the coefficients $a_i^{(n)}$ and the fact
+  that $Q_k^{(n-1)} ≥ Q_i^{(n-1)} = Q_i^{(n-2)}$ for every $i ≠ k$,
+  it follows that
+  \[
+    \frac{λ_i}{λ_k} = \frac{a_i^{(n)}}{a_k^{(n)}} · \frac{Q_i^{(n-1)}}{Q_k^{(n-1)}} ≤ c · 1,
+  \]
+  or equivalently $λᵢ ≤ c λₖ$. From this, it follows that
+  \[
+    1 = λ₀ + λ₁ + ⋯ + λ_d ≤ λ_k (1 + dc).
+  \]
+  Therefore, $λₖ ≥ 1/(1 + dc) > 0$.
+\end{proof}
+
+\begin{lemma}
+  \label{lem:min-max-conv}
   The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same
-  number $α_i$, if every index occurs infinitely often in $ℓ_n$.
+  limit, if every index occurs infinitely often in $ℓ_n$.
 \end{lemma}
 
 \begin{proof}
   Let $s_i = \lim_{n → ∞} s_i^{(n)}$
   and $t_i = \lim_{n → ∞} t_i^{(n)}$.
   Suppose $s_i < t_i$.
-  For $s_i$, there must exist an $ε > 0$ and an index $N$ such that for every $n ≥ N$,
+  For the minimum~$s_i$, there must exist an $ε > 0$ and an index $N ≥ 0$ such
+  that for every $n ≥ N$,
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
-  Hence,
-  \[
-    \frac{P_{iℓ}^{(n)}}{Q_j^{(n)}} > (λ₀ + λ₁ + \dots + λ_d) (s_i - ε).
-    \qedhere
-  \]
+  Let $k = ℓ_{n-1}$.
+  Then, $Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$.
+  \begin{align*}
+    r_i^{(n)}
+    & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & > \lambda_k \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
+    & = \lambda_k \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + (1 - λ_k) (s_i - ε),
+  \end{align*}
+  or equivalently
+  \begin{align*}
+    r_i^{(n)} - s_i > λ_k \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε.
+  \end{align*}
+  Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $M$
+  that bounds $λ_k$ from below.
+  It follows that
+  \begin{align*}
+    r_i^{(n)} - s_i > \frac{1}{M} \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε
+  \end{align*}
+  for some constant $M > 0$.
+  Advancing this inequality from $n$ to $n+1, n+2, …, n+k$ results in the new
+  inequality
+  \begin{align*}
+    r_i^{(n+k)} - s_i > \frac{1}{M^k} \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
+  \end{align*}
+  Since every index occurs infinitely often,
+  there must be one index $n$ where $r_i^{(n)} ≤ t_i$
+  and another index $n+k$ where $r_i^{(n)} ≥ s_i$.
+  \begin{align*}
+    0 > \frac{1}{M^k} \left( t_i - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
+  \end{align*}
+  But $ε$ can be chosen arbitrarily small,
+  which is a contradiction to the fact that $t_i - s_i > 0$.
+  Therefore, $t_i$ and $s_i$ converge to the same limit.
 \end{proof}
+
+\begin{theorem}
+  \label{thm:mdcf-conv}
+  If for every $n ≥ 0$ there exists a constant $c ≥ 0$ such that
+  \[
+    0 < \frac{1}{a^{(n)}_{ℓₙ}} ≤ c, \qquad 0 ≤ \frac{a^{(n)}_i}{a^{(n)}_{ℓₙ}} ≤ c.
+  \]
+  for every $i ≠ ℓₙ$ and every index occurs infinitely often in the sequence $ℓₙ$,
+  then the sequence $r^{(n)}$ converges to $α$.
+\end{theorem}
+
+\begin{proof}
+  Let $α^{(n)}$ denote the $n$-th complete quotient of $α$.
+  By Lemma~\ref{lem:mdcf-wallis}, we can represent each element in $α$ as
+  \[
+    α_i = \frac{P_{i0}^{(n-1)} + P_{i1}^{(n-1)} α_1^{(n)} + ⋯ + P_{id}^{(n-1)} α_d^{(n)}}{Q_{i0}^{(n-1)} + Q_{i1}^{(n-1)} α_1^{(n)} + ⋯ + Q_{id}^{(n-1)} α_d^{(n)}}.
+  \]
+  Using a similar argument as Lemma~\ref{lem:conv-conv}, we can represent this
+  as a linear combination
+  \[
+    α_i = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+  \]
+  From the previous lemma, we know that $r^{(n)}$ converges to some limit $α'$.
+  Since every index occurs infinitely often,
+  we can find an index $m ≤ n - 1$ such that $ℓ_m = j$ and
+  \[
+    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} = \frac{P_{ij}^{(m)}}{Q_j^{(m)}} = r_i^{(m)},
+  \]
+  or equivalently we can find an index where the term is a convergent.
+  As $n$ increases there are infinitely many such convergents,
+  so each term converges to $α_i'$.
+  Thus,
+  \[
+    α_i
+    = \lim_{n → ∞} λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
+    = λ₀ α_i' + λ₁ α_i' + ⋯ + λ_d α_i'
+    = α_i'
+  \]
+  for every $i ≤ d$.
+\end{proof}
+
+One application of this theorem are periodic MDCFs.
+Since they only have a finite set of a coefficients they easily satisfy the
+first requirement of the theorem.
+
+\begin{corollary}
+  Periodic MDCFs converge if the period contains every index.
+\end{corollary}
 
 % ==============================================================================
 \section{The Geometry behind Multi-Dimensional Continued Fractions}
