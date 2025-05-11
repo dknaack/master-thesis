@@ -1,16 +1,31 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-\begin{problem}[Hermite's Question]
-  Is there a representation of the real numbers as a sequence of integers such
-  that the sequence is eventually periodic if and only if the real number is a
-  cubic irrational?
+\begin{itemize}
+  \item Motivation: Continued fractions for quadratic irrationals, Hermite's
+    question as generalization of the problem.
+  \item Application: Potentially for simultaneous Diophantine approximation
+  \item How: Using a generalization of the Euclidean algorithm
+\end{itemize}
+
+Is there a representation of the real numbers as a sequence of integers such
+that the sequence is eventually periodic if and only if the real number is a
+cubic irrational?
+
+\begin{problem}[Hermite's Problem]
+  Given a real number $x ∈ ℝ$,
+  find a sequence of natural numbers~$\{a_n\}_{n ≥ 0}$ such that
+  \begin{enumerate}
+    \item $\lim_{n → ∞} a_n = x$
+    \item There exists an index $N ≥ 0$ and a period $ℓ ≥ 1$ such that $a_n = a_{n+ℓ}$
+      for every $n ≥ N$ if and only if $x$ is a cubic irrational.
+  \end{enumerate}
 \end{problem}
 
 % TODO: Fix definition of eventually periodic
 More formally, we are looking for a function which maps any real number $r$ to
-a sequence $(a_n)_{n \in \N}$ such that $a_{k+n} = a_{\ell+n}$ for all $n \ge k$ and
-some $k \ne \ell$ if and only if there is a cubic polynomial $p$ such that $p(r) = 0$.
+a sequence $(a_n)_{n \in \N}$ such that $\lim_{n → ∞} a_n = r$ and
+$a_{k+n} = a_{\ell+n}$ for all $n \ge k$ and some $k \ne \ell$ if and only if there is a cubic polynomial $p$ such that $p(r) = 0$.
 Importantly, the function must map \emph{all} real numbers to a sequence.
 Nadir Murru \cite{Murru15} has already shown that there exists a mapping from all
 cubic irrationals to eventually periodic sequences.
@@ -21,7 +36,10 @@ However, the author was unable to derive a sequence for all real numbers.
 \begin{itemize}
   \item Concepts from the Euclidean algorithm carry over to the generalized algorithm
   \item Multi-dimensional continued fractions
-  \item Analysis of the periodicity
+  \item Proof that the generalized Euclidean algorithm is periodic for a generalization of the metallic ratios
+  \item Proof that periodic MDCFs are algebraic numbers of degree $≤ d+1$.
+  \item Proof that MDCFs converge under certain conditions
+  \item Analysis of the periodicity of cubic roots and other irrational numbers
 \end{itemize}
 
 \section{Related Work}
@@ -45,9 +63,11 @@ However, the author was unable to derive a sequence for all real numbers.
 \section{Structure of this Thesis}
 
 \begin{enumerate}
-  \item Euclidean Algorithm, Fibonacci numbers, golden ratio
+  \item Preliminaries: Algebraic number theory and the Euclidean algorithm
   \item Quadratic irrationals
-  \item Generalized Euclidean, lattice theory, higher-order Fibonacci numbers and golden ratios
-  \item Cubic Irrationals
-  \item Higher-Order Irrationals
+  \item Generalized Euclidean Algorithm: Introduction to lattice theory, lattice basis computation
+  \item Generalization of the Fibonacci Numbers and their Golden Ratios
+  \item Multi-Dimensional Continued Fraction
+  \item Experimental Analysis: Periodic cubic roots, approximation rate for
+    MDCFs and comparison of different ways of optimizing the algorithm.
 \end{enumerate}
