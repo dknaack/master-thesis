@@ -118,7 +118,7 @@ Given an infinite MDCF representation~$[a₀; ℓ_1, a_1; …]$ of a vector $x �
 \end{itemize}
 
 For the analysis of MDCFs,
-we begin with two lemmas, which are generalization of
+we begin with two lemmas, that are generalizations of
 Lemma~\ref{lem:cf-nesting} and Lemma~\vref{lem:cf-wallis}.
 
 \begin{lemma}
@@ -167,18 +167,40 @@ integral combination of $B'$.
 Then, we exchange $B'_{ℓ}$ with $c'$ and $c'$ with $B' a_i + B'_{ℓ}$.
 We continue this process until $B x = c$.
 
-In total, we define two sequences:
-A matrix sequence $\{P^{(n)}\}_{n ≥ 0}$ and a vector sequences $\{Q^{(n)}\}_{n ≥ 0}$.
-Their are defined as follows:
+In total, there are two types of sequences:
+A sequence of $d+1$ vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ and a sequence
+of $d+1$ scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$,
+which represent the denominators of the convergents.
+The sequences begin with
 \begin{align*}
-  P_{ℓₙ}^{(n)} & = P^{(n-1)} a_n + p^{(n-1)}, & P_i^{(n)} & = P_i^{(n)}, & P^{(-1)}   & = I_d, \\
-  Q_{ℓₙ}^{(n)} & = Q^{(n-1)} a_n + q^{(n-1)}, & Q_i^{(n)} & = Q_i^{(n)}, & Q^{(-1)}_j & = 0,   \\
-  p^{(n)}      & = P_{ℓₙ}^{(n-1)},            &           &              & p^{(-1)}_j & = 0,   \\
-  q^{(n)}      & = Q_{ℓₙ}^{(n-1)},            &           &              & q^{(-1)}   & = 1.
+  P_0^{(-1)} & = 0, & P_i^{(-1)} & = e_i, \\
+  Q_0^{(-1)} & = 1, & Q_i^{(-1)} & = 0
+\end{align*}
+and the sequences are updated according to the following recurrences:
+\begin{align*}
+  P_{ℓₙ}^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}, &
+  P_i^{(n)} & = P_i^{(n-1)}, &
+  P_0^{(n)} & = P_{ℓₙ}^{(n-1)} \\
+  Q_{ℓₙ}^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}, &
+  Q_i^{(n)} & = Q_i^{(n-1)}, &
+  Q_0^{(n)} & = Q_{ℓₙ}^{(n-1)},
 \end{align*}
 where $i ≠ ℓ_n$.
 What this sequence effectively does is reconstructing the lattice from an
 initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
+
+Modelling this back to the Euclidean algorithm,
+the vectors $P_1^{(n)}, …, P_d^{(n)}$ represent the basis and $P_0^{(n)}$ is
+the additional vector, which is reduced during a run of the algorithm.
+This matches the behavior of the algorithm in reverse.
+We begin with $P_0^{(n)}$ since in the Euclidean algorithm we would end with this vector.
+Then, the formula calculates a new vector using an integral combination of the
+old vectors and store it in $P_{ℓ_n}^{(n)}$.
+This corresponds directly to the modulo and exchange operation of the original
+Euclidean algorithm.
+As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, the
+scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ scale the vectors back down such
+that they converge to a limit as $n$ increases.
 
 % TODO: Ensure that this is correct for the first index!
 \begin{lemma}
@@ -186,7 +208,7 @@ initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
   Let $x ∈ ℝ^d$, then
   \[
     [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
-    = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}} = \frac{P^{(n-1)} x + p^{(n-1)}}{Q^{(n-1)} x + q^{(n-1)}}.
+    = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}.
   \]
 \end{lemma}
 
