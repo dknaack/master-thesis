@@ -150,11 +150,7 @@ For the brute-force search, the strategy always outputs the entire set; any inde
 The minimum strategy only outputs one index and its the one where $x^{(n)}$ has
 the minimum fractional value, if $n$ is the length of the list $L$.
 \[
-  \texttt{strat} \colon ℝ^d × \{1, …, d\}^* → \mathcal P(\{1, …, d\}), (x, L) ↦ \{ℓ_1, …, ℓ_k\}.
-\]
-For example,
-\[
-  \texttt{strat}(x, L) = \mathrm{arg\,min}_{ℓ ∈ \{1,…,d\}} \{ y_i(ℓ) - x_i \}
+  \texttt{strat} \colon ℝ^d → \mathcal P(\{1, …, d\}), x ↦ \{ℓ_1, …, ℓ_k\}.
 \]
 
 % ==============================================================================
