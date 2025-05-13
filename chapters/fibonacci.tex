@@ -349,10 +349,73 @@ But choosing $x_d$ only gives us a decrease of $φ^{d+1} - ε$ in total.
   \]
 \end{proof}
 
+% begin periodicity
+Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
+the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
+\begin{equation}
+  \label{eq:general-solution}
+  x_i^{(n)} = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)}.
+\end{equation}
+
+\begin{lemma}
+  Pivoting with the first element of $x^{(n)}$ using the modified update rule yields the vector
+  \[
+    x' = (x^{(n-1)}_2, x^{(n-1)}_3, \dots, x^{(n-1)}_d, x^{(n-1)}_1).
+  \]
+\end{lemma}
+
+\begin{proof}
+  For $x_1$, we get
+  \[
+    \begin{aligned}
+      \frac{1}{x_1}
+      & = \frac{F(n)}{F(n - 1)} \\
+      & = a_d + \frac{F(n - d - 1) + a_1 F(n - d - 2) + \dots + a_{d-1} F(n - 2)}{F(n - 1)} \\
+      & = a_d + x^{(n-1)}_d.
+    \end{aligned}
+  \]
+  For the other values, we get
+  \begin{align*}
+    \frac{x_i}{x_1}
+    & = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)} \frac{F(n)}{F(n - 1)} \\
+    & = a_{d-1} + \frac{F(n - i) + \sum_{k=2}^{i-1} a_{d-k} F(n - k)}{F(n-1)} \\
+    & = x^{(n-1)}_{i+1} \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  Running the generalized Euclidean algorithm with $x^{(n)}$ as the solution to
+  the linear system $B x = c$ requires $n$ steps, if $x^{(n)}_1$ is the
+  smallest element in $x^{(n)}$.
+\end{corollary}
+
+Of course, the Euclidean algorithm receives a matrix $B \in \Z^{d \times d}$
+and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
+However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
+where $x^{(n)}$ is the solution, in the following way:
+\[
+  B^{(n)} = F(n) I_d, \qquad c^{(n)}_k = \sum_{i=0}^k a_{d-i} F(n - i) \text{ for } k ≤ d.
+\]
+
+\begin{lemma}
+  The vector $x^{(n)}$ from Equation~\ref{eq:general-solution} is a solution to the
+  linear system $B^{(n)} x = c^{(n)}$.
+\end{lemma}
+
+\begin{proof}
+  Each row in the linear system is of the form
+  \[
+    F(n) x_k = \sum_{i = 0}^k a_{d-i} F(n - i).
+  \]
+  Rearranging the equation gives the definition of $x^{(n)}_k$.
+\end{proof}
+% end periodicity
+
 % ==============================================================================
 \section{Multi-Dimensional Golden and Metallic Ratios}
 % ==============================================================================
 
+% begin convergence
 Dividing two consecutive Fibonacci numbers approaches the golden ratio as $n$ increases.
 The golden ratio is a solution to the equation $x^2 - x - 1 = 0$.
 For higher dimensions, we will encounter similar polynomial equations with higher degree.
@@ -434,6 +497,7 @@ always alternating between increasing and decreasing.
 But they do approach the golden ratio.
 For the convergence of the generalized sequence $r_n$,
 we will instead apply the squeeze theorem.
+The main idea is illustrated in Figure~\ref{fig:fibonacci-convergence}.
 We show that the sequences
 \[
   s_n = \min\{r_n, r_{n-1}, …, r_{n-d} \}, \qquad t_n = \max\{r_n, r_{n-1}, …, r_{n-d}\}
@@ -447,7 +511,7 @@ respectively.
 % TODO: Include a plot of the Fibonacci numbers
 
 \begin{lemma}
-  The sequences $s_n$ and $t_n$ are increasing and decreasing, respectively.
+  The sequences $s_n$ and $t_n$ are monotone.
 \end{lemma}
 
 \begin{proof}
@@ -532,65 +596,7 @@ respectively.
   For the same recurrence $F$, $\lim_{n → ∞} F(n + i) / F(n) = φ^i$ for $i > 1$.
 \end{corollary}
 
-Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
-the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
-\begin{equation}
-  \label{eq:general-solution}
-  x_i^{(n)} = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)}.
-\end{equation}
-
-\begin{lemma}
-  Pivoting with the first element of $x^{(n)}$ using the modified update rule yields the vector
-  \[
-    x' = (x^{(n-1)}_2, x^{(n-1)}_3, \dots, x^{(n-1)}_d, x^{(n-1)}_1).
-  \]
-\end{lemma}
-
-\begin{proof}
-  For $x_1$, we get
-  \[
-    \begin{aligned}
-      \frac{1}{x_1}
-      & = \frac{F(n)}{F(n - 1)} \\
-      & = a_d + \frac{F(n - d - 1) + a_1 F(n - d - 2) + \dots + a_{d-1} F(n - 2)}{F(n - 1)} \\
-      & = a_d + x^{(n-1)}_d.
-    \end{aligned}
-  \]
-  For the other values, we get
-  \begin{align*}
-    \frac{x_i}{x_1}
-    & = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)} \frac{F(n)}{F(n - 1)} \\
-    & = a_{d-1} + \frac{F(n - i) + \sum_{k=2}^{i-1} a_{d-k} F(n - k)}{F(n-1)} \\
-    & = x^{(n-1)}_{i+1} \qedhere
-  \end{align*}
-\end{proof}
-
-\begin{corollary}
-  Running the generalized Euclidean algorithm with $x^{(n)}$ as the solution to
-  the linear system $B x = c$ requires $n$ steps, if $x^{(n)}_1$ is the
-  smallest element in $x^{(n)}$.
-\end{corollary}
-
-Of course, the Euclidean algorithm receives a matrix $B \in \Z^{d \times d}$
-and vector $c \in \Z^d$ as its input and not the solution $x$ itself.
-However, we can construct a very simple linear system $B^{(n)} x = c^{(n)}$,
-where $x^{(n)}$ is the solution, in the following way:
-\[
-  B^{(n)} = F(n) I_d, \qquad c^{(n)}_k = \sum_{i=0}^k a_{d-i} F(n - i) \text{ for } k ≤ d.
-\]
-
-\begin{lemma}
-  The vector $x^{(n)}$ from Equation~\ref{eq:general-solution} is a solution to the
-  linear system $B^{(n)} x = c^{(n)}$.
-\end{lemma}
-
-\begin{proof}
-  Each row in the linear system is of the form
-  \[
-    F(n) x_k = \sum_{i = 0}^k a_{d-i} F(n - i).
-  \]
-  Rearranging the equation gives the definition of $x^{(n)}_k$.
-\end{proof}
+% end convergence
 
 \begin{definition}
   Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
