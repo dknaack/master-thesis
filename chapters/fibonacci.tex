@@ -39,49 +39,77 @@ their golden ratios.
   \end{enumerate}
 \end{definition}
 
-\begin{proposition}[Lamé's Theorem \cite{Lame44}]
+We revisit the classical case of Fibonacci numbers and the golden ratio
+to analyze their relationship with the Euclidean algorithm.
+The analysis of the running time of the Euclidean algorithm was actually one of
+the first practical applications of the Fibonacci numbers.
+They show up in a proof by Lamé, who he bounded the number of iterations by the
+number of digits in the input.
+The proof is considered by some \cite{TODO} as the beginning of computational
+complexity theory.
+
+\begin{theorem}[Lamé's Theorem \cite{Lame44}]
+  \label{thm:lame}
   The Euclidean algorithm requires at most $5h$ steps,
   where $h = \log_{10}(b)$.
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
-  \todo[inline]{Using Fibonacci numbers.}
+  % TODO
 \end{proof}
 
-What if the ratio $a/b$ perfectly equals the golden ratio?
-In this case, the Euclidean algorithm no longer runs on two integer inputs,
-since the golden ratio is irrational.
-Therefore, we extend the algorithm to the real numbers.
-Our input now consists of a single number $x ∈ ℝ$, which in the original
-algorithm represents the ratio between the two inputs.
-This allows us to run the algorithm on the golden ratio.
+The theorem also follows easily using the continued fraction of the ratios
+between Fibonacci numbers.
+Given a finite continued fraction $[a₀; a₁, …, a_n]$, the Euclidean algorithm
+requires $n$ steps for any input $(a, b)$ with the same ratio $a/b$ as the
+continued fraction.
+Since $[1; 1, …, 1] = F(n+1)/F(n)$ for some $n ≥ 0$, the Euclidean algorithm
+takes at least $n$ steps for two consecutive Fibonacci numbers.
+Furthermore, Fibonacci numbers are the smallest numbers which require $n$ steps
+since we can only increase the coefficients of the continued fraction.
 
-Given $x ∈ ℝ$, the algorithm proceeds just as the original.
-We assume $x$ actually represents the fraction $x/1$,
-then we find a number $a₀ ∈ ℕ$ times until $x - 1 · a₀ < 1$.
-Once this is the case, we swap the inputs, i.e. we calculate the inverse fraction $1/(x - a)$.
-Now, we subtract $x - a$ from $1$ until $1 - a₁ (x - a₀) < x - a₀$
-and then calculate the inverse fraction again.
-We repeat this process until $x = 0$.
-Subtracting $a_i$ from the numerator such that it is smaller than the
-denominator and then calculating the inverse.
+What makes Fibonacci numbers special with respect to the Euclidean algorithm
+is that the division at each step always has a quotient of $1$.
 
 \begin{example}
-  Let $x = 13/5$.
+  Consider $a = 13$ and $b = 8$.
   The algorithm proceeds as follows:
   \[
     \begin{array}{rclcrcl}
-      13/5 & = & 2 & · & 1   & + & 3/5 \\
-         1 & = & 1 & · & 3/5 & + & 2/5 \\
-       3/5 & = & 1 & · & 2/5 & + & 1/5 \\
-       2/5 & = & 2 & · & 1/5 & + & 0.
+      13/8 & = & 1 & · & 5/8 & + & 3/8 \\
+       5/8 & = & 1 & · & 3/8 & + & 2/8 \\
+       3/8 & = & 1 & · & 2/8 & + & 1/8 \\
+       2/8 & = & 2 & · & 1/8 & + & 0.
     \end{array}
   \]
 \end{example}
 
+\begin{theorem}
+  $\lim_{n → ∞} \frac{F(n+1)}{F(n)} = φ$.
+\end{theorem}
+
+\begin{proof}
+  First, the continued fraction $[1; 1, …, 1]$ already evaluates to the ratio of consecutive Fibonacci numbers,
+  since the numerator $p_n$ and the denominator $q_n$ are defined by the sequences:
+  \[
+    p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}
+  \]
+  and $a_n = 1$ for every $n ≥ 0$.
+  Therefore, they are exactly the Fibonacci sequences and furthermore, $q_n$ starts one index behind $p_n$,
+  which results in the ratios $F(n+1)/F(n)$.
+  Lemma~\vref{lem:cf-approx} then gives us the convergence of the ratios towards some limit $L$.
+  The limit $L$ must satisfy
+  \[
+    L = \lim_{n → ∞} \frac{F(n+1)}{F(n)} = \lim_{n → ∞} 1 + \frac{F(n-1)}{F(n)} = 1 + \frac{1}{L}.
+  \]
+  Multiplying this equation by $L$ gives the defining polynomial of the golden ratio $φ$
+  and the ratios are always positive, so $L = φ$.
+\end{proof}
+
 \begin{example}
   Let $φ$ be the golden ratio,
-  i.e. $φ^2 - φ - 1 = 0$.
+  which satisfies $φ^2 - φ - 1 = 0$
+  and has an approximate value of $1.618$.
   The algorithm proceeds as follows:
   \[
     \begin{array}{rclcrcl}
@@ -93,6 +121,11 @@ denominator and then calculating the inverse.
     \end{array}
   \]
 \end{example}
+
+In summary,
+the defining property of Fibonacci numbers with respect to the Euclidean
+algorithm is that they always have a quotient of $1$ in each iteration.
+Furthermore, they are the smallest numbers which have this property.
 
 % ==============================================================================
 \section{Higher-Order Fibonacci Numbers}
