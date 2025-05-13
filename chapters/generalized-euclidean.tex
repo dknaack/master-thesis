@@ -8,8 +8,8 @@ Naturally, we can ask for a generalization of the Euclidean algorithm,
 which can be used to construct higher-dimensional continued fractions
 and potentially leads to an answer of Hermite's question.
 
-In this chapter, we will analyze one such possible candidate,
-which is a generalization of the Euclidean algorithm by Klein and Reuter~\cite{Klein24}.
+In this chapter, we analyze one such possible candidate by Klein and Reuter~\cite{Klein24},
+which is a generalization of the Euclidean algorithm.
 While the Euclidean algorithm works with integers,
 the generalized version works with vectors.
 It solves the problem of lattice basis computation,
@@ -33,8 +33,10 @@ Formally, a lattice is defined as follows:
   \[
     \mathcal{L}(A) = \left\{\, A₁z₁ + \dots + A_n z_n \mid z_1, \dots, z_n ∈ ℤ^d \,\right\}.
   \]
-  The \emph{rank} of $\mathcal{L}(A)$ is $n$ and its \emph{dimension} is $d$.
-  If $n = d$, then $\mathcal{L}(A)$ is a \emph{full rank} lattice and $A$ is a \emph{basis}.
+  The \emph{rank} of $\mathcal{L}(A)$ is defined as the rank of the matrix $A$
+  and the \emph{dimension} of the lattice $\mathcal{L}(A)$ is $d$.
+  If $\mathrm{rank}(A) = d$, then $\mathcal{L}(A)$ is called a \emph{full rank}
+  lattice and $A$ is a \emph{basis} for the lattice.
 \end{definition}
 
 In a vector space, an over-defined set of vectors $A = \{A₁, …, Aₙ\}$ with $n > d$
@@ -52,15 +54,17 @@ For example, consider the matrix
 \]
 Taking any two columns $A_i, A_j$ of the matrix produces a linearly independent
 set, but no set produces the same lattice as the whole matrix.
-The missing vector $A_k$ cannot be reached by an integral combination of the
+The missing vector $A_k$ cannot be reached by a simple integral combination of the
 other two vectors $A_i, A_j$.
+Instead, we have to find new basis vectors for this lattice.
 
+% TODO: Note about the fact that we only care about one additional vector
 % TODO: Shouldn't it be the rank instead of n > d?
 The problem of finding a basis for a lattice is typically known as \emph{lattice basis computation}.
-For this problem, the input is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
+The input for this problem is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
 is to find a basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
 The problem can also be seen as a multi-dimensional analogue of
-computing the greatest common divisor of a set of numbers.
+computing the greatest common divisor from a given set of numbers.
 Indeed, we can view a set of numbers $a₁, a₂, …, aₙ ∈ ℤ$ as the basis vectors
 of the one-dimensional lattice
 \[
@@ -68,10 +72,15 @@ of the one-dimensional lattice
 \]
 The greatest common divisor represents a reduced basis in this lattice.
 
+\begin{itemize}
+  \item Applications? \cite{Ajtai96,Gentry08}
+\end{itemize}
+
 Previous approaches for computing such bases either used a variant of the LLL
 algorithm~\cite{Lenstra82} or computed the Hermite normal form of the
 matrix~\cite{Storjohann96}.
-The generalized Euclidean algorithm uses a fundamentally different approach.
+The generalized Euclidean algorithm uses a fundamentally different approach,
+which is more in line with the classical Euclidean algorithm.
 
 \begin{figure}[tbp]
   \centering
@@ -82,10 +91,6 @@ The generalized Euclidean algorithm uses a fundamentally different approach.
     {\color{cyan}cyan}.
   }
 \end{figure}
-
-\begin{itemize}
-  \item Applications? \cite{Ajtai96,Gentry08}
-\end{itemize}
 
 % ==============================================================================
 \section{Description of the Algorithm}
@@ -148,16 +153,17 @@ $Π(B)$ is entirely determined by $\mathrm{det}(B)$, i.e.
 So in a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
 ∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
 Specifically,
+given a solution $x$ to $Bx = a$,
 \[
-  a = z + r.
+  a = B\floor{x} + B\{x\} = z + r.
 \]
 This is essentially a multi-dimensional division with remainder operation inside a lattice.
 It allows us to define a modulo operation for the algorithm as follows:
 \[
   a \pmod{Π(B)} := a - B\floor{B^{-1} a}.
 \]
-It remains to show that applying this modulo operation on $a$ does not affect
-the underlying lattice $\mathcal L(B ∪ \{a\})$.
+It remains to be shown that applying this modulo operation on $a$ does not
+affect the underlying lattice $\mathcal L(B ∪ \{a\})$.
 
 \begin{lemma}
   Given a set of vectors $A = \{A_1, \dots, A_n\}$ with $A_i ∈ ℤ^d$
@@ -165,7 +171,7 @@ the underlying lattice $\mathcal L(B ∪ \{a\})$.
   let $r = c \pmod{Π(B)}$ for any vector $c ∈ A \setminus B$.
   Then,
   \[
-    \mathcal L(A) = \mathcal L(A \setminus \{c\} ∪ \{r\}).
+    \mathcal L(A) = \mathcal L((A \setminus \{c\}) ∪ \{r\}).
   \]
 \end{lemma}
 
@@ -307,8 +313,7 @@ Although the update rule speeds up the algorithm considerably, it is not
 optimal for the construction of a generalized continued fraction.
 The problem is that the rule flips the sign of all elements inside the solution
 vector in each iteration, so it ends up producing negative values.
-Instead, I have slightly modified the rule such that it maps each $xᵢ$ to
-another positive value.
+Instead, we slightly modify the rule such that it maps each $xᵢ$ to another positive value.
 After we replace $B_ℓ$ with $c$, we flip the signs of all vectors $B_i$ with $i ≠ ℓ$.
 This leads to the modified update rule, where the values $x_i$ for $i ≠ ℓ$ are
 no longer negated:
