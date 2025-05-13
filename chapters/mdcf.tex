@@ -168,15 +168,16 @@ Then, we exchange $B'_{ℓ}$ with $c'$ and $c'$ with $B' a_i + B'_{ℓ}$.
 We continue this process until $B x = c$.
 
 In total, there are two types of sequences:
-A sequence of $d+1$ vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ and a sequence
-of $d+1$ scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$,
+A sequence of $d+1$ vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)} ∈ ℤ^{d+1}$ and a sequence
+of $d+1$ scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)} ∈ ℤ$,
 which represent the denominators of the convergents.
 The sequences begin with
 \begin{align*}
-  P_0^{(-1)} & = 0, & P_i^{(-1)} & = e_i, \\
-  Q_0^{(-1)} & = 1, & Q_i^{(-1)} & = 0
+  P_0^{(-1)} & = 0, & P_i^{(-1)} & = e_i, & P_0^{(-1)} = 0 \\
+  Q_0^{(-1)} & = 1, & Q_i^{(-1)} & = 0,   & P_0^{(-1)} = 1
 \end{align*}
-and the sequences are updated according to the following recurrences:
+where $1 ≤ i ≤ d$ and the sequences are updated according to the following
+recurrences:
 \begin{align*}
   P_{ℓₙ}^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}, &
   P_i^{(n)} & = P_i^{(n-1)}, &
@@ -193,14 +194,15 @@ Modelling this back to the Euclidean algorithm,
 the vectors $P_1^{(n)}, …, P_d^{(n)}$ represent the basis and $P_0^{(n)}$ is
 the additional vector, which is reduced during a run of the algorithm.
 This matches the behavior of the algorithm in reverse.
-We begin with $P_0^{(n)}$ since in the Euclidean algorithm we would end with this vector.
+We begin with the vector $P_0^{(-1)} = 0$ since the Euclidean algorithm
+would end with a zero vector.
 Then, the formula calculates a new vector using an integral combination of the
-old vectors and store it in $P_{ℓ_n}^{(n)}$.
-This corresponds directly to the modulo and exchange operation of the original
-Euclidean algorithm.
+old vectors and stores it in $P_{ℓ_n}^{(n)}$.
+This corresponds directly to the modulo and exchange operation of the
+generalized Euclidean algorithm.
 As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, the
-scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ scale the vectors back down such
-that they converge to a limit as $n$ increases.
+values $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ scale the vectors back down and as
+such they ensure that they converge to a limit as $n$ increases.
 
 % TODO: Ensure that this is correct for the first index!
 \begin{lemma}
@@ -255,6 +257,9 @@ that they converge to a limit as $n$ increases.
 \section{Convergence of Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
+% TODO: I don't like how we say that the requirement is from Perron, when it's
+% not really from him, but just based on his version.
+% TODO: We should mention somewhere that a^{(n)} is always positive.
 % TODO: The indices here are wrong...
 In the following, we assume that we have an MDCF $[a^{(0)}; ℓ_1, a^{(1)}; ℓ_2, a^{(2)}; …]$
 of an irrational vector $x = (x₁, …, x_d)$.
@@ -265,14 +270,16 @@ The convergent of this MDCF is denoted by
   = \left( \frac{P_{1ℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}}, \dots, \frac{P_{dℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}} \right).
 \]
 The aim of this section is to show that the convergents actually live up to
-their name and converge towards the vector $x$.
+their name and converge towards the vector $x$ as $n$ increases.
 The proof is based on Perron's proof for the convergence of his
 algorithm \cite{Perron07}.
 For the proof we need two more requirements:
 The first comes from Perron's original proof.
 In his version, he required that there exists some constant $c > 0$ such that
 \[
-  0 < \frac{1}{a_{ℓ_{n-1}}^{(n)}} ≤ c \text{ and } 0 ≤ \frac{a_i^{(n)}}{a_{ℓ_{n-1}}^{(n)}} ≤ c \text{ for every } i ≠ ℓₙ.
+  0 < \frac{1}{a_{ℓ_{n-1}}^{(n)}} ≤ c
+  \quad \text{ and } \quad
+  0 ≤ \frac{a_i^{(n)}}{a_{ℓ_{n-1}}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓₙ.
 \]
 In addition to his requirement, we also need that the sequence $ℓ_n$
 contains every index infinitely often.
@@ -280,14 +287,16 @@ This is already given in the Jacobi-Perron algorithm,
 but not in the generalized Euclidean algorithm.
 So we need this additional requirement for the convergence.
 
-The vector $r^{(n)}$ is only one possible convergent,
-the other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ_n$ are also possible convergent vectors.
+The vector $r^{(n)}$ is only one possible convergent.
+The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ_n$ are also convergent
+vectors, since $ℓ_m = i$ at some point $m < n$.
 The first step for the proof is to show that each convergent $r^{(n)}$ is a
-linear combination of the previous vectors $P_i^{(n-1)}/Q_i^{(n-1)}$.
+convex combination of these vectors.
+This also shows that the vector $x$ lies in the convex hull of the convergents.
 
 \begin{lemma}
   \label{lem:conv-conv}
-  There exists $λ₀, λ₁, …, λ_d ∈ [0, 1]$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
+  There exists $λ₀, λ₁, …, λ_d ≥ 0$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
   \[
     r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}}.
   \]
@@ -297,16 +306,16 @@ linear combination of the previous vectors $P_i^{(n-1)}/Q_i^{(n-1)}$.
   We choose $n ≥ 0$ such that every index in $\{1, …, d\}$ has occurred at least once.
   By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ_n}^{(n)}$ using the previous values as follows:
   \begin{align*}
-    P_{iℓ_n}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)} \\
+    P_{iℓ_n}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)}.
   \end{align*}
   Dividing by $Q_{ℓ_n}^{(n)}$ gives us
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
   \end{align*}
   Using $λ_k = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ k ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
-  we can reformulate the convergent as the linear combination for this lemma.
+  we can reformulate the convergent as the convex combination for this lemma.
   Because of the requirement that every index has occurred at least once,
-  the denominators $Q_k^{(n-1)}$ of the linear combination cannot be zero.
+  the denominators $Q_k^{(n-1)}$ of the convex combination cannot be zero.
   Therefore, this is a valid representation of the convergent $r_i^{(n)}$.
   For the coefficients $λ_i$, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
   The first property follows from the definition of $Q_ℓ^{(n)}$:
@@ -366,14 +375,18 @@ By the monotone-convergence theorem, they must converge.
 The previous lemma only shows that the sequences are converging,
 not that they are converging to the same limit.
 To show the second part, we first need this crucial lemma
-about the coefficients $λ₀, λ₁, …, λ_d$ in the linear combination from Lemma~\ref{lem:conv-conv}.
-This is also the crucial property, that Perron requires for the convergence of his algorithm.
+about the coefficients $λ₀, λ₁, …, λ_d$ in the convex combination from Lemma~\ref{lem:conv-conv}.
+In particular, there always exists one $λ_k$ which is neither exactly $0$ nor $1$.
+Stated differently, the vector $x$ never lies exactly on a convergent. % TODO: Is this not trivial??
+This is also the crucial property, that Perron has shown for the convergence of
+his algorithm.
 
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $k$ with $λ_k > 0$.
+  There exists one index $ℓ$ with $0 < λ_ℓ < 1$.
 \end{lemma}
 
+% TODO: Show that it is not equal to 1!
 \begin{proof}
   We choose $k = ℓ_{n-1}$.
   Using the initial requirements for the coefficients $a_i^{(n)}$ and the fact
@@ -389,6 +402,37 @@ This is also the crucial property, that Perron requires for the convergence of h
   Therefore, $λₖ ≥ 1/(1 + dc) > 0$.
 \end{proof}
 
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/convergence}
+  \caption{
+    Illustration of the proof for the convergence of MDCFs.
+    The points $r^{(i)}, r^{(j)}$ and $r^{(k)}$ represent the convergents and $x$ is
+    the vector, which is approximated by them.
+    If $r^{(k)}$ is the convergent of the current iteration,
+    then either $r^{(i)}$ or $r^{(j)}$ has to be moved in the next iteration.
+    However, neither can go in the red triangle,
+    since $λ_k > 1/dc$.
+  }
+  \label{fig:convergence}
+\end{figure}
+
+The two sequences $s^{(n)}$ and $t^{(n)}$ wrap the convex hull in an
+axis-aligned bounding box.
+If the sequences converge to the same limit,
+then that means that the bounding box shrinks to a point.
+Therefore, the convergent $r^{(n)}$, which is inside this box, converges to the
+same point.
+However, the box could also approach some non-empty box, i.e.
+\[
+  \lim_{n → ∞} s_i^{(n)} < \lim_{n → ∞} t_i^{(n)}.
+\]
+But the previous lemma contradicts this assumption,
+because each convergent moves by a constant percentage towards this vector.
+Therefore, we can always find a point at which the convergents step over this
+non-empty box and every convergent is inside the box.
+This is the main idea behind the following lemma.
+
 \begin{lemma}
   \label{lem:min-max-conv}
   The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same
@@ -397,40 +441,41 @@ This is also the crucial property, that Perron requires for the convergence of h
 
 \begin{proof}
   Let $s_i = \lim_{n → ∞} s_i^{(n)}$
-  and $t_i = \lim_{n → ∞} t_i^{(n)}$.
+  and $t_i = \lim_{n → ∞} t_i^{(n)}$ for every $i ≤ d$.
   Suppose $s_i < t_i$.
   For the minimum~$s_i$, there must exist an $ε > 0$ and an index $N ≥ 0$ such
   that for every $n ≥ N$,
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
-  Let $k = ℓ_{n-1}$.
-  Then, $Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$.
+  Let $ℓ' = ℓ_{n-1}$.
+  Then, $r_i^{(n-1)} = P_{iℓ'}^{(n-1)}/Q_{ℓ'}^{(n-1)}$ and
+  %$Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$. % TODO: Why was this here?
   \begin{align*}
     r_i^{(n)}
     & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & > \lambda_k \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
-    & = \lambda_k \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} + (1 - λ_k) (s_i - ε),
+    & > \lambda_{ℓ'} \frac{P_{iℓ'}^{(n-1)}}{Q_{ℓ'}^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
+    & = \lambda_{ℓ'} r_i^{(n-1)} + (1 - λ_{ℓ'}) (s_i - ε),
   \end{align*}
   or equivalently
   \begin{align*}
-    r_i^{(n)} - s_i > λ_k \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε.
+    r_i^{(n)} - s_i > λ_{ℓ'} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
   Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $M$
-  that bounds $λ_k$ from below.
+  that bounds $λ_{ℓ'}$ from below.
   It follows that
   \begin{align*}
-    r_i^{(n)} - s_i > \frac{1}{M} \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε
+    r_i^{(n)} - s_i > \frac{1}{M} \left( r_i^{(n-1)} - s_i \right) - ε
   \end{align*}
   for some constant $M > 0$.
   Advancing this inequality from $n$ to $n+1, n+2, …, n+k$ results in the new
   inequality
   \begin{align*}
-    r_i^{(n+k)} - s_i > \frac{1}{M^k} \left( \frac{P_{ik}^{(n-1)}}{Q_k^{(n-1)}} - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
+    r_i^{(n+k)} - s_i > \frac{1}{M^k} \left( r_i^{(n-1)} - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
   \end{align*}
   Since every index occurs infinitely often,
-  there must be one index $n$ where $r_i^{(n)} ≤ t_i$
-  and another index $n+k$ where $r_i^{(n)} ≥ s_i$.
+  there must be one index $n$ where $r_i^{(n-1)} ≤ t_i$
+  and another index $n+k$ where $r_i^{(n+k)} ≥ s_i$.
   \begin{align*}
     0 > \frac{1}{M^k} \left( t_i - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
   \end{align*}
@@ -456,7 +501,7 @@ This is also the crucial property, that Perron requires for the convergence of h
     x_i = \frac{P_{i0}^{(n-1)} + P_{i1}^{(n-1)} x_1^{(n)} + ⋯ + P_{id}^{(n-1)} x_d^{(n)}}{Q_{i0}^{(n-1)} + Q_{i1}^{(n-1)} x_1^{(n)} + ⋯ + Q_{id}^{(n-1)} x_d^{(n)}}.
   \]
   Using a similar argument as Lemma~\ref{lem:conv-conv}, we can represent this
-  as a linear combination
+  as a convex combination
   \[
     x_i = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
@@ -492,16 +537,16 @@ first requirement of the theorem.
 \section{The Geometry behind Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
-For the geometrical interpretation of continued fractions,
-we represented each convergent $pₙ/qₙ$ as a 2D vector $(pₙ, qₙ)$.
-This vector approaches an irrational line spanned by the vector $(1, α)$ where
+In the geometrical interpretation of continued fractions,
+each convergent $pₙ/qₙ$ was represented as a two-dimensional vector $(pₙ, qₙ)$.
+These vectors approached an irrational line spanned by the vector $(1, α)$ where
 $α$ is some irrational number.
 For the generalization of this interpretation to multi-dimensional continued
 fractions, we represent each convergent, which is a $d$-dimensional rational vector,
 as a $(d+1)$-dimensional integer vector.
-Specifically, given a vector $(p₁/q₁, …, p_d/q_d) ∈ ℚ^d$, first we find a
+Specifically, given a vector $r = (p₁/q₁, …, p_d/q_d) ∈ ℚ^d$, first we find a
 common denominator $(p₁'/q, …, p_d'/q_d)$ and then we map it to the vector
-$(q, p₁, …, p_d) ∈ ℤ^{d+1}$.
+$\hat r = (q, p₁', …, p_d') ∈ ℤ^{d+1}$.
 We can go back from the integer vector to a rational vector by dividing each
 coordinate with the first and removing the first coordinate from the integer
 vector:
@@ -509,22 +554,30 @@ Given $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$, we map it back to $(x₁/x₀, …
 
 In this space, the representation for a particular convergent is not unique,
 there can be multiple integer vectors representing the same convergent.
-For example, if we have a vector $c ∈ ℤ^d$ for a convergent,
+For example, if we have a vector $\hat r ∈ ℤ^d$ for a convergent,
 then we can multiply with some scalar $λ ∈ ℤ$ and get a new vector $c' = λ c$
 which represents the same convergent.
 This is because the scalar is eliminated when mapping back to the rational vector:
 \[
-  λ (c₀, c₁, …, c_d) ↦  \left(\frac{λ c₁}{λ c₀}, …, \frac{λ c_d}{λ c_0} \right).
+  λ (c₀, c₁, …, c_d)
+  ↦ \left(\frac{λ c₁}{λ c₀}, …, \frac{λ c_d}{λ c_0} \right)
+  = \left(\frac{c₁}{c₀}, …, \frac{c_d}{c_0} \right).
 \]
-Therefore, two vectors $a, b ∈ ℤ^{d+1}$ are equivalent, denoted as $a ≡ b$,
-if $a = λ b$ or $b = λ a$ for some $λ ∈ ℤ$.
+Therefore, two nonzero vectors $a, b ∈ ℝ^{d+1}$ are equivalent,
+denoted as $a \sim b$, if $a = λ b$ for some scalar $λ ∈ ℝ$.
+This relation then defines the equivalence class of an element $a ∈ ℝ^{d+1}$ as
+\[
+  [a] = \mathrm{span}(a) = \{ λ a \mid λ ∈ ℝ, λ ≠ 0 \}.
+\]
+Formally, this is known as a real projective space, denoted as $\mathbb{RP}^{d+1}$.
+It is the set of equivalence classes $ℝ^{d+1} \setminus \{0\}$ defined by the
+equivalence relation $\sim$.
+An element $x$ of this space is denoted as $[x₀, x₁, …, x_d]$,
+where the square brackets indicate that this element is an equivalence
+class.
+In summary, we have the following mappings from $ℝ^d$ to $\mathbb{RP}^{d+1}$
+and vice-versa:
 
-% TODO: Are the convergents calculated by the recurrence relation in this
-% section always minimal/irreducible?
-
-
-
-% TODO: Explain mapping from and back to the original vector space.
 \begin{center}
   \begin{tikzpicture}
     \matrix[
@@ -562,8 +615,9 @@ the new coordinate $x₀$:
   =
   \begin{bmatrix} 1 \\ 1/x₁ \\ x₂/x₂ \\ \end{bmatrix}.
 \]
-Similarly, subtracting the integer part of each value in $[1, x₁, x₂]$ is
-equivalent to a series of skew operations:
+If $x₁$ and $x₂$ are greater than $1$,
+then we first have to subtract the integer part from the vector $x$.
+In the projective space, this is equivalent to a series of skew operations:
 \[
   \begin{bmatrix}
     1 & 0 & 0 \\
@@ -584,57 +638,76 @@ equivalent to a series of skew operations:
 Importantly, each of those matrices has
 determinant $±1$.
 Therefore, the whole operation can be easily reversed by inverting the matrix.
-This is the equivalent of the inverse pivot operation in homogeneous
-coordinates.
-
-We can also reformulate the MDCF as a series of matrix multiplications.
+This is the equivalent of the inverse pivot operation in
+the projective space $\mathbb{RP}^{d+1}$.
+Using this notion, we can reformulate the MDCF as a series of matrix multiplications.
 In the following $T(a)$ denotes the translation by a vector $a ∈ ℝ^d$
 and the matrix $S(ℓ)$ denotes the swap of $x_\ell$ with $x_0$.
-The MDCF can then be written as
+The definition of the MDCFs can then be written as
 \[
-  [a₀] = \hat a₀, \qquad
-  [a₀; ℓ₁, a₁; …; ℓₙ, aₙ] = T(a₀) · S(ℓ_1) · [a₁; ℓ_2, a_2; …; ℓ_n, a_n].
+  [a^{(0)}] = \hat a^{(0)}, \qquad
+  [a^{(0)}; ℓ₁, a^{(1)}; …; ℓₙ, a^{(n)}] = T(a₀) · S(ℓ_1) · [a^{(1)}; ℓ_2, a^{(2)}; …; ℓ_n, a^{(n)}],
 \]
+where $\hat a^{(0)} = (1, a_1^{(0)}, …, a_d^{(0)})$.
 
-This allows us to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
-Instead of several matrix and vector sequences, we simplify it to a single matrix sequence $\{B^{(n)}\}_{n ≥ 0}$,
+We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
+Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $\{B^{(n)}\}_{n ≥ 0}$,
 where one matrix $B^{(n)}$ consists of the column vectors $B₀^{(n)}, B₁^{(n)}, …, B_d^{(n)}$.
-We begin with $B^{(0)} = I_d$ and update the matrix according to
+We begin with the identity matrix, $B^{(0)} = I_d$, and update the matrix according to
 \begin{align*}
   B_{ℓₙ}^{(n)} = B^{(n-1)} \hat a^{(n)},
   \qquad B_i^{(n)} = B_i^{(n-1)},
-  \qquad B_0^{(n)} = B_{ℓₙ}^{(n-1)}.
+  \qquad B_0^{(n)} = B_{ℓₙ}^{(n-1)},
 \end{align*}
-By construction, $B^{(n)}$ is the combined matrix of the sequences $P^{(n)}, Q^{(n)}, p^{(n)}$ and $q^{(n)}$:
+where $\hat a^{(n)} = (1, a_1^{(n)}, …, a_d^{(n)})$.
+By construction, $B^{(n)}$ is the combined matrix of the original sequences
+$P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mdcf-wallis}:
 \[
   B^{(n)} = \begin{pmatrix}
-    p^{(n)} & P^{(n)} \\
-    q^{(n)} & Q^{(n)} \\
+    Q_0^{(n)} & Q_1^{(n)} & ⋯ & Q_d^{(n)} \\
+    P_0^{(n)} & P_1^{(n)} & ⋯ & P_d^{(n)} \\
   \end{pmatrix}.
 \]
+In fact, we can prove an equivalent statement from this lemma using the new sequence.
 
 \begin{lemma}
   \label{lem:mdcf-wallis'}
-  Let $x ∈ ℝ^d$, then
+  Let $x ∈ ℝ^d$ and $\hat x = (1, x₁, …, x_d)$, then
   \[
-    [a^{(0)}; ℓ₁, a^{(1)}; …; ℓ_{n-1}, a^{(n-1)}; ℓ, x] ≡ B^{(n-1)} \hat x
+    [a^{(0)}; ℓ₁, a^{(1)}; …; ℓ_{n-1}, a^{(n-1)}; ℓ, x] = [B^{(n-1)} \hat x]
   \]
 \end{lemma}
 
 % TODO
 \begin{proof}
-  For $n = 0$, this is clearly true.
-  Suppose the lemma is true for $n ≥ 0$, then
+  By construction of $B^{(n-1)}$, we have
   \begin{align*}
-    [a^{(0)}; ℓ₁, a₁; …; ℓ_n, a_n; ℓ, x]
-    & ≡ [a^{(0)}; ℓ₁, a₁; …; ℓ_n, a_n + \mathrm{pivot}_ℓ(x)] \\
-    & ≡ B^{(n-1)}
-    \begin{bmatrix}
-      a^{(n)} + \mathrm{pivot}_ℓ(x) \\ 1
-    \end{bmatrix} \\
-    & ≡ B^{(n-1)} (\hat a^{(n)} + \hat{x}) \\
-    & ≡ B^{(n)} \hat{x} \qedhere
+    B^{(n-1)} \hat x
+    & = B_0^{(n-1)} \hat x_0 + B_1^{(n-1)} \hat x_1 + ⋯ + B_d^{(n-1)} x_d \\
+    & =
+    \begin{pmatrix}
+      P_0^{(n-1)} \\
+      Q_0^{(n-1)} \\
+    \end{pmatrix} \hat x_0
+    + \begin{pmatrix}
+      P_1^{(n-1)} \\
+      Q_1^{(n-1)} \\
+    \end{pmatrix} \hat x_1
+    + ⋯ + \begin{pmatrix}
+      P_d^{(n-1)} \\
+      Q_d^{(n-1)} \\
+    \end{pmatrix} \hat x_d \\
+    & = \begin{pmatrix}
+      P_0^{(n-1)} \hat x_0 + P_1^{(n-1)} \hat x_1 + ⋯ + P_d^{(n-1)} \hat x_d \\
+      Q_0^{(n-1)} \hat x_0 + Q_1^{(n-1)} \hat x_1 + ⋯ + Q_d^{(n-1)} \hat x_d \\
+    \end{pmatrix}.
   \end{align*}
+  Projecting this vector back to $ℚ^d$ results exactly in the vector
+  \[
+    \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}
+  \]
+  from
+  Lemma~\ref{lem:mdcf-wallis}.
 \end{proof}
 
 % ==============================================================================
@@ -656,12 +729,13 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 
 % TODO: Should we use x ≡ y or [x] = [y]?
 \begin{proof}
-  If the MDCF is purely periodic, then there is some $n ≥ 1$ such that $x = x^{(n)}$.
+  If the MDCF is purely periodic, then there is some index $n ≥ 1$ such that $x = x^{(n)}$.
+  Let $\hat x = [1, x₁, …, x_d]$ and $\hat x^{(n)} = [1, x_1^{(n)}, …, x_d^{(n)}]$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
-    \hat x ≡ B^{(n)} \hat x^{(n)} ≡ B^{(n)} \hat x \iff λ₁ \hat x = λ₂ B^{(n)} \hat x \iff λ \hat x = B^{(n)} \hat x,
+    [\hat x] = [B^{(n)} \hat x^{(n)}] = [B^{(n)} \hat x] \iff λ \hat x = B^{(n)} \hat x,
   \]
-  for some $λ₁, λ₂ ∈ ℝ \setminus \{0\}$ with $λ = λ₁/λ₂$.
+  for some nonzero $λ ∈ ℝ$.
   Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $B^{(n)}$.
   The characteristic polynomial $\det(B^{(n)} - λ I)$ can have a degree of at most $d+1$,
   therefore the eigenvalue $λ$ is an algebraic number of degree $d+1$.
@@ -694,9 +768,10 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
-    \hat x = B^{(k)} \hat x^{(k)} = B^{(k+ℓ)} \hat x^{(k+ℓ)} = B^{(k+ℓ)} \hat x^{(k)}.
+    [\hat x] = [B^{(k)} \hat x^{(k)}],
   \]
-  Every element in $x$ can be represented as a linear rational expression of $x^{(k)}$:
+  which means that very element in $x$ can be represented as a linear rational
+  expression of $x^{(k)}$:
   \[
     x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}},
   \]
