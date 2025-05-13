@@ -1,6 +1,7 @@
 \chapter{Periodic Representation of Quadratic Irrationals}
 \label{ch:quadratic}
 
+% TODO: Find a source for this chapter
 We begin with the case of quadratic irrationals.
 A quadratic irrational is any real number which is a root of a polynomial with degree $2$.
 For quadratic irrationals, it is already well known that they can be
@@ -72,13 +73,14 @@ fraction.
 Instead, we can use a more direct way to calculate the convergent $pₙ/qₙ$ from
 the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ of the same
 continued fractions.
-To prove this, we will first need the following lemma.
+To prove this, we will first need the following lemma,
+which shows that we can also start from the back of a continued fraction.
 
 \begin{lemma}
   \label{lem:cf-nesting}
-  Let $x ∈ ℝ$, then
+  Let $r₀, r₁, …, r_n, x ∈ ℝ$, then
   \[
-    [r₀; a₁, …, r_n, x] = [r₀; r₁, …, r_n + 1/x]
+    [r₀; r₁, …, r_n, x] = [r₀; r₁, …, r_n + 1/x]
   \]
 \end{lemma}
 
@@ -96,11 +98,10 @@ To prove this, we will first need the following lemma.
   \end{align*}
 \end{proof}
 
-We can use the following recurrence relation to calculate the convergents of a
-continued fraction $[a₀; a₁, …, aₙ]$:
+We can use the following recurrence relation to calculate the convergent $p_n/q_n$:
 \begin{align*}
-  p_n & = p_{n-1} a_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
-  q_n & = q_{n-1} a_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0
+  p_n & = p_{n-1} r_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
+  q_n & = q_{n-1} r_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0.
 \end{align*}
 The correctness is shown by the following lemma.
 
@@ -175,8 +176,7 @@ Therefore, we additionally require that in a finite continued fraction the last 
 
 To construct a continued fraction for a particular number $x ∈ ℝ$,
 we use the Euclidean algorithm.
-For a rational number $x = p/q$ we can run the algorithm
-on the inputs $(p, q)$.
+Given a rational number $x = p/q$, we run the algorithm with the input pair $(p, q)$.
 Recall that the Euclidean algorithm runs in two steps: modulo and exchange.
 The modulo step removes the integer part of the fraction $p/q$
 and the exchange step swaps the numerator with the denominator,
@@ -204,7 +204,7 @@ or equivalently it inverts the fraction.
 
 \begin{theorem}
   \label{thm:rat-cf}
-  Every rational number has a finite continued fraction representation.
+  Every rational number has a unique finite continued fraction.
 \end{theorem}
 
 \begin{proof}
@@ -308,7 +308,7 @@ removed again.
     \left| x - \frac{pₙ}{qₙ} \right|
     & = \left| \frac{x_n p_{n-1} + p_{n-2}}{x_n q_{n-1} + q_{n-2}} - \frac{a_n p_{n-1} + p_{n-2}}{a_n q_{n-1} + q_{n-2}} \right| \\
     & = \left| \frac{(x_n p_{n-1} + p_{n-2})(a_n q_{n-1} + q_{n-2}) - (x_n q_{n-1} + q_{n-2})(a_n p_{n-1} + p_{n-2})}{(x_n q_{n-1} + q_{n-2})(a_n q_{n-1} + q_{n-2})} \right| \\
-    & = \left| \frac{(p_{n-1} q_{n-2} + q_{n-1} p_{n-2})(x_n - a_n)}{((x_n - a_n) q_{n-1} + q_n) q_n} \right| \\
+    & = \left| \frac{(p_{n-1} q_{n-2} - q_{n-1} p_{n-2})(x_n - a_n)}{((x_n - a_n) q_{n-1} + q_n) q_n} \right| \\
     & = \Biggl| \frac{(-1)^{n+1} \overbrace{(x_n - a_n)}^{≤ 1}}{q_n^2 + \underbrace{(x_n - a_n)}_{≥ 0} q_{n-1} q_n} \Biggr| < \frac{1}{q_n^2}. \qedhere
   \end{align*}
 \end{proof}
@@ -382,15 +382,19 @@ The next vector $B_2$ is the integer lattice point before the intersection with 
   }
 \end{figure}
 
+\begin{lemma}
+  $\det\begin{pmatrix} B_n & B_{n-1} \end{pmatrix} = ±1$.
+\end{lemma}
+
 In his original lecture notes \cite{Klein95},
 Klein showed that the closest points to the irrational line $α$ are convergents and
 vice-versa.
 
 \begin{definition}
-  A nonzero point $(x, y) ∈ ℤ^2$ is a \emph{relative minimum} with respect to a
-  line $(1, α)$, if for every point $(x', y') ∈ ℤ^2$ with $x' ≤ x$ or $y ≤ y'$,
+  A nonzero point $(p, q) ∈ ℤ^2$ is a \emph{relative minimum} with respect to a
+  line $(1, α)$, if for every point $(p', q') ∈ ℤ^2$ with $p' ≤ p$ or $q ≤ q'$,
   \[
-    |x α - y| ≤ |x' α - y'|.
+    |q α - p| ≤ |q' α - p'|.
   \]
 \end{definition}
 
@@ -405,26 +409,19 @@ vice-versa.
   Reflecting $B_{n+1}$ across the line $α$ produces two parallel lines:
   One going through $B_{n+1}$ and one going through the reflected point.
   Any point which is closer must lie in the cylinder between the two lines.
-  The parallelogram constructed from the points $B_{n-1}, B_n$ and $B_{n+1}$
-  covers this entire cylinder, because $B_{n-1}$ and $B_n$ are both further
-  away from the line than $B_n$.
+  Next, we construct a parallelogram from the origin and the points $B_{n-1}, B_n$ and $B_{n+1}$.
+  There are two cases for this parallelogram:
   But the parallelogram only contains
   \begin{align*}
     |\det \begin{pmatrix}
-      B_{n+1} - B_{n-1} & B_n - B_{n-1} \\
+      a B_n & B_{n-1} \\
     \end{pmatrix}|
-    & = |\det \begin{pmatrix}
-      B_n a_{n+1} & B_n - B_{n-1} \\
-    \end{pmatrix}| \\
     & = a_{n+1} |\det \begin{pmatrix}
-      B_n & B_n \\
-    \end{pmatrix} - \det \begin{pmatrix}
       B_n & B_{n-1} \\
     \end{pmatrix}| \\
-    & = a_{n+1} |0 - 1| = a_{n+1}
+    & = a_{n+1}
   \end{align*}
-  integer lattice points
-  and all of these point are on the line between $B_{n-1}$ and $B_{n+1}$.
+  integer lattice points and all of these point are on the line between $B_{n-1}$ and $B_{n+1}$.
   Therefore, $B_{n+1}$ is also a relative minimum.
 \end{proof}
 
@@ -453,8 +450,10 @@ vice-versa.
 
 For a periodic continued fraction starting at $K$ with length $ℓ$,
 we will denote it as $[a₀; a₁, …, a_{K-1}, \overline{a_K, …, a_{K+ℓ}}]$.
-This is similar to how in decimal notation, we denote a period with a bar over the digits.
-For example, $1/3 = 0.\overline{3}$.
+This is similar to how in decimal notation, we denote a period with a bar over the digits,
+e.g. $1/3 = 0.\overline{3}$.
+In a continued fraction, we similarly denote the period with a line over the
+coefficients that are infinitely repeated.
 
 \begin{example}
   Consider $x = \sqrt{2}$.
@@ -479,8 +478,7 @@ periodic if and only if $x$ is a quadratic irrational.
 We begin with the first direction:
 
 \begin{theorem}
-  If the continued fraction representation of a number $x ∈ ℝ$ is eventually periodic,
-  then $x$ is a quadratic irrational.
+  If the continued fraction of a number $x ∈ ℝ$ is eventually periodic, then $x$ is a quadratic irrational.
 \end{theorem}
 
 \begin{proof}
