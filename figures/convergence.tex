@@ -1,0 +1,36 @@
+\documentclass[tikz]{standalone}
+
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=1]
+  \coordinate (min) at (0, 0);
+  \coordinate (max) at (5, 3);
+  \coordinate (alpha) at (2.2, 1.5);
+  \coordinate (ri) at (0, 1);
+  \coordinate (rj) at (2, 3);
+  \coordinate (rk) at (5, 0);
+
+  \node[below left] at (min) {$s^{(n)}$};
+  \node[above right] at (max) {$t^{(n)}$};
+  \node[above] at (alpha) {$x$};
+  \node[left] at (ri) {$r^{(i)}$};
+  \node[above] at (rj) {$r^{(j)}$};
+  \node[right] at (rk) {$r^{(k)}$};
+
+  \fill (min) circle (1pt);
+  \fill (max) circle (1pt);
+  \fill (alpha) circle (2pt);
+  \fill (ri) circle (1pt);
+  \fill (rj) circle (1pt);
+  \fill (rk) circle (1pt);
+
+  \fill[red!30] (ri) -- ($(rk)!0.8!(ri)$) -- ($(rk)!0.8!(rj)$) -- (rj) -- cycle;
+
+  \draw[dashed] (min) rectangle (max);
+  \draw (1, 0.5) node[below left] {$s$} rectangle (4, 2.5) node[above right] {$t$};
+  \draw (ri) -- (rj) -- (rk) -- cycle;
+\end{tikzpicture}
+\end{document}
+
+
