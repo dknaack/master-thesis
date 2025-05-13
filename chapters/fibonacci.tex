@@ -418,19 +418,33 @@ recurrences like the Fibonacci sequence with their respective golden ratio.
   \]
 \end{definition}
 
+% TODO: Why is the characteristic polynomial defined as such, any reason?
+
 \begin{example}
-  The linear recurrence which has $p_d^*(x)$ as its characteristic polynomial is:
-  \begin{align*}
-    F(n) = F(n - 1) + (-1)^{d+1} F(n - d) - \sum_{i=2}^{d - 1} (-1)^{i+1} 2 F(n - i).
-  \end{align*}
+  The characteristic polynomial of the $d$-bonacci sequence is
+  \[
+    x^{d+1} - x^d - ⋯ - x - 1.
+  \]
 \end{example}
 
-Next, we will show that the ratios of consecutive terms
+The root can be considered a generalization of the golden ratio.
+If we weaken the requirement that each coefficient $a_i$ is either $0$ or $1$ and
+instead allow any nonnegative number $a_i ∈ ℤ_{≥ 0}$, then this can be considered a
+generalization of the metallic means.
+
+The question for the higher-order Fibonacci sequence is whether they behave the
+same way the classical Fibonacci numbers do.
+Most importantly, whether their ratios
 \[
-  r_n = \frac{F(n+1)}{F(n)} = \frac{a_0 F(n - d)}{F(n)} + \frac{a₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{a_{d-1} F(n-1)}{F(n)} + 1.
+  r_n
+  := \frac{F(n+1)}{F(n)}
+  = \frac{a_0 F(n - d)}{F(n)} + \frac{a₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{a_{d-1} F(n-1)}{F(n)} + 1.
 \]
-is converging to the only positive real root of the characteristic polynomial $p_F$.
-Each ratio in the sum can be rewritten as a product of consecutive ratios $r_{n-i}$:
+are actually converging to the only positive real root of their characteristic
+polynomial $p_F$ or not.
+In the following, we will show that this is indeed the case.
+First, we rewrite the terms of the equation such that each ratio in the sum can
+be rewritten as a product of consecutive ratios $r_{n-i}$:
 \begin{align*}
   \frac{F(n - d + i)}{F(n)}
   & = \frac{F(n - d + i + 1)}{F(n - d + i)} \frac{F(n - d + i + 2)}{F(n - d + i + 1)} \dots \frac{F(n-1)}{F(n)} \\
@@ -440,7 +454,7 @@ So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2},
 \[
   r_n = 1 + \frac{a_d}{r_{n-1}} + \frac{a_{d-1}}{r_{n-1} r_{n-2}} + ⋯ + \frac{a₀}{r_{n-1} r_{n-2} \dots r_{n-d}}.
 \]
-
+Using this equation, we can show that the ratios must be bounded.
 
 \begin{lemma}
   The ratios $r_n$ are bounded between $1$ and $d+1$.
@@ -452,9 +466,10 @@ So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2},
   \[
     \frac{F(d+1)}{F(d)} = \frac{F(0) + F(1) + ⋯ + F(d)}{F(d)} = \frac{1 + 1 + ⋯ + 1}{1} = d + 1,
   \]
-  which also satisfies the bounds.
-  By induction, suppose that the ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$ all satisfy the bound between $1$ and $d+1$.
-  The ratio $r_n$ can be reformulated as follows:
+  which clearly satisfies the bounds of this lemma.
+  By induction, suppose that the previous ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$
+  all satisfy the bound between $1$ and $d+1$.
+  From previous consideration, we can reformulate the ratio $r_n$ as follows:
   \[
     r_n = 1 + \frac{a₁}{r_{n-1}} + \frac{a₂}{r_{n-1} r_{n-2}} + \dots + \frac{a_d}{r_{n-1} r_{n-2} \dots r_{n-d}}.
   \]
@@ -469,26 +484,6 @@ So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2},
   Hence, $1 ≤ r_n ≤ d+1$ for every $n ≥ 0$.
 \end{proof}
 
-The next step to prove the convergence of the ratios would be to show that the
-ratios are monotonically increasing or decreasing.
-That is clearly not the case, however.
-For $d=1$, the only sequence is the Fibonacci sequence and its ratios are
-always alternating between increasing and decreasing.
-But they do approach the golden ratio.
-For the convergence of the generalized sequence $r_n$,
-we will instead apply the squeeze theorem.
-The main idea is illustrated in Figure~\ref{fig:fibonacci-convergence}.
-We show that the sequences
-\[
-  s_n = \min\{r_n, r_{n-1}, …, r_{n-d} \}, \qquad t_n = \max\{r_n, r_{n-1}, …, r_{n-d}\}
-\]
-converge to the same limit.
-Because $r_n$ lies between the two sequences, it must also converge to the same limit as $s_n$ and $t_n$.
-For these sequences, we already know from the previous lemma that they are bounded,
-so it only remains to be shown that they are increasing and decreasing,
-respectively.
-
-% TODO: Include a plot of the Fibonacci numbers
 \begin{figure}[tbp]
   \centering
   \includestandalone{figures/fibonacci-convergence}
@@ -502,6 +497,24 @@ respectively.
   }
   \label{fig:fibonacci-convergence}
 \end{figure}
+
+Showing that the sequence is monotone would be enough to show the convergence.
+However, the sequence is clearly not monotone.
+Even the ratios of the original Fibonacci sequence alternate between increasing
+and decreasing.
+So we cannot possibly prove that the higher-order sequences are monotone.
+Instead, we bound the sequence between two other sequences $s_n$ and $t_n$
+and show that the two sequences are converging to the same limit.
+From the squeeze theorem, it follows that $r_n$ converges to the same limit.
+The main idea is illustrated in Figure~\ref{fig:fibonacci-convergence}.
+The sequences are
+\[
+  s_n = \min\{r_n, r_{n-1}, …, r_{n-d} \}, \qquad t_n = \max\{r_n, r_{n-1}, …, r_{n-d}\}
+\]
+Because $r_n$ clearly lies between the two sequences, so it must converge to the same limit as $s_n$ and $t_n$.
+For these sequences, we already know from the previous lemma that they are bounded,
+so it only remains to be shown that they are monotone,
+where $s_n$ is always increasing and $t_n$ is decreasing.
 
 \begin{lemma}
   The sequences $s_n$ and $t_n$ are monotone.
@@ -536,7 +549,7 @@ respectively.
 % TODO: Finish this proof
 \begin{proof}
   For a contradiction, suppose there exists some $δ > 0$ such that $t_n - s_n > δ$ for every $n ≥ 0$.
-  Out of the previous ratios, there must be one ratio $r_k$ exactly equals to $t_n$.
+  Out of the previous ratios, there must be one ratio $r_k$ exactly equal to $t_n$.
   Therefore,
   \begin{align*}
     s_{n+1} ≥ r_n & = λ₀ r_{n-d-1} + λ₁ r_{n-d} + ⋯ + λ_d r_{n-1} \\
@@ -552,7 +565,7 @@ respectively.
   \[
     s_{n+i} ≥ s_{n+i-1} + c δ ≥ s_{n+i-2} + 2c δ ≥ \dots ≥ s_n + i c δ
   \]
-  and $s_{n+i}$ would increase indefinitely as $i$ approaches infinity,
+  and $s_{n+i}$ would always increase as $i$ approaches infinity,
   which contradicts the previous lemma.
   Therefore, $δ = 0$ and it follows that $s_n$ and $t_n$ are approaching the same limit.
 \end{proof}
@@ -588,9 +601,49 @@ respectively.
 \begin{corollary}
   For the same recurrence $F$, $\lim_{n → ∞} F(n + i) / F(n) = φ^i$ for $i > 1$.
 \end{corollary}
+%end{convergence}
 
-% end convergence
+%begin{periodicity}
+The previous theorem leads us straight to an algebraic solution vector,
+for which the generalized Euclidean algorithm is periodic.
+We simply use the previous vector $x^{(n)}$ defined for the Fibonacci sequence
+and increase $n$ towards infinity:
+\begin{align*}
+  x_i
+  & = \lim_{n → ∞} x_i^{(n)} \\
+  & = \lim_{n → ∞} \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)} \\
+  & = φ^{d-i} + \sum_{k=1}^{i-1} a_{d-k} φ^{d-k}.
+\end{align*}
 
+\begin{theorem}
+  The generalized Euclidean algorithm is periodic for $x = (φ, φ^2, …, φ^d)$,
+  where $φ$ is the positive root of the polynomial
+  \[
+    x^{d+1} - a_{d} x^d - ⋯ - a_1 x - a₀
+  \]
+  with $a_0, a_1, …, a_d ∈ ℤ_{≥ 0}$.
+\end{theorem}
+
+\begin{proof}
+  We pivot with $ℓ = 1, 2, …, d$ twice.
+  In the first round, we get a vector $x'$ with
+  \[
+    x_i' = ...
+  \]
+  Once we have the vector $x'$, applying the generalized Euclidean algorithm
+  will produce the vector $x''$ with
+  \[
+    x_ℓ'' = …, x_i'' = …
+  \]
+  So the algorithm just rotates the elements one spot to the right.
+  Applying the algorithm $d$ times with the indices $1, 2, …, d$
+  amounts to a complete rotation where each value ends up where it started.
+  Therefore, we have reached $x'$ again and the algorithm becomes periodic.
+\end{proof}
+%end{periodicity}
+
+%begin{inverse golden ratio}
+\iffalse
 \begin{definition}
   Given a polynomial $p = \sum_{i=0}^n a_i x^n$, its \emph{reciprocal polynomial},
   denoted as $p^*$, is defined as
@@ -616,11 +669,12 @@ respectively.
   Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
   By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
 \end{proof}
+\fi
+%end{inverse golden ratio}
 
 % ==============================================================================
 \iffalse
 \section{Metallic Ratios}
-\fi
 % ==============================================================================
 
 The result from the previous section can be generalized to an even larger class
@@ -643,3 +697,4 @@ which can be reconstructed by the characteristic polynomial.
 For the linear recurrence,
 the ratios of consecutive terms approaches the real positive root of the
 polynomial again.
+\fi
