@@ -566,6 +566,36 @@ The norm is an instance of Pell's equation.
   \end{align*}
 \end{proof}
 
+\begin{example}
+  Consider $x = \sqrt{2}$, which has the following convergents:
+  \[
+    \binom{0}{1}, \binom{1}{0}, \binom{1}{1}, \binom{3}{2}, \binom{7}{5}, \binom{17}{12}, \binom{41}{29}, …
+  \]
+  If the norm is bounded, then there must be two elements with the same bound
+  and indeed the second and fourth elements have the same bound:
+  \[
+    N(1 + 0\sqrt{2}) = 1 = 3^2 - 2 · 2^2 = N(3 + 2\sqrt{2}).
+  \]
+  So $(3 + 2\sqrt{2})(1 + 0\sqrt{2})$ is a convergent,
+  but then $(3 + 2\sqrt{2})^n(1 + 0\sqrt{2})$ must also be a convergent for every $n ≥ 0$.
+  For example, we have for $n = 2$,
+  \[
+    (3 + 2\sqrt{2})^2(1 + 0\sqrt{2})
+    = 9 + 12\sqrt{2} + 8
+    = 17 + 12\sqrt{2}
+  \]
+  and $(17, 12)$ is in fact one of the convergents.
+  There are other elements with the same norm.
+  For example, $(1, 1)$ and $(7, 5)$ have the same bound:
+  \[
+    N(1 + \sqrt{2}) = 1^2 - 2 · 1^2 = -1 = 49 - 50 = 7^2 - 2 · 5^2 = N(7 + 5 \sqrt{2}).
+  \]
+  Furthermore, we can multiply $1 + \sqrt{2}$ with $3 + 2\sqrt{2}$ to get to $7 + 5\sqrt{2}$:
+  \[
+    (3 + 2 \sqrt{2}) (1 + \sqrt{2}) = 3 + 2\sqrt{2} + 3\sqrt{2} + 4 = 7 + 5 \sqrt{2}.
+  \]
+\end{example}
+
 \begin{theorem}
   If $x$ is a quadratic irrational,
   then its continued fraction is periodic.
