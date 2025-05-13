@@ -131,64 +131,23 @@ Furthermore, they are the smallest numbers which have this property.
 \section{Higher-Order Fibonacci Numbers}
 % ==============================================================================
 
-We have already seen that the worst-case input for the one-dimensional
-Euclidean algorithm are the Fibonacci numbers.
-Plugging in two Fibonacci numbers always requires at least n steps for the
-algorithm.
-This leads to the question whether such numbers also exist in higher dimensions
-and what their golden ratios look like.
-
 % TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
-
-First, we have to understand what Fibonacci numbers in higher dimensions would
-look like.
-Fibonacci numbers have two properties which make them special for the Euclidean algorithm.
-The first is that applying one iteration of the Euclidean algorithm on two
-consecutive Fibonacci numbers~$(F(n + 1), F(n))$ yields the previous Fibonacci numbers~$(F(n), F(n - 1))$.
-So the Euclidean algorithm requires exactly $n$ steps on this input.
-
-The second property is that they are minimal with respect to this.
-There are other sequences, which fulfill the first property, but the Fibonacci
-numbers are special, in that they fit exactly once inside the next number.
-This means that in the Euclidean algorithm there is a multiplicative factor of $1$ at each step (except the last):
-\[
-  \begin{array}{rcl}
-    F(n + 1) & = & 1 · F(n) + F(n - 1),     \\
-    F(n)     & = & 1 · F(n - 1) + F(n - 2), \\
-             & ⋮ &                          \\
-    F(2)     & = & 2 · F(1).
-  \end{array}
-\]
-Other numbers may have higher factors -- for example, the silver ratio has a
-factor of $2$ at each step -- but the Fibonacci numbers have the smallest factor.
-
-This property is also reflected in the fractions $a/b$ for a given input $(a, b)$.
-At each step (except the last) the fraction always has an integer part of $1$:
-\[
-  \begin{array}{rcl}
-    \frac{F(n + 1)}{F(n)} & = & 1 + \frac{F(n - 1)}{F(n)},     \\
-    \frac{F(n)}{F(n - 1)} & = & 1 + \frac{F(n - 2)}{F(n - 1)}, \\
-                          & ⋮ &                                \\
-    \frac{F(2)}{F(1)}     & = & 2.                              \\
-  \end{array}
-\]
-So, a higher-dimensional Fibonacci number would also need to have a fraction
-with integer part $1$ at each step.
-
 % TODO: We should also discuss the thing about idempotence under the choice of the pivot.
 % TODO: Should we have a discussion about why we choose this particular linear system.
 
-First, we are indeed talking about just numbers and not vectors.
-The Euclidean algorithm takes one-dimensional integers as input, so one would
-expect that the generalized algorithm would take Fibonacci vectors as input.
-But the numbers of steps that the algorithm requires only depends on the
-initial solution vector x.
-In fact, the entire execution of the algorithm only depends on this vector.
-There are infinitely many possible linear systems which have the same solution
-vector x, and hence there would be infinitely many "Fibonacci vectors".
-Therefore, we look instead only for the numbers inside the rational vector.
+For the generalisation of Fibonacci numbers with respect to the generalized
+Euclidean algorithm,
+we must find a sequence which similarly has a quotient of $1$ at each iteration.
+However, the problem is that no single definitive sequence can exist.
+With the generalized Euclidean algorithm we have an additional choice with the
+element we choose to pivot with.
+Therefore, multiple different notions of Fibonacci numbers exist for this
+algorithm.
 
-There are many different possibilities for choosing a linear system which has the solution $x$.
+In the generalized Euclidean algorithm,
+the quotient comes from the solution vector $x$.
+In fact, the execution of the algorithm depends entirely on this vector.
+There are infinitely many possible linear systems which have the same solution vector $x$.
 We use a simple construction, which
 given a rational vector $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$,
 constructs the linear system $Bx = c$ with
@@ -210,6 +169,9 @@ constructs the linear system $Bx = c$ with
     p_d
   \end{pmatrix}.
 \end{equation}
+Therefore, we define the Fibonacci numbers in terms of the solution vector $x$
+and use the construction of $B$ and $c$ as the input to the generalized
+Euclidean algorithm.
 
 \begin{table}[tbp]
   \caption{The first 10 Fibonacci numbers for $d = 1, …, 5$ and their respective golden ratio.}
@@ -219,34 +181,30 @@ constructs the linear system $Bx = c$ with
 \end{table}
 
 % I would like a better explanation of what the goal of this section is
-
-Although we have reduced the problem just to the vector $x$, there is still
-some ambiguity left, when extending Fibonacci numbers to higher dimensions.
-The generalized Euclidean algorithm allows for an additional degree of freedom
-by choosing which column vector $B_ℓ$ we swap our vector $c$ with.
-Therefore, there cannot be just one definitive Fibonacci number, there are
-different ones depending on the choice of our index $ℓ$.
-
-The first strategy one may think of is to choose the index $ℓ$ with the
+We begin by deriving the Fibonacci numbers for one particular strategy.
+Recall that the determinant decreases by $\{x_ℓ\}$ in each iteration.
+So the first strategy one may think of is to choose the index $ℓ$ with the
 smallest fractional value.
-After all, this gives us the largest decrease in the determinant over one
-iteration.
+After all, this gives us the largest decrease in the determinant over one iteration.
 Locally, this would be the highest decrease we can achieve.
-So we begin with this strategy and try to find a generalization of Fibonacci
-numbers under this strategy.
+So we begin with this strategy and see how the Fibonacci numbers are defined.
 
 % TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
 % TODO: Should we have a table for the Fibonacci numbers?
 % TODO: What about adding references to their OEIS number?
 
-The Fibonacci numbers for this strategy are defined as
-\begin{align*}
-  F(0) = F(1) = ⋯ = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d).
-\end{align*}
-For $d = 2, 3, 4$, they are also called the Tribonacci, Tetranacci and Pentanacci numbers.
-In general, they are known as the $d$-bonacci numbers.
-For these numbers,
-We use the solution vector
+\begin{definition}
+  The Fibonacci numbers for this strategy are defined as
+  \begin{enumerate}
+    \item $F(0) = F(1) = ⋯ = F(d) = 1$.
+    \item $F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d)$.
+  \end{enumerate}
+  For $d = 2, 3$ and $4$, they are also referred to as the Tribonacci, Tetranacci
+  and Pentanacci numbers.
+  In general, they are known as the $d$-bonacci numbers.
+\end{definition}
+
+For these numbers, we use the solution vector
 \[
   x =
   \left(
@@ -316,6 +274,15 @@ The respective golden ratio $φ$ for this sequence is the positive root of the p
   p(x) = x^{d+1} - x^d - 1.
 \end{align*}
 
+\begin{definition}
+  A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
+  following form:
+  \[
+    F(n + 1) = a_0 F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) + a_d F(n).
+  \]
+\end{definition}
+
+\iffalse % determinant
 The golden ratio for this sequence also shows up for a different strategy.
 When we choose two indices $ℓ$ and $ℓ'$ such that they minimize the ratio
 $\{x_{ℓ'}\}/\{x_{ℓ}\}$, then we can bound the decrease of the determinant over
@@ -381,6 +348,7 @@ But choosing $x_d$ only gives us a decrease of $φ^{d+1} - ε$ in total.
     \qedhere
   \]
 \end{proof}
+\fi % determinant
 
 % begin periodicity
 Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
@@ -429,23 +397,10 @@ where $x^{(n)}$ is the solution, in the following way:
 \[
   B^{(n)} = F(n) I_d, \qquad c^{(n)}_k = \sum_{i=0}^k a_{d-i} F(n - i) \text{ for } k ≤ d.
 \]
-
-\begin{lemma}
-  The vector $x^{(n)}$ from Equation~\ref{eq:general-solution} is a solution to the
-  linear system $B^{(n)} x = c^{(n)}$.
-\end{lemma}
-
-\begin{proof}
-  Each row in the linear system is of the form
-  \[
-    F(n) x_k = \sum_{i = 0}^k a_{d-i} F(n - i).
-  \]
-  Rearranging the equation gives the definition of $x^{(n)}_k$.
-\end{proof}
 % end periodicity
 
 % ==============================================================================
-\section{Multi-Dimensional Golden and Metallic Ratios}
+\section{Multi-Dimensional Golden Ratios and Mettallic Means}
 % ==============================================================================
 
 % begin convergence
@@ -456,16 +411,8 @@ The goal of this section is to generalize the relationship between linear
 recurrences like the Fibonacci sequence with their respective golden ratio.
 
 \begin{definition}
-  A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
-  following form:
-  \[
-    F(n + 1) = a_0 F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) + a_d F(n).
-  \]
-\end{definition}
-
-\begin{definition}
-  Given a linear recurrence~$F$ with coefficients~$a_0, \dots, a_d$, its
-  \emph{characteristic polynomial} $p_F$ is defined as
+  The \emph{characteristic polynomial} of a linear recurrence~$F$ with
+  non-negative integer coefficients~$a_0, \dots, a_d$ is defined as
   \[
     p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
   \]
