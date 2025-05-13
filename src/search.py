@@ -84,17 +84,19 @@ def deterministic_search(x, N, strat):
     """
     d = len(x)
     y = x
+    L = []
     seen = {y: 0}
     for n in range(N):
-        l = strat(y)
+        l = strat(y, n)
+        L.append(l)
         y = pivot(y, l)
         if y in seen:
             j = seen[y]
             start = L[:j]
-            period = L[j:i+1]
+            period = L[j:n+1]
             return start, period
         else:
-            seen[y] = i + 1
+            seen[y] = n + 1
 
 def nondeterministic_search(x, N, strat):
     """
