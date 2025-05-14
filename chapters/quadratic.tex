@@ -500,6 +500,51 @@ We begin with the first direction:
   since $x$ is a rational expression of $x_k$ it must also be a quadratic irrational.
 \end{proof}
 
+% TODO: Figure for shift of Klein polygon
+The converse was originally proven by Lagrange \cite{Lagrange70}.
+Here, a proof by Korkina \cite{Korkina96} is presented,
+which uses the geometrical interpretation to show periodicity.
+The idea is that for quadratic irrationals,
+there always exists a matrix $A$ which shifts the boundary of a Klein polygon
+in the positive direction and preserves the volume between the extreme points.
+Because the volume corresponds to the coefficients $a_0, a_1, …$, they must
+repeat at some point.
+
+\begin{theorem}
+  If $x$ is a quadratic irrational,
+  then its continued fraction is periodic.
+\end{theorem}
+
+\begin{proof}
+  For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
+  non-identity matrix $A ∈ ℤ^{2×2}$ with $\det(A) = 1$ which has $(1, x)$ and
+  $(1, \overline{x})$ as eigenvectors of this matrix.
+  Because the Klein polygon $K$ is the set of integer points in the cone
+  spanned by these eigenvectors, it must be invariant under this transformation.
+  Similarly, the boundary $Π(K)$ is also invariant under this transformation.
+  However, $A$ is not the identity, so the matrix $A$ must shift the points along the boundary.
+  We assume WLOG that it shifts it in the positive direction,
+  i.e. $B_{n+k} = A B_n$ for some $k ≥ 1$.
+  If not, then we can choose $A^{-1}$ as the transformation.
+  Because $\det(A) = 1$, the matrix $A$ preserves volume, so
+  \[
+    a_{n+k} =
+    \det\begin{pmatrix}
+      B_{n+k} & B_{n+k-2}
+    \end{pmatrix}
+    = \det\begin{pmatrix}
+      A B_n & A B_{n-2}
+    \end{pmatrix}
+    = \det(A) \det\begin{pmatrix}
+      B_n & B_{n-2}
+    \end{pmatrix}
+    = a_n.
+  \]
+  Hence, the continued fraction is periodic after some point.
+\end{proof}
+
+%begin{old proof}
+\iffalse
 The converse was originally proven by Lagrange \cite{Lagrange70}.
 We construct the continued fraction for a particular quadratic irrational using
 the Euclidean algorithm.
@@ -661,3 +706,5 @@ from which it follows that every fundamental unit is also a convergent.
 \begin{corollary}
   Every fundamental unit is a convergent.
 \end{corollary}
+\fi
+%end{old proof}
