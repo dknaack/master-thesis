@@ -31,31 +31,48 @@ their golden ratios.
 \section{The Classical Case: Fibonacci Numbers and the Golden Ratio}
 % ==============================================================================
 
-\begin{definition}
-  The \emph{Fibonacci numbers} are defined as
-  \begin{enumerate}
-    \item $F(0) = F(1) = 1$.
-    \item $F(n) = F(n - 1) + F(n - 2)$ for $n > 2$.
-  \end{enumerate}
-\end{definition}
-
 We revisit the classical case of Fibonacci numbers and the golden ratio
-to analyze their relationship with the Euclidean algorithm.
-The analysis of the running time of the Euclidean algorithm was actually one of
-the first practical applications of the Fibonacci numbers.
-They show up in a proof by Lamé, who he bounded the number of iterations by the
-number of digits in the input.
+to understand their relationship with the Euclidean algorithm.
+Fibonacci numbers are a recursive sequence.
+Starting with the initial conditions $F(0) = 1$ and $F(1) = 1$,
+the remaining terms are calculated using the formula
+\[
+  F(n) = F(n-1) + F(n-2).
+\]
+The first terms of this sequence are $1, 1, 2, 3, 5, 8, 13, 21, …$
+
+Their relationship with the Euclidean algorithm becomes apparent when analyzing
+the runtime of the algorithm.
+In fact, the analysis was actually one of the first practical application of
+the Fibonacci numbers.
+Lamé \cite{Lame44} used the Fibonacci numbers to show that the number of
+iterations in the Euclidean algorithm is bounded by the number of digits in the
+input.
 The proof is considered by some \cite{TODO} as the beginning of computational
 complexity theory.
 
-\begin{theorem}[Lamé's Theorem \cite{Lame44}]
+\begin{theorem}
   \label{thm:lame}
-  The Euclidean algorithm requires at most $5h$ steps,
-  where $h = \log_{10}(b)$.
+  If the Euclidean algorithm requires $n$ steps for $(a, b) ∈ ℤ_{> 0}^2$ with $a < b$,
+  then $a ≥ F(n+2)$ and $b ≥ F(n+1)$.
 \end{theorem}
 
 \begin{proof}
-  % TODO
+  For $n = 0$, we have $F(2) = 2$ and $F(2) = 1$
+  and they are the smallest pair of positive integers which require one step of
+  the Euclidean algorithm.
+  In fact, they are the smallest pair which satisfy $a < b$.
+  So any pair, which takes only one step, must satisfy $a ≥ F(2)$ and $b ≥ F(1)$.
+  Suppose that the theorem holds for some $n ≥ 0$.
+  Let $(a, b)$ be an input which requires $n+1$ steps.
+  Then, $a = qb + r$ for some integers $q, r ≥ 1$.
+  For the pair $(b, r)$, the algorithm requires $n$ steps, so $b ≥ F(n+2)$ and
+  $r ≥ F(n+1)$ by induction.
+  But then
+  \[
+    a = qb + r ≥ F(n+2) + F(n+1) = F(n+3).
+  \]
+  Therefore, the theorem also holds for $n+1$.
 \end{proof}
 
 The theorem also follows easily using the continued fraction of the ratios
@@ -68,9 +85,13 @@ takes at least $n$ steps for two consecutive Fibonacci numbers.
 Furthermore, Fibonacci numbers are the smallest numbers which require $n$ steps
 since we can only increase the coefficients of the continued fraction.
 
-What makes Fibonacci numbers special with respect to the Euclidean algorithm
-is that the division at each step always has a quotient of $1$.
+The continued fractions also show the connection between the Fibonacci numbers
+and the golden ratio.
+The convergents of the continued fraction $[1; \overline{1}]$ are ratios
+between consecutive Fibonacci numbers $F(n+1)/F(n)$ and as $n$ approaches
+infinity the convergents tend towards the golden ratio $φ$.
 
+\iffalse
 \begin{example}
   Consider $a = 13$ and $b = 8$.
   The algorithm proceeds as follows:
@@ -83,28 +104,34 @@ is that the division at each step always has a quotient of $1$.
     \end{array}
   \]
 \end{example}
+\fi
 
 \begin{theorem}
   $\lim_{n → ∞} \frac{F(n+1)}{F(n)} = φ$.
 \end{theorem}
 
 \begin{proof}
-  First, the continued fraction $[1; 1, …, 1]$ already evaluates to the ratio of consecutive Fibonacci numbers,
-  since the numerator $p_n$ and the denominator $q_n$ are defined by the sequences:
+  First, to show that the continued fraction $[1; 1, …, 1]$ actually evaluates
+  to the ratio of consecutive Fibonacci numbers, we use the formula from
+  Lemma~\ref{lem:cf-wallis}:
   \[
-    p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}
+    p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}.
   \]
-  and $a_n = 1$ for every $n ≥ 0$.
-  Therefore, they are exactly the Fibonacci sequences and furthermore, $q_n$ starts one index behind $p_n$,
-  which results in the ratios $F(n+1)/F(n)$.
-  Lemma~\vref{lem:cf-approx} then gives us the convergence of the ratios towards some limit $L$.
-  The limit $L$ must satisfy
+  Because $a_n = 1$ for every $n ≥ 0$ and $p_{-1} = 1, p_{-2} = 0$,
+  the Fibonacci sequence and the sequence $p_n$ are the same.
+  This is also true for $q_n$, but $q_{-1} = 0$ and $q_{-2} = 1$, so the sequence lags one step behind $p_n$.
+  Therefore, the convergents are actually $F(n+1)/F(n)$.
+  The convergence is already given by Lemma~\vref{lem:cf-approx},
+  so all that remains to be shown is that they actually converge to the golden ratio $φ$.
+  Suppose they converge to some different limit $φ'$
   \[
-    L = \lim_{n → ∞} \frac{F(n+1)}{F(n)} = \lim_{n → ∞} 1 + \frac{F(n-1)}{F(n)} = 1 + \frac{1}{L}.
+    φ' = \lim_{n → ∞} \frac{F(n+1)}{F(n)} = \lim_{n → ∞} 1 + \frac{F(n-1)}{F(n)} = 1 + \frac{1}{φ'}.
   \]
-  Multiplying this equation by $L$ gives the defining polynomial of the golden ratio $φ$
-  and the ratios are always positive, so $L = φ$.
+  Multiplying this equation by $φ'$ results in the defining polynomial of the golden ratio $φ$.
+  Because the ratios are always positive, we must have $φ' = φ$.
 \end{proof}
+
+% TODO: Metallic means
 
 \begin{example}
   Let $φ$ be the golden ratio,
@@ -124,8 +151,8 @@ is that the division at each step always has a quotient of $1$.
 
 In summary,
 the defining property of Fibonacci numbers with respect to the Euclidean
-algorithm is that they always have a quotient of $1$ in each iteration.
-Furthermore, they are the smallest numbers which have this property.
+algorithm is that they represent the worst-case for the algorithm.
+At each step, they have a quotient of $1$, so they decrease slower than any other pair of integers.
 
 % ==============================================================================
 \section{Higher-Order Fibonacci Numbers}
