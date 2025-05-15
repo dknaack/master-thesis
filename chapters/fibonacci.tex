@@ -134,6 +134,7 @@ Furthermore, they are the smallest numbers which have this property.
 % TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
 % TODO: We should also discuss the thing about idempotence under the choice of the pivot.
 % TODO: Should we have a discussion about why we choose this particular linear system.
+% TODO: The discussion about the linear system should go in the generalized Euclidean algorithm chapter
 
 For the generalisation of Fibonacci numbers with respect to the generalized
 Euclidean algorithm,
@@ -249,10 +250,117 @@ The golden ratios for each definition is the limit of consecutive Fibonacci numb
 \]
 where $F(n)$ can be any of the previously defined Fibonacci numbers.
 
+The following lemma shows that the $\mathrm{pivot}$ operation can also be
+viewed as a multi-dimensional division with remainder operation, where we have
+a set of integers $p₁, …, p_d$ and divide them by one element $p_ℓ$.
+
+\begin{lemma}
+  \label{lem:divmod}
+  % TODO: This should basically prove that pivot is just division with
+  % remainder
+  Let $x ∈ ℚ^d$ and $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$.
+  Suppose $x = (p₁/q, p₂/q, …, p_d/q)$ and $x' = (p₁'/q', p₂'/q', …, p_d'/q')$
+  with $p_ℓ/q$ with each having an irreducible fraction, then
+  \[
+    q = p_ℓ',
+    \qquad
+    p_ℓ = a_ℓ p_ℓ' + q',
+    \qquad
+    p_i = a_i p_ℓ' + p_i'
+    \quad
+    \text{ for every } i ≠ ℓ,
+  \]
+  where $a = \floor{x}$.
+\end{lemma}
+
+\begin{proof}
+  % TODO: Reference the rule
+  By the update rule, we have
+  \[
+    \frac{p_ℓ'}{q'} = \frac{1}{\frac{p_ℓ}{q} - a_ℓ} = \frac{q}{p_ℓ - a_ℓ q}
+  \]
+  Therefore, $q = p_ℓ'$ and $p_ℓ = a_ℓ q + q' = a_ℓ p_ℓ' + q'$.
+  For the remaining elements $x_i = p_i/q$ with $i ≠ ℓ$, we have
+  \[
+    \frac{p_i'}{q'} = \frac{\frac{p_i}{q} - a_i}{\frac{p_ℓ}{q} - a_ℓ} = \frac{p_i - a_i q}{p_ℓ - a_ℓ q}.
+  \]
+  Therefore, $p_i = p_i' + a_i q = p_i' + a_i p_ℓ'$.
+\end{proof}
+
+To show that the $d$-bonacci numbers are the worst-case for the minimum
+strategy, we first need a few requirements.
+The first is that the vector $x$ is strictly positive,
+which can be easily solved by ignoring the first iteration.
+If $x$ contains any negative values, then applying one step of the algorithm
+produces a strictly positive vector.
+The second requirement is that the values in $x$ are all different.
+The reasoning behind this requirement is that one could easily check if there
+are two elements $x_i, x_j$ with $x_i = x_j$.
+Pivoting with either $ℓ = i$ or $ℓ = j$ removes the other element from the
+vector, since the element will be zero in the next iteration.
+With these requirements, we can show that the $d$-bonacci numbers are the worst-case.
+
+\begin{theorem}
+  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$ be the solution vector after one iteration
+  such that $0 < q < p₁ < … < p_d$.
+  The generalized Euclidean algorithm requires at least $(n - d)$ steps for some $n ≥ d$ when taking the
+  minimum fractional value at each step if
+  \[
+    q ≥ F(n),
+    \qquad
+    pᵢ ≥ \sum_{k = 0}^i F(n - k),
+    \text{ for every } i ≤ d.
+  \]
+\end{theorem}
+
+\begin{proof}
+  For $n = d$, we have
+  \begin{align*}
+    q ≥ F(d) = 1,
+    \qquad
+    p_i ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
+  \end{align*}
+  These bounds are the smallest bounds we can have, since any smaller set of
+  integers does not even satisfy $0 < q < p₁ < ⋯ < p_d$.
+  Furthermore, any other set of numbers cannot require less than $0$ steps, so
+  the theorem holds for $n = d$.
+
+  % TODO: Fix indices
+  Suppose the algorithm requires $n - d$ steps for some input $x' = (p₁'/q', …, p_d'/q')$.
+  The particular order of the values in $x'$ does not matter for the strategy.
+  Hence, we can assume WLOG that $q' < p_2' < p_3' < … < p_d' < p_1'$.
+  By induction, $q' ≥ F(n)$ and because $p_1'$ is the largest value,
+  \begin{align*}
+    p_1' & ≥ \sum_{k=0}^d F(n - k) = F(n + 1).
+  \end{align*}
+  Similarly, because all other values with $i ≠ 1$ are shifted one place to the
+  left, we have
+  \begin{align*}
+    p_i' & ≥ \sum_{k=0}^{i-1} F(n - k) = \sum_{k=1}^i F(n + 1 - k) \text{ for } 2 ≤ i ≤ d.
+  \end{align*}
+  Let $x ∈ ℚ^d$ such that $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$ and $a = \floor{x}$.
+  The smallest fractional value is $\{x_ℓ\}$ if and only if $1/\{x_i\}$ is the largest value.
+  Since $p_1'/q'$ is the largest value, we pivot with $ℓ = 1$.
+  By the previous lemma,
+  \begin{align*}
+    q
+    & = p_1'
+    ≥ F(n+1), \\
+    p_1
+    & = a_1 p_1' + q'
+    ≥ F(n + 1) + F(n)
+    = ∑_{k=0}^1 F(n + 1 - k), \\
+    p_i
+    & = a_i p_1' + p_i'
+    ≥ F(n + 1) + ∑_{k=1}^i F(n + 1 - k)
+    ≥ ∑_{k=0}^i F(n + 1 - k).
+  \end{align*}
+  % TODO: I feel like this is the wrong conclusion/direction.
+  Therefore, $x$ requires at least $n+1$ steps.
+\end{proof}
+
 % ==============================================================================
-\iffalse
 \section{Higher-Order Fibonacci Sequence for the Maximum Strategy}
-\fi
 % ==============================================================================
 
 \begin{table}[tbp]
