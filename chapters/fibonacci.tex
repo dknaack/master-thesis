@@ -155,7 +155,7 @@ algorithm is that they represent the worst-case for the algorithm.
 At each step, they have a quotient of $1$, so they decrease slower than any other pair of integers.
 
 % ==============================================================================
-\section{Higher-Order Fibonacci Numbers}
+\section{Higher-Order Fibonacci Numbers for the Minimum Strategy}
 % ==============================================================================
 
 % TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
@@ -202,7 +202,7 @@ and use the construction of $B$ and $c$ as the input to the generalized
 Euclidean algorithm.
 
 \begin{table}[tbp]
-  \caption{The first 10 Fibonacci numbers for $d = 1, …, 5$ and their respective golden ratio.}
+  \caption{The first 10 $d$-bonacci numbers with $d = 1, …, 5$ and their golden ratios.}
   \label{tbl:min-fibonacci}
   \centering
   \input{tables/min-fibonacci}
@@ -271,11 +271,13 @@ In this case, the Fibonacci numbers are defined as
   F(0) = \dots = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - d).
 \end{align*}
 
-The golden ratios for each definition is the limit of consecutive Fibonacci numbers
+The golden ratios for these numbers is the limit
 \[
-  φ = \lim_{n → ∞} \frac{F(n + 1)}{F(n)},
+  φ = \lim_{n → ∞} \frac{F(n + 1)}{F(n)}.
 \]
-where $F(n)$ can be any of the previously defined Fibonacci numbers.
+
+% TODO: There should be a note, that we're taking the actual minimum, so we
+% stop once we see any zero. Because at that point, we're cycling.
 
 The following lemma shows that the $\mathrm{pivot}$ operation can also be
 viewed as a multi-dimensional division with remainder operation, where we have
@@ -287,17 +289,18 @@ a set of integers $p₁, …, p_d$ and divide them by one element $p_ℓ$.
   % remainder
   Let $x ∈ ℚ^d$ and $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$.
   Suppose $x = (p₁/q, p₂/q, …, p_d/q)$ and $x' = (p₁'/q', p₂'/q', …, p_d'/q')$
-  with $p_ℓ/q$ with each having an irreducible fraction, then
+  with each having at least one irreducible fraction.
+  Furthermore, let $x_{(k)} = p_{(k)}/q$ and $x_{(k)}' = p_{(k)}'/q'$ denote
+  the $k$-th smallest element in each vector, respectively.
+  Then,
   \[
-    q = p_ℓ',
+    q ≥ p_{(d)}',
     \qquad
-    p_ℓ = a_ℓ p_ℓ' + q',
+    p_ℓ ≥ a_{(d)} p_{(d)}' + q',
     \qquad
-    p_i = a_i p_ℓ' + p_i'
-    \quad
-    \text{ for every } i ≠ ℓ,
+    p_i ≥ a_{(i)} p_{(d)}' + p_{(i)}'
   \]
-  where $a = \floor{x}$.
+  for every $i ≤ d - 1$ and $a = \floor{x}$.
 \end{lemma}
 
 \begin{proof}
@@ -328,14 +331,14 @@ vector, since the element will be zero in the next iteration.
 With these requirements, we can show that the $d$-bonacci numbers are the worst-case.
 
 \begin{theorem}
-  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$ be the solution vector after one iteration
-  such that $0 < q < p₁ < … < p_d$.
-  The generalized Euclidean algorithm requires at least $(n - d)$ steps for some $n ≥ d$ when taking the
-  minimum fractional value at each step if
+  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$
+  and let $x_{(i)} = p_{(i)}/q$ denote the $i$-th smallest element.
+  If the algorithm requires at least $n ≥ 0$ steps for $x$ when taking the
+  minimum fractional value at each step, then
   \[
     q ≥ F(n),
     \qquad
-    pᵢ ≥ \sum_{k = 0}^i F(n - k),
+    p_{(i)} ≥ \sum_{k = 0}^i F(n - k),
     \text{ for every } i ≤ d.
   \]
 \end{theorem}
@@ -345,50 +348,67 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   \begin{align*}
     q ≥ F(d) = 1,
     \qquad
-    p_i ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
+    p_{(i)} ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
   \end{align*}
   These bounds are the smallest bounds we can have, since any smaller set of
-  integers does not even satisfy $0 < q < p₁ < ⋯ < p_d$.
-  Furthermore, any other set of numbers cannot require less than $0$ steps, so
+  integers does not even satisfy $0 < q < p_{σ(1)} < ⋯ < p_{σ(d)}$.
+  Furthermore, any other set of numbers requires at least $0$ steps, so
   the theorem holds for $n = d$.
 
   % TODO: Fix indices
-  Suppose the algorithm requires $n - d$ steps for some input $x' = (p₁'/q', …, p_d'/q')$.
+  Suppose the algorithm requires $n$ steps for some input $x' = (p₁'/q', …, p_d'/q')$.
   The particular order of the values in $x'$ does not matter for the strategy.
   Hence, we can assume WLOG that $q' < p_2' < p_3' < … < p_d' < p_1'$.
   By induction, $q' ≥ F(n)$ and because $p_1'$ is the largest value,
   \begin{align*}
-    p_1' & ≥ \sum_{k=0}^d F(n - k) = F(n + 1).
+    p_{σ(1)}' & ≥ \sum_{k=0}^d F(n - k) = F(n + 1).
   \end{align*}
   Similarly, because all other values with $i ≠ 1$ are shifted one place to the
   left, we have
   \begin{align*}
-    p_i' & ≥ \sum_{k=0}^{i-1} F(n - k) = \sum_{k=1}^i F(n + 1 - k) \text{ for } 2 ≤ i ≤ d.
+    p_{(i)}' & ≥ \sum_{k=0}^i F(n - k) = \sum_{k=1}^{i+1} F(n + 1 - k) \text{ for } 2 ≤ i ≤ d.
   \end{align*}
   Let $x ∈ ℚ^d$ such that $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$ and $a = \floor{x}$.
-  The smallest fractional value is $\{x_ℓ\}$ if and only if $1/\{x_i\}$ is the largest value.
-  Since $p_1'/q'$ is the largest value, we pivot with $ℓ = 1$.
-  By the previous lemma,
+  From Lemma~\ref{lem:divmod}, it follows that
   \begin{align*}
     q
-    & = p_1'
-    ≥ F(n+1), \\
-    p_1
-    & = a_1 p_1' + q'
-    ≥ F(n + 1) + F(n)
-    = ∑_{k=0}^1 F(n + 1 - k), \\
-    p_i
-    & = a_i p_1' + p_i'
-    ≥ F(n + 1) + ∑_{k=1}^i F(n + 1 - k)
-    ≥ ∑_{k=0}^i F(n + 1 - k).
+    & ≥ p_{(d)}' ≥ F(n+1), \\
+    p_{(1)}
+    & ≥ a_{(1)} p_{(d)}' + q' ≥ F(n + 1) + F(n) = \sum_{k=0}^1 F(n + 1 - k) \\
+    p_{(i)}
+    & ≥ a_{(i)} p_{(d)}' + p_{(i)}' ≥ F(n + 1) + ∑_{k=0}^i F(n - k) = ∑_{k=0}^{i+1} F(n + 1 - k).
   \end{align*}
-  % TODO: I feel like this is the wrong conclusion/direction.
-  Therefore, $x$ requires at least $n+1$ steps.
+  The permutation $π$ which orders $x$ might not be the same as $σ$.
+  However, if two elements are swapped, then we can easily swap the bounds, too.
+  Therefore, the theorem also holds for $n+1$.
 \end{proof}
 
 % ==============================================================================
-\section{Higher-Order Fibonacci Sequence for the Maximum Strategy}
+\section{Higher-Order Fibonacci Numbers for the Maximum Strategy}
 % ==============================================================================
+
+Next, we look at the opposite strategy:
+Always taking the index with the maximum fractional value at each step.
+With the minimum strategy,
+each element in the solution vector $x$ was greater than $1$ after one iteration.
+With this strategy the exact opposite happens:
+Each element in the solution vector is smaller than $1$ after one iteration,
+except the element we pivot with.
+The reason is that $\{x_ℓ\}$ is the largest fractional value,
+so the ratio $\{x_i\}/\{x_ℓ\}$ will always be less than $1$.
+However, $1/\{x_ℓ\}$ is still greater than $1$, because $\{x_ℓ\} < 1$.
+
+The worst-case for this strategy are called maximum Fibonacci numbers and they
+are defined by the following recurrence relation:
+\begin{align*}
+  F(n) =
+  \begin{cases}
+    1, & \text{ if } n ≤ 0, \\
+    F(n - 1) + F(n - 1 - d), & \text{ if } n > 0.
+  \end{cases}
+\end{align*}
+The first few terms of this sequences for different dimensions are listed in
+Table~\ref{tbl:max-fibonacci}.
 
 \begin{table}[tbp]
   \caption{The first 10 Fibonacci numbers for $d = 1, …, 5$ and their respective golden ratio.}
@@ -397,20 +417,145 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   \input{tables/max-fibonacci}
 \end{table}
 
-Next, we look at the opposite strategy:
-Always taking the index with the maximum fractional value at each step.
+To construct the solution vector $x$ for these numbers, we choose a consecutive
+ratio of two Fibonacci numbers for each $x_i$, where the index $i$ determines
+the distance between the two.
+More specifically, we choose the vector
+\begin{align*}
+  x = \left(
+    \frac{F(n-1)}{F(n)},
+    \frac{F(n-2)}{F(n)},
+    …,
+    \frac{F(n-(d-1)}{F(n)},
+    \frac{F(n-d) + F(n)}{F(n)} \right).
+\end{align*}
 
-The Fibonacci numbers are defined by the following recurrence relation:
+This time, we pivot with the largest fractional value, which is $x_1$.
+Let $a = \floor{x}$, then the next vector is $x' = (x₁', …, x_d')$ where
+the first element is
 \begin{align*}
-  F(0) = F(1) = \dots = F(d) = 1, \qquad F(n + d + 1) = F(n + d) + F(n).
+  x_1'
+  = \frac{1}{\left\{\frac{F(n-1)}{F(n)}\right\}}
+  = \frac{F(n)}{F(n-1)}
+  = \frac{F(n-1) + F(n-1-d)}{F(n)},
 \end{align*}
-The respective golden ratio $φ$ for this sequence is the positive root of the polynomial
+the elements with $i ≤ d - 1$ are
 \begin{align*}
-  p(x) = x^{d+1} - x^d - 1.
+  x_i'
+  = \frac{\frac{F(n-i)}{F(n)}}{\frac{F(n-1)}{F(n)}}
+  = \frac{F(n-i)}{F(n-1)}
 \end{align*}
+and the last element is
+\begin{align*}
+  x_d'
+  = \frac{\frac{F(n-d) + F(n)}{F(n)} - 1}{\frac{F(n-1)}{F(n)}}
+  = \frac{F(n-d)}{F(n-1)}.
+\end{align*}
+
+\begin{theorem}
+  Suppose the Euclidean algorithm requires at least $n$ steps for $x = (p₁/q, …, p_d/q)$
+  with $0 < p₁ < ⋯ < p_{d-1} < q < p_d$ when taking the maximum fractional value at each step.
+  Then,
+  \[
+    q ≥ F(n+d),
+    \qquad
+    p_d ≥ F(n + d) + F(n),
+    \qquad
+    p_i ≥ F(n + i)
+    \quad
+    \text{ for every } i ≤ d - 1.
+  \]
+\end{theorem}
+
+\begin{proof}
+  For $n = 0$, we have
+  \[
+    \left(\frac{F(2)}{F(1)}, \frac{F(3)}{F(1)}, …, \frac{F(d+1)}{F(1)} \right)
+    = \left(\frac{2}{1}, \frac{3}{1}, …, \frac{d+1}{1} \right).
+  \]
+  This is the first positive input, which satisfies the ordering and it requires only one step.
+  Therefore, any other input that requires one step must be larger.
+  Now suppose that the theorem holds for any $n ≥ 0$.
+  Let $x ∈ ℚ^d$ such that the Euclidean algorithm requires at least $n+1$ steps
+  and let $x' = \mathrm{pivot}_ℓ(x) = (p₁'/q', …, p_d'/q')$.
+  We assume WLOG that $p₂' < ⋯ < p_d' < q' < p₁'$.
+  By induction,
+  \begin{align*}
+    q'   & ≥ F(n),                     \\
+    p_1' & ≥ F(n) + F(n + d) = F(n+d), \\
+    p_i' & ≥ F(n + i + 1)
+    \text{ for every } i ≤ d - 1.
+  \end{align*}
+  Because $p_1'/q'$ is the largest value, we must pivot with $ℓ = 1$.
+  Furthermore, only $p_d > q$, so $a_d = \floor{x_d} = 1$ while $a_i =
+  \floor{x_i} = 0$ for every $i ≠ d$.
+  From Lemma~\ref{lem:divmod}, it follows that
+  \begin{align*}
+    q   & = p₁'
+          ≥ F(n + d), \\
+    p_d & = a₁ p₁' + q'
+          ≥ F(n + d) + F(n + 1) = F(n + 1 + d), \\
+    p_i & = aᵢ p₁' + pᵢ'
+          ≥ F(n + 1 + i),
+  \end{align*}
+  which completes the proof.
+\end{proof}
+
+% ==============================================================================
+\section{Combining both Strategies into the Minimax Strategy}
+% ==============================================================================
+
+We choose two indices $k, ℓ$ at once such that they minimize $\{\{x_k\}/\{x_ℓ\}\}$.
+We pivot with $k$ first to get $x'$, then with $ℓ$ to get $x''$.
+It follows that:
+
+\begin{itemize}
+  \item $1/\{\{x_ℓ\}/\{x_k\}\}$ is the largest element in $x''$
+  \item $\{\{x_ℓ\}/\{x_k\}\}$ is the smallest fractional value in $x'$
+  \item $1/\{x_k\}$ is the largest element in $x'$
+\end{itemize}
+
+For this strategy, the Fibonacci numbers are defined as
+\begin{align*}
+  F_0(n) & = F_1(n-1) + F_1(n-2) + ⋯ + F_1(n-d-1), \\
+  F_1(n) & = F_0(n-1) + F_0(n-d-1).
+\end{align*}
+
+\begin{theorem}
+  If the algorithm requires $n ≥ 0$ steps with the minimax strategy,
+  then
+  \[
+    q ≥ F(),
+    \qquad
+    p_{(i)} ≥ F().
+  \]
+\end{theorem}
+
+\begin{proof}
+  Suppose the algorithm requires $n$ steps for $x''$.
+  By induction,
+  \[
+    q'' ≥ F(),
+    \qquad
+    p_{(i)}'' ≥ F().
+  \]
+  By Lemma~\ref{lem:divmod},
+  \begin{align*}
+    q' & = p_ℓ'' ≥ ?, \\
+    p_ℓ' & = a_ℓ' p_ℓ'' + q'' ≥ q'' ≥ ?, \\
+    p_i' & = a_i' p_ℓ'' + p_i'' ≥ p_i'' ≥ ?, \\
+    p_k' & = a_k' p_ℓ'' + p_k'' ≥ p_ℓ'' + p_k'' ≥ ?.
+  \end{align*}
+  Again by Lemma~\ref{lem:divmod},
+  \begin{align*}
+    q & = p_k' ≥ F(n + 1), \\
+    p_ℓ & = a_k' p_k' + q' ≥ p_k' + q' ≥ ?, \\
+    p_i & = a_i' p_k' + p_i' ≥ p_k' + p_i' ≥ ?.
+  \end{align*}
+\end{proof}
 
 \begin{definition}
-  A linear recurrence with coefficients~$a_0, \dots, a_d$ is an equation of the
+  A linear recurrence with coefficients~$a_0, \dots, a_d ≥ 0$ is an equation of the
   following form:
   \[
     F(n + 1) = a_0 F(n - d) + a_1 F(n - d + 1) + \dots + a_{d-1} F(n - 1) + a_d F(n).
@@ -625,8 +770,8 @@ Using this equation, we can show that the ratios must be bounded.
   \caption{
     Illustration of the convergence proof for ratios of Fibonacci numbers.
     The points represent the ratios $r_n$.
-    The sequences $s_n$ and $t_n$ are the minimum and maximum from a subset of
-    those numbers, respectively.
+    The sequences $s_n$ and $t_n$ are the minimum and maximum from a block of
+    consecutive ratios, respectively.
     Both sequences converge towards the same limit $φ$, so the ratios converge
     towards this limit, too.
   }
@@ -707,7 +852,7 @@ where $s_n$ is always increasing and $t_n$ is decreasing.
 
 % TODO: Show that this converges! We're still missing the convergence criteria
 \begin{theorem}
-  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d ∈ \{0,1\}$
+  Let $F$ be a linear recurrence with coefficients $a_0, \dots, a_d ≥ 0$
   and let $φ$ be the real positive root of its characteristic polynomial.
   Then,
   \[
