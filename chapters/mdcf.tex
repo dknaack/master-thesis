@@ -69,10 +69,13 @@ which can be done by the following equations:
 \]
 This allows us to calculate the previous vector $x$ from the next vector $x'$,
 if we know the integer vector $a$.
-Let $\mathrm{pivot}_ℓ^{-1}$ denote this inverse function.
+For the inverse function, we do not need to store the index,
+since in the next vector $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element.
+So we can derive $ℓ$ from the vector by its largest element.
+By $\mathrm{pivot}^{-1}$ we denote this inverse function.
 We have
 \[
-  \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}_ℓ^{-1}(a, x') = x.
+  \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}^{-1}(a, x') = x.
 \]
 This operation leads directly to a definition of MDCFs.
 
@@ -82,26 +85,25 @@ For subsequent lemmas, we will need a definition of MDCFs which allows rational
 or even real vectors as coefficients.
 
 \begin{definition}
-  Given a sequence of $d$-dimensional real vectors $\{r^{(n)}\}_{n ≥ 0}$ and a sequence of
-  indices $\{ℓₙ\}_{n ≥ 1}$ between $1$ and $d$,
-  the \emph{$d$-dimensional continued fraction} $[r^{(0)}; ℓ₁, r^{(1)}; …]$ is defined as
+  Given a sequence of $d$-dimensional real vectors $\{r^{(n)}\}_{n ≥ 0}$,
+  the \emph{$d$-dimensional continued fraction} $[r^{(0)}; r^{(1)}, …]$ is defined as
   \[
     [r^{(0)}; ℓ₁, r^{(1)}; …] = \lim_{n → ∞} [r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}],
   \]
-  where the finite continued fractions $[r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}]$ are defined as
+  where the finite continued fractions $[r^{(0)}; r^{(1)}, …, r^{(n)}]$
+  are defined inductively as
   \[
     [r^{(0)}] = r^{(0)},
     \qquad
-    [r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}]
-    = \mathrm{pivot}_{ℓ₁}^{-1}\big(r^{(0)}, [r^{(1)}; ℓ₂, r^{(2)}; …; ℓₙ, r^{(n)}]\big).
+    [r^{(0)}, r^{(1)}, …, r^{(n)}]
+    = \mathrm{pivot}^{-1}\big(r^{(0)}, [r^{(1)}, r^{(2)}, …, r^{(n)}]\big).
   \]
 \end{definition}
 
-For the representation to be correct, we require $r_{ℓₙ}^{(n)} ≠ 0$ for $n ≥ 1$.
+For the representation to be correct, we require $\max_i r_i^{(n)} ≠ 0$ for $n ≥ 1$.
 This is similar to the continued fractions, where only the first value could be zero,
 while all subsequent values had to be positive.
-For the multi-dimensional counterpart we only require that the value chosen by
-$ℓₙ$ is not zero.
+For the multi-dimensional counterpart we only require that the pivot element is not zero.
 The other values in the vector $r^{(n)}$ can assume any non-negative value.
 
 The terminology from one-dimensional continued fractions naturally carry over to its
@@ -109,8 +111,8 @@ multi-dimensional counterpart.
 Given an infinite MDCF representation~$[a₀; ℓ_1, a_1; …]$ of a vector $x ∈ ℝ^d$, we define the following:
 
 \begin{itemize}
-  \item The \emph{$k$-th convergent} of $x$ is the finite MDCF $[a₀; ℓ₁, a₁; …; ℓ_k, a_k]$.
-  \item The \emph{$k$-th complete quotient} is the MDCF $[aₖ; a_{k+1}, …]$.
+  \item The \emph{$k$-th convergent} of $x$ is the finite MDCF $[r^{(0)}; r^{(1)}, …, r^{(n)}]$.
+  \item The \emph{$k$-th complete quotient} is the MDCF $[r^{(n)}; r^{(n+1)}, …]$.
   \item The MDCF is \emph{eventually periodic} if there exists an index~$n₀ ≥ 0$
     and a period~$k ≥ 1$ such that $aₙ = a_{n+k}$ and $ℓₙ = ℓ_{n+k}$
     for every $n ≥ n₀$.
@@ -127,22 +129,22 @@ The second gives us a formula for calculating the convergents.
   \label{lem:mdcf-nesting}
   Let $x ∈ ℝ^d$, then
   \[
-    [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
-    = [a₀; ℓ₁, a₁; \cdots; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)]
+    [r^{(0)}; r^{(1)}, …, r^{(n)}, x]
+    = [r^{(0)}; r^{(1)}, …, r^{(n-1)}, \mathrm{pivot}^{-1}(r^{(n)}, x)]
   \]
 \end{lemma}
 
 \begin{proof}
   If $n = 0$, then by definition,
   \[
-    [a₀; ℓ, x] = \mathrm{pivot}_{ℓ}^{-1}(a₀, [x]) = \mathrm{pivot}_{ℓ}^{-1}(a₀, x) = [\mathrm{pivot}_{ℓ}^{-1}(a₀, x)].
+    [r^{(0)}; x] = \mathrm{pivot}^{-1}(r^{(0)}, [x]) = \mathrm{pivot}^{-1}(r^{(0)}, x) = [\mathrm{pivot}^{-1}(r^{(0)}, x)].
   \]
   Suppose the lemma holds for any $n ≥ 0$, then
   \begin{align*}
-    [a₀; ℓ₁, a₁; …; ℓₙ, aₙ; ℓ, x]
-    & = \mathrm{pivot}_{ℓ₁}^{-1}(a₀, [a₁; …; ℓₙ, aₙ; ℓ, x]) \\
-    & = \mathrm{pivot}_{ℓ₁}^{-1}(a₀, [a₁; …; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)] \\
-    & = [a₀; ℓ₁, a₁; …; ℓₙ, \mathrm{pivot}_{ℓ}^{-1}(aₙ, x)]. \qedhere
+    [r^{(0)}; r^{(1)}, …, r^{(n+1)}, x]
+    & = \mathrm{pivot}^{-1}(r^{(0)}, [r^{(1)}; r^{(2)}, …, r^{(n+1)}, x]) \\
+    & = \mathrm{pivot}^{-1}(r^{(0)}, [r^{(1)}; r^{(2)}, …, r^{(n)}, \mathrm{pivot}^{-1}(r^{(n)}, x)] \\
+    & = [r^{(0)}; r^{(1)}, …, r^{(n)}, \mathrm{pivot}^{-1}(r^{(n+1)}, x)]. \qedhere
   \end{align*}
 \end{proof}
 
@@ -181,14 +183,15 @@ The sequences begin with
 where $1 ≤ i ≤ d$ and the sequences are updated according to the following
 recurrences:
 \begin{align*}
-  P_{ℓₙ}^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}, &
+  P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} r_1^{(n)} + ⋯ + P_d^{(n-1)} r_d^{(n)}, &
   P_i^{(n)} & = P_i^{(n-1)}, &
   P_0^{(n)} & = P_{ℓₙ}^{(n-1)} \\
-  Q_{ℓₙ}^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}, &
+  Q_ℓ^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} r_1^{(n)} + ⋯ + Q_d^{(n-1)} r_d^{(n)}, &
   Q_i^{(n)} & = Q_i^{(n-1)}, &
   Q_0^{(n)} & = Q_{ℓₙ}^{(n-1)},
 \end{align*}
-where $i ≠ ℓ_n$.
+where $i ≠ ℓ$ and $ℓ$ is the index of the maximum element in the complete
+quotient $x^{(n)}$. % TODO: n or n - 1?
 What this sequence effectively does is reconstructing the lattice from an
 initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
 
@@ -209,9 +212,9 @@ such they ensure that they converge to a limit as $n$ increases.
 % TODO: Ensure that this is correct for the first index!
 \begin{lemma}
   \label{lem:mdcf-wallis}
-  Let $x ∈ ℝ^d$, then
+  Let $r^{(0)}, r^{(1)}, …, r^{(n-1)}, x ∈ ℝ^d$, then
   \[
-    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
+    [r^{(0)}; r^{(1)}, …, r^{(n-1)}, x]
     = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}.
   \]
 \end{lemma}
@@ -219,38 +222,39 @@ such they ensure that they converge to a limit as $n$ increases.
 \begin{proof}
   If $n = 0$, then
   \[
-    [x] = x = \frac{I_d x + 0}{0^T x + 1}.
+    [x]
+    = x
+    = \frac{x}{1}
+    = \frac{0 + e₁ x₁ + ⋯ + e_d x_d}{1 + 0 x₁ + ⋯ + 0 x_d}
+    = \frac{P₀^{(0)} + P₁^{(0)} x₁ + ⋯ + P_d^{(0)} x_d}{Q_0^{(0)} + Q_1^{(0)} x₁ + ⋯ + Q_d^{(0)} x_d}.
   \]
-  Suppose the lemma holds for $n ≥ 0$.
-  Then,
+  Suppose the lemma holds for $n ≥ 0$,
+  we show that it also holds for $n+1$.
+  From the previous lemma, it follows that
   \begin{align*}
-    y & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]                              \\
-      & = [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1} + \mathrm{pivot}_ℓ(x)]              \\
-      & = \frac{P^{(n-1)} (a + \mathrm{pivot}_ℓ(x)) + p^{(n-1)}}{Q^{(n-1)} (aₙ + \mathrm{pivot}_ℓ(x)) + q^{(n-1)}} \\
-      & = \frac{x_ℓ}{x_ℓ} · \frac{P^{(n-1)} (a + \mathrm{pivot}_ℓ(x)) + p^{(n-1)}}{Q^{(n-1)} (aₙ + \mathrm{pivot}_ℓ(x)) + q^{(n-1)}}.
+    [r^{(0)}; r^{(1)}; …, r^{(n)}, x] & = [r^{(0)}; r^{(1)}, …, r^{(n-1)}, \mathrm{pivot}^{-1}(r^{(n)}, x)].
   \end{align*}
-  The numerator has the following form:
+  Let $y = \mathrm{pivot}^{-1}(r^{(n)}, x)$ and $ℓ = \argmax_i x_i$.
+  By the induction hypothesis,
   \begin{align*}
-    & x_ℓ \left( P_0^{(n-2)} + P_ℓ^{(n-2)} \left( a_ℓ + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ} P_i^{(n-2)} \left(a_i + \frac{x_i}{x_ℓ} \right) \right) \\
-    & = P_0^{(n-2)} x_ℓ + P_ℓ^{(n-2)} a_ℓ x_ℓ + P_ℓ^{(n-2)} + \sum_{i ≠ ℓ} P_i^{(n-2)} a_i x_ℓ + P_i^{(n-2)} x_i \\
-    & = \underbrace{\left( P_0^{(n-2)} + P_ℓ^{(n-2)} a_ℓ + \sum_{i ≠ ℓ} P_i^{(n-2)} a_i \right)}_{P_ℓ^{(n-1)} a} x_ℓ
-      + \underbrace{P_ℓ^{(n-2)}}_{P_0^{(n-1)}} x_ℓ
-      + \sum_{i ≠ ℓ} \underbrace{P_i^{(n-1)}}_{P_i^{(n-1)}} x_i \\
-    & = P_0^{(n-1)} + P_1^{(n-1)} a_1 + ⋯ + P_d^{(n-1)} a_d.
+    [r^{(0)}; r^{(1)}; …, r^{(n)}, x] & = \frac{x_ℓ}{x_ℓ} · \frac{P_0^{(n-1)} + P_1^{(n-1)} y_1 + ⋯ + P_d^{(n-1)} y_d}{Q_0^{(n-1)} + Q_1^{(n-1)} y_1 + ⋯ + Q_d^{(n-1)} y_d},
   \end{align*}
-  Analogously, the denominator has the following form:
+  where the fraction is expanded with $x_ℓ/x_ℓ$ such that the numerator and denominator are each multiplied by $x_ℓ$.
+  The numerator can then be simplified as follows:
   \begin{align*}
-    & x_ℓ \left( Q_0^{(n-2)} + Q_ℓ^{(n-2)} \left( a_ℓ + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ} Q_i^{(n-2)} \left(a_i + \frac{x_i}{x_ℓ} \right) \right) \\
-    & = Q_0^{(n-2)} x_ℓ + Q_ℓ^{(n-2)} a_ℓ x_ℓ + Q_ℓ^{(n-2)} + \sum_{i ≠ ℓ} Q_i^{(n-2)} a_i x_ℓ + Q_i^{(n-2)} x_i \\
-    & = \underbrace{\left( Q_0^{(n-2)} + Q_ℓ^{(n-2)} a_ℓ + \sum_{i ≠ ℓ} Q_i^{(n-2)} a_i \right)}_{Q_ℓ^{(n-1)} a} x_ℓ
-      + \underbrace{Q_ℓ^{(n-2)}}_{Q_0^{(n-1)}} x_ℓ
-      + \sum_{i ≠ ℓ} \underbrace{Q_i^{(n-1)}}_{Q_i^{(n-1)}} x_i \\
-    & = Q_0^{(n-1)} + Q_1^{(n-1)} a_1 + ⋯ + Q_d^{(n-1)} a_d.
+    & \hphantom{{} = {}} x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} y_ℓ + \sum_{i ≠ ℓ, i ≠ 0} P_i^{(n-1)} y_i \right) \\
+    & = x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} \left( r_ℓ^{(n)} + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ, i ≠ 0} P_i^{(n-1)} \left(r_i^{(n)} + \frac{x_i}{x_ℓ} \right) \right) \\
+    & = P_0^{(n-1)} x_ℓ + P_ℓ^{(n-1)} r_ℓ^{(n)} x_ℓ + P_ℓ^{(n-1)} + \sum_{i ≠ 0, i ≠ ℓ} P_i^{(n-1)} r_i^{(n)} x_ℓ + P_i^{(n-1)} x_i \\
+    & = \underbrace{\left( P_0^{(n-1)} + P_ℓ^{(n-1)} r_ℓ^{(n)} + \sum_{i ≠ 0, i ≠ ℓ} P_i^{(n-1)} r_i^{(n)} \right)}_{P_ℓ^{(n)}} x_ℓ
+      + \underbrace{P_ℓ^{(n-1)}}_{P_0^{(n)}}
+      + \sum_{i ≠ 0, i ≠ ℓ} \underbrace{P_i^{(n)}}_{P_i^{(n)}} x_i \\
+    & = P_0^{(n)} + P_1^{(n)} x_1 + ⋯ + P_d^{(n)} x_d.
   \end{align*}
-  Hence,
+  The simplification for the denominator is identical.
+  Therefore,
   \[
-    [a₀; ℓ₁, a₁; …; ℓ_{n-1}, a_{n-1}; ℓ, x]
-    = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}.
+    [r^{(0)}; r^{(1)}, …, r^{(n)}, x]
+    = \frac{P_0^{(n)} + P_1^{(n)} x_1 + ⋯ + P_d^{(n)} x_d}{Q_0^{(n)} + Q_1^{(n)} x_1 + ⋯ + Q_d^{(n)} x_d}.
     \qedhere
   \]
 \end{proof}
@@ -259,13 +263,19 @@ such they ensure that they converge to a limit as $n$ increases.
 \section{Convergence of Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
+% TODO: Maybe we should call r^{(n)} the primary convergent and the other ones
+% secondary convergents. Something to better make the distinction.
 % TODO: I don't like how we say that the requirement is from Perron, when it's
 % not really from him, but just based on his version.
 % TODO: We should mention somewhere that a^{(n)} is always positive.
 % TODO: The indices here are wrong...
-In the following, we assume that we have an MDCF $[a^{(0)}; ℓ_1, a^{(1)}; ℓ_2, a^{(2)}; …]$
-of an irrational vector $x = (x₁, …, x_d)$.
-The convergent of this MDCF is denoted by
+In the following, we assume that we have an MDCF $[a^{(0)}, a^{(1)}, a^{(2)}
+…]$ with only positive integer coefficients $a^{(1)}, a^{(2)}$ and one
+(potentially negative) integer vector $a^{(0)}$.
+Furthermore, we assume that this is an MDCF constructed using the generalized
+Euclidean algorithm for some irrational vector $x = (x₁, …, x_d)$.
+In the following, $x^{(k)}$ denotes the $k$-th complete quotient of $x$
+and the $n$-th convergent is denoted as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
@@ -279,23 +289,24 @@ For the proof we need two more requirements:
 The first comes from Perron's original proof.
 In his version, he required that there exists some constant $c > 0$ such that
 \[
-  0 < \frac{1}{a_{ℓ_{n-1}}^{(n)}} ≤ c
+  0 < \frac{1}{a_{ℓ}^{(n)}} ≤ c
   \quad \text{ and } \quad
-  0 ≤ \frac{a_i^{(n)}}{a_{ℓ_{n-1}}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓₙ.
+  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ = \argmax_i x_i^{(n)}.
 \]
-In addition to his requirement, we also need that the sequence $ℓ_n$
-contains every index infinitely often.
+In addition to his requirement, we also need that every element is the maximum infintely often,
+or equivalently the associated index sequence contains every index infinitely often.
 This is already given in the Jacobi-Perron algorithm,
 but not in the generalized Euclidean algorithm.
 So we need this additional requirement for the convergence.
 
 The vector $r^{(n)}$ is only one possible convergent.
-The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ_n$ are also convergent
-vectors, since $ℓ_m = i$ at some point $m < n$.
+The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ are also convergent
+vectors, since $i = \argmax_i x_i^{(m)}$ at some index $m < n$ if $n$ is chosen large enough.
 The first step for the proof is to show that each convergent $r^{(n)}$ is a
 convex combination of these vectors.
-This also shows that the vector $x$ lies in the convex hull of the convergents.
+This shows that the vector $x$ lies in the convex hull of the convergents.
 
+% TODO: We should probably add superscripts to the lambdas as they depend on n.
 \begin{lemma}
   \label{lem:conv-conv}
   There exists $λ₀, λ₁, …, λ_d ≥ 0$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
@@ -306,13 +317,14 @@ This also shows that the vector $x$ lies in the convex hull of the convergents.
 
 \begin{proof}
   We choose $n ≥ 0$ such that every index in $\{1, …, d\}$ has occurred at least once.
-  By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ_n}^{(n)}$ using the previous values as follows:
+  Let $ℓ = \argmax_i x_i^{(n)}$.
+  By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ}^{(n)}$ using the previous values as follows:
   \begin{align*}
-    P_{iℓ_n}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)}.
+    P_{iℓ}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)}.
   \end{align*}
-  Dividing by $Q_{ℓ_n}^{(n)}$ gives us
+  Dividing by $Q_ℓ^{(n)}$ gives us
   \begin{align*}
-    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
+    \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
   \end{align*}
   Using $λ_k = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ k ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
   we can reformulate the convergent as the convex combination for this lemma.
@@ -360,7 +372,7 @@ By the monotone-convergence theorem, they must converge.
   for every $0 ≤ j ≤ d$ by construction of the sequence~$s_i^{(n-1)}$.
   Using Lemma~\ref{lem:conv-conv},
   \begin{align*}
-    \frac{P_{iℓ}^{(n)}}{Q_{ℓ}^{(n)}}
+    \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}
     & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
     & ≥ λ₀ s_i^{(n-1)} + λ₁ s_i^{(n-1)} + ⋯ + λ_d s_i^{(n-1)} = s_i^{(n-1)}.
   \end{align*}
@@ -379,13 +391,15 @@ not that they are converging to the same limit.
 To show the second part, we first need this crucial lemma
 about the coefficients $λ₀, λ₁, …, λ_d$ in the convex combination from Lemma~\ref{lem:conv-conv}.
 In particular, there always exists one $λ_k$ which is neither exactly $0$ nor $1$.
-Stated differently, the vector $x$ never lies exactly on a convergent. % TODO: Is this not trivial??
+% TODO: Is this not trivial?? Yes, an we should reformulate this statement to
+% make it clear that this is constant. It always moves by a constant amount
+Stated differently, the vector $x$ never lies exactly on a convergent.
 This is also the crucial property, that Perron has shown for the convergence of
 his algorithm.
 
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $ℓ$ with $0 < λ_ℓ < 1$.
+  There exists one index $ℓ$ with $λ_ℓ > c$ for some positive constant $c$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
@@ -435,10 +449,12 @@ Therefore, we can always find a point at which the convergents step over this
 non-empty box and every convergent is inside the box.
 This is the main idea behind the following lemma.
 
+% TODO: Should we add the requirements, like every index occurs infinitely
+% often (but the correct version)?
 \begin{lemma}
   \label{lem:min-max-conv}
   The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same
-  limit, if every index occurs infinitely often in $ℓ_n$.
+  limit.
 \end{lemma}
 
 \begin{proof}
@@ -450,7 +466,7 @@ This is the main idea behind the following lemma.
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
-  Let $ℓ' = ℓ_{n-1}$.
+  Let $ℓ' = \argmax_i x_i^{(n-1)}$.
   Then, $r_i^{(n-1)} = P_{iℓ'}^{(n-1)}/Q_{ℓ'}^{(n-1)}$ and
   %$Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$. % TODO: Why was this here?
   \begin{align*}
@@ -486,14 +502,15 @@ This is the main idea behind the following lemma.
   Therefore, $t_i$ and $s_i$ converge to the same limit.
 \end{proof}
 
+% TODO: Fix statement, i.e. ℓₙ no longer exists...
 \begin{theorem}
   \label{thm:mdcf-conv}
   If for every $n ≥ 0$ there exists a constant $c ≥ 0$ such that
   \[
-    0 < \frac{1}{a^{(n)}_{ℓₙ}} ≤ c, \qquad 0 ≤ \frac{a^{(n)}_i}{a^{(n)}_{ℓₙ}} ≤ c.
+    0 < \frac{1}{a^{(n)}_ℓ} ≤ c, \qquad 0 ≤ \frac{a^{(n)}_i}{a^{(n)}_ℓ} ≤ c.
   \]
-  for every $i ≠ ℓₙ$ and every index occurs infinitely often in the sequence $ℓₙ$,
-  then the sequence $r^{(n)}$ converges to $x$.
+  for every $i ≠ ℓ = \argmax_i x_i^{(n)}$ and every index occurs infinitely
+  often in the sequence $ℓ$, then the sequence $r^{(n)}$ converges to $x$.
 \end{theorem}
 
 \begin{proof}
@@ -527,6 +544,7 @@ This is the main idea behind the following lemma.
   for every $i ≤ d$.
 \end{proof}
 
+% TODO: Explain that the theorem always applies since we choose the maximum
 One application of this theorem are periodic MDCFs.
 Since they only have a finite set of a coefficients they easily satisfy the
 first requirement of the theorem.
@@ -644,13 +662,13 @@ This is the equivalent of the inverse pivot operation in
 the projective space $\mathbb{RP}^{d+1}$.
 Using this notion, we can reformulate the MDCF as a series of matrix multiplications.
 In the following $T(a)$ denotes the translation by a vector $a ∈ ℝ^d$
-and the matrix $S(ℓ)$ denotes the swap of $x_\ell$ with $x_0$.
+and the matrix $S(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
 The definition of the MDCFs can then be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
-  [a^{(0)}; ℓ₁, a^{(1)}; …; ℓₙ, a^{(n)}] = T(a₀) · S(ℓ_1) · [a^{(1)}; ℓ_2, a^{(2)}; …; ℓ_n, a^{(n)}],
+  [a^{(0)}; a^{(1)}, …, a^{(n)}] = T(a₀) · S(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
 \]
-where $\hat a^{(0)} = (1, a_1^{(0)}, …, a_d^{(0)})$.
+where $ℓ = \argmax_i [a^{(1)}; a^{(2)}, …, a^{(n)}]_i$ and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
 
 We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
 Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $\{B^{(n)}\}_{n ≥ 0}$,
