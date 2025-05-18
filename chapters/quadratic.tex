@@ -509,6 +509,42 @@ there always exists a matrix $A$ which shifts the boundary of a Klein polygon
 in the positive direction and preserves the volume between the extreme points.
 Because the volume corresponds to the coefficients $a_0, a_1, …$, they must
 repeat at some point.
+The first task is to show that such a matrix actually exists.
+
+\begin{lemma}
+  The norm of the convergents $N(β_n)$ is bounded by some constant $c$ independent of $n$.
+\end{lemma}
+
+\begin{proof}
+  By Lemma~\ref{lem:cf-approx}, there exists some $δₙ ∈ ℝ$ with $|δₙ| < 1$
+  such that $pₙ = qₙ \sqrt{D} + \frac{δₙ}{qₙ}$.
+  Therefore, we can bound the norm by
+  \begin{align*}
+    |N(αₙ)|
+    & = |pₙ^2 - D qₙ^2| \\
+    & = \left|\left(qₙ \sqrt{D} + \frac{δₙ}{qₙ} \right)^2 - Dqₙ^2\right| \\
+    & = \Biggl|qₙ^2 D + 2δ \sqrt{D} + \underbrace{\frac{δₙ^2}{qₙ^2}}_{\le 1} - Dqₙ^2\Biggr| \\
+    & \le 2 \sqrt{D} + 1 \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  For every quadratic irrational $x$, there exists a matrix $U ∈ ℤ^{2×2}$ with
+  determinant $1$, which has eigenvectors $(1, x)$ and $(1, \overline{x})$.
+\end{corollary}
+
+\begin{example}
+  \label{ex:sqrt2-unit}
+  Consider $x = \sqrt{2}$.
+  The fundamental unit is $3 + 2\sqrt{2}$ since $3^2 - 2 · 2^2 = 1$.
+  It has the multiplication matrix
+  \[
+    U = \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+  \]
+\end{example}
 
 \begin{theorem}
   If $x$ is a quadratic irrational,
@@ -543,6 +579,33 @@ repeat at some point.
   Hence, the continued fraction is periodic after some point.
 \end{proof}
 
+% TODO: Define T_a
+\begin{example}
+  Consider the matrix $U$ from Example~\ref{ex:sqrt2-unit}.
+  The matrix must have $(1, \sqrt{2})$ and $(1, -\sqrt{2})$ as eigenvectors,
+  since it is a multiplication
+  Furthermore, the matrix shifts each convergents by two,
+  because
+  \[
+    B_n = T_2^{n-1} T_1 e_1
+    \qquad
+    \text{ and }
+    \qquad
+    A_2^2 =
+    \begin{pmatrix}
+      1 & 2 \\
+      1 & 1 \\
+    \end{pmatrix}^2
+    =
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}.
+  \]
+  So, $B_{n+2} = U B_n$ for every $n ≥ 1$.
+\end{example}
+
+%===============================================================================
 %begin{old proof}
 \iffalse
 The converse was originally proven by Lagrange \cite{Lagrange70}.
@@ -593,23 +656,6 @@ which is equivalent to
 \end{definition}
 
 The norm is an instance of Pell's equation.
-
-\begin{lemma}
-  The norm of the convergents $N(B_n)$ is bounded by some constant $c$ independent of $n$.
-\end{lemma}
-
-\begin{proof}
-  By Lemma~\ref{lem:cf-approx}, there exists some $δₙ ∈ ℝ$ with $|δₙ| < 1$
-  such that $pₙ = qₙ \sqrt{D} + \frac{δₙ}{qₙ}$.
-  Therefore, we can bound the norm by
-  \begin{align*}
-    |N(αₙ)|
-    & = |pₙ^2 - D qₙ^2| \\
-    & = \left|\left(qₙ \sqrt{D} + \frac{δₙ}{qₙ} \right)^2 - Dqₙ^2\right| \\
-    & = \Biggl|qₙ^2 D + 2δ \sqrt{D} + \underbrace{\frac{δₙ^2}{qₙ^2}}_{\le 1} - Dqₙ^2\Biggr| \\
-    & \le 2 \sqrt{D} + 1 \qedhere
-  \end{align*}
-\end{proof}
 
 \begin{example}
   Consider $x = \sqrt{2}$, which has the following convergents:
@@ -708,3 +754,4 @@ from which it follows that every fundamental unit is also a convergent.
 \end{corollary}
 \fi
 %end{old proof}
+%===============================================================================
