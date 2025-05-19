@@ -1,0 +1,20 @@
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usetikzlibrary{arrows.meta,positioning,shapes}
+\setmainfont{TeX Gyre Pagella}
+\setmathfont{TeX Gyre Pagella Math}
+\setsansfont[Scale=0.95]{Clear Sans}
+\setmonofont[
+  Scale=1.05,
+  UprightFeatures={SmallCapsFont=LMMonoCaps10-Regular},
+  ItalicFeatures={SmallCapsFont=LMMonoCaps10-Oblique},
+]{Latin Modern Mono}
+% Patch for modern versions of fontspec:
+\let\ttfamilyinline\relax
+\newfontfamily\ttfamilyinline{Latin Modern Mono Prop}
+% Adjust tikz settings:
+\tikzset{
+  > = {Stealth[length=2.8pt .8, inset'=0pt .575, width'=0pt 1.55, line join=round, sep]},
+  normal linewidth/.style = semithick,
+}
+
