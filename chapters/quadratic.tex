@@ -52,8 +52,7 @@ of the first entry $a₀$, which can be any integer.
     r = \lim_{n → ∞} [r₀; r₁, …, rₙ]
   \]
   exists.
-  The fractions $[r₀; r₁, …, rₙ]$ are called the
-  \emph{convergents} of the infinite continued fraction $[r₀; r₁, r₂, …]$.
+  The fraction $[r₀; r₁, …, rₖ]$ is also called the \emph{$k$-th convergent} of $[r₀; r₁, …, r_n]$.
 \end{definition}
 
 If the sequence consists of positive integers,
@@ -133,39 +132,19 @@ The correctness is shown by the following lemma.
   \end{align*}
 \end{proof}
 
-\begin{lemma}
-  \label{lem:cf-det}
-  $p_n q_{n-1} - q_n p_{n-1} = (-1)^{n+1}$ for $n ≥ -1$.
-\end{lemma}
-
-\begin{proof}
-  For $n = -1$, we have
-  \[
-    p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
-  \]
-  Suppose that the lemma holds for $n ≥ -1$, then
-  \begin{align*}
-    p_{n+1} q_n - q_{n+1} p_n
-    & = (p_n a_{n+1} + p_{n-1}) q_n - (q_n a_{n+1} + q_{n-1}) p_n \\
-    & = p_{n-1} q_n - q_{n-1} p_n \\
-    & = (-1) (p_n q_{n-1} - q_n p_{n-1}) \\
-    & = (-1)^{n+1}. \qedhere
-  \end{align*}
-\end{proof}
-
 % ==============================================================================
 \section{Construction of Continued Fractions}
 % ==============================================================================
 
 % TODO: Should we jump out of the gate with this problem?
-For a representation of the real numbers,
-we need to construct a unique continued fractions for every number $x ∈ ℝ$.
+The first part of Hermite's question requires a representation of the real numbers.
+This means we have to find a unique continued fraction $[r₀; r₁, …]$ for every real number $x$.
 Although the definition of a continued fraction allows real numbers,
-for the construction we restrict ourselves to continued fractions which only
+for the representation we restrict ourselves to continued fractions which only
 contain integers.
 More specifically, we will only look at continued fractions $[a₀; a₁, a₂, …]$
-with $a₀ ∈ ℤ$ and $aₙ ∈ ℤ_{> 0}$.
-However, this does not guarantee a unique representation alone.
+where $a₀$ can be any integer but $aᵢ$ has to be a positive integer for every $i > 0$.
+However, these constraints do not guarantee a unique representation alone.
 Consider $x = 3/2$, with the current requirements there are two possible representations:
 \[
   x = [1; 1, 1] = 1 + \cfrac{1}{1 + \cfrac{1}{1}} \qquad \text{ or } \qquad x = [1; 2] = 1 + \cfrac{1}{2}.
@@ -174,13 +153,13 @@ The issue is that we can always split the last coefficient in the continued frac
 In general, if $x = [a₀; a₁, …, aₙ]$, then also $x = [a₀; a₁, …, aₙ - 1, 1]$.
 Therefore, we additionally require that in a finite continued fraction the last value is never $1$.
 
-To construct a continued fraction for a particular number $x ∈ ℝ$,
-we use the Euclidean algorithm.
-Given a rational number $x = p/q$, we run the algorithm with the input pair $(p, q)$.
-Recall that the Euclidean algorithm runs in two steps: modulo and exchange.
-The modulo step removes the integer part of the fraction $p/q$
-and the exchange step swaps the numerator with the denominator,
-or equivalently it inverts the fraction.
+We begin with the representation of rational numbers.
+We use the Euclidean algorithm to construct the continued fraction for a number $x ∈ ℚ$,
+More specifically, if $x = p/q$, then we run the algorithm with the input pair $(p, q)$.
+At each step, we keep track of the quotient,
+which will be used as a coefficient in the continued fraction.
+So if $p = a₀q + r$ is the first division step, then the quotient $a₀$ will be
+the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ of $p/q$.
 
 \begin{example}
   Consider $x = 13/5$.
@@ -191,7 +170,7 @@ or equivalently it inverts the fraction.
      3 & = 1 · 2 + 1 \\
      2 & = 2 · 1 + 0.
   \end{align*}
-  The factors in each line correspond directly to the continued fraction of $13/5$:
+  The quotient in each line correspond directly to the continued fraction of $13/5$:
   \[
     \frac{13}{5}
     = [2; 1, 1, 2]
@@ -202,18 +181,20 @@ or equivalently it inverts the fraction.
   \]
 \end{example}
 
-\begin{theorem}
-  \label{thm:rat-cf}
-  Every rational number has a unique finite continued fraction.
-\end{theorem}
+\begin{lemma}
+  \label{lem:cf-rat}
+  Every rational number has a finite continued fraction.
+\end{lemma}
 
 \begin{proof}
+  We begin by constructing a continued fraction for every rational number.
   Let $p/q$ be a reduced fraction, i.e. $\gcd(p, q) = 1$.
-  The proof is done by induction over the number of steps when running the
+  We proceed by induction over the number of steps when running the
   Euclidean algorithm on $(p, q)$.
   Suppose only one step is required, then $p = a₀ q + 0$.
-  Because $p/q$ is reduced, $q = 1$ and $p/q$ is an integer.
+  Because $p/q$ is a reduced fraction, we have $q = 1$ and $p/q$ is an integer.
   Hence, $[a₀] = a₀ = p$ is a valid continued fraction of $p/q$.
+
   For $n ≥ 0$, let $p = a₀ q + r$ be the first step of the Euclidean algorithm.
   By induction, suppose that $q/r$ has a finite continued fraction $[a₁; a₂, …, aₙ]$.
   Then,
@@ -224,37 +205,35 @@ or equivalently it inverts the fraction.
     = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
     = [a₀; a₁, …, aₙ].
   \]
-  Therefore, there exists a continued fraction for every rational number $p/q$.
+  Therefore, there exists a finite continued fraction for every rational number $p/q$.
 \end{proof}
 
-For the continued fractions of irrational numbers,
-we extend the Euclidean algorithm to allow real numbers as input.
-The algorithm still works the same.
-The modulo step subtracts the smaller number from the larger until it is no
-longer possible and the exchange step swaps the two inputs.
-This time, there is no immediately apparent way to split an irrational number
-$x$ into two inputs $(a, b)$.
-However, a simple solution is to use $(x, 1)$ as the input to the Euclidean
-algorithm.
-In fact, for the rational numbers we similarly could have used $(p/q, 1)$ as
-the input.
+We cannot directly use the Euclidean algorithm for irrational numbers.
+It is not clear how we would split an irrational number $x$ into two inputs $(p, q)$ for the Euclidean algorithm.
+The solution is to look at the ratio between the two inputs in the Euclidean algorithm.
+Consider $x = 13/5$ again.
+In the first iteration, the ratio is $13/5 = 2 + 3/5$
+and in the second iteration the ratio is $5/3$.
+So what we are doing is removing the integer part of the fraction $p/q$ and
+then continuing with the inverse of the remainder, i.e. $q/r$.
+The extension to the real numbers is now straightforward.
+Instead of only allowing rational numbers as ratios,
+we can use any real number.
+This leads to the following algorithm to construct a continued fraction
+$[a₀; a₁, …]$ for a given number $x ∈ ℝ$:
 
-% TODO: We should probably use a simpler example
-\begin{example}
-  Consider $x = \sqrt{7}$.
-  The Euclidean algorithm proceeds as follows:
-  \[
-    \begin{array}{rclcrcl}
-      \sqrt{7}      & = & 2 · 1               + (\sqrt{7} - 2)    & ≈ & 2.6458 & = & 2 · 1 + 0.6458      \\
-      1             & = & 1 · (\sqrt{7} - 2)  + (3 - \sqrt{7})    & ≈ & 1      & = & 1 · 0.6458 + 0.3542 \\
-      \sqrt{7} - 2  & = & 1 · (3 - \sqrt{7})  + (2\sqrt{7} - 5)   & ≈ & 0.6458 & = & 1 · 0.3542 + 0.2915 \\
-      3 - \sqrt{7}  & = & 1 · (2\sqrt{7} - 5) + (8 - 3\sqrt{7})   & ≈ & 0.3542 & = & 1 · 0.2915 + 0.0627 \\
-      2\sqrt{7} - 5 & = & 4 · (8 - 3\sqrt{7}) + (14\sqrt{7} - 37) & ≈ & 0.2915 & = & 4 · 0.0627 + 0.0407 \\
-                    & ⋮ &                                         & ⋮ &        & ⋮ &
-    \end{array}
-  \]
-  This corresponds to the continued fraction $\sqrt{7} = [2; 1, 1, 1, 4, …]$.
-\end{example}
+\begin{enumerate}
+  \item Set $x_0 = x$ and $n = 0$.
+  \item Define $a_n = \floor{x_n}$.
+  \item Calculate $x_{n+1} = \frac{1}{x_n - a_n}$.
+  \item If $x_{n+1} ≠ 0$, increment $n$ and go to step 2.
+\end{enumerate}
+
+The terms $x_n$ are also called the \emph{$n$-th complete quotient} of $x$.
+The result is a continued fraction $[a₀; a₁, …]$ for each number $x ∈ ℝ$.
+Because the continued fraction $[a₀; a₁, …]$ is made up of integers and the
+ones after $a₀$ are all positive, its integer part is entirely determined by
+the first coefficient $a₀$ and its fractional part is determined by $[a₁; a₂, …]$.
 
 \begin{figure}[tb]
   \centering
@@ -271,6 +250,7 @@ the input.
   Consider the golden ratio $φ$.
   It is the positive real root of the polynomial $p(x) = x^2 - x - 1$,
   which means that it satisfies $φ = 1 + 1/φ$.
+  Since it is positive, we have $1 < φ = 1 + 1/φ < 2$ and $\floor{φ} = 1$.
   This makes the construction of the continued fraction particularly simple since
   \[
     φ = 1 + \cfrac{1}{1 + \cfrac{1}{1 + \cfrac{1}{⋱}}}.
@@ -293,8 +273,40 @@ Therefore, in the next rectangle only one square of length $φ - 1$ will be
 removed again.
 
 \begin{lemma}
+  \label{lem:cf-det}
+  $p_n q_{n-1} - q_n p_{n-1} = (-1)^{n+1}$ for $n ≥ -1$.
+\end{lemma}
+
+\begin{proof}
+  For $n = -1$, we have
+  \[
+    p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
+  \]
+  Suppose that the lemma holds for $n ≥ -1$, then
+  \begin{align*}
+    p_{n+1} q_n - q_{n+1} p_n
+    & = (p_n a_{n+1} + p_{n-1}) q_n - (q_n a_{n+1} + q_{n-1}) p_n \\
+    & = p_{n-1} q_n - q_{n-1} p_n \\
+    & = (-1) (p_n q_{n-1} - q_n p_{n-1}) \\
+    & = (-1)^{n+1}. \qedhere
+  \end{align*}
+\end{proof}
+
+The lemma already gives us a hint towards the convergence of continued fractions,
+because dividing the equation by $q_n q_{n-1}$ results in
+\[
+  \frac{p_n}{q_n} - \frac{p_{n-1}}{q_{n-1}} = \frac{(-1)^{n+1}}{q_n q_{n-1}}.
+\]
+Furthermore, $q_n$ and $q_{n-1}$ are always increasing.
+Therefore, the distance between consecutive convergents is always decreasing
+and the convergents themselves must approach some limit.
+In the following lemma, we show that this limit is exactly the number we are trying to represent.
+
+\begin{lemma}
   \label{lem:cf-approx}
-  Let $p_n/q_n$ be the convergents of $x ∈ ℝ$, then
+  Let $x ∈ ℝ$.
+  Suppose $[a₀; a₁, …]$ is the continued fraction constructed from $x$ with convergents $p_n/q_n$.
+  Then,
   \[
     \left| x - \frac{pₙ}{qₙ} \right| < \frac{1}{qₙ^2}.
   \]
@@ -302,55 +314,109 @@ removed again.
 
 % TODO: Have we proven that (p_{n-1} q_n - p_n q_{n-1}) = (-1)^n yet?
 \begin{proof}
-  Suppose $x = [a₀; a₁, …, a_{n-1}, xₙ]$ for some $xₙ ∈ ℝ$ and $pₙ/qₙ = [a₀; a₁, …, a_{n-1}, aₙ]$ with $aₙ = \floor{xₙ}$.
-  By Lemma~\ref{lem:cf-wallis},
+  Let $x_n = [a_n; a_{n+1}, …]$.
+  Then, $x = [a₀; a₁, …, a_{n-1}, x_n]$ and $a_n = \floor{x_n}$.
+  Using Lemma~\ref{lem:cf-wallis},
+  we can represent $x$ as well as $p_n/q_n$ using the previous convergents
+  $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ together with the coefficients $x_n$
+  and $a_n$, respectively.
+  It follows that
   \begin{align*}
-    \left| x - \frac{pₙ}{qₙ} \right|
     & = \left| \frac{x_n p_{n-1} + p_{n-2}}{x_n q_{n-1} + q_{n-2}} - \frac{a_n p_{n-1} + p_{n-2}}{a_n q_{n-1} + q_{n-2}} \right| \\
     & = \left| \frac{(x_n p_{n-1} + p_{n-2})(a_n q_{n-1} + q_{n-2}) - (x_n q_{n-1} + q_{n-2})(a_n p_{n-1} + p_{n-2})}{(x_n q_{n-1} + q_{n-2})(a_n q_{n-1} + q_{n-2})} \right| \\
-    & = \left| \frac{(p_{n-1} q_{n-2} - q_{n-1} p_{n-2})(x_n - a_n)}{((x_n - a_n) q_{n-1} + q_n) q_n} \right| \\
+    & = \left| \frac{(p_{n-1} q_{n-2} - q_{n-1} p_{n-2})(x_n - a_n)}{((x_n - a_n) q_{n-1} + q_n) q_n} \right|.
+  \end{align*}
+  Applying Lemma~\ref{lem:cf-det} completes the proof:
+  \begin{align*}
+    \left| x - \frac{pₙ}{qₙ} \right|
     & = \Biggl| \frac{(-1)^{n+1} \overbrace{(x_n - a_n)}^{≤ 1}}{q_n^2 + \underbrace{(x_n - a_n)}_{≥ 0} q_{n-1} q_n} \Biggr| < \frac{1}{q_n^2}. \qedhere
   \end{align*}
 \end{proof}
 
+We now have a continued fraction for both rational number and irrational numbers.
+What remains to be shown is that the continued fractions are unique.
+This would give us a representation for every real number $x ∈ ℝ$ using a
+continued fraction $[a₀; a₁, …]$, which is constructed using the Euclidean
+algorithm.
+
 \begin{theorem}
   \label{thm:irrat-cf}
-  Every irrational number has a unique continued fraction.
+  Every real number $x$ has a unique continued fraction.
 \end{theorem}
 
 \begin{proof}
-  From the previous lemma it follows that $[a₀; a₁, …] = \lim_{n → ∞} [a₀; a₁, …, aₙ] = x$.
-  Suppose there is a different sequence $\{b_n\}_{n ≥ 0}$ with $[b₀; b₁, …] = x$.
-  % TODO
-  Therefore, the sequence $\{aₙ\}_{n ≥ 0}$ is unique.
+  From the previous considerations, it follows that for every number $x ∈ ℝ$,
+  there exists a continued fraction $[a₀; a₁, …]$ such that $[a₀; a₁, …] = x$.
+  Suppose there is a different continued fraction $[b₀; b₁, …]$ with $[b₀; b₁, …] = x$.
+  Because $[0; a₁, a₂, …]$ and $[0; b₁, b₂, …]$ both lie between $0$ and $1$,
+  the continued fractions must share the same first coefficient $a₀ = b₀$.
+  Otherwise, they would not have the same integer part and represent different numbers.
+  By induction, suppose that the first $n ≥ 0$ terms are equal.
+  Then, the continued fractions $[a_{n+1}; a_{n+2}, …]$ and $[b_{n+1}; b_{n+2}, …]$ must be equal.
+  But by the same argument, we have $a_{n+1} = b_{n+1}$.
+  Therefore, the continued fraction $[a₀; a₁, …]$ is unique.
 \end{proof}
 
 % ==============================================================================
 \section{The Geometry behind Continued Fractions}
 % ==============================================================================
 
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/klein-polygon}
-  \caption{
-    A Klein polygon for $\sqrt{2}$.
-  }
-  \label{fig:klein-polygon}
-\end{figure}
-
 With the prospect of the generalized Euclidean algorithm, I present a geometric
 proof based on Klein \cite{Klein95}.
-The basis behind this proof is that instead of viewing the convergents $p_n/q_n$ as
-fractions on a 1-dimensional number line,
-we view them as two dimensional integer vectors $B_n$, where the first coordinate
-represents the numerator $p$ and the second coordinate the denominator $q$.
+The basis behind his interpretation is that instead of viewing the convergents
+$p_n/q_n$ as fractions on a 1-dimensional number line,
+we view them as two dimensional integer vectors $b_n$, where the first
+coordinate represents the numerator $p_n$ and the second coordinate the
+denominator $q_n$.
+There are now two different ways to calculate the convergent vector $b_n$.
 
-From Lemma~\ref{lem:cf-wallis},
-we directly know that the vectors $B_n$ can be calculated as follows:
+The first follows directly from the definition of the continued fractions.
+Suppose we have the vector $\tilde b_{n-1} = (\tilde p_{n-1}, \tilde q_{n-1})^⊤$
+for the continued fraction $[a₁; a₂, …, aₙ]$.
+To calculate the convergent of $[a₀; a₁, …, aₙ]$,
+we would calculate the reciprocal of $\tilde p_{n-1} / \tilde q_{n-1}$ first
+and then add the integer part $a₀$ to it.
+The equivalent of calculating the reciprocal in the vector space is swapping the two coordinates
+since $\tilde b_{n-1} = (\tilde p_{n-1}, \tilde q_{n-1})^⊤$ is the vector for $\tilde p_{n-1} / \tilde q_{n-1}$
+and therefore $(\tilde q_{n-1}, \tilde p_{n-1})^⊤$ must be the vector for $\tilde q_{n-1} / \tilde p_{n-1}$.
+The second part is adding some integer part $a₀$ to the reciprocal.
+This is equivalent to adding $a₀ q$ to the first coordinates
+or skewing the vector using linear transformation $S$.
+In fact, the reciprocal can also be done by a matrix transformation $R$.
+These matrices are defined as follows:
+\[
+  S^a =
+  \begin{pmatrix}
+    1 & 1 \\
+    0 & 1 \\
+  \end{pmatrix}^a
+  =
+  \begin{pmatrix}
+    1 & a \\
+    0 & 1 \\
+  \end{pmatrix},
+  \quad
+  R =
+  \begin{pmatrix}
+    0 & 1 \\
+    1 & 0 \\
+  \end{pmatrix}.
+\]
+The vector $b_n$ can then be calculated using
+\[
+  b_n = S^{a_0} R \tilde b_{n-1}.
+\]
+
+The second way to calculate the convergent vectors follows from Lemma~\ref{lem:cf-wallis}.
+We already know that the vectors $b_n$ can be calculated as follows:
 \begin{align*}
-  B_n =
+  b_n =
   \begin{pmatrix}
     p_n \\ q_n
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    p_{n-1} a_n + p_{n-2} \\ q_{n-1} a_n + q_{n-2}
   \end{pmatrix}
   =
   \begin{pmatrix}
@@ -361,16 +427,67 @@ we directly know that the vectors $B_n$ can be calculated as follows:
   \begin{pmatrix}
     p_{n-2} \\ q_{n-2}
   \end{pmatrix}
-  = B_{n-1} a_n + B_{n-2}
+  = b_{n-1} a_n + b_{n-2}.
 \end{align*}
+We combine the previous two vectors in a matrix $B_n = \begin{pmatrix}
+  b_{n-1} & b_{n-2} \\
+\end{pmatrix}$.
+We can calculate the next matrix by multiplying with the matrices $S$ and $R$:
+\[
+  B_n S^{a_n} R =
+  \begin{pmatrix}
+    p_{n-1} & p_{n-2} \\
+    q_{n-1} & q_{n-2} \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    a_n & 1 \\
+    1   & 0 \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    p_{n-1} a_n + p_{n-2} & p_{n-1} \\
+    q_{n-1} a_n + q_{n-2} & q_{n-1} \\
+  \end{pmatrix}
+  =
+  B_n.
+\]
+Since $\det(S^a) = \det(S)^a = 1$ and $\det(R) = -1$, it is straightforward to
+see that $B_n$ always has determinant $±1$.
+But this was proven already by Lemma~\ref{lem:cf-det}.
+
+\begin{figure}[tb]
+  \centering
+  \includestandalone{figures/klein-polygon}
+  \caption{
+    A Klein polygon for $\sqrt{2}$.
+  }
+  \label{fig:klein-polygon}
+\end{figure}
+
 This can also be interpreted geometrically, as shown in Figure~\ref{fig:klein-polygon}.
-We begin with the unit vectors $(1, 0)$ and $(0, 1)$.
-Then, we start at the point $B_{-2} = (0, 1)$ and draw a line using the vector $B_{-1} = (1, 0)$.
+We begin with the unit vectors $b_{-1} = (1, 0)$ and $b_{-2} = (0, 1)$.
+To calculate the next vector, we start at the point $b_{-2} = (0, 1)$ and draw a line using the vector $b_{-1} = (1, 0)$.
 This line intersects the irrational line $(1, α)$ at some point
-and the next vector $B_0$ is the integer lattice point on the line before the
+and the next vector $b_0$ is the integer lattice point on the line before the
 intersection.
-We continue with $B_{-1}$ and draw a line using the vector $B_0$.
-The next vector $B_2$ is the integer lattice point before the intersection with $(1, α)$, again.
+We continue with $b_{-1}$ and draw a line using the vector $b_0$.
+The next vector $b_2$ is the integer point before the intersection with $(α, 1)$, again.
+
+The even and odd vectors each form a polygonal chain which gets closer and
+closer to the irrational line.
+In his original lecture notes, Klein showed that the vectors are indeed the
+closest points to the irrational line $α$ and furthermore he has shown the converse:
+The closest point are either convergents or they lie on a line between two
+convergents.
+
+\begin{definition}
+  A point $(p, q) ∈ ℤ^2 \setminus \{(0, 0)\}$ is a \emph{relative minimum} with
+  respect to an irrational line $(α, 1)$, if for every point $(p', q') ∈ ℤ^2$
+  with $p' ≤ p$ \emph{or} $q ≤ q'$, we have
+  \[
+    |q α - p| ≤ |q' α - p'|.
+  \]
+\end{definition}
 
 \begin{figure}[tb]
   \centering
@@ -382,22 +499,6 @@ The next vector $B_2$ is the integer lattice point before the intersection with 
   }
 \end{figure}
 
-\begin{lemma}
-  $\det\begin{pmatrix} B_n & B_{n-1} \end{pmatrix} = ±1$.
-\end{lemma}
-
-In his original lecture notes \cite{Klein95},
-Klein showed that the closest points to the irrational line $α$ are convergents and
-vice-versa.
-
-\begin{definition}
-  A nonzero point $(p, q) ∈ ℤ^2$ is a \emph{relative minimum} with respect to a
-  line $(1, α)$, if for every point $(p', q') ∈ ℤ^2$ with $p' ≤ p$ or $q ≤ q'$,
-  \[
-    |q α - p| ≤ |q' α - p'|.
-  \]
-\end{definition}
-
 \begin{theorem}
   \label{thm:conv-is-relmin}
   Every convergent is a relative minimum.
@@ -405,9 +506,9 @@ vice-versa.
 
 \begin{proof}
   For the first two convergents, this is obviously true.
-  By induction, suppose that the convergent $B_{n-1}$ and $B_n$ are relative minima.
-  Reflecting $B_{n+1}$ across the line $α$ produces two parallel lines:
-  One going through $B_{n+1}$ and one going through the reflected point.
+  By induction, suppose that the convergent $b_{n-1}$ and $b_n$ are relative minima.
+  Reflecting $b_{n+1}$ across the line $α$ produces two parallel lines:
+  One going through $b_{n+1}$ and one going through the reflected point.
   Any point which is closer must lie in the cylinder between the two lines.
   Next, we construct a parallelogram from the origin and the points $B_{n-1}, B_n$ and $B_{n+1}$.
   There are two cases for this parallelogram:
@@ -439,15 +540,14 @@ vice-versa.
 \section{Continued Fractions of Quadratic Irrationals}
 % ==============================================================================
 
-% TODO: There are still some issues with this section, like what about
-% quadratic irrationals which aren't square roots?
-
-\begin{definition}
-  A continued fraction $[a₀; a₁, …]$ is called \emph{eventually periodic}
-  if there exists an index $K ≥ 0$ and a period $ℓ ≥ 1$ such that $aₖ = a_{k+ℓ}$ for every $k ≥ K$.
-  A continued fraction is called \emph{purely periodic} if $k₀ = 0$.
-\end{definition}
-
+% TODO: Write introduction for this section
+This section is about the second part of Hermite's question for quadratic
+irrationals, i.e. whether the continued fraction of a number is periodic if and only
+if the number is a quadratic irrational.
+Formally, we call a continued fraction $[a₀; a₁, …]$ \emph{periodic}
+if there exists a starting index $K ≥ 0$ and a period $ℓ ≥ 1$ such that $aₖ = a_{k+ℓ}$ for every $k ≥ K$.
+A continued fraction is called \emph{purely periodic} if $K = 0$,
+i.e. the period starts immediately.
 For a periodic continued fraction starting at $K$ with length $ℓ$,
 we will denote it as $[a₀; a₁, …, a_{K-1}, \overline{a_K, …, a_{K+ℓ}}]$.
 This is similar to how in decimal notation, we denote a period with a bar over the digits,
@@ -456,81 +556,119 @@ In a continued fraction, we similarly denote the period with a line over the
 coefficients that are infinitely repeated.
 
 \begin{example}
-  Consider $x = \sqrt{2}$.
-  We can rewrite $x$ as follows:
-  \begin{align*}
-    x
-    = 1 + (\sqrt{2} - 1)
-    = 1 + \frac{(\sqrt{2} - 1) (1 + \sqrt{2})}{1 + \sqrt{2}}
-    = 1 + \frac{1}{1 + \sqrt{2}}
-  \end{align*}
-  Expanding $\sqrt{2}$ in the equation infinitely many times gives us
-  \begin{align*}
-    \sqrt{2}
-    = 1 + \frac{1}{2 + \cfrac{1}{2 + \cfrac{1}{2 + \cfrac{1}{⋱}}}}.
-  \end{align*}
-  So the continued fraction of $\sqrt{2}$ is $[1; \overline{2}]$.
+  We construct the continued fraction for $x = \sqrt{2}$.
+  Because the root lies between $1$ and $2$, the first term must be $a₀ = 1$.
+  The next complete quotient is
+  \[
+    x₁ = \frac{1}{\sqrt{2} - 1} = \frac{\sqrt{2} + 1}{(\sqrt{2} - 1)(\sqrt{2} + 1)} = \sqrt{2} + 1.
+  \]
+  It lies between $2$ and $3$,
+  so the next term is $a₁ = 2$.
+  However, the next complete quotient is the same, since
+  \[
+    x₂ = \frac{1}{\sqrt{2} - 1} = \sqrt{2} + 1 = x₁.
+  \]
+  Therefore, terms will repeat and the resulting continued fraction for $\sqrt{2}$ is $[1; \overline{2}]$.
 \end{example}
 
-The interesting connection between the quadratic irrationals and continued
-fraction is that a continued fraction of a number $x ∈ ℝ$ is eventually
-periodic if and only if $x$ is a quadratic irrational.
-We begin with the first direction:
+For the proof, we have to show two directions.
+The first is that every periodic continued fraction is a quadratic irrational
+and the second is that every quadratic irrational has a periodic continued fraction.
+We begin with the former and we will use the geometry from the previous section
+in the proof.
 
 \begin{theorem}
-  If the continued fraction of a number $x ∈ ℝ$ is eventually periodic, then $x$ is a quadratic irrational.
+  If the continued fraction of $x ∈ ℝ$ is periodic, then $x$ is a quadratic irrational.
 \end{theorem}
 
 \begin{proof}
-  Let $x$ be a continued fraction $[a₀; a₁, …]$ with a period of length $ℓ ≥ 1$
-  starting at an index $k ≥ 0$,
-  i.e. $x_k = [a_k; a_{k+1}, …] = [a_{k+ℓ}; a_{k+ℓ+1}, …] = x_{k+ℓ}$.
-  By Lemma~\ref{lem:cf-wallis}, we have
+  Let $x$ be a continued fraction $[a₀; a₁, …]$, which is purely periodic.
+  Then, there exists a complete quotient such that $x = x_ℓ = [a_ℓ; a_{ℓ+1}, …]$ for some $ℓ ≥ 1$.
+  For each pair of convergent vectors $b_{n-1}, b_{n-2}$,
+  we can use the complete quotient $x_ℓ$ to find an intersection point with the
+  line $(x, 1)$ and since $x_ℓ = x$, we can also use $x$.
+  Stated differently, there exists a $λ ∈ ℝ$ such that
   \[
-    x
-    = \frac{p_k x_k + p_{k-1}}{q_k x_k + q_{k-1}}
-    = \frac{p_{k+ℓ} x_{k+ℓ} + p_{k+ℓ-1}}{q_{k+ℓ} x_{k+ℓ} + q_{k+ℓ-1}}
-    = \frac{p_{k+ℓ} x_k + p_{k+ℓ-1}}{q_{k+ℓ} x_k + q_{k+ℓ-1}}
+    B_ℓ
+    \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    =
+    b_{ℓ-1} x + b_{ℓ-2}
+    = λ
+    \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
   \]
-  Multiplying by the denominators on both sides results in the quadratic equation
+  Therefore, $(x, 1)^⊤$ is an eigenvector of the matrix $B_ℓ$
+  and $λ$ is the eigenvalue.
+  Because $B$ is a 2-by-2 matrix,
+  the eigenvalue can only be a quadratic irrational.
+  The eigenvector is a solution to the linear system $(B_ℓ - λ I_2) (x, 1) = 0$,
+  where the coefficients come from the field $ℚ(λ)$.
+  Therefore, $x$ must be a quadratic irrational.
+
+  We proceed with the eventually-periodic case
+  where some index $k ≥ 0$ exists after which the period begins.
+  By Lemma~\ref{lem:cf-wallis},
   \[
-    (q_{k+ℓ} x_k + q_{k+ℓ-1})(p_k x_k + p_{k-1}) - (q_k x_k + q_{k-1}) (p_{k+ℓ} x_k + p_{k+ℓ-1}) = 0.
+    x = \frac{p_{k-1} x_k + p_{k-2}}{q_{k-1} x_k + q_{k-2}}.
   \]
-  Hence, the complete quotient $x_k$ is a quadratic irrational and
-  since $x$ is a rational expression of $x_k$ it must also be a quadratic irrational.
+  Because $x$ is a rational expression of $x_k$,
+  it lives in the same field as $x_k$.
+  The continued fraction for $x_k$ is purely periodic, so $x_k$ is a quadratic irrational.
+  But then $x$ is one, too.
 \end{proof}
 
 % TODO: Figure for shift of Klein polygon
 The converse was originally proven by Lagrange \cite{Lagrange70}.
 Here, a proof by Korkina \cite{Korkina96} is presented,
-which uses the geometrical interpretation to show periodicity.
+which uses the geometrical interpretation of Klein to show periodicity.
 The idea is that for quadratic irrationals,
-there always exists a matrix $A$ which shifts the boundary of a Klein polygon
-in the positive direction and preserves the volume between the extreme points.
-Because the volume corresponds to the coefficients $a_0, a_1, …$, they must
-repeat at some point.
+there always exists a matrix $U$ which shifts the boundary of a Klein polygon
+in the positive direction and preserves volume.
+Because the volume between two vectors $b_n, b_{n-2}$ directly corresponds to
+the coefficients $a_0, a_1, …$, they must repeat at some point.
+
 The first task is to show that such a matrix actually exists.
+We show this by interpreting the convergent vectors as members of the
+quadratic field $ℚ(x)$.
+The number $x$ is a quadratic irrational, so $ℚ(x)$ is isomorphic to a
+two-dimensional vector space.
+Each vector $b_n$ then has an associated multiplication matrix $M_n$,
+where determinant of this matrix is the algebraic norm $N(b_n)$ of the vectors.
+We show that this norm is bounded independently of $n$.
 
 \begin{lemma}
-  The norm of the convergents $N(β_n)$ is bounded by some constant $c$ independent of $n$.
+  The norm $N(p_n + q_n x)$ is bounded by some constant $c$.
 \end{lemma}
 
 \begin{proof}
+  Suppose $x$ satisfies $Ax^2 + Bx + C = 0$ with $A, B, C ∈ ℤ$.
+  Then, The norm for any element $p + qx ∈ ℚ(x)$ is
+  \[
+    N(p + qx) = Ap^2 + Bpq + Cq^2.
+  \]
   By Lemma~\ref{lem:cf-approx}, there exists some $δₙ ∈ ℝ$ with $|δₙ| < 1$
-  such that $pₙ = qₙ \sqrt{D} + \frac{δₙ}{qₙ}$.
+  such that $pₙ = qₙ x + \frac{δₙ}{qₙ}$.
   Therefore, we can bound the norm by
   \begin{align*}
-    |N(αₙ)|
-    & = |pₙ^2 - D qₙ^2| \\
-    & = \left|\left(qₙ \sqrt{D} + \frac{δₙ}{qₙ} \right)^2 - Dqₙ^2\right| \\
-    & = \Biggl|qₙ^2 D + 2δ \sqrt{D} + \underbrace{\frac{δₙ^2}{qₙ^2}}_{\le 1} - Dqₙ^2\Biggr| \\
-    & \le 2 \sqrt{D} + 1 \qedhere
+    |N(p_n + q_n x)|
+    & = |A pₙ^2 + B pₙ qₙ + C qₙ^2| \\
+    & = \left|A \left(qₙ x + \frac{δₙ}{qₙ} \right)^2 + B \left(qₙ x + \frac{δₙ}{qₙ} \right) + C qₙ^2\right| \\
+    & = \left|\underbrace{(Ax^2 + Bx + C)}_{= 0} qₙ^2 + 2 A δₙ x + B \frac{δₙ}{qₙ} + A \frac{δₙ^2}{qₙ^2} \right| \\
+    & \le (2|x| + 1)|A| + |B|. \qedhere
   \end{align*}
 \end{proof}
 
+From the lemma, it follows that there must be two different vectors $b_n, b_m$,
+which have the same norm.
+
 \begin{corollary}
-  For every quadratic irrational $x$, there exists a matrix $U ∈ ℤ^{2×2}$ with
-  determinant $1$, which has eigenvectors $(1, x)$ and $(1, \overline{x})$.
+  For every quadratic irrational $x$, there exists an integer matrix $U ≠ I_2$
+  with determinant $1$, which has eigenvectors $(x, 1)$ and $(\overline{x}, 1)$.
 \end{corollary}
 
 \begin{example}
@@ -542,8 +680,50 @@ The first task is to show that such a matrix actually exists.
     U = \begin{pmatrix}
       3 & 4 \\
       2 & 3 \\
+    \end{pmatrix},
+  \]
+  which has determinant $1$ by definition.
+  Furthermore,
+  \[
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      \sqrt{2} \\ 1 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      4 + 3\sqrt{2} \\
+      3 + 2\sqrt{2} \\
+    \end{pmatrix}
+    =
+    (3 + 2\sqrt{2})
+    \begin{pmatrix}
+      \sqrt{2} \\ 1 \\
     \end{pmatrix}
   \]
+  and
+  \[
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      -\sqrt{2} \\ 1 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      4 - 3\sqrt{2} \\
+      3 - 2\sqrt{2} \\
+    \end{pmatrix}
+    =
+    (3 - 2\sqrt{2})
+    \begin{pmatrix}
+      -\sqrt{2} \\ 1 \\
+    \end{pmatrix}.
+  \]
+  Therefore, it has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors.
 \end{example}
 
 \begin{theorem}
@@ -553,26 +733,23 @@ The first task is to show that such a matrix actually exists.
 
 \begin{proof}
   For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
-  non-identity matrix $A ∈ ℤ^{2×2}$ with $\det(A) = 1$ which has $(1, x)$ and
+  non-identity matrix $U ∈ ℤ^{2×2}$ with $\det(U) = 1$ which has $(1, x)$ and
   $(1, \overline{x})$ as eigenvectors of this matrix.
   Because the Klein polygon $K$ is the set of integer points in the cone
   spanned by these eigenvectors, it must be invariant under this transformation.
   Similarly, the boundary $Π(K)$ is also invariant under this transformation.
   However, $A$ is not the identity, so the matrix $A$ must shift the points along the boundary.
-  We assume WLOG that it shifts it in the positive direction,
+  We assume that it shifts it in the positive direction,
   i.e. $B_{n+k} = A B_n$ for some $k ≥ 1$.
-  If not, then we can choose $A^{-1}$ as the transformation.
+  If not, then we can choose $A^{-1}$ to shift them in the positive direction.
   Because $\det(A) = 1$, the matrix $A$ preserves volume, so
   \[
-    a_{n+k} =
-    \det\begin{pmatrix}
-      B_{n+k} & B_{n+k-2}
-    \end{pmatrix}
+    a_{n+k}
     = \det\begin{pmatrix}
-      A B_n & A B_{n-2}
+      b_{n+k} & b_{n+k-2}
     \end{pmatrix}
     = \det(A) \det\begin{pmatrix}
-      B_n & B_{n-2}
+      b_n & b_{n-2}
     \end{pmatrix}
     = a_n.
   \]
@@ -582,16 +759,16 @@ The first task is to show that such a matrix actually exists.
 % TODO: Define T_a
 \begin{example}
   Consider the matrix $U$ from Example~\ref{ex:sqrt2-unit}.
-  The matrix must have $(1, \sqrt{2})$ and $(1, -\sqrt{2})$ as eigenvectors,
-  since it is a multiplication
+  The matrix has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors
+  and it has determinant $1$.
   Furthermore, the matrix shifts each convergents by two,
   because
   \[
-    B_n = T_2^{n-1} T_1 e_1
+    B_n = B_{n-2} S^2 R S^2 R
     \qquad
     \text{ and }
     \qquad
-    A_2^2 =
+    S^2 R S^2 R =
     \begin{pmatrix}
       1 & 2 \\
       1 & 1 \\
