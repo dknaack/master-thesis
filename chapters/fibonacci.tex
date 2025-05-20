@@ -358,7 +358,7 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   % TODO: Fix indices
   Suppose the algorithm requires $n$ steps for some input $x' = (p₁'/q', …, p_d'/q')$.
   The particular order of the values in $x'$ does not matter for the strategy.
-  Hence, we can assume WLOG that $q' < p_2' < p_3' < … < p_d' < p_1'$.
+  Hence, we can assume without loss of generality that $q' < p_2' < p_3' < … < p_d' < p_1'$.
   By induction, $q' ≥ F(n)$ and because $p_1'$ is the largest value,
   \begin{align*}
     p_{σ(1)}' & ≥ \sum_{k=0}^d F(n - k) = F(n + 1).
@@ -491,7 +491,7 @@ and the last element is
     p_{σ(i)}' & ≥ F(n - i)
     \text{ for every } i ≤ d - 1.
   \end{align*}
-  We assume WLOG that $σ(i) = i$ and that it orders the elements in increasing order.
+  We assume without loss of generality that $σ(i) = i$ and that it orders the elements in increasing order.
   Because $p_{σ(d)}$ is the largest element in $x'$, we have $ℓ = σ(d) = d$.
   However, $x_ℓ$ cannot be the largest element in $x$ because of the strategy.
   Therefore, $a_ℓ = 0$ and there exists another element $x_k$ with $k ≠ ℓ$ and $a_k ≥ 1$.
@@ -585,7 +585,7 @@ two iterations using the golden ratio $φ$.
 \end{theorem}
 
 \begin{proof}
-  We assume WLOG that the vector is sorted in increasing order and
+  We assume without loss of generality that the vector is sorted in increasing order and
   $0 ≤ x_i ≤ 1$ for every $i ≤ d$.
   For a contradiction, assume the algorithm yields a smaller decrease than $φ^{d+1}$ on input $x$.
   We must have $x_i > φ^{d+1-i}$ for every $i = 1, \dots, d$.
@@ -703,7 +703,7 @@ recurrences like the Fibonacci sequence with their respective golden ratio.
 
 \begin{definition}
   The \emph{characteristic polynomial} of a linear recurrence~$F$ with
-  non-negative integer coefficients~$a_0, \dots, a_d$ is defined as
+  nonnegative integer coefficients~$a_0, \dots, a_d$ is defined as
   \[
     p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
   \]
@@ -818,7 +818,7 @@ where $s_n$ is always increasing and $t_n$ is decreasing.
   \]
   using $λ_i = F(n - i) / F(n + 1)$.
   To show that this is indeed a convex combination, all coefficients $λ_i$
-  need to be non-negative and $λ₀ + λ₁ + \dots + \lambda_d = 1$.
+  need to be nonnegative and $λ₀ + λ₁ + \dots + \lambda_d = 1$.
   The former follows from the fact that Fibonacci numbers are always increasing,
   while the latter follows simply from the definition of the Fibonacci numbers.
   Because $s_n$ is the minimum and $t_n$ the maximum of $r_n, r_{n-1}, …, r_{n-d}$,
@@ -982,7 +982,7 @@ The generalization considers higher-degree polynomials of the form
 \[
   x^{d+1} - a_d x^d - \dots - a_1 x - 1
 \]
-with non-negative integer coefficients $a_1, a_2, …, a_d$.
+with nonnegative integer coefficients $a_1, a_2, …, a_d$.
 Each of these polynomials has a corresponding linear recurrence,
 which can be reconstructed by the characteristic polynomial.
 For the linear recurrence,

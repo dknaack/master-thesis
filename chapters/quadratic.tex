@@ -41,7 +41,7 @@ and $a₀, a₁, …$ will denote a sequence of positive integers with the excep
 of the first entry $a₀$, which can be any integer.
 
 \begin{definition}
-  Given a sequence $\{r_n\}_{n ≥ 0}$ of real numbers, the finite continued
+  Given a sequence $(r_n)_{n ≥ 0}$ of real numbers, the finite continued
   fractions over this sequence are defined inductively as
   \[
     [r₀] = r₀, \qquad
@@ -557,7 +557,7 @@ This is shown in the following theorem.
 
 \begin{corollary}
   The vertices of the Klein polygons $K_0$ and $K_1$ are exactly equal to the even
-  convergents $\{b_{2n}\}_{n ≥ -1}$ and odd convergents $\{b_{2n+1}\}_{n ≥
+  convergents $(b_{2n})_{n ≥ -1}$ and odd convergents $(b_{2n+1})_{n ≥
   -1}$, respectively.
 \end{corollary}
 
@@ -607,11 +607,11 @@ in the proof.
 \end{theorem}
 
 \begin{proof}
-  Let $x$ be a continued fraction $[a₀; a₁, …]$, which is purely periodic.
+  Let $x$ be a purely periodic continued fraction $[a₀; a₁, …]$.
   Then, there exists a complete quotient such that $x = x_ℓ = [a_ℓ; a_{ℓ+1}, …]$ for some $ℓ ≥ 1$.
-  For each pair of convergent vectors $b_{n-1}, b_{n-2}$,
-  we can use the complete quotient $x_ℓ$ to find an intersection point with the
-  line $(x, 1)$ and since $x_ℓ = x$, we can also use $x$.
+  For each pair of convergent vectors $b_{n-1}, b_{n-2}$, we can use the
+  complete quotient $x_ℓ$ to find an intersection point with the line $(x, 1)$
+  and since $x_ℓ = x$, we can also use $x$ itself.
   Stated differently, there exists a $λ ∈ ℝ$ such that
   \[
     B_ℓ
@@ -785,7 +785,7 @@ points along the boundary.
 
 \begin{proof}
   For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
-  non-identity matrix $U$ with $\det(U) = 1$ which has $(x, 1)^⊤$ and
+  nonidentity matrix $U$ with $\det(U) = 1$ which has $(x, 1)^⊤$ and
   $(\overline{x}, 1)^⊤$ as eigenvectors of this matrix.
   Applying $U$ on the Klein polygon, we have
   \begin{align*}
