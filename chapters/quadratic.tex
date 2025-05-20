@@ -543,6 +543,31 @@ convergents.
 
 \end{proof}
 
+\begin{definition}
+  Let $v₁, v₂ ∈ ℝ^2$ be two linearly independent vectors.
+  Consider the cone $C$ in $ℝ^2$ bounded by the two rays of $v₁, v₂$. That is
+  \[
+    C = \{ λ₁ v₁ + λ₂ v₂ \mid λ₁, λ₂ ≥ 0 \}.
+  \]
+  The \emph{Klein polygon} $K$ spanned by $v₁, v₂$ is defined as the convex hull
+  of all nonzero integer points inside the cone, i.e.
+  \[
+    K = \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\}).
+  \]
+  The boundary of the polygon is denoted as $Π(K)$.
+\end{definition}
+
+The even and odd convergent vectors are part of two such Klein polygons.
+The even convergents are part of the Klein polygon spanned by $(0, 1)$ and $(x, 1)$,
+and the odd convergents are part of the Klein polygon spanned by $(x, 1)$ and $(1, 0)$.
+An immediate consequence of the previous two theorems is the following:
+
+\begin{corollary}
+  Every convergent vector is an extreme point in the Klein polygon spanned by the
+  vectors $(0, 1)$ and $(x, 1)$ or by the vectors $(x, 1)$ and $(1, 0)$, and
+  vice-versa.
+\end{corollary}
+
 % ==============================================================================
 \section{Continued Fractions of Quadratic Irrationals}
 % ==============================================================================
