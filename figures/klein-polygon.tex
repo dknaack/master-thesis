@@ -6,42 +6,50 @@
 \begin{tikzpicture}[scale=0.7]
   \tikzset{font=\footnotesize, >=stealth}
   % Axes
-  \draw[black!20] (-0.5, -0.5) grid (8.5, 8.5);
   \draw[->] (-0.5,0) -- (8.5,0) node[right] {$x$};
   \draw[->] (0,-0.5) -- (0,8.5) node[above] {$y$};
-  \node[above left]  at (0, 1) {$B_{-2}$};
-  \node[below right] at (1, 0) {$B_{-1}$};
-  \node[above] at (1, 1) {$B₀$};
-  \node[below right] at (3, 2) {$B₁$};
-  \node[above] at (7, 5) {$B₂$};
-  \node[right] at (8, {8/sqrt(2)}) {$x/y = \sqrt{2}$};
+  \node[above left]  at (0, 1) {$b_{-2}$};
+  \node[below right] at (1, 0) {$b_{-1}$};
+  \node[above] at (1, 1) {$b₀$};
+  \node[below right] at (3, 2) {$b₁$};
+  \node[above] at (7, 5) {$b₂$};
+  \node[above right] at (8.5, {8.5/sqrt(2)}) {$x/y = \sqrt{2}$};
+  \fill (0, 0) circle (3pt);
 
-  \clip (0, 0) rectangle (8.5, 8.5);
-
-  \fill[blue!50!black] (1, 1) circle[radius=3pt];
-  \fill[blue!50!black] (0, 1) circle[radius=3pt];
-  \fill[blue!50!black] (4, 3) circle[radius=2pt];
-  \fill[blue!50!black] (7, 5) circle[radius=3pt];
-
-  \fill[red!50!black] (1, 0) circle[radius=3pt];
-  \fill[red!50!black] (2, 1) circle[radius=2pt];
-  \fill[red!50!black] (3, 2) circle[radius=3pt];
-  \fill[red!50!black] (10, 7) circle[radius=2pt];
-
-  \iffalse
-  \draw[thick, red!50!black, ->] (0, 0) -- (1, 0);
-  \draw[thick, blue!50!black, ->] (0, 0) -- (0, 1);
-  \fi
-
+  \clip (-0.5, -0.5) rectangle (8.5, 8.5);
   \draw[dashed] (0, 0) -- (8.5, {8.5/sqrt(2)});
-  \draw[thick, blue!50!black] (0, 1) -- (1, 1) -- (7, 5) -- (41, 29);
-  \draw[thick, red!50!black] (1, 0) -- (3, 2) -- (17, 12);
 
-  % Hyperbola branch
+  \def\OddConv{0/1, 1/1, 4/3, 7/5, 17/12}
+  \def\EvenConv{1/0, 2/1, 3/2, 10/7, 41/29}
+
+  \foreach \x/\y in \OddConv {
+    \fill[red!50!black] (+\x, +\y) circle[radius=3pt];
+  }
+
+  \foreach \x/\y in \EvenConv {
+    \fill[blue!50!black] (+\x, +\y) circle[radius=3pt];
+  }
+
+  \draw[thick, red!50!black] (0, 1)
+    \foreach \x/\y in \OddConv { -- (\x, \y) } ;
+  \draw[thick, blue!50!black] (1, 0)
+    \foreach \x/\y in \EvenConv { -- (\x, \y) };
+
   \begin{scope}[on background layer]
-    \clip (0, 0) rectangle (8.5, 8.5);
-    \fill[blue!20] (0, 0) -- (0, 1) -- (1, 1) -- (7, 5) -- (41, 29) -- (0, 29);
-    \fill[red!20] (0, 0) -- (1, 0) -- (3, 2) -- (17, 12) -- (17, 0);
+    \clip (-0.5, -0.5) rectangle (8.5, 8.5);
+    \foreach \x in {1, ..., 8}
+    \foreach \y in {1, ..., 8}
+      \fill[black!50] (\x, \y) circle (2pt);
+    \foreach \x in {0, ..., 8}
+    {
+      \fill[black] (\x, 0) circle (2pt);
+      \fill[black] (0, \x) circle (2pt);
+    }
+
+    \fill[red, opacity=0.2] (0, 12)
+      \foreach \x/\y in \OddConv { -- (\x, \y) } -- cycle;
+    \fill[blue, opacity=0.2] (41, 0)
+      \foreach \x/\y in \EvenConv { -- (\x, \y) } -- cycle;
   \end{scope}
 \end{tikzpicture}
 \end{document}
