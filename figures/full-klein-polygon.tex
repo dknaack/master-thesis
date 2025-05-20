@@ -1,0 +1,105 @@
+\documentclass[tikz]{standalone}
+
+\tikzset{>=stealth}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.5]
+  \tikzset{font=\footnotesize, >=stealth}
+  % Axes
+  \node[above] at (8, {8/sqrt(2)}) {$x/y = \sqrt{2}$};
+  \node[below] at (8, {-8/sqrt(2)}) {$x/y = -\sqrt{2}$};
+  \node[below] at (0, 0) {$0$};
+  \fill (0, 0) circle (3pt);
+
+  \clip (-8.5, -7.5) rectangle (8.5, 7.5);
+  \draw (-8, {-8/sqrt(2)}) -- (8, {8/sqrt(2)});
+  \draw (-8, {8/sqrt(2)}) -- (8, {-8/sqrt(2)});
+
+  \coordinate (B-1) at (1, 0);
+  \coordinate (B-2) at (0, 1);
+  \def\OddConv{0/1, 1/1, 4/3, 7/5, 17/12}
+  \def\EvenConv{1/0, 2/1, 3/2, 10/7, 41/29}
+
+  \foreach \x/\y in \OddConv {
+    \fill[red!50!black] (+\x, +\y) circle[radius=3pt];
+    \fill[red!50!black] (-\x, +\y) circle[radius=3pt];
+    \fill[red!50!black] (+\x, -\y) circle[radius=3pt];
+    \fill[red!50!black] (-\x, -\y) circle[radius=3pt];
+  }
+
+  \foreach \x/\y in \EvenConv {
+    \fill[blue!50!black] (+\x, +\y) circle[radius=3pt];
+    \fill[blue!50!black] (-\x, +\y) circle[radius=3pt];
+    \fill[blue!50!black] (+\x, -\y) circle[radius=3pt];
+    \fill[blue!50!black] (-\x, -\y) circle[radius=3pt];
+  }
+
+  \draw[thick, red!50!black] (0, 1)
+    \foreach \x/\y in \OddConv { -- (\x, \y) } ;
+  \draw[thick, red!50!black] (0, 1)
+    \foreach \x/\y in \OddConv { -- (-\x, \y) } ;
+  \draw[thick, red!50!black] (0, -1)
+    \foreach \x/\y in \OddConv { -- (\x, -\y) } ;
+  \draw[thick, red!50!black] (0, -1)
+    \foreach \x/\y in \OddConv { -- (-\x, -\y) } ;
+
+  \draw[thick, blue!50!black] (1, 0)
+    \foreach \x/\y in \EvenConv { -- (\x, \y) };
+  \draw[thick, blue!50!black] (1, 0)
+    \foreach \x/\y in \EvenConv { -- (\x, -\y) };
+  \draw[thick, blue!50!black] (-1, 0)
+    \foreach \x/\y in \EvenConv { -- (-\x, \y) };
+  \draw[thick, blue!50!black] (-1, 0)
+    \foreach \x/\y in \EvenConv { -- (-\x, -\y) };
+
+  \begin{scope}[on background layer]
+    \clip (-8.5, -8.5) rectangle (8.5, 8.5);
+
+    \foreach \x in {-8, ..., 8}
+    \foreach \y in {-8, ..., 8}
+      \fill[black!50] (\x, \y) circle (2pt);
+
+    \fill[red, opacity=0.2] (0, 12)
+      \foreach \x/\y in \OddConv { -- (\x, \y) } -- cycle;
+    \fill[red, opacity=0.2] (0, 12)
+      \foreach \x/\y in \OddConv { -- (-\x, \y) } -- cycle;
+    \fill[red, opacity=0.2] (0, -12)
+      \foreach \x/\y in \OddConv { -- (\x, -\y) } -- cycle;
+    \fill[red, opacity=0.2] (0, -12)
+      \foreach \x/\y in \OddConv { -- (-\x, -\y) } -- cycle;
+
+    \fill[blue, opacity=0.2] (41, 0)
+      \foreach \x/\y in \EvenConv { -- (\x, \y) } -- cycle;
+    \fill[blue, opacity=0.2] (-41, 0)
+      \foreach \x/\y in \EvenConv { -- (-\x, \y) } -- cycle;
+    \fill[blue, opacity=0.2] (41, 0)
+      \foreach \x/\y in \EvenConv { -- (\x, -\y) } -- cycle;
+    \fill[blue, opacity=0.2] (-41, 0)
+      \foreach \x/\y in \EvenConv { -- (-\x, -\y) } -- cycle;
+  \end{scope}
+%(-10, -15),
+%(-9, -13),
+%(-8, -12),
+%(-7, -10),
+%(-6, -9),
+%(-5, -8),
+%(-4, -6),
+%(-3, -5),
+%(-2, -3),
+%(-1, -2),
+%(0, 0),
+%(1, -1),    (1, 1),
+%(2, -2),    (2, 2),
+%(3, -4),    (3, 4),
+%(4, -5),    (4, 5),
+%(5, -7),    (5, 7),
+%(6, -8),    (6, 8),
+%(7, -9),    (7, 9),
+%(8, -11),   (8, 11),
+%(9, -12),   (9, 12),
+%(10, -14),  (10, 14)
+\end{tikzpicture}
+\end{document}
+
+
+
