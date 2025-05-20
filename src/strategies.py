@@ -4,29 +4,13 @@ from sage.all import *
 def floor_list(list):
     return [floor(elem) for elem in list]
 
-class MDCF:
-    def __init__(self, dim, int_part):
-        self.indices = []
-        self.coeffs = [int_part]
-        self.dim = dim
-
-    def __repr__(self):
-        result = '[' + str(self.coeffs[0])
-        for l, a in zip(self.indices, self.coeffs[1:]):
-            result += '; ' + str(l) + ', ' + str(a)
-        result += ']'
-        return result
-
-    def append(self, l, a):
-        assert len(a) == self.dim
-        self.indices.append(l)
-        self.coeffs.append(a)
-
-    def value(self):
-        x = self.coeffs[-1]
-        for a, l in zip(self.coeffs[-2::-1], self.indices[::-1]):
-            x = unpivot(x, a, l)
-        return x
+def mdcf(coeffs):
+    if len(coeffs) == 0:
+        raise ValueError("The list is empty")
+    elif len(coeffs) == 1:
+        return coeffs[0]
+    else:
+        return unpivot(mdcf(coeffs[1:]), coeffs[0])
 
 #
 # Nondeterministic Strategies
@@ -41,15 +25,15 @@ class ApproxStrategy:
         for l in range(d):
             # Construct an MDCF from the new sequence
             new_seq = seq + [l]
-            mdcf = MDCF(d, floor_list(xs))
+            cf = [floor_list(xs)]
             ys = xs
             for i in new_seq:
                 if frac(ys[l]) == 0:
                     break
                 ys = pivot(ys, i)
-                mdcf.append(i, floor_list(ys))
+                cf += [floor_list(ys)]
             else:
-                conv = mdcf.value()
+                conv = mdcf(cf)
                 q = lcm([x.denominator() for x in conv])
 
                 # Check if the convergent is a good simultaneous approximation
