@@ -14,13 +14,23 @@ def pivot(x, *indices):
                 y[i] = frac(x[i]) / frac(x[l])
     return tuple(y)
 
-def unpivot(x, a, l):
-    y = [0 for _ in x]
-    for i in range(len(x)):
+def unpivot(x, a):
+    d = len(x)
+
+    # Determine the pivot, which is the maximum element
+    l = None
+    for i in range(d):
+        if l is None or x[l] < x[i]:
+            l = i
+
+    # Unpivot using x[l]
+    y = [0 for _ in range(d)]
+    for i in range(d):
         if i == l:
-            y[i] = a[i] + 1 / x[l]
+            y[i] = a[i] + 1 / x[i]
         else:
             y[i] = a[i] + x[i] / x[l]
+
     return tuple(y)
 
 def brute_force_search(x, N):
