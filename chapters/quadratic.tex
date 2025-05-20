@@ -785,22 +785,30 @@ points along the boundary.
 
 \begin{proof}
   For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
-  non-identity matrix $U ∈ ℤ^{2×2}$ with $\det(U) = 1$ which has $(1, x)$ and
-  $(1, \overline{x})$ as eigenvectors of this matrix.
-  Because the Klein polygon $K$ is the set of integer points in the cone
-  spanned by these eigenvectors, it must be invariant under this transformation.
-  Similarly, the boundary $Π(K)$ is also invariant under this transformation.
-  However, $A$ is not the identity, so the matrix $A$ must shift the points along the boundary.
+  non-identity matrix $U$ with $\det(U) = 1$ which has $(x, 1)^⊤$ and
+  $(\overline{x}, 1)^⊤$ as eigenvectors of this matrix.
+  Applying $U$ on the Klein polygon, we have
+  \begin{align*}
+    UK
+    = U \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\})
+    = \mathrm{conv}(UC ∩ Uℤ^2 \setminus \{(0, 0)\}).
+  \end{align*}
+  But $U$ is unimodular, so $Uℤ^2 = ℤ^2$, and $C$ is the cone spanned by the
+  eigenvectors of $U$ and they have positive eigenvalues, so $UC = C$.
+  Thus, $K$ is invariant under $U$.
+  Similarly, the boundary $Π(K)$ must also be invariant under this transformation.
+  Because $U$ preserves the orientation of vectors and is not the identity, it
+  must shift the integer points along the boundary.
   We assume that it shifts it in the positive direction,
-  i.e. $B_{n+k} = A B_n$ for some $k ≥ 1$.
-  If not, then we can choose $A^{-1}$ to shift them in the positive direction.
-  Because $\det(A) = 1$, the matrix $A$ preserves volume, so
+  i.e. $B_{n+k} = U B_n$ for some $k ≥ 1$.
+  If not, then we can choose $U^{-1}$ to shift them in the positive direction.
+  Because $\det(U) = 1$, the matrix also preserves volume and
   \[
     a_{n+k}
     = \det\begin{pmatrix}
       b_{n+k} & b_{n+k-2}
     \end{pmatrix}
-    = \det(A) \det\begin{pmatrix}
+    = \det(U) \det\begin{pmatrix}
       b_n & b_{n-2}
     \end{pmatrix}
     = a_n.
