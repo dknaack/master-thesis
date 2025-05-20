@@ -481,29 +481,35 @@ and the last element is
   This is the first positive input, which satisfies the ordering and it requires only one step.
   Therefore, any other input that requires one step must be larger.
   Now suppose that the theorem holds for any $n ≥ 0$.
-  Let $x ∈ ℚ^d$ such that the Euclidean algorithm requires at least $n+1$ steps
-  and let $x' = \mathrm{pivot}_ℓ(x) = (p₁'/q', …, p_d'/q')$.
-  We assume WLOG that $p₂' < ⋯ < p_d' < q' < p₁'$.
-  By induction,
+  Let $x ∈ ℚ^d$ and $a = \floor{x}$.
+  Suppose that $x' = \mathrm{pivot}_ℓ(x) = (p₁'/q', …, p_d'/q')$ requires at
+  least $n$ steps, where $ℓ$ is chosen according to the strategy.
+  By induction, there exists a permutation $σ$ such that
   \begin{align*}
-    q'   & ≥ F(n),                     \\
-    p_1' & ≥ F(n) + F(n + d) = F(n+d), \\
-    p_i' & ≥ F(n + i + 1)
+    q'        & ≥ F(n),                     \\
+    p_{σ(d)}' & ≥ F(n) + F(n - d) = F(n+1), \\
+    p_{σ(i)}' & ≥ F(n - i)
     \text{ for every } i ≤ d - 1.
   \end{align*}
-  Because $p_1'/q'$ is the largest value, we must pivot with $ℓ = 1$.
-  Furthermore, only $p_d > q$, so $a_d = \floor{x_d} = 1$ while $a_i =
-  \floor{x_i} = 0$ for every $i ≠ d$.
-  From Lemma~\ref{lem:divmod}, it follows that
+  We assume WLOG that $σ(i) = i$ and that it orders the elements in increasing order.
+  Because $p_{σ(d)}$ is the largest element in $x'$, we have $ℓ = σ(d) = d$.
+  However, $x_ℓ$ cannot be the largest element in $x$ because of the strategy.
+  Therefore, $a_ℓ = 0$ and there exists another element $x_k$ with $k ≠ ℓ$ and $a_k ≥ 1$.
+  Futhermore, that element must come before $x_ℓ$ since $ℓ = d$.
+  We can now bound $x$ using $x'$ and Lemma~\ref{lem:divmod}:
   \begin{align*}
-    q   & = p₁'
-          ≥ F(n + d), \\
-    p_d & = a₁ p₁' + q'
-          ≥ F(n + d) + F(n + 1) = F(n + 1 + d), \\
-    p_i & = aᵢ p₁' + pᵢ'
-          ≥ F(n + 1 + i),
+    q   & = p_ℓ' ≥ F(n+1), \\
+    p_ℓ & = a_ℓ p_ℓ' + q' = q' ≥ F(n) ≥ F((n+1) - 1), \\
+    p_k & = a_k p_ℓ' + p_k' ≥ p_ℓ' + p_k' ≥ F(n + 1) + F(n + 1 - (k + 1)), \\
+    p_i & = a_k p_ℓ' + p_i' ≥ p_i' ≥ F(n - i) = F((n+1) - (i+1)).
   \end{align*}
-  which completes the proof.
+  where $i < ℓ = d$ and $i ≠ k$.
+  We're missing the bound for $F(n+1) + F(n+1 - d)$ and $F(n + 1 - k)$.
+  The former follows from the bound of $p_k$.
+  Because $k < ℓ$, we have
+  \begin{align*}
+    p_k & ≥ F(n + 1) + F(n + 1 - (k + 1)) ≥ F(n+1) + F(n+1 - d).
+  \end{align*}
 \end{proof}
 
 % ==============================================================================
