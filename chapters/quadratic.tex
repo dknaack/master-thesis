@@ -394,16 +394,38 @@ The geometrical view will also be useful for the second part of Hermite's questi
 \section{The Geometry behind Continued Fractions}
 % ==============================================================================
 
-With the prospect of the generalized Euclidean algorithm, I present a geometric
-proof based on Klein \cite{Klein95}.
-The basis behind his interpretation is that instead of viewing the convergents
-$p_n/q_n$ as fractions on a 1-dimensional number line,
-we view them as two dimensional integer vectors $b_n$, where the first
-coordinate represents the numerator $p_n$ and the second coordinate the
-denominator $q_n$.
-There are now two different ways to calculate the convergent vector $b_n$.
+The geometry of continued fraction was first analyzed by Klein \cite{Klein95}.
+He viewed the convergents $p_n/q_n$ of a continued fraction $[a₀; a₁, …]$ not
+as rational numbers lying on a one-dimensional number line,
+but as a convergent \emph{vector} $bₙ = (pₙ, qₙ)$ in the two-dimensional integer lattice $ℤ^2$.
+Klein has shown many geometrical analogues of important theorems for continued fraction
+using these vectors.
+However, we will focus on a small subset, which will be useful for the
+continued fractions of quadratic irrationals.
 
-The first follows directly from the definition of the continued fractions.
+\begin{figure}[tb]
+  \centering
+  \includestandalone{figures/klein-polygon}
+  \caption{
+    The convergents of $\sqrt{2}$ as two-dimensional vectors.
+  }
+  \label{fig:klein-polygon}
+\end{figure}
+
+Figure~\ref{fig:klein-polygon} shows an example with $\sqrt{2}$ and its convergent vectors $bₙ$.
+The figure clearly shows that there are two different polygonal chains.
+One formed by the even convergents and one formed by the odd convergents.
+These chains both seemingly approach a line where $x/y = \sqrt{2}$.
+The reason for this follows from the convergence of continued fractions proven in Lemma~\ref{lem:cf-approx}.
+If we scale down each convergent $(pₙ, qₙ)$ by its second coordinate,
+then we get the vector $(pₙ/qₙ, 1)$.
+This vector cannot be further away than $1/qₙ^2$ from the vector $(\sqrt{2}, 1)$.
+Therefore, scaling things back up results in a distance $1/qₙ$, which decreases as $n$ increases.
+So convergence in this geometrical interpretation means that the vectors are
+approaching a line spanned by the vector $(x, 1)$.
+
+Convergence is one property which can be interpreted geometrically.
+There is also a geometrical interpretation for the definition of continued fractions themselves.
 Suppose we have the vector $\tilde b_{n-1} = (\tilde p_{n-1}, \tilde q_{n-1})^⊤$
 for the continued fraction $[a₁; a₂, …, aₙ]$.
 To calculate the convergent of $[a₀; a₁, …, aₙ]$,
@@ -440,8 +462,10 @@ The vector $b_n$ can then be calculated using
   b_n = S^{a_0} R \tilde b_{n-1}.
 \]
 
-The second way to calculate the convergent vectors follows from Lemma~\ref{lem:cf-wallis}.
-We already know that the vectors $b_n$ can be calculated as follows:
+For the continued fractions, we quickly moved from the definition to Lemma~\ref{lem:cf-wallis},
+which tells us how to calculate the convergent $pₙ/qₙ$ using $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
+Naturally, we can ask whether this has a nice geometrical interpretation, too.
+First, we can easily derive a formula to calculate the vector $bₙ$, since
 \begin{align*}
   b_n =
   \begin{pmatrix}
@@ -462,10 +486,63 @@ We already know that the vectors $b_n$ can be calculated as follows:
   \end{pmatrix}
   = b_{n-1} a_n + b_{n-2}.
 \end{align*}
-We combine the previous two vectors in a matrix $B_n = \begin{pmatrix}
+However, there is also an explanation for the choice of the coefficients $aₙ$.
+If we view $aₙ$ as a variable between $0$ and infinity, then this forms a ray
+starting at $b_{n-2}$ and going in the direction of $b_{n-1}$.
+This line must intersect the line spanned by $(x, 1)$ at some point
+and we choose $aₙ$ such that $bₙ$ comes just before the intersection.
+Importantly, we can use the complete quotient $xₙ$ to calculate the intersection point:
+\[
+  λ
+  \begin{pmatrix}
+    x \\
+    1 \\
+  \end{pmatrix}
+  =
+  b_{n-1} x_n + b_{n-2}
+  \iff
+  \frac{λ x}{λ} = \frac{p_{n-1} x_n + p_{n-2}}{q_{n-1} x_n + q_{n-2}}.
+\]
+
+For the first new lemma, we return to what we saw in
+Figure~\ref{fig:klein-polygon} and show that even and odd convergent lie on
+different sides of the line spanned by $(x, 1)$.
+In terms of rational numbers,
+this means that the convergents alternate between being less than $x$ and being
+greater than $x$.
+
+\begin{lemma}
+  \label{lem:klein-conv}
+  Even and odd convergent lie on different sides of the line spanned by $(x, 1)$.
+\end{lemma}
+
+\begin{proof}
+  We proceed via induction on $n$.
+  For the first two vectors $b_{-2}$ and $b_{-1}$, this is obviously true.
+  Now suppose, that $b_{n-1}$ and $b_{n-2}$ lie in different cones.
+  The next vector $b_n$ can be calculated according to
+  \[
+    b_n = b_{n-1} a_n + b_{n-2}.
+  \]
+  Furthermore, we can find an intersection with the line spanned $(x, 1)$ using
+  the complete quotient $xₙ$ of $x$:
+  \[
+    λ
+    \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    = b_{n-1} xₙ + b_{n-2}.
+  \]
+  By the induction hypothesis, the vector $b_{n-2}$ is on a different side than $b_{n-1}$.
+  However, $a_n$ is smaller than $x_n$, so $b_n = b_{n-1} a_n + b_{n-2}$ never crosses the line.
+  Therefore, $b_n$ is on the same side as $b_{n-2}$.
+\end{proof}
+
+If we combine the previous two vectors in a matrix $B_n = \begin{pmatrix}
   b_{n-1} & b_{n-2} \\
-\end{pmatrix}$.
-We can calculate the next matrix by multiplying with the matrices $S$ and $R$:
+\end{pmatrix}$,
+then we can calculate the next matrix by multiplying with the matrices $S$ and $R$, since
 \[
   B_n S^{a_n} R =
   \begin{pmatrix}
@@ -486,59 +563,10 @@ We can calculate the next matrix by multiplying with the matrices $S$ and $R$:
 \]
 Since $\det(S^a) = \det(S)^a = 1$ and $\det(R) = -1$, it is straightforward to
 see that $B_n$ always has determinant $±1$.
-But this was proven already by Lemma~\ref{lem:cf-det}.
-
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/klein-polygon}
-  \caption{
-    The convergents for $\sqrt{2}$ form two different polygonal chains.
-    Each chain approaches $\sqrt{2}$ as $n$ increases.
-  }
-  \label{fig:klein-polygon}
-\end{figure}
-
-This can also be interpreted geometrically, as shown in Figure~\ref{fig:klein-polygon}.
-We begin with the unit vectors $b_{-1} = (1, 0)$ and $b_{-2} = (0, 1)$.
-To calculate the next vector, we start at the point $b_{-2} = (0, 1)$ and draw a line using the vector $b_{-1} = (1, 0)$.
-This line intersects the irrational line $(1, α)$ at some point
-and the next vector $b_0$ is the integer lattice point on the line before the
-intersection.
-We continue with $b_{-1}$ and draw a line using the vector $b_0$.
-The next vector $b_2$ is the integer point before the intersection with $(α, 1)$, again.
-
-The even and odd vectors each form a polygonal chain which gets closer and
-closer to the irrational line.
-
-\begin{lemma}
-  \label{lem:klein-conv}
-  Every odd convergent lies in the cone spanned by $(x, 1)$ and $(1, 0)$,
-  and every even convergent lies in the cone spanned by $(0, 1)$ and $(x, 1)$.
-\end{lemma}
-
-\begin{proof}
-  We proceed via induction on $n$.
-  For the first two vectors, this is obviously true.
-  Now suppose, that $b_{n-1}$ and $b_{n-2}$ lie in different cones.
-  The next vector $b_n$ can be calculated according to
-  \[
-    b_n = b_{n-1} a_n + b_{n-2}.
-  \]
-  Furthermore, using the complete quotient $xₙ$ of $x$, we can find an intersection with the line $(x, 1)$:
-  \[
-    λ
-    \begin{pmatrix}
-      x \\
-      1 \\
-    \end{pmatrix}
-    = b_{n-1} xₙ + b_{n-2}.
-  \]
-  By the induction hypothesis, the vector $b_{n-2}$ is in the correct cone
-  and $b_{n-1}$ is in a different cone.
-  However, $a_n$ is smaller than $x_n$, so $b_n = b_{n-1} a_n + b_{n-2}$ never crosses the irrational line.
-  Therefore, $b_n$ is in the same cone as $b_{n-2}$ and even and odd
-  convergents must be in the two cones.
-\end{proof}
+Geometrically, this means that there is no integer point inside the
+parallelogram spanned by $b_{n-1}$ and $b_{n-2}$.
+This is the geometrical analogue of Lemma~\ref{lem:cf-det},
+because $\det(B_n) = p_{n-1} q_{n-2} - p_{n-2} q_{n-1}$.
 
 \begin{lemma}
   \label{lem:klein-empty}
