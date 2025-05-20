@@ -387,16 +387,21 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
 \section{Higher-Order Fibonacci Numbers for the Maximum Strategy}
 % ==============================================================================
 
-Next, we look at the opposite strategy:
-Always taking the index with the maximum fractional value at each step.
-With the minimum strategy,
-each element in the solution vector $x$ was greater than $1$ after one iteration.
-With this strategy the exact opposite happens:
-Each element in the solution vector is smaller than $1$ after one iteration,
-except the element we pivot with.
-The reason is that $\{x_ℓ\}$ is the largest fractional value,
-so the ratio $\{x_i\}/\{x_ℓ\}$ will always be less than $1$.
-However, $1/\{x_ℓ\}$ is still greater than $1$, because $\{x_ℓ\} < 1$.
+Choose the maximum fractional value, but never the actual maximum value.
+The reason behind the latter is that the maximum value is always the previous
+pivot element.
+Therefore, if we choose the same maximum element, we could end up choosing the
+same index over and over again.
+Hence, we remove this index from the consideration and only look at the maximum
+fractional value without the actual maximum.
+
+If we have a vector $x ∈ ℚ$, then pivoting with this strategy must result in a
+vector $x'$, where exactly one value is greater than $1$.
+Because $\{x_ℓ\}$ is the maximum, every other element has a smaller fractional
+value and $\{x_i\}/\{x_ℓ\}$ is smaller than $1$.
+For the analysis, we assume the same for the initial vector $x$.
+If $x$ does not satisfy these conditions, then we can iterate once and it has
+to satisfy them.
 
 The worst-case for this strategy are called maximum Fibonacci numbers and they
 are defined by the following recurrence relation:
