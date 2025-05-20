@@ -460,13 +460,13 @@ and the last element is
 \begin{theorem}
   Suppose the Euclidean algorithm requires at least $n$ steps for $x = (p₁/q, …, p_d/q)$
   with $0 < p₁ < ⋯ < p_{d-1} < q < p_d$ when taking the maximum fractional value at each step.
-  Then,
+  Then, there exists a permutation $σ$ such that
   \[
     q ≥ F(n+d),
     \qquad
-    p_d ≥ F(n + d) + F(n),
+    p_{σ(d)} ≥ F(n + d) + F(n),
     \qquad
-    p_i ≥ F(n + i)
+    p_{σ(i)} ≥ F(n + i)
     \quad
     \text{ for every } i ≤ d - 1.
   \]
