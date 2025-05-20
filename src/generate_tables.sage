@@ -10,7 +10,8 @@ def generate_period_table(output):
         print('$n^3$', 'Pre-period', 'Period')
         numbers = set(range(2, 31)) - set([x**3 for x in range(5)])
         for r in numbers:
-            K.<a> = NumberField(x^3 - r, embedding=RR(1))
+            K = NumberField(x^3 - r, embedding=RR(1))
+            a = K.gen()
             xs = (a, a^2)
             start, period = brute_force_search(xs, 24)
 
