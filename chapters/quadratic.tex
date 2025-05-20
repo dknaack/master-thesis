@@ -476,69 +476,42 @@ The next vector $b_2$ is the integer point before the intersection with $(α, 1)
 
 The even and odd vectors each form a polygonal chain which gets closer and
 closer to the irrational line.
-In his original lecture notes, Klein showed that the vectors are indeed the
-closest points to the irrational line $α$ and furthermore he has shown the converse:
-The closest point are either convergents or they lie on a line between two
-convergents.
 
-\begin{definition}
-  A point $(p, q) ∈ ℤ^2 \setminus \{(0, 0)\}$ is a \emph{relative minimum} with
-  respect to an irrational line $(α, 1)$, if for every point $(p', q') ∈ ℤ^2$
-  with $p' ≤ p$ \emph{or} $q ≤ q'$, we have
-  \[
-    |q α - p| ≤ |q' α - p'|.
-  \]
-\end{definition}
-
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/parallelogram-cover}
-  \caption{
-    The parallelogram spanned by $B$ and $B'$ contains only $0$ as an integral point.
-    The rest of the surface can be covered by identical parallelograms.
-    Therefore, the surface can only contain an integral point at $B$.
-  }
-\end{figure}
-
-\begin{theorem}
-  \label{thm:conv-is-relmin}
-  Every convergent is a relative minimum.
-\end{theorem}
+\begin{lemma}
+  \label{lem:klein-conv}
+  Every odd convergent lies in the cone spanned by $(x, 1)$ and $(1, 0)$,
+  and every even convergent lies in the cone spanned by $(0, 1)$ and $(x, 1)$.
+\end{lemma}
 
 \begin{proof}
-  For the first two convergents $b_{-2}$ and $b_{-1}$, there are no other
-  nonzero integer points which have at least one smaller coordinate.
-  Therefore, they are relative minima.
-  By induction, suppose that the convergent $b_{n-1}$ and $b_n$ are relative minima.
-  Reflecting $b_{n+1}$ across the line $α$ produces two parallel lines:
-  One going through $b_{n+1}$ and one going through the reflected point.
-  Any point which is closer must lie in the cylinder between the two lines.
-  Suppose there is a point which lies closer than $b_{n+1}$.
-  There are two cases where the point may end up.
-
-  Case 1: The point lies to the right of $(x, 1)$.
-
-  Next, we construct a parallelogram from the origin and the points $B_{n-1}, B_n$ and $B_{n+1}$.
-  There are two cases for this parallelogram:
-  But the parallelogram only contains
-  \begin{align*}
-    |\det \begin{pmatrix}
-      a B_n & B_{n-1} \\
-    \end{pmatrix}|
-    & = a_{n+1} |\det \begin{pmatrix}
-      B_n & B_{n-1} \\
-    \end{pmatrix}| \\
-    & = a_{n+1}
-  \end{align*}
-  integer lattice points and all of these point are on the line between $B_{n-1}$ and $B_{n+1}$.
-  Therefore, $B_{n+1}$ is also a relative minimum.
+  We proceed via induction on $n$.
+  For the first two vectors, this is obviously true.
+  Now suppose, that $b_{n-1}$ and $b_{n-2}$ lie in different cones.
+  The next vector $b_n$ can be calculated according to
+  \[
+    b_n = b_{n-1} a_n + b_{n-2}.
+  \]
+  Furthermore, using the complete quotient $xₙ$ of $x$, we can find an intersection with the line $(x, 1)$:
+  \[
+    λ
+    \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    = b_{n-1} xₙ + b_{n-2}.
+  \]
+  By the induction hypothesis, the vector $b_{n-2}$ is in the correct cone
+  and $b_{n-1}$ is in a different cone.
+  However, $a_n$ is smaller than $x_n$, so $b_n = b_{n-1} a_n + b_{n-2}$ never crosses the irrational line.
+  Therefore, $b_n$ is in the same cone as $b_{n-2}$ and even and odd
+  convergents must be in the two cones.
 \end{proof}
 
-% TODO: Technically, they can also be a lattice point between two convergents.
-\begin{theorem}
-  \label{thm:relmin-is-conv}
-  Every relative minimum is a convergent.
-\end{theorem}
+\begin{lemma}
+  \label{lem:klein-empty}
+  Between the polygonal chains of the even and odd convergent vectors,
+  there exists no nonzero integer point.
+\end{lemma}
 
 \begin{proof}
 
@@ -556,18 +529,36 @@ convergents.
   \[
     K = \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\}).
   \]
-  The boundary of the polygon is denoted as $Π(K)$.
+  The boundary of such a polygon is denoted as $Π(K)$.
 \end{definition}
 
 The even and odd convergent vectors are part of two such Klein polygons.
-The even convergents are part of the Klein polygon spanned by $(0, 1)$ and $(x, 1)$,
-and the odd convergents are part of the Klein polygon spanned by $(x, 1)$ and $(1, 0)$.
-An immediate consequence of the previous two theorems is the following:
+The even convergents are part of the Klein polygon $K_0$ spanned by $(0, 1)$ and $(x, 1)$,
+and the odd convergents are part of the Klein polygon $K_1$ spanned by $(x, 1)$ and $(1, 0)$.
+This is shown in the following theorem.
+
+\begin{theorem}
+  The Klein polygons $K_0$ and $K_1$ are exactly equal to the
+  convex hull of the even and odd convergents, respectively.
+\end{theorem}
+
+\begin{proof}
+  Suppose there is a point in the Klein polygons,
+  which is not in the convex hull of either the even or odd convergents.
+  This means that the point must lie between the two polygonal chains,
+  which is impossible by Lemma~\ref{lem:klein-empty}.
+  Now suppose there is a point in the convex hull of the convergents,
+  but not in one of the Klein polygons.
+  Then, there must be one convergent outside the Klein polygon,
+  which is closer to the line $(x, 1)$.
+  However, this integer point is still inside the cone,
+  so it is also contained in the Klein polygon.
+\end{proof}
 
 \begin{corollary}
-  Every convergent vector is an extreme point in the Klein polygon spanned by the
-  vectors $(0, 1)$ and $(x, 1)$ or by the vectors $(x, 1)$ and $(1, 0)$, and
-  vice-versa.
+  The vertices of the Klein polygons $K_0$ and $K_1$ are exactly equal to the even
+  convergents $\{b_{2n}\}_{n ≥ -1}$ and odd convergents $\{b_{2n+1}\}_{n ≥
+  -1}$, respectively.
 \end{corollary}
 
 % ==============================================================================
