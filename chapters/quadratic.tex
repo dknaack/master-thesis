@@ -187,17 +187,20 @@ the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ of $p/
 \end{lemma}
 
 \begin{proof}
-  We begin by constructing a continued fraction for every rational number.
-  Let $p/q$ be a reduced fraction, i.e. $\gcd(p, q) = 1$.
+  Let $p/q$ be the reduced fraction of a rational number, i.e. $\gcd(p, q) = 1$.
   We proceed by induction over the number of steps when running the
   Euclidean algorithm on $(p, q)$.
   Suppose only one step is required, then $p = a₀ q + 0$.
-  Because $p/q$ is a reduced fraction, we have $q = 1$ and $p/q$ is an integer.
-  Hence, $[a₀] = a₀ = p$ is a valid continued fraction of $p/q$.
+  Because $\gcd(p, q) = 1$, the fraction $p/q$ must be an integer.
+  Hence, the continued fraction $[a₀]$ represents $p/q$ correctly.
 
-  For $n ≥ 0$, let $p = a₀ q + r$ be the first step of the Euclidean algorithm.
-  By induction, suppose that $q/r$ has a finite continued fraction $[a₁; a₂, …, aₙ]$.
-  Then,
+  Next, suppose that there exists a valid continued fraction for any rational
+  number which requires $n$ steps in the Euclidean algorithm.
+  Let $p = a₀ q + r$ be the first step of the Euclidean algorithm
+  and suppose $(p, q)$ requires $n+1$ steps.
+  Then, $(q, r)$ requires $n$ steps and by induction there exists a continued
+  fraction $[a₁; a₂, …, aₙ]$ for $q/r$.
+  Using this fact, we can construct the continued fraction for $p/q$, since
   \[
     \frac{p}{q}
     = a₀ + \frac{r}{q}
@@ -205,29 +208,20 @@ the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ of $p/
     = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
     = [a₀; a₁, …, aₙ].
   \]
-  Therefore, there exists a finite continued fraction for every rational number $p/q$.
+  Therefore, $[a₀; a₁, …, aₙ]$ is a valid continued fraction for $p/q$.
 \end{proof}
 
-We cannot directly use the Euclidean algorithm for irrational numbers.
-It is not clear how we would split an irrational number $x$ into two inputs $(p, q)$ for the Euclidean algorithm.
-The solution is to look at the ratio between the two inputs in the Euclidean algorithm.
-Consider $x = 13/5$ again.
-In the first iteration, the ratio is $13/5 = 2 + 3/5$
-and in the second iteration the ratio is $5/3$.
-So what we are doing is removing the integer part of the fraction $p/q$ and
-then continuing with the inverse of the remainder, i.e. $q/r$.
-The extension to the real numbers is now straightforward.
-Instead of only allowing rational numbers as ratios,
-we can use any real number.
-This leads to the following algorithm to construct a continued fraction
-$[a₀; a₁, …]$ for a given number $x ∈ ℝ$:
+So for every rational number, we have a finite continued fraction.
+It remains to be shown that there exists a continued fraction for every irrational number.
+However, we cannot use the Euclidean algorithm again.
+In order to run the Euclidean algorithm for an irrational number $x$,
+we would have to find two integers $p, q$ such that $p/q = x$
+and that is by definition not possible.
+Therefore, we cannot use the Euclidean algorithm directly to construct a
+continued fraction.
 
-\begin{enumerate}
-  \item Set $x_0 = x$ and $n = 0$.
-  \item Define $a_n = \floor{x_n}$.
-  \item Calculate $x_{n+1} = \frac{1}{x_n - a_n}$.
-  \item If $x_{n+1} ≠ 0$, increment $n$ and go to step 2.
-\end{enumerate}
+Instead, we use a slightly different algorithm shown in Listing~\ref{lst:cont-frac}.
+A continued fraction, which consists solely of positive integers, must always be greater than $1$.
 
 The terms $x_n$ are also called the \emph{$n$-th complete quotient} of $x$.
 The result is a continued fraction $[a₀; a₁, …]$ for each number $x ∈ ℝ$.
@@ -235,6 +229,36 @@ Because the continued fraction $[a₀; a₁, …]$ is made up of integers and th
 ones after $a₀$ are all positive, its integer part is entirely determined by
 the first coefficient $a₀$ and its fractional part is determined by $[a₁; a₂, …]$.
 
+\begin{Pseudocode}[
+    float={tbp},
+    label={lst:cont-frac},
+    caption={Algorithm to construct a continued fraction {$[a₀; a₁, …]$} for any $x ∈ ℝ$.}]
+$x₀ ← x$
+$n ← 0$
+while $xₙ ≠ 0$ do
+  $aₙ ← \floor{xₙ}$
+  $x_{n+1} ← \frac{1}{xₙ - aₙ}$
+  $n ← n + 1$
+end
+\end{Pseudocode}
+
+\begin{lemma}
+  Let $n ≥ 1$ and $a₁, …, aₙ ∈ \Z_{> 0}$.
+  Then, $[0; a₁, …, aₙ] < 1$.
+\end{lemma}
+
+\begin{proof}
+  For $n = 1$, the continued fraction is $[0; a₁] = \frac{1}{a₁}$.
+  Because $a₁ ≥ 2$, the whole continued fraction must be smaller than $1$.
+  Suppose that $[0; a₂, …, aₙ]$ is smaller than $1$.
+  Then the inverse is smaller than $1$ but still greater than $0$.
+  Therefore,
+  \[
+    [0; a₁, …, aₙ] = \frac{1}{[a₁; a₂, …, aₙ]} = \frac{1}{a₁ + [0; a₂, …, aₙ]} < 1. \qedhere
+  \]
+\end{proof}
+
+\iffalse
 \begin{figure}[tb]
   \centering
   \includestandalone{figures/golden-rectangle}
@@ -271,6 +295,7 @@ But the ratios between the longer and shorter sides remain the same since
 \]
 Therefore, in the next rectangle only one square of length $φ - 1$ will be
 removed again.
+\fi
 
 \begin{lemma}
   \label{lem:cf-det}
@@ -297,16 +322,16 @@ because dividing the equation by $q_n q_{n-1}$ results in
 \[
   \frac{p_n}{q_n} - \frac{p_{n-1}}{q_{n-1}} = \frac{(-1)^{n+1}}{q_n q_{n-1}}.
 \]
-Furthermore, $q_n$ and $q_{n-1}$ are always increasing.
-Therefore, the distance between consecutive convergents is always decreasing
-and the convergents themselves must approach some limit.
-In the following lemma, we show that this limit is exactly the number we are trying to represent.
+Since $aₙ > 0$ for $n ≥ 1$, the denominators $q_n$ and $q_{n-1}$ are always
+increasing after some point.
+Consequently, the distance between consecutive convergents is decreasing.
+But we need to show that the convergents actually approach the represented number.
+For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ < 1$.
 
 \begin{lemma}
   \label{lem:cf-approx}
-  Let $x ∈ ℝ$.
-  Suppose $[a₀; a₁, …]$ is the continued fraction constructed from $x$ with convergents $p_n/q_n$.
-  Then,
+  Let $x ∈ ℝ$ and let $[a₀; a₁, …]$ be the continued fraction constructed using the algorithm from Listing~\ref{lst:cont-frac}.
+  If $pₙ/qₙ$ is the $n$-th convergent of the continued fraction, then
   \[
     \left| x - \frac{pₙ}{qₙ} \right| < \frac{1}{qₙ^2}.
   \]
@@ -320,13 +345,14 @@ In the following lemma, we show that this limit is exactly the number we are try
   we can represent $x$ as well as $p_n/q_n$ using the previous convergents
   $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ together with the coefficients $x_n$
   and $a_n$, respectively.
-  It follows that
+  Hence,
   \begin{align*}
+    \left| x - \frac{pₙ}{qₙ} \right|
     & = \left| \frac{x_n p_{n-1} + p_{n-2}}{x_n q_{n-1} + q_{n-2}} - \frac{a_n p_{n-1} + p_{n-2}}{a_n q_{n-1} + q_{n-2}} \right| \\
     & = \left| \frac{(x_n p_{n-1} + p_{n-2})(a_n q_{n-1} + q_{n-2}) - (x_n q_{n-1} + q_{n-2})(a_n p_{n-1} + p_{n-2})}{(x_n q_{n-1} + q_{n-2})(a_n q_{n-1} + q_{n-2})} \right| \\
     & = \left| \frac{(p_{n-1} q_{n-2} - q_{n-1} p_{n-2})(x_n - a_n)}{((x_n - a_n) q_{n-1} + q_n) q_n} \right|.
   \end{align*}
-  Applying Lemma~\ref{lem:cf-det} completes the proof:
+  From Lemma~\ref{lem:cf-det} it follows that
   \begin{align*}
     \left| x - \frac{pₙ}{qₙ} \right|
     & = \Biggl| \frac{(-1)^{n+1} \overbrace{(x_n - a_n)}^{≤ 1}}{q_n^2 + \underbrace{(x_n - a_n)}_{≥ 0} q_{n-1} q_n} \Biggr| < \frac{1}{q_n^2}. \qedhere
@@ -336,8 +362,8 @@ In the following lemma, we show that this limit is exactly the number we are try
 We now have a continued fraction for both rational number and irrational numbers.
 What remains to be shown is that the continued fractions are unique.
 This would give us a representation for every real number $x ∈ ℝ$ using a
-continued fraction $[a₀; a₁, …]$, which is constructed using the Euclidean
-algorithm.
+continued fraction $[a₀; a₁, …]$, which is constructed using a version of the
+Euclidean algorithm.
 
 \begin{theorem}
   \label{thm:irrat-cf}
@@ -356,6 +382,13 @@ algorithm.
   But by the same argument, we have $a_{n+1} = b_{n+1}$.
   Therefore, the continued fraction $[a₀; a₁, …]$ is unique.
 \end{proof}
+
+This concludes the first part for Hermite's question.
+We now have a representation of the real numbers using continued fractions.
+The second part is about periodic continued fractions and quadratic irrationals.
+But before we look into that, we will look into the geometry behind the continued fractions
+to understand them better.
+The geometrical view will also be useful for the second part of Hermite's question.
 
 % ==============================================================================
 \section{The Geometry behind Continued Fractions}
