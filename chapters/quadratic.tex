@@ -582,7 +582,7 @@ coefficients that are infinitely repeated.
 
 \begin{example}
   We construct the continued fraction for $x = \sqrt{2}$.
-  Because the root lies between $1$ and $2$, the first term must be $a₀ = 1$.
+  Because it lies between $1$ and $2$, the first term must be $a₀ = 1$.
   The next complete quotient is
   \[
     x₁ = \frac{1}{\sqrt{2} - 1} = \frac{\sqrt{2} + 1}{(\sqrt{2} - 1)(\sqrt{2} + 1)} = \sqrt{2} + 1.
@@ -591,7 +591,7 @@ coefficients that are infinitely repeated.
   so the next term is $a₁ = 2$.
   However, the next complete quotient is the same, since
   \[
-    x₂ = \frac{1}{\sqrt{2} - 1} = \sqrt{2} + 1 = x₁.
+    x₂ = \frac{1}{x₁ - 2} = \frac{1}{\sqrt{2} - 1} = \sqrt{2} + 1 = x₁.
   \]
   Therefore, terms will repeat and the resulting continued fraction for $\sqrt{2}$ is $[1; \overline{2}]$.
 \end{example}
