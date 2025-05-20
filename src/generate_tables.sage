@@ -1,6 +1,8 @@
 from search import *
+from strategies import *
 from contextlib import redirect_stdout
 from sys import argv, stderr
+from sage.all import *
 
 def str_list(xs):
     return [str(x) for x in xs]
@@ -41,6 +43,17 @@ def generate_fibonacci(output, F):
         for d in range(1, d_max):
             phi = F(d, 20) / F(d, 19)
             print(d, round(phi, 5), *[F(d, i) for i in range(n_max)], sep='\t')
+
+def generate_strategy_comparison():
+    R = QQ['x']
+    x = R.gen()
+    for r in range(2, 51):
+        p = x^3 - r
+        if not p.is_irreducible():
+            continue
+        K = NumberField(p, embedding=RR(1))
+        a = K.gen()
+        deterministic_search((a, a^2), 10000, jpa_strategy)
 
 if __name__ == '__main__':
     if len(argv) < 2:
