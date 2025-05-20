@@ -688,8 +688,15 @@ We show that this norm is bounded independently of $n$.
   \end{align*}
 \end{proof}
 
-From the lemma, it follows that there must be two different vectors $b_n, b_m$,
-which have the same norm.
+From the lemma, it follows that there must be two different convergent vectors
+$b_n, b_m$, which have the same norm.
+Each vector has a corresponding element $p_n + q_n x$ and $p_m + q_m x$ in the quadratic field $ℚ(x)$.
+Hence, there must be some element $ε ∈ ℚ(x)$ with $N(ε) = 1$ such that
+\[
+  ε (p_n + q_n x) = p_m + q_m x.
+\]
+However, $ε$ is not $1$ since $b_n$ and $b_m$ are different vectors.
+An immediate consequence of this is the following corollary:
 
 \begin{corollary}
   For every quadratic irrational $x$, there exists an integer matrix $U ≠ I_2$
