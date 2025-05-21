@@ -537,17 +537,21 @@ This is the main idea behind the proof for convergence.
   Therefore, $t_i$ and $s_i$ converge to the same limit.
 \end{proof}
 
+We have shown that $s^{(n)}$ and $t^{(n)}$ converge to the same limit
+and that $r^{(n)}$ therefore also converges to that limit.
+What remains to be shown is what they converge to,
+which is the original vector $x$ used for construction of the MDCF.
+
 % TODO: Fix statement, i.e. ℓₙ no longer exists...
 \begin{theorem}
   \label{thm:mdcf-conv}
-  If for every $n ≥ 0$ there exists a constant $c ≥ 0$ such that
-  \[
-    0 < \frac{1}{a^{(n)}_ℓ} ≤ c, \qquad 0 ≤ \frac{a^{(n)}_i}{a^{(n)}_ℓ} ≤ c.
-  \]
-  for every $i ≠ ℓ = \argmax_i x_i^{(n)}$ and every index occurs infinitely
-  often in the sequence $ℓ$, then the sequence $r^{(n)}$ converges to $x$.
+  The sequence $r^{(n)}$ converges to $x$.
 \end{theorem}
 
+% TODO: We should improve the last section of this proof,
+% because I don't think this is correctly showing that it converges to the same
+% limit. Or rather, we're already assuming that we are approaching x_i in the
+% limit.
 \begin{proof}
   Let $x^{(n)}$ denote the $n$-th complete quotient of $x$.
   By Lemma~\ref{lem:mdcf-wallis}, we can represent each element in $x$ as
@@ -557,31 +561,30 @@ This is the main idea behind the proof for convergence.
   Using a similar argument as Lemma~\ref{lem:conv-conv}, we can represent this
   as a convex combination
   \[
-    x_i = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+    x_i = λ₀' \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁' \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d' \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
+    \quad
+    \text{ with }
+    \quad
+    λ_i' = x_i^{(n)} \frac{Q_i^{(n-1)}}{Q_ℓ^{(n)}}.
   \]
-  with $λ_i = x_i^{(n)} \frac{Q_i^{(n-1)}}{Q_ℓ^{(n)}}$.
-  From the previous lemma, we know that $r^{(n)}$ converges to some limit $x'$.
+  From the previous lemma, we know that $r^{(n)}$ converges to some limit $x' ∈ ℝ^d$.
   Since every index occurs infinitely often,
-  we can find an index $m ≤ n - 1$ such that $ℓ_m = j$ and
+  we can find an index $m ≤ n - 1$ such that the primary convergent $r_i^{(m)}$ is
   \[
-    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} = \frac{P_{ij}^{(m)}}{Q_j^{(m)}} = r_i^{(m)},
+    \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} = \frac{P_{ij}^{(m)}}{Q_j^{(m)}}.
   \]
-  or equivalently we can find an index where the term is a convergent.
-  As $n$ increases there are infinitely many such convergents,
-  so each term converges to $x_i'$.
-  Thus,
-  \[
+  As $n$ increases there are infinitely many such convergents, so each term converges to $x_i'$.
+  Thus, for each secondary convergent there are sufficiently small values $ε₀, ε₁, …, ε_d$ such that
+  \begin{align*}
     x_i
-    = \lim_{n → ∞} λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
-    = λ₀ x_i' + λ₁ x_i' + ⋯ + λ_d x_i'
-    = x_i'
-  \]
-  for every $i ≤ d$.
+    & = λ₀' \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁' \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d' \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & = λ₀' (x_i' - ε₀) + λ₁' (x_i - ε₁) + ⋯ + λ_d' (x_d - ε_d) \\
+    & = x_i' - (λ₀' ε₀ + λ₁' ε₁ + λ_d' ε_d).
+  \end{align*}
+  However, as $n$ increases the values $εᵢ$ become arbitrarily small
+  and because the values $λ₀', λ₁', …, λ_d$ all lie between $0$ and $1$,
+  we can conclude that $x_i = x_i'$.
 \end{proof}
-
-\begin{corollary}
-  Periodic MDCFs converge if every element is the maximum in the period.
-\end{corollary}
 
 % ==============================================================================
 \section{The Geometry behind Multi-Dimensional Continued Fractions}
