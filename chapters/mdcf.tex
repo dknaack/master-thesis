@@ -6,38 +6,45 @@ periodic sequence of integers.
 The continued fractions were constructed using the Euclidean algorithm.
 Naturally, we can generalize continued fractions to higher dimensions using the
 generalized Euclidean algorithm.
-This leads to a concept of multi-dimensional continued fractions, which could
-potentially lead to an answer of Hermite's question.
-Since it is based on the generalized Euclidean algorithm,
-it extends previous generalizations of continued fractions based on the
-Jacobi-Perron algorithm \cite{Gupta00}.
+This leads to a concept of Multi-Dimensional Continued Fractions (MDCFs), which could
+potentially be an answer of Hermite's question.
+Since they are based on the generalized Euclidean algorithm,
+they extend previous generalizations of continued fractions based on the
+Jacobi-Perron algorithm, like bifurcating or ternary continued fractions \cite{Gupta00}.
 
 This chapter introduces the concept of MDCFs and discusses their potential as
 an answer to Hermite's question.
 We begin by defining what they are and deriving many properties similar to
 continued fractions.
-Subsequently, we look at numbers represented by periodic MDCFs and whether they
-must be algebraic numbers of degree $d+1$.
-Finally, we discuss the geometry behind the multi-dimensional continued fractions.
-The other direction -- Whether algebraic numbers of degree $d+1$ admit periodic
-MDCFs -- will be discussed in the next chapter.
+The chapter contains two main results for MDCFs.
+The first is that they converge under certain conditions
+and the second is that periodic MDCFs always consist of algebraic numbers with degree $≤ d+1$.
+For the latter, we will first analyze the geometry behind MDCFs in the same
+style as Klein did for continued fractions.
+What is missing from this chapter is the other direction,
+that MDCFs containing certain algebraic numbers are always periodic.
+This will be discussed in more detail in the next chapter.
 
 % ==============================================================================
 \section{Construction using the Generalized Euclidean Algorithm}
 % ==============================================================================
 
-To derive the continued fraction for a real number, we have used the Euclidean algorithm.
+To derive the continued fraction for a real number, we have used an algorithm
+similar to the Euclidean algorithm.
 In particular, we looked at the ratio $a/b$ between the two inputs $a$ and $b$,
 and we have used the integer part of that ratio as a coefficient in the
 continued fraction.
-Iterating the Euclidean algorithm then gave us a unique representation for
+Iterating the algorithm then gave us a unique representation for
 every real number.
-The Euclidean algorithm can also be viewed as the generalized algorithm when $d = 1$.
-In this case, the ratio $a/b$ represents the solution $x$ of the linear system $bx = a$.
-So the integer part of the solution $x$ also represents a coefficient in the
-continued fraction.
-We can then use the pivot operation to iterate over this solution and gain the
-rest of the coefficients.
+Since the Euclidean algorithm is just the generalized version for $d = 1$,
+we can easily extend this algorithm to higher dimensions.
+The generalized algorithm already contains some notion of a ratio in the form
+of the solution vector $x$.
+If $d = 1$, then the solution vector $x$ is a solution to the equation $bx = a$,
+where $a$ and $b$ are inputs for the classical Euclidean algorithm.
+So the integer part of the solution $x$ represents the first coefficient for
+the continued fraction of $a/b$ and the fractional part $\{a/b\}$ is the
+inverse of the next continued fraction.
 
 The multi-dimensional continued fraction can now be easily derived from the
 solution vector $x$ in higher dimensions.
@@ -45,10 +52,10 @@ Specifically, given a vector $x ∈ ℝ^d$, we take the integer part of each
 element $\floor{x}$ as a coefficient of the multi-dimensional continued
 fraction.
 Then, we get the subsequent coefficients by iterating over this vector using
-the pivot operation.
-This gives us a top-down construction of MDCFs, but typically continued
+the $\mathrm{pivot}$ operation.
+This gives us a top-down construction of MDCFs, but we defined continued
 fractions are defined in a bottom-up fashion.
-For a bottom-up definition of the MDCFs, we simply reverse the pivot operation.
+For a bottom-up definition of the MDCFs, we have to reverse the pivot operation.
 The inverse operation can be derived as follows:
 Let $x ∈ ℝ^d$ and $a = \floor{x}$.
 If $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ$, then
@@ -69,26 +76,28 @@ which can be done by the following equations:
 \]
 This allows us to calculate the previous vector $x$ from the next vector $x'$,
 if we know the integer vector $a$.
-For the inverse function, we do not need to store the index,
-since in the next vector $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element.
-So we can derive $ℓ$ from the vector by its largest element.
-By $\mathrm{pivot}^{-1}$ we denote this inverse function.
-We have
+What we do not need for the inverse function is the index $ℓ$.
+The reason is that $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element,
+since $\{x_i\} < 1$ for every element.
+So we can derive $ℓ$ from the vector $x'$ by finding the index of the largest element.
+We will denote the inverse function as $\mathrm{pivot}^{-1}$,
+it takes a vector $x' ∈ ℝ^d$ and an integer vector $a$
+and then calculates $x$ using the equations above.
+In summary, we have
 \[
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}^{-1}(a, x') = x.
 \]
-This operation leads directly to a definition of MDCFs.
 
-Although, we initially used integer vectors $a ∈ ℤ^d$ for the definition of the inverse operation,
-we can also look at what happens when $a$ is not necessarily an integer vector.
-For subsequent lemmas, we will need a definition of MDCFs which allows rational
-or even real vectors as coefficients.
+Using this inverse operation we can directly derive the bottom-up definition for MDCFs.
+So far we have only used integer vectors $a ∈ ℤ^d$,
+however, in the definition we will allow any real vector, just like with the continued fractions.
+Again this is for subsequent lemmas, where we will need rational or even real vectors coefficients.
 
 \begin{definition}
   Given a sequence of $d$-dimensional real vectors $(r^{(n)})_{n ≥ 0}$,
   the \emph{$d$-dimensional continued fraction} $[r^{(0)}; r^{(1)}, …]$ is defined as
   \[
-    [r^{(0)}; ℓ₁, r^{(1)}; …] = \lim_{n → ∞} [r^{(0)}; ℓ₁, r^{(1)}; …; ℓₙ, r^{(n)}],
+    [r^{(0)}; r^{(1)}, …] = \lim_{n → ∞} [r^{(0)}; r^{(1)}, …, r^{(n)}],
   \]
   where the finite continued fractions $[r^{(0)}; r^{(1)}, …, r^{(n)}]$
   are defined inductively as
@@ -269,23 +278,27 @@ such they ensure that they converge to a limit as $n$ increases.
 % not really from him, but just based on his version.
 % TODO: We should mention somewhere that a^{(n)} is always positive.
 % TODO: The indices here are wrong...
-In the following, we assume that we have an MDCF $[a^{(0)}, a^{(1)}, a^{(2)}
-…]$ with only positive integer coefficients $a^{(1)}, a^{(2)}$ and one
-(potentially negative) integer vector $a^{(0)}$.
-Furthermore, we assume that this is an MDCF constructed using the generalized
-Euclidean algorithm for some irrational vector $x = (x₁, …, x_d)$.
-In the following, $x^{(k)}$ denotes the $k$-th complete quotient of $x$
-and the $n$-th convergent is denoted as
+In this section, we assume that we have an MDCF $[a^{(0)}, a^{(1)}, a^{(2)} …]$
+with only positive integer coefficients $a^{(0)}, a^{(1)}, a^{(2)}, …$.
+Although the first coefficient can be negative, we further assume that it is always positive,
+since the first complete quotient would only have positive coefficients.
+Finally, we assume that this is an MDCF constructed using the generalized
+Euclidean algorithm from some positive irrational vector $x = (x₁, …, x_d)$.
+In particular, this means that the MDCF is infinite.
+With $x^{(n)}$ we denote the $n$-th complete quotient of $x$
+and if $ℓ$ is the index of the largest element in $x^{(n)}$, then the $n$-th
+convergent is denoted as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
-  = \left( \frac{P_{1ℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}}, \dots, \frac{P_{dℓ_n}^{(n)}}{Q_{ℓ_n}^{(n)}} \right).
+  = \left( \frac{P_{1ℓ}^{(n)}}{Q_{ℓ}^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_{ℓ}^{(n)}} \right).
 \]
 The aim of this section is to show that the convergents actually live up to
 their name and converge towards the vector $x$ as $n$ increases.
 The proof is based on Perron's proof for the convergence of his
 algorithm \cite{Perron07}.
-For the proof we need two more requirements:
+For the proof we need two more requirements.
+
 The first comes from Perron's original proof.
 In his version, he required that there exists some constant $c > 0$ such that
 \[
@@ -293,31 +306,45 @@ In his version, he required that there exists some constant $c > 0$ such that
   \quad \text{ and } \quad
   0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ = \argmax_i x_i^{(n)}.
 \]
-In addition to his requirement, we also need that every element is the maximum infintely often,
-or equivalently the associated index sequence contains every index infinitely often.
+This condition is always satisfied by MDCFs.
+Because $ℓ$ is the index of the largest element in $x^{(n)}$
+and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
+the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
+Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
+Hence, this condition is satisfied for $c = 1$.
+
+The second requirement is specifically for MDCFs.
+Each MDCF is constructed using the generalized Euclidean algorithm and one
+possible choice of indices $ℓ₁, ℓ₂, … ∈ \{1, …, d\}$.
+For MDCFs, this means that in the complete quotients different elements might be the maximum.
+The second requirement then states that every element is the maximum infinitely often,
+or equivalently in the construction of the MDCF every index is used infinitely often.
 This is already given in the Jacobi-Perron algorithm,
 but not in the generalized Euclidean algorithm.
-So we need this additional requirement for the convergence.
+So we need this additional requirement specifically for MDCFs.
 
-The vector $r^{(n)}$ is only one possible convergent.
-The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ are also convergent
+The vector $r^{(n)}$ is only one possible convergent out of several.
+The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ can also be considered convergent
 vectors, since $i = \argmax_i x_i^{(m)}$ at some index $m < n$ if $n$ is chosen large enough.
-The first step for the proof is to show that each convergent $r^{(n)}$ is a
-convex combination of these vectors.
-This shows that the vector $x$ lies in the convex hull of the convergents.
+We will call $r^{(n)}$ the \emph{primary} convergent and the other ones \emph{secondary} convergents.
+The first step for the proof is to show that each primary convergent $r^{(n)}$ is a
+convex combination of the secondary convergents.
+This shows that the next primary convergent lies in the convex hull of the
+secondary convergents.
 
 % TODO: We should probably add superscripts to the lambdas as they depend on n.
 \begin{lemma}
   \label{lem:conv-conv}
   There exists $λ₀, λ₁, …, λ_d ≥ 0$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
   \[
-    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}}.
+    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
 \end{lemma}
 
 \begin{proof}
-  We choose $n ≥ 0$ such that every index in $\{1, …, d\}$ has occurred at least once.
-  Let $ℓ = \argmax_i x_i^{(n)}$.
+  We choose $n ≥ 0$ such that every element was the maximum at least once.
+  In particular, this means that $Q_i^{(n-1)} > 0$ for every $i ∈ \{1, …, d\}$.
+  Let $ℓ$ be the index of the largest element in $x^{(n)}$.
   By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ}^{(n)}$ using the previous values as follows:
   \begin{align*}
     P_{iℓ}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)}.
@@ -346,8 +373,9 @@ This shows that the vector $x$ lies in the convex hull of the convergents.
   between $0$ and $1$.
 \end{proof}
 
-To prove the convergence, we will apply the squeeze theorem, again.
-We use the two sequences $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
+Next, we enclose the secondary convergents inside an axis-aligned bounding box
+delimited by the two sequences
+$s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
 \[
   s_i^{(n)} = \min\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}
 \]
@@ -355,11 +383,12 @@ and
 \[
   t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}.
 \]
-The convergent $r^{(n)}$ clearly lies between the sequences $s^{(n)}$ and $t^{(n)}$.
-So if $s^{(n)}$ and $t^{(n)}$ converge to the same limit, then $r^{(n)}$ also
-converges to the same limit.
-For the convergence of $s^{(n)}$ and $t^{(n)}$, we show that they are monotone
-and bounded.
+This box will be used to show the convergence via the sequence theorem.
+The primary convergent $r^{(n)}$ clearly lies between the two sequences.
+So if $s^{(n)}$ and $t^{(n)}$ converge to the same limit, then $r^{(n)}$ must
+also converge to the same limit.
+For the convergence of $s^{(n)}$ and $t^{(n)}$, we show that each of them is
+monotone and bounded.
 By the monotone-convergence theorem, they must converge.
 
 \begin{lemma}
@@ -386,36 +415,42 @@ By the monotone-convergence theorem, they must converge.
   or equivalently $s_i^{(n-1)} ≤ s_i^{(n)} ≤ r_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}$.
 \end{proof}
 
-The previous lemma only shows that the sequences are converging,
-not that they are converging to the same limit.
-To show the second part, we first need this crucial lemma
+
+Before we show that they are converging to the same limit, we first need this crucial lemma
 about the coefficients $λ₀, λ₁, …, λ_d$ in the convex combination from Lemma~\ref{lem:conv-conv}.
-In particular, there always exists one $λ_k$ which is neither exactly $0$ nor $1$.
-% TODO: Is this not trivial?? Yes, an we should reformulate this statement to
-% make it clear that this is constant. It always moves by a constant amount
-Stated differently, the vector $x$ never lies exactly on a convergent.
-This is also the crucial property, that Perron has shown for the convergence of
-his algorithm.
+The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
+It states that the coefficient of the previous primary convergent $r^{(n-1)}$,
+which is also a secondary convergent, is always greater than some constant
+independent of $n$.
+If we look at the convex hull of the secondary convergents, then this means
+that we cut off a constant portion from the convex hull.
 
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $ℓ$ with $λ_ℓ > c$ for some positive constant $c$.
+  There exists one index $ℓ$ with $λ_ℓ > \frac{1}{M}$ for some positive constant $M$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
 \begin{proof}
-  We choose $k = ℓ_{n-1}$.
+  Let $ℓ$ be the index of the largest element in the previous complete quotient $x^{(n-1)}$.
   Using the initial requirements for the coefficients $a_i^{(n)}$ and the fact
-  that $Q_k^{(n-1)} ≥ Q_i^{(n-1)} = Q_i^{(n-2)}$ for every $i ≠ k$,
-  it follows that
+  that
   \[
-    \frac{λ_i}{λ_k} = \frac{a_i^{(n)}}{a_k^{(n)}} · \frac{Q_i^{(n-1)}}{Q_k^{(n-1)}} ≤ c · 1,
+    Q_ℓ^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d ≥ Q_i^{(n-2)} = Q_i^{(n-1)}
   \]
-  or equivalently $λᵢ ≤ c λₖ$. From this, it follows that
+  for every $i ≠ ℓ$, it follows that
   \[
-    1 = λ₀ + λ₁ + ⋯ + λ_d ≤ λ_k (1 + dc).
+    \frac{λ_i}{λ_ℓ}
+    = \frac{a_i^{(n)}}{a_ℓ^{(n)}} · \frac{Q_i^{(n-1)}}{Q_ℓ^{(n-1)}}
+    ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}}
+    ≤ c,
   \]
-  Therefore, $λₖ ≥ 1/(1 + dc) > 0$.
+  or equivalently $λᵢ ≤ c λ_ℓ$.
+  But then,
+  \[
+    1 = λ₀ + λ₁ + ⋯ + λ_d ≤ λ_ℓ (1 + dc).
+  \]
+  Therefore, $λ_ℓ ≥ 1/(1 + dc) > 0$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -433,9 +468,7 @@ his algorithm.
   \label{fig:convergence}
 \end{figure}
 
-The two sequences $s^{(n)}$ and $t^{(n)}$ wrap the convex hull in an
-axis-aligned bounding box.
-If the sequences converge to the same limit,
+If the sequences $s^{(n)}$ and $t^{(n)}$ converge to the same limit,
 then that means that the bounding box shrinks to a point.
 Therefore, the convergent $r^{(n)}$, which is inside this box, converges to the
 same point.
@@ -443,11 +476,12 @@ However, the box could also approach some non-empty box, i.e.
 \[
   \lim_{n → ∞} s_i^{(n)} < \lim_{n → ∞} t_i^{(n)}.
 \]
-But the previous lemma contradicts this assumption,
-because each convergent moves by a constant percentage towards this vector.
-Therefore, we can always find a point at which the convergents step over this
-non-empty box and every convergent is inside the box.
-This is the main idea behind the following lemma.
+But the previous lemma contradicts this assumption.
+The area of the convex hull must shrink at least by a constant proportion.
+So if the sequences would approach different limits, then we can always find a
+point at which the convergents step over the box such that every convergent is
+inside the box.
+This is the main idea behind the proof for convergence.
 
 % TODO: Should we add the requirements, like every index occurs infinitely
 % often (but the correct version)?
@@ -466,21 +500,22 @@ This is the main idea behind the following lemma.
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
-  Let $ℓ' = \argmax_i x_i^{(n-1)}$.
-  Then, $r_i^{(n-1)} = P_{iℓ'}^{(n-1)}/Q_{ℓ'}^{(n-1)}$ and
+  Let $ℓ$ be the index of the largest element in the previous complete quotient $x^{(n-1)}$.
+  Since the limit $s_i - ε$ bounds the secondary convergents,
+  we can use this to bound the primary convergent
   %$Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$. % TODO: Why was this here?
   \begin{align*}
     r_i^{(n)}
     & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & > \lambda_{ℓ'} \frac{P_{iℓ'}^{(n-1)}}{Q_{ℓ'}^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
-    & = \lambda_{ℓ'} r_i^{(n-1)} + (1 - λ_{ℓ'}) (s_i - ε),
+    & > \lambda_{ℓ} \frac{P_{iℓ}^{(n-1)}}{Q_{ℓ}^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
+    & = \lambda_{ℓ} r_i^{(n-1)} + (1 - λ_ℓ) (s_i - ε),
   \end{align*}
   or equivalently
   \begin{align*}
-    r_i^{(n)} - s_i > λ_{ℓ'} \left( r_i^{(n-1)} - s_i \right) - ε.
+    r_i^{(n)} - s_i > λ_{ℓ} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
   Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $M$
-  that bounds $λ_{ℓ'}$ from below.
+  which bounds $λ_{ℓ}$ from below.
   It follows that
   \begin{align*}
     r_i^{(n)} - s_i > \frac{1}{M} \left( r_i^{(n-1)} - s_i \right) - ε
@@ -544,13 +579,8 @@ This is the main idea behind the following lemma.
   for every $i ≤ d$.
 \end{proof}
 
-% TODO: Explain that the theorem always applies since we choose the maximum
-One application of this theorem are periodic MDCFs.
-Since they only have a finite set of a coefficients they easily satisfy the
-first requirement of the theorem.
-
 \begin{corollary}
-  Periodic MDCFs converge if the period contains every index.
+  Periodic MDCFs converge if every element is the maximum in the period.
 \end{corollary}
 
 % ==============================================================================
@@ -661,14 +691,14 @@ Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in
 the projective space $\mathbb{RP}^{d+1}$.
 Using this notion, we can reformulate the MDCF as a series of matrix multiplications.
-In the following $T(a)$ denotes the translation by a vector $a ∈ ℝ^d$
-and the matrix $S(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
+In the following $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$
+and the matrix $R(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
 The definition of the MDCFs can then be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
   [a^{(0)}; a^{(1)}, …, a^{(n)}] = T(a₀) · S(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
 \]
-where $ℓ = \argmax_i [a^{(1)}; a^{(2)}, …, a^{(n)}]_i$ and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
+where $ℓ$ is the index of the largest element in $[a^{(1)}; a^{(2)}, …, a^{(n)}]$ and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
 
 We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
 Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $(B^{(n)})_{n ≥ 0}$,
@@ -694,7 +724,7 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
   \label{lem:mdcf-wallis'}
   Let $x ∈ ℝ^d$ and $\hat x = (1, x₁, …, x_d)$, then
   \[
-    [a^{(0)}; ℓ₁, a^{(1)}; …; ℓ_{n-1}, a^{(n-1)}; ℓ, x] = [B^{(n-1)} \hat x]
+    [r^{(0)}; r^{(1)}, …, r^{(n-1)}, x] = [B^{(n-1)} \hat x]
   \]
 \end{lemma}
 
@@ -744,7 +774,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 \begin{lemma}
   \label{lem:mdcf-purely-periodic}
   If there exists a purely periodic MDCF for $x ∈ ℝ^d$,
-  then $xᵢ$ is an algebraic number of degree $≤ d+1$ for every $i ≤ d$.
+  then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
 \end{lemma}
 
 % TODO: Should we use x ≡ y or [x] = [y]?
@@ -777,8 +807,8 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 
 \begin{theorem}
   \label{thm:mdcf-periodic}
-  If there exists a periodic MDCF for a given vector $x ∈ ℝ^d$,
-  then each $x_i$ is a root of some polynomial with degree $≤ d+1$ for every $i ≤ d$.
+  If there exists a periodic MDCF for $x ∈ ℝ^d$,
+  then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
 \end{theorem}
 
 \begin{proof}
