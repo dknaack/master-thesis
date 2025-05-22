@@ -575,7 +575,24 @@ because $\det(B_n) = p_{n-1} q_{n-2} - p_{n-2} q_{n-1}$.
 \end{lemma}
 
 \begin{proof}
-
+  We can cover the area between the chains
+  using parallelograms made up of the points $b_n$, $b_{n-1}, b_{n-2}$, and a suitable fourth point.
+  Each parallelogram contains exactly
+  \begin{align*}
+    |\det\begin{pmatrix}
+      b_n - b_{n-2} & b_{n-1} - b_{n-2}
+    \end{pmatrix}|
+    & = |\det\begin{pmatrix}
+      a_n b_{n-1} & b_{n-1} - b_{n-2}
+    \end{pmatrix}| \\
+    & = |\det\begin{pmatrix}
+      a_n b_{n-1} & -b_{n-2}
+    \end{pmatrix}| \\
+    & = a_n
+  \end{align*}
+  integer points.
+  However, these points all lie on the line between $b_n$ and $b_{n-2}$.
+  Therefore, the area between the chains cannot contain any integer point.
 \end{proof}
 
 \begin{definition}
