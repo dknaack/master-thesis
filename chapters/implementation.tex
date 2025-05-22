@@ -5,12 +5,10 @@ We have already seen in Chapter~\ref{ch:fibonacci},
 that the simplest periodic MDCFs compose a special class of polynomials,
 which can be interpreted as a generalization of the metallic ratios in higher
 dimensions.
-There is also a particular class of polynomials for the Jacobi-Perron algorithm,
-which are periodic for that algorithm and in turn have periodic MDCFs.
-However, this still leaves the question, whether all algebraic numbers of degree $d+1$
+However, this still leaves the question, whether all algebraic numbers of degree $≤ d+1$
 have a periodic $d$-dimensional continued fraction.
 Within the scope of this thesis, I was unable to prove this question in
-general, but I will nevertheless present my evidence for the conjecture.
+general, but I will nevertheless present my evidence for this conjecture.
 
 % TODO: Rewrite this part
 In this chapter, I present more examples of periodic MDCFs for common algebraic numbers.
@@ -200,16 +198,6 @@ So,
   \texttt{strat}(x, n) = (n \bmod d) + 1.
 \]
 
-In summary, the following deterministic strategies were tried:
-\begin{itemize}
-  \item Minimum fractional value
-  \item Maximum fractional value
-  \item Strategies which are regular: $s(x, n) = ((n + k) \bmod d) + 1$ for all $k ≤ d$.
-    This includes the Jacobi-Perron algorithm which sets $k = 0$.
-  \item Some other paper, which decides the next candidate
-    based on the algebraic norm of the underlying field. % TODO: Find the paper
-\end{itemize}
-
 For the non-deterministic search, only the approximation criterion was tested,
 but with different rates, i.e. whether for some constant $c ≥ 1$,
 \[
@@ -365,16 +353,53 @@ The specific constant for each root is listed in Table~\ref{tbl:approx-const}.
 
 Considering the difficulty in finding higher-dimensional MDCFs,
 a more efficient search strategy is needed.
-The optimal strategy would be deterministic
-and give only the next for any given real vector.
-We could then follow the chain by evaluating it at every complete convergent to
-see which index comes next.
-However, even a non-deterministic strategy that eliminates possible candidates
-from the search space would be better than brute force.
-Therefore, I have analyzed different candidates, both deterministic and
-non-deterministic, that could replace the brute-force search.
+When constructing the MDCF using the generalized Euclidean algorithm,
+we always have a choice for the pivot element $x_ℓ$.
+Ideally, we could just determine the pivot element solely from the vector $x$
+without resorting to a search down the tree.
+Therefore, I have compared different strategies which can be used for this purpose.
+Each strategy receives the current vector $x$ as well as the number of steps
+taken so far and outputs the next index to pivot with.
+The search for a periodic MDCF then works just like the brute-force search:
+If there is any vector which occured twice, then program terminates the search.
 
-We can likely rule out alternating pivot sequences since this corresponds to
-the Jacobi-Perron algorithm and for this algorithm it is conjectured
-\cite{Karpenkov21} that the algorithm is not periodic for $\sqrt[3]{4}$.
-However, the brute-force algorithm is periodic for this input (see Table~\ref{table:cube-root-4}).
+In summary, the following deterministic strategies were tried:
+\begin{itemize}
+  \item Choosing the minimum and maximum fractional value.
+  \item Fixed strategies,
+    which are defined for some list of indices $L = ℓ₀ ℓ₁ \dots ℓ_{k-1}$
+    and output $ℓ_{(n \bmod k)}$ after $n$ steps.
+    This also includes the Jacobi-Perron algorithm,
+    which always chooses the indices $1, 2, …, d$ in this order.
+  \item Choosing the best convergent.
+    Out of the $d$ possible indices,
+    we choose the one which produces the best convergent $r^{(n)}$,
+    which means that it minimizes the distance to the original input vector.
+    This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
+\end{itemize}
+% TODO: For how many steps did we run the construction?
+The fixed strategies were the easiest to implement and therefore also the
+fastest, so I ran them for a maximum number of $1000$ steps.
+The other strategies had a little more overhead, so I only ran them for a
+maximum of $100$ steps.
+
+Table~\ref{tbl:comparison} lists the results for this section.
+Out of all strategies, the best are clearly the one,
+which chooses the minimum fractional value, and the fixed strategy, which
+alternates between the first and second element.
+Surprisingly, the worst strategy for constructing MDCFs seems to be the one,
+which chooses the best convergent with either norm.
+It was unable to construct a single MDCF for any cube root.
+% Why was it unable to do so? Which indices did it choose? How well do the
+% other strategies approximate the original input vector? Are they better or
+% worse after some number of steps?
+
+Although the minimum strategy was able to find the most MDCFs,
+it was not able to find all MDCFs.
+Some cube roots were only found by other strategies,
+while others were only found by the minimum strategy.
+In conclusion, no perfect strategy was found.
+This is not surprising,
+since what this search is likely aiming for is a fundamental unit in a cubic field.
+The problem of finding a fundamental unit is not trivial in higher degree fields. % TODO: cite
+For cubic fields, usually an instance of the LLL algorithm is used.
