@@ -172,42 +172,6 @@ element we choose to pivot with.
 Therefore, multiple different notions of Fibonacci numbers exist for this
 algorithm.
 
-In the generalized Euclidean algorithm,
-the quotient comes from the solution vector $x$.
-In fact, the execution of the algorithm depends entirely on this vector.
-There are infinitely many possible linear systems which have the same solution vector $x$.
-We use a simple construction, which
-given a rational vector $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$,
-constructs the linear system $Bx = c$ with
-\begin{equation}
-  \label{eq:linear-system-construction}
-  B =
-  \begin{pmatrix}
-    q & 0 & ⋯ & 0 \\
-    0 & q & ⋯ & 0 \\
-    ⋮ & ⋮ & ⋱ & ⋮ \\
-    0 & 0 & ⋯ & q \\
-  \end{pmatrix},
-  \quad
-  c =
-  \begin{pmatrix}
-    p₁ \\
-    p₂ \\
-    ⋮ \\
-    p_d
-  \end{pmatrix}.
-\end{equation}
-Therefore, we define the Fibonacci numbers in terms of the solution vector $x$
-and use the construction of $B$ and $c$ as the input to the generalized
-Euclidean algorithm.
-
-\begin{table}[tbp]
-  \caption{The first 10 $d$-bonacci numbers with $d = 1, …, 5$ and their golden ratios.}
-  \label{tbl:min-fibonacci}
-  \centering
-  \input{tables/min-fibonacci}
-\end{table}
-
 % I would like a better explanation of what the goal of this section is
 We begin by deriving the Fibonacci numbers for one particular strategy.
 Recall that the determinant decreases by $\{x_ℓ\}$ in each iteration.
@@ -220,6 +184,15 @@ So we begin with this strategy and see how the Fibonacci numbers are defined.
 % TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
 % TODO: Should we have a table for the Fibonacci numbers?
 % TODO: What about adding references to their OEIS number?
+
+% TODO: Maybe it's better to show the numbers in the ratios, since we explain
+% that they approach some golden ratio anyways
+\begin{table}[tbp]
+  \caption{The first 10 $d$-bonacci numbers with $d = 1, …, 5$ and their golden ratios.}
+  \label{tbl:min-fibonacci}
+  \centering
+  \input{tables/min-fibonacci}
+\end{table}
 
 \begin{definition}
   The Fibonacci numbers for this strategy are defined as
