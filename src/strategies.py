@@ -8,10 +8,10 @@ def floor_list(list):
 def mdcf(coeffs):
     if len(coeffs) == 0:
         raise ValueError("The list is empty")
-    elif len(coeffs) == 1:
-        return coeffs[0]
-    else:
-        return unpivot(mdcf(coeffs[1:]), coeffs[0])
+    result, *coeffs = coeffs
+    for a in coeffs[::-1]:
+        result = unpivot(result, a)
+    return result
 
 #
 # Nondeterministic Strategies
