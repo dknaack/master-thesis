@@ -226,50 +226,72 @@ and the previous two lemmas lead to the following theorem:
 \end{theorem}
 
 % ==============================================================================
-\section{Extension to Real Numbers}
+\section{Constructing an Integer Representation for Real Vectors}
 % ==============================================================================
 
 % TODO: There should be some explanation on the fact that the solution vector
 % kind of represents the ratio between the inputs just like in the Euclidean
 % algorithm.
-The last step needed for the analysis is an extension of the algorithm to real
-numbers.
-In the original Euclidean algorithm,
-we used the ratio $b^{-1}a$ between the two inputs to derive a variant,
-which works on real numbers.
-In a sense, we use the solution vector $x = B^{-1}a$ as a ratio between the inputs
-and we allow $x$ to be a real vector.
+The first part of Hermite's question asks for a representation of real numbers
+as a sequence of integers $a₀, a₁, …$ and we will use the algorithm to
+construct a new representation different from the continued fractions.
+In the classical Euclidean algorithm,
+we used the ratio $b^{-1}a$ between the two inputs $a, b ∈ ℤ$ to derive the continued fraction.
+At each step, the integer part $\floor{b^{-1} a}$ determined one coefficient in
+the representation.
+In a sense, we can use the solution vector $x = B^{-1}a$ as a ratio between the inputs.
+The integer part $\floor{x}$ now defines a whole vector, which we use as
+one coefficient vector in the representation.
+This also gives us a representation of an entire vector not just a single number.
 In the original lattice reduction problem, this means that we allow the
 algorithm to take in real vectors as input.
-Just like with the Euclidean algorithm, this causes the algorithm to continue
-infinitely as long as the vector $x$ is not rational.
+In summary, if $x, x', x'', …$ are the solution vectors at each iteration of the algorithm,
+then we represent the original input vector $x$ as a list of integer vectors $\left[\floor{x}, \floor{x'}, \floor{x''}, …\right]$.
 
-One problem is that calculating the next solution vector requires solving a
-linear system.
-However, there is a more direct way to calculate the solution vector $x$.
+This raises the question:
+How can we represent a single real number $r$?
+The answer is that we just have to choose a vector for every real number.
+This can be realized as a function which maps any number $r ∈ ℝ$ to a vector $x ∈ ℝ^d$.
+One such function is
+\[
+  r ↦ (r, r^2, …, r^d).
+\]
+This function has the advantage that the elements of the vector are linearly independent,
+if $r$ is an algebraic number with degree $≥ d$.
+
+The next problem is that we need to find an entire linear system for the Euclidean algorithm.
+Since $x$ is a real vector now, we can also choose lattices with real vectors.
+Therefore, a simple solution would be to choose the linear system $Bx = c$ with
+$B = I_d$ and $c = x$, which clearly has $x$ as the solution.
+However, there is a way we can entirely eliminate the linear system from the construction.
 In the original paper, the authors proceed to apply various optimization
-to speed up the basic algorithm presented here.
+to speed up the basic version presented here.
 One of those optimizations, removes the need to solve a linear system in each iteration.
 Instead of recomputing a solution each time,
 we can update the current solution to gain the solution for the next iteration.
-If $x = (x₁, …, x_d)$ is the solution in the current iteration,
-then $x' = (x₁', …, x_d')$ with
+Suppose $x = (x₁, …, x_d)$ is the solution in the current iteration,
+then we calculate the next vector $x' = (x₁', …, x_d')$ using
 \begin{align*}
   x_i' =
   \begin{cases}
-    \frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
-    -\frac{\{x_i\}}{\{x_ℓ\}} & \text{ otherwise,}
+    \hphantom{-}\frac{1}{\{x_ℓ\}},  & \text{ if } i = ℓ, \\
+    -\frac{\{x_i\}}{\{x_ℓ\}}, & \text{ if } i ≠ ℓ,
   \end{cases}
 \end{align*}
-is the solution in the next iteration.
+where $\{x_i\} := x_i - \floor{x_i}$.
 This update rule follows from the fact that
 \[
   B_ℓ \{x_ℓ\} + \sum_{i ≠ ℓ} B_i \{x_i\} = r
-  \iff
+  \Leftrightarrow
   r - \sum_{i ≠ ℓ} B_i \{x_i\} = B_ℓ \{x_ℓ\}
-  \iff
+  \Leftrightarrow
   r \frac{1}{\{x_ℓ\}} - \sum_{i ≠ ℓ} B_i \frac{\{x_i\}}{\{x_ℓ\}} = B_ℓ.
 \]
+With this rule,
+we only need to solve the linear system at the start of the algorithm.
+Afterwards we use the rule to update our solution vector.
+Importantly, this means that the representation no longer depends on the linear system, itself.
+We can immediately start constructing the representation from the initial solution vector $x$.
 
 % TODO: Should we add a citation for Northshield and explain that continued
 % fractions map positive to positive values which seems to be a fundamental
@@ -309,10 +331,13 @@ end
 \end{Pseudocode}
 
 Although the update rule speeds up the algorithm considerably, it is not
-optimal for the construction of a generalized continued fraction.
-The problem is that the rule flips the sign of all elements inside the solution
-vector in each iteration, so it ends up producing negative values.
-Instead, we slightly modify the rule such that it maps each $xᵢ$ to another positive value.
+optimal for the construction of an integer representation.
+The problem is that the coefficients can become negative.
+In one dimension, the solution vector always remains positive,
+but in higher dimensions this is no longer the case.
+The rule flips the signs of all elements $x_i$ with $i ≠ ℓ$
+and can therefore produce negative values in the solution vector and also in the representation.
+To avoid this, we slightly modify the rule such that it maps each $xᵢ$ to another positive value.
 After we replace $B_ℓ$ with $c$, we flip the signs of all vectors $B_i$ with $i ≠ ℓ$.
 This leads to the modified update rule, where the values $x_i$ for $i ≠ ℓ$ are
 no longer negated:
@@ -328,6 +353,44 @@ By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
 The modified algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
 In the algorithm, first $B_ℓ$ is flipped and then the whole matrix $B$ is flipped,
 This is the same as only flipping the vectors $B_i$ for $i ≠ ℓ$.
+The difference between the two algorithms is essentially that we propagate the
+negation to the vectors $B_i$ instead of the elements $x_i'$.
+Hence, $x$ is totally positive after one iteration of the algorithm.
+We now have an easy way to represent real numbers,
+except that this representation is not unique.
+
+% TODO: We need to explain that this representation is not unique
+
+\begin{example}
+  % TODO: We should add an example here somewhere
+  Consider $x = (13/5, 8/5)$.
+  The vector has at least two different representations.
+  It can be represented as either $[(1,1); (1, 0), (1, 0)]$ or $[(1,1); (0, 1), (0, 1)]$,
+  since
+  \begin{align*}
+    (\underline{5/2}, 3/2) → (\underline{1/2}, 1) → (1, 0). \\
+    (5/2, \underline{3/2}) → (1, \underline{1/2}) → () \\
+    2/5
+  \end{align*}
+  Hence, the representation for $x$ is not unique.
+\end{example}
+
+To find a unique representation, all we need is a deterministic strategy,
+that decides which element $x_ℓ$ to choose for pivoting.
+For example, one possible strategy could be to choose the element with the
+smallest fractional value.
+
+In conclusion,
+we represent a vector $x ∈ ℝ^d$ as a sequence of integer vectors by repeatedly
+applying the $\mathrm{pivot}$ operation on it until $\{x\} = 0$.
+The index $ℓ$ is given according to some strategy and at each step we store
+$\floor{x}$ as one coefficient in the representation for $x$.
+We turn this into a representation for a single number $r ∈ ℝ$ by mapping each
+number to the vector $(r^1, r^2, …, r^d)$.
+This solves the first part of Hermite's question.
+In the next chapters, we will discuss the second part of Hermite's question,
+whether the representation is periodic if and only if the number is a cubic
+irrational, or algebraic number in general.
 
 % ==============================================================================
 \section{Comparison to the Jacobi-Perron Algorithm}
