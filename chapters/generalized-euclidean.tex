@@ -60,7 +60,7 @@ Instead, we have to find new basis vectors for this lattice.
 
 % TODO: Note about the fact that we only care about one additional vector
 % TODO: Shouldn't it be the rank instead of n > d?
-The problem of finding a basis for a lattice is typically known as \emph{lattice basis computation}.
+The problem of finding a basis for a lattice is known as \emph{lattice basis computation}.
 The input for this problem is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
 is to find a basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
 The problem can also be seen as a multi-dimensional analogue of
@@ -129,11 +129,11 @@ The fractional part of $a$ would then be $r = a - z$.
 The fractional part is actually contained in what is known as the \emph{fundamental parallelepiped} of the lattice.
 
 \begin{definition}
-  The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with $B ∈ ℤ^{d × n}$ is defined as
+  The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with a basis $B ∈ ℤ^{d×d}$ is defined as
   \[
-    Π(B) = \left\{\, B₁ x₁ + \dots + B_n x_n \mid x_1, \dots, x_n ∈ [0, 1) \,\right\}
+    Π(B) = \left\{\, B₁ x₁ + \dots + B_d x_d \mid x_1, \dots, x_d ∈ [0, 1) \,\right\}.
   \]
-  The volume of the parallelepiped is
+  The volume of this parallelepiped is
   \[
     \mathrm{vol}(Π(B)) = |\det(B)|.
   \]
