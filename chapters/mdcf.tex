@@ -279,34 +279,39 @@ such they ensure that they converge to a limit as $n$ increases.
 % not really from him, but just based on his version.
 % TODO: We should mention somewhere that a^{(n)} is always positive.
 % TODO: The indices here are wrong...
-In this section, we assume that we have an MDCF $[a^{(0)}, a^{(1)}, a^{(2)} …]$
-with only positive integer coefficients $a^{(0)}, a^{(1)}, a^{(2)}, …$.
-Although the first coefficient can be negative, we further assume that it is always positive,
-since the first complete quotient would only have positive coefficients.
-Finally, we assume that this is an MDCF constructed using the generalized
-Euclidean algorithm from some positive irrational vector $x = (x₁, …, x_d)$.
-In particular, this means that the MDCF is infinite.
-With $x^{(n)}$ we denote the $n$-th complete quotient of $x$
-and if $ℓ$ is the index of the largest element in $x^{(n)}$, then the $n$-th
-convergent is denoted as
+So far in our analysis, we have implicitly assumed that the MDCF $[a^{(0)}; a^{(1)}, a^{(2)} …]$
+constructed using the generalized Euclidean algorithm always converges to the
+original input vector $x ∈ ℝ^d$.
+The aim of this section is to show that the convergents actually live up to
+their name and converge towards the vector $x$ as $n$ increases.
+Since we have used the Euclidean algorithm to construct the MDCF,
+we can assume that all vectors $a^{(n)}$ are positive integers even the first
+one $a^{(0)}$.
+Although the first coefficient can be negative, we can safely assume that its
+not since the second coefficient is always positive.
+Therefore, we simply prove the convergence for the second complete quotient $x^{(1)} =
+[a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MDCF.
+Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
+which means that the MDCF is infinite.
+We denote with $x^{(n)}$ the $n$-th complete quotient of $x$
+and if $ℓ$ is the index of the largest element in $x^{(n)}$,
+then the $n$-th convergent of $x$ is denoted as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
   = \left( \frac{P_{1ℓ}^{(n)}}{Q_{ℓ}^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_{ℓ}^{(n)}} \right).
 \]
-The aim of this section is to show that the convergents actually live up to
-their name and converge towards the vector $x$ as $n$ increases.
-The proof is based on Perron's proof for the convergence of his
-algorithm \cite{Perron07}.
-For the proof we need two more requirements.
 
+The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
+For the proof we need two more requirements.
 The first comes from Perron's original proof.
 In his version, he required that there exists some constant $c > 0$ such that
 \[
   0 < \frac{1}{a_{ℓ}^{(n)}} ≤ c
   \quad \text{ and } \quad
-  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ = \argmax_i x_i^{(n)}.
+  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ,
 \]
+where $ℓ$ is the index of the largest element in $x^{(n)}$.
 This condition is always satisfied by MDCFs.
 Because $ℓ$ is the index of the largest element in $x^{(n)}$
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
@@ -316,21 +321,37 @@ Hence, this condition is satisfied for $c = 1$.
 
 The second requirement is specifically for MDCFs.
 Each MDCF is constructed using the generalized Euclidean algorithm and one
-possible choice of indices $ℓ₁, ℓ₂, … ∈ \{1, …, d\}$.
-For MDCFs, this means that in the complete quotients different elements might be the maximum.
-The second requirement then states that every element is the maximum infinitely often,
-or equivalently in the construction of the MDCF every index is used infinitely often.
-This is already given in the Jacobi-Perron algorithm,
+possible choice of indices $ℓ₁, ℓ₂, …$ between $1$ and $d$.
+In the opposite direction, this means that the complete quotients can have different elements as their maximum.
+The second requirement then states that during the construction of the MDCF
+we use every index infinitely often.
+Again, in the opposite direction, this means that for each $i ∈ \{1, …, d\}$,
+there are infinitely many complete quotients which have $x_i^{(n)}$ as their
+largest element.
+This requirement is already given in the Jacobi-Perron algorithm,
 but not in the generalized Euclidean algorithm.
-So we need this additional requirement specifically for MDCFs.
+So we need this specifically for MDCFs.
+
+\begin{example}
+  Consider the MDCF $[(2, 1); \overline{(2, 1)}]$.
+  The maximum in the first complete quotient is $x^{(1)}_1$,
+  because the coefficient $a^{(1)} = (2, 1)$ determines the integer part
+  for all elements in $x^{(1)}$ and the next complete quotient $x^{(2)}$
+  only determines the fractional part.
+  Therefore, the first element must be the largest.
+  However, then it does not satisfy the second requirement.
+  Therefore, the following proof won't apply to this MDCF.
+\end{example}
 
 The vector $r^{(n)}$ is only one possible convergent out of several.
-The other vectors $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ can also be considered convergent
-vectors, since $i = \argmax_i x_i^{(m)}$ at some index $m < n$ if $n$ is chosen large enough.
-We will call $r^{(n)}$ the \emph{primary} convergent and the other ones \emph{secondary} convergents.
-The first step for the proof is to show that each primary convergent $r^{(n)}$ is a
-convex combination of the secondary convergents.
-This shows that the next primary convergent lies in the convex hull of the
+If $n$ is large enough, then we can consider the other vectors
+$P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
+since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
+We will call $r^{(n)}$ the \emph{primary convergent} and the other ones
+\emph{secondary convergents}.
+The first step for the proof is to show that the next primary convergent $r^{(n)}$ is a
+convex combination of the previous secondary convergents.
+This shows that the primary convergent always lies in the convex hull of the
 secondary convergents.
 
 % TODO: We should probably add superscripts to the lambdas as they depend on n.
@@ -338,7 +359,7 @@ secondary convergents.
   \label{lem:conv-conv}
   There exists $λ₀, λ₁, …, λ_d ≥ 0$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
   \[
-    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{id}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
 \end{lemma}
 
@@ -374,9 +395,9 @@ secondary convergents.
   between $0$ and $1$.
 \end{proof}
 
-Next, we enclose the secondary convergents inside an axis-aligned bounding box
-delimited by the two sequences
-$s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
+Next, we enclose the secondary convergents inside an axis-aligned bounding box.
+At each iteration, we define the box by its minimum and maximum corner points using the two sequences
+$s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ which are defined as
 \[
   s_i^{(n)} = \min\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}
 \]
@@ -384,47 +405,59 @@ and
 \[
   t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}.
 \]
-This box will be used to show the convergence via the sequence theorem.
-The primary convergent $r^{(n)}$ clearly lies between the two sequences.
+We use this box to show the convergence via the squeeze theorem.
+The primary convergent $r^{(n)}$ lies inside the box since it is one of the
+secondary convergent vectors used in the definition of the sequences.
 So if $s^{(n)}$ and $t^{(n)}$ converge to the same limit, then $r^{(n)}$ must
 also converge to the same limit.
 For the convergence of $s^{(n)}$ and $t^{(n)}$, we show that each of them is
 monotone and bounded.
-By the monotone-convergence theorem, they must converge.
+By the monotone-convergence theorem, the sequences must converge.
 
 \begin{lemma}
   The sequences $s_i^{(n)}$ and $t_i^{(n)}$ are monotone and bounded.
 \end{lemma}
 
 \begin{proof}
-  We can bound the new convergent $r^{(n)}$ from below using $s^{(n-1)}$.
+  We can bound the new convergent $r^{(n)}$ from below using the previous term $s^{(n-1)}$.
   For the previous iteration, we already have $P_{ij}^{(n-1)}/Q_j^{(n-1)} ≥ s_i^{(n-1)}$
-  for every $0 ≤ j ≤ d$ by construction of the sequence~$s_i^{(n-1)}$.
+  for every $j ∈ \{0, …, d\}$ by construction.
   Using Lemma~\ref{lem:conv-conv},
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}
     & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & ≥ λ₀ s_i^{(n-1)} + λ₁ s_i^{(n-1)} + ⋯ + λ_d s_i^{(n-1)} = s_i^{(n-1)}.
+    & ≥ λ₀ s_i^{(n-1)} + λ₁ s_i^{(n-1)} + ⋯ + λ_d s_i^{(n-1)}
+      = s_i^{(n-1)}.
   \end{align*}
   The bound for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ is even easier since
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)}.
   \]
   Using the same argument, we can bound each convergent from above by $t_i^{(n-1)}$.
-  Therefore, in each iteration the convergent $r_i^{(n)}$ is
-  bounded between the previous minimum~$s_i^{(n-1)}$ and the previous maximum~$t_i^{(n-1)}$,
-  or equivalently $s_i^{(n-1)} ≤ s_i^{(n)} ≤ r_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}$.
+  Therefore, in each iteration all secondary convergents are
+  bounded between previous minimum~$s_i^{(n-1)}$ and previous maximum~$t_i^{(n-1)}$.
+  Hence, the next minimum~$s_i^{(n)}$ and the next maximum~$t_i^{(n)}$ must
+  also be bounded between the two terms.
+  In summary, we have
+  \[
+    s_i^{(n-1)} ≤ s_i^{(n)} ≤ r_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}. \qedhere
+  \]
 \end{proof}
 
-
-Before we show that they are converging to the same limit, we first need this crucial lemma
-about the coefficients $λ₀, λ₁, …, λ_d$ in the convex combination from Lemma~\ref{lem:conv-conv}.
+In order to show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
+converging to the same limit, we first need this crucial lemma about the
+coefficients $λ₀, λ₁, …, λ_d$ from Lemma~\ref{lem:conv-conv}.
+% TODO: Actually add the figure here. Or do we wanna use the combined one, which is already here?
 The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
-It states that the coefficient of the previous primary convergent $r^{(n-1)}$,
-which is also a secondary convergent, is always greater than some constant
-independent of $n$.
-If we look at the convex hull of the secondary convergents, then this means
-that we cut off a constant portion from the convex hull.
+It states that one of the coefficients is always greater than some constant
+independently of $n$ and importantly that coefficient is for the previous convergent $r^{(n-1)}$.
+From the recurrence for the convergents,
+it follows that we always carry over the primary convergent $r^{(n-1)}$ as one
+of the secondary convergents in the next iteration.
+Therefore, we cannot change its position.
+However, we can change one of the other convergents.
+But the area available for the next convergent $r^{(n)}$ is restricted by this lemma
+such that the convex hull always shrinks by a constant amount.
 
 \begin{lemma}
   \label{lem:lambda-pos}
@@ -439,7 +472,8 @@ that we cut off a constant portion from the convex hull.
   \[
     Q_ℓ^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d ≥ Q_i^{(n-2)} = Q_i^{(n-1)}
   \]
-  for every $i ≠ ℓ$, it follows that
+  for every $i ≠ ℓ$.
+  It follows that
   \[
     \frac{λ_i}{λ_ℓ}
     = \frac{a_i^{(n)}}{a_ℓ^{(n)}} · \frac{Q_i^{(n-1)}}{Q_ℓ^{(n-1)}}
@@ -451,7 +485,7 @@ that we cut off a constant portion from the convex hull.
   \[
     1 = λ₀ + λ₁ + ⋯ + λ_d ≤ λ_ℓ (1 + dc).
   \]
-  Therefore, $λ_ℓ ≥ 1/(1 + dc) > 0$.
+  Therefore, $λ_ℓ ≥ 1/M$ with $M = 1 + dc > 0$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -464,7 +498,7 @@ that we cut off a constant portion from the convex hull.
     If $r^{(k)}$ is the convergent of the current iteration,
     then either $r^{(i)}$ or $r^{(j)}$ has to be moved in the next iteration.
     However, neither can go in the red triangle,
-    since $λ_k > 1/dc$.
+    since $λ_k > 1/M$.
   }
   \label{fig:convergence}
 \end{figure}
@@ -473,16 +507,17 @@ If the sequences $s^{(n)}$ and $t^{(n)}$ converge to the same limit,
 then that means that the bounding box shrinks to a point.
 Therefore, the convergent $r^{(n)}$, which is inside this box, converges to the
 same point.
-However, the box could also approach some non-empty box, i.e.
+However, the box could also turn out to be nonempty,
+if the sequences approach different limits, i.e.
 \[
   \lim_{n → ∞} s_i^{(n)} < \lim_{n → ∞} t_i^{(n)}.
 \]
 But the previous lemma contradicts this assumption.
-The area of the convex hull must shrink at least by a constant proportion.
+The area of the convex hull always shrinks by a at least a constant proportion.
 So if the sequences would approach different limits, then we can always find a
-point at which the convergents step over the box such that every convergent is
-inside the box.
-This is the main idea behind the proof for convergence.
+point at which all convergents step over the box and all of them are contained
+in the supposed limit.
+This is the main idea behind the following proof.
 
 % TODO: Should we add the requirements, like every index occurs infinitely
 % often (but the correct version)?
@@ -582,8 +617,8 @@ which is the original vector $x$ used for construction of the MDCF.
     & = λ₀' (x_i' - ε₀) + λ₁' (x_i - ε₁) + ⋯ + λ_d' (x_d - ε_d) \\
     & = x_i' - (λ₀' ε₀ + λ₁' ε₁ + λ_d' ε_d).
   \end{align*}
-  However, as $n$ increases the values $εᵢ$ become arbitrarily small
-  and because the values $λ₀', λ₁', …, λ_d$ all lie between $0$ and $1$,
+  However, as $n$ increases the values $εᵢ$ must become arbitrarily small
+  and because the coefficients $λ₀', λ₁', …, λ_d'$ all lie between $0$ and $1$,
   we can conclude that $x_i = x_i'$.
 \end{proof}
 
