@@ -626,27 +626,31 @@ which is the original vector $x$ used for construction of the MDCF.
 \section{The Geometry behind Multi-Dimensional Continued Fractions}
 % ==============================================================================
 
+% TODO: I'm not sold on the square brackets. With the list notation for the
+% continued fraction, they're kind of ambiguous. Maybe we should just switch to
+% regular parentheses instead.
 In the geometrical interpretation of continued fractions,
-each convergent $pₙ/qₙ$ was represented as a two-dimensional vector $(pₙ, qₙ)$.
-These vectors approached an irrational line spanned by the vector $(1, α)$ where
-$α$ is some irrational number.
-For the generalization of this interpretation to multi-dimensional continued
-fractions, we represent each convergent, which is a $d$-dimensional rational vector,
+we represented each convergent $pₙ/qₙ$ as a two-dimensional vector $(pₙ, qₙ)$.
+These vectors approached an irrational line spanned by the vector $(1, α)$
+where $α$ is some irrational number.
+For the generalization to multi-dimensional continued fractions,
+we represent each convergent,
+which is a $d$-dimensional rational vector,
 as a $(d+1)$-dimensional integer vector.
-Specifically, given a vector $r = (p₁/q₁, …, p_d/q_d) ∈ ℚ^d$, first we find a
-common denominator $(p₁'/q, …, p_d'/q_d)$ and then we map it to the vector
-$\hat r = (q, p₁', …, p_d') ∈ ℤ^{d+1}$.
-We can go back from the integer vector to a rational vector by dividing each
-coordinate with the first and removing the first coordinate from the integer
-vector:
-Given $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$, we map it back to $(x₁/x₀, …, x_d/x₀) ∈ ℚ^d$.
+Specifically, given a vector $r^{(n)} = (p₁/q₁, …, p_d/q_d) ∈ ℚ^d$,
+we first find a common denominator $(p₁'/q, …, p_d'/q)$ and
+then we map it to the vector $\hat r = (q, p₁', …, p_d') ∈ ℤ^{d+1}$.
+We can go back from the integer vector to a rational vector
+by dividing each coordinate with the first and
+removing the first coordinate from the integer vector,
+i.e. given $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$, we map it back to $(x₁/x₀, …, x_d/x₀) ∈ ℚ^d$.
 
 In this space, the representation for a particular convergent is not unique,
 there can be multiple integer vectors representing the same convergent.
-For example, if we have a vector $\hat r ∈ ℤ^d$ for a convergent,
-then we can multiply with some scalar $λ ∈ ℤ$ and get a new vector $c' = λ c$
+For example, if we have a vector $r ∈ ℤ^{d+1}$ for a convergent,
+then we can multiply with some scalar $λ ∈ ℤ$ and get a new vector $r' = λ r$
 which represents the same convergent.
-This is because the scalar is eliminated when mapping back to the rational vector:
+This is because the scalar is eliminated when mapping it back to the rational vector:
 \[
   λ (c₀, c₁, …, c_d)
   ↦ \left(\frac{λ c₁}{λ c₀}, …, \frac{λ c_d}{λ c_0} \right)
@@ -748,14 +752,14 @@ We begin with the identity matrix, $B^{(0)} = I_d$, and update the matrix accord
   \qquad B_i^{(n)} = B_i^{(n-1)},
   \qquad B_0^{(n)} = B_{ℓₙ}^{(n-1)},
 \end{align*}
-where $\hat a^{(n)} = (1, a_1^{(n)}, …, a_d^{(n)})$.
+where $\hat a^{(n)} = [1, a_1^{(n)}, …, a_d^{(n)}]$.
 By construction, $B^{(n)}$ is the combined matrix of the original sequences
 $P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mdcf-wallis}:
 \[
-  B^{(n)} = \begin{pmatrix}
+  B^{(n)} = \begin{bmatrix}
     Q_0^{(n)} & Q_1^{(n)} & ⋯ & Q_d^{(n)} \\
     P_0^{(n)} & P_1^{(n)} & ⋯ & P_d^{(n)} \\
-  \end{pmatrix}.
+  \end{bmatrix}.
 \]
 In fact, we can prove an equivalent statement from this lemma using the new sequence.
 
@@ -774,26 +778,26 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
     B^{(n-1)} \hat x
     & = B_0^{(n-1)} \hat x_0 + B_1^{(n-1)} \hat x_1 + ⋯ + B_d^{(n-1)} x_d \\
     & =
-    \begin{pmatrix}
+    \begin{bmatrix}
       P_0^{(n-1)} \\
       Q_0^{(n-1)} \\
-    \end{pmatrix} \hat x_0
-    + \begin{pmatrix}
+    \end{bmatrix} \hat x_0
+    + \begin{bmatrix}
       P_1^{(n-1)} \\
       Q_1^{(n-1)} \\
-    \end{pmatrix} \hat x_1
-    + ⋯ + \begin{pmatrix}
+    \end{bmatrix} \hat x_1
+    + ⋯ + \begin{bmatrix}
       P_d^{(n-1)} \\
       Q_d^{(n-1)} \\
-    \end{pmatrix} \hat x_d \\
-    & = \begin{pmatrix}
+    \end{bmatrix} \hat x_d \\
+    & = \begin{bmatrix}
       P_0^{(n-1)} \hat x_0 + P_1^{(n-1)} \hat x_1 + ⋯ + P_d^{(n-1)} \hat x_d \\
       Q_0^{(n-1)} \hat x_0 + Q_1^{(n-1)} \hat x_1 + ⋯ + Q_d^{(n-1)} \hat x_d \\
-    \end{pmatrix}.
+    \end{bmatrix}.
   \end{align*}
   Projecting this vector back to $ℚ^d$ results exactly in the vector
   \[
-    \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}
+    r^{(n)} = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}
   \]
   from
   Lemma~\ref{lem:mdcf-wallis}.
@@ -859,19 +863,19 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   \[
     [\hat x] = [B^{(k)} \hat x^{(k)}],
   \]
-  which means that very element in $x$ can be represented as a linear rational
-  expression of $x^{(k)}$:
+  which means that very element in $x$ can be represented
+  as a rational expression of $x^{(k)}$:
   \[
     x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}},
   \]
   % TODO: I think we should be more precise here since the elements could be
   % inside different fields. They are not, but this sentence does not indicate
   % that.
-  From the previous lemma, it follows that the elements of $\hat x^{(k)}$
-  are contained in some field $ℚ(λ)$, where $λ$ is an algebraic number of degree $≤ d+1$.
-  Furthermore, $B^{(k)}$ consists solely of integers.
-  Therefore, every element in $x$ is contained in the same field $ℚ(λ)$
-  and they must also be an algebraic numbers of degree $≤ d+1$.
+  From the Lemma~\ref{lem:mdcf-purely-periodic},
+  it follows that the elements of $\hat x^{(k)}$
+  are contained in a field $ℚ(λ)$ with degree $≤ d+1$.
+  Since $B^{(k)}$ consists solely of integers, every element in $x$ is contained in the same field $ℚ(λ)$.
+  Therefore, they must also be algebraic numbers of degree $≤ d+1$.
 \end{proof}
 
 % TODO: There should be a discussion about the potential for answering
