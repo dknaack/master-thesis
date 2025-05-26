@@ -621,21 +621,49 @@ which are defined as follows:
 % Periodicity
 %
 
+% TODO: THIS DOES NOT WORK AT ALL, THE INTEGER PART IS NOT CORRECT!!!!!
 
-\begin{definition}
-  A \emph{linear recurrence} with coefficients~$c_0, \dots, c_d ∈ ℤ_{≥ 0}$ is an equation
+
+We proceed with the general case.
+Now we are given a \emph{linear recurrence} with coefficients~$c_0, c_1, \dots, c_{d-1} ∈ \{0, 1\}$ such that
+the initial terms are $F(n) = 1$ for $n < 0$ and
+the remaining terms are calculated using the recurrence
+\[
+  F(n + 1) = F(n - d) + c_{d-1} F(n - d + 1) + \dots + c_1 F(n - 1) + c_0 F(n).
+\]
+Importantly, the coefficients satisfy
+\[
+  c
+\]
+Given such a linear recurrence $F$, we choose the solution vector $x^{(n)} = (x_1^{(n)}, …, x_d^{(n)})$ with
+\begin{align*}
+  x_i^{(n)} = \frac{\sum_{k=0}^i c_k F(n - k)}{F(n)}.
+\end{align*}
+
+\begin{lemma}
+  $1 ≤ x_i^{(n)} < 2$.
+\end{lemma}
+
+\begin{proof}
+  For $n = 0$, the first terms are all $1$, so
   \[
-    F(n + 1) = c_0 F(n - d) + c_1 F(n - d + 1) + \dots + c_{d-1} F(n - 1) + c_d F(n).
+    x_i^{(0)}
+    = \frac{\sum_{k=0}^i c_k F(n - k)}{F(n)}
+    = c_0 + \frac{\sum_{k=1}^i c_k F(n - k)}{F(n)}
+    = c_0 + \frac{\sum_{k=1}^i c_k}{\sum_{k=0}^d c_k}
+    ≤ c₀ + 1.
   \]
-\end{definition}
-
-% begin periodicity
-Given, the linear recurrence $F(n + d + 1) = F(n) + a_1 F(n - 1) + \dots + a_d F(n + d)$,
-the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
-\begin{equation}
-  \label{eq:general-solution}
-  x_i^{(n)} = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)}.
-\end{equation}
+  Suppose that the bounds hold for any $n ≥ 0$.
+  By induction,
+  \[
+    c₀ + 1
+    ≥ \frac{\sum_{k=0}^i c_k F(n - k)}{F(n)}
+    ≥ \frac{F(n)}{F(n+1)} \frac{\sum_{k=0}^i c_k F(n - k)}{F(n)}
+    ≥ \frac{F(n)}{F(n+1)}
+    = c_0 + \frac{\sum_{k=1}^i c_k}{\sum_{k=0}^d c_k}
+    ≤ c₀ + 1.
+  \]
+\end{proof}
 
 \begin{lemma}
   Pivoting with the first element of $x^{(n)}$ using the modified update rule yields the vector
@@ -645,16 +673,16 @@ the value for $x_i^{(n)}$ in the solution $x^{(n)}$ is
 \end{lemma}
 
 \begin{proof}
-  For $x_1$, we get
+  For the first value, we have
   \[
     \begin{aligned}
-      \frac{1}{x_1}
-      & = \frac{F(n)}{F(n - 1)} \\
-      & = a_d + \frac{F(n - d - 1) + a_1 F(n - d - 2) + \dots + a_{d-1} F(n - 2)}{F(n - 1)} \\
-      & = a_d + x^{(n-1)}_d.
+      \frac{1}{\{x_1\}}
+      & = \frac{F(n+1)}{F(n)} \\
+      & = 1 + \frac{\sum_{k=0}^d c_k F(n - k)}{F(n)} \\
+      & = 1 + x^{(n-1)}_d.
     \end{aligned}
   \]
-  For the other values, we get
+  For the other values, we have
   \begin{align*}
     \frac{x_i}{x_1}
     & = \frac{F(n - i) + \sum_{k=1}^{i-1} a_{d-k} F(n - k)}{F(n)} \frac{F(n)}{F(n - 1)} \\
@@ -677,6 +705,7 @@ where $x^{(n)}$ is the solution, in the following way:
   B^{(n)} = F(n) I_d, \qquad c^{(n)}_k = \sum_{i=0}^k a_{d-i} F(n - i) \text{ for } k ≤ d.
 \]
 % end periodicity
+\fi
 
 % ==============================================================================
 \section{Multi-Dimensional Golden Ratios and Metallic Means}
@@ -738,7 +767,7 @@ So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2},
 \[
   r_n = 1 + \frac{a_d}{r_{n-1}} + \frac{a_{d-1}}{r_{n-1} r_{n-2}} + ⋯ + \frac{a₀}{r_{n-1} r_{n-2} \dots r_{n-d}}.
 \]
-Using this equation, we can show that the ratios must be bounded.
+Using this equation, we can show that the ratios are bounded.
 
 \begin{lemma}
   The ratios $r_n$ are bounded between $1$ and $d+1$.
@@ -891,6 +920,7 @@ where $s_n$ is always increasing and $t_n$ is decreasing.
 % Periodicity
 %
 
+% TODO: THIS DOES NOT WORK AT ALL, THE INTEGER PART IS NOT CORRECT!!!!!
 
 The previous theorem leads us straight to an algebraic solution vector $x$,
 for which the generalized Euclidean algorithm is periodic.
