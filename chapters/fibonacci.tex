@@ -301,14 +301,14 @@ vector, since the element will be zero in the next iteration.
 With these requirements, we can show that the $d$-bonacci numbers are the worst-case.
 
 \begin{theorem}
-  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$
-  and let $x_{(i)} = p_{(i)}/q$ denote the $i$-th smallest element.
+  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$.
   If the algorithm requires at least $n ≥ 0$ steps for $x$ when taking the
-  minimum fractional value at each step, then
+  minimum fractional value at each step, then there exists a permutation $σ$
+  such that
   \[
     q ≥ F(n),
     \qquad
-    p_{(i)} ≥ \sum_{k = 0}^i F(n - k),
+    p_{σ(i)} ≥ \sum_{k = 0}^i F(n - k),
     \text{ for every } i ≤ d.
   \]
 \end{theorem}
@@ -318,7 +318,7 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   \begin{align*}
     q ≥ F(d) = 1,
     \qquad
-    p_{(i)} ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
+    p_{σ(i)} ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
   \end{align*}
   These bounds are the smallest bounds we can have, since any smaller set of
   integers does not even satisfy $0 < q < p_{σ(1)} < ⋯ < p_{σ(d)}$.
