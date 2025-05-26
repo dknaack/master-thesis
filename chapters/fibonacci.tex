@@ -494,21 +494,31 @@ It follows that:
   \item $1/\{\{x_ℓ\}/\{x_k\}\}$ is the largest element in $x''$
   \item $\{\{x_ℓ\}/\{x_k\}\}$ is the smallest fractional value in $x'$
   \item $1/\{x_k\}$ is the largest element in $x'$
+  \item $\{x_k\}$ has the largest fractional value in $x$
+  \item $\{x_i\}/\{x_k\} < 1$ for every $i$.
 \end{itemize}
 
-For this strategy, the Fibonacci numbers are defined as
+For this strategy, we interleave the previous two sequences.
+We have an even sequence $F_0$ and an odd sequence $F_1$,
+which are defined as follows:
 \begin{align*}
-  F_0(n) & = F_1(n-1) + F_1(n-2) + ⋯ + F_1(n-d-1), \\
-  F_1(n) & = F_0(n-1) + F_0(n-d-1).
+  F_1(n) & = F_0(n-1) + F_0(n-2) + ⋯ + F_0(n-d-1), \\
+  F_0(n) & = F_1(n-1) + F_1(n-d-1).
+\end{align*}
+
+\begin{align*}
+  \frac{F_1(n) + ∑_{k=0}^i F(n - k)}{F_1(n)}
+  \frac{F_1(n)}{F}
 \end{align*}
 
 \begin{theorem}
-  If the algorithm requires $n ≥ 0$ steps with the minimax strategy,
-  then
+  Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$ with distinct elements $p_i/q > 1$.
+  If the algorithm requires $n ≥ 0$ steps for $x$ with the minimax strategy,
+  then there exists a permutation $σ$ such that
   \[
-    q ≥ F(),
+    q ≥ F_1(n),
     \qquad
-    p_{(i)} ≥ F().
+    p_{σ(i)} ≥ F_1(n) + \sum_{k=1}^i F_0(n - k).
   \]
 \end{theorem}
 
@@ -516,22 +526,28 @@ For this strategy, the Fibonacci numbers are defined as
   Suppose the algorithm requires $n$ steps for $x''$.
   By induction,
   \[
-    q'' ≥ F(),
+    q'' ≥ F_1(n),
     \qquad
-    p_{(i)}'' ≥ F().
+    p_{σ(i)}'' ≥ ∑_{k=0}^i F_0(n - k).
   \]
+  In the first iteration,
+  $x_k$ has the largest fractional value.
+  Therefore, $x_i' = \{x_i\}/\{x_k\}$ must be smaller than $1$ and $a_i' = 0$ for every $i ≠ k$.
+  Furthermore, $x_k' = 1/\{x_k\}$ must be greater than $1$ and $a_k' ≥ 1$.
   By Lemma~\ref{lem:divmod},
   \begin{align*}
-    q' & = p_ℓ'' ≥ ?, \\
-    p_ℓ' & = a_ℓ' p_ℓ'' + q'' ≥ q'' ≥ ?, \\
-    p_i' & = a_i' p_ℓ'' + p_i'' ≥ p_i'' ≥ ?, \\
-    p_k' & = a_k' p_ℓ'' + p_k'' ≥ p_ℓ'' + p_k'' ≥ ?.
+    q' & = p_ℓ'' ≥ F_0(n), \\
+    p_ℓ' & = a_ℓ' p_ℓ'' + q'' ≥ q'' ≥ F_0(n), \\
+    p_i' & = a_i' p_ℓ'' + p_i'' ≥ p_i'' ≥ \sum_{k=0}^i F_0(n - k), \\
+    p_k' & = a_k' p_ℓ'' + p_k'' ≥ p_ℓ'' + p_k'' ≥ \sum_{k=0}^d F_0(n - k) = F_1(n+1).
   \end{align*}
+  By assumption, every element $x_i$ in the initial input is greater than $1$ and
+  so $a_i ≥ 1$ for every $i ∈ \{1, …, d\}$.
   Again by Lemma~\ref{lem:divmod},
   \begin{align*}
-    q & = p_k' ≥ F(n + 1), \\
-    p_ℓ & = a_k' p_k' + q' ≥ p_k' + q' ≥ ?, \\
-    p_i & = a_i' p_k' + p_i' ≥ p_k' + p_i' ≥ ?.
+    q & = p_k' ≥ F_1(n + 1), \\
+    p_k & = a_k' p_k' + q' ≥ p_k' + q' ≥ F_1(n+1) + F_0(n + 1 - 1), \\
+    p_i & = a_i' p_k' + p_i' ≥ p_k' + p_i' ≥ F_1(n+1) + \sum_{k=1}^{i+1} F_0(n+1 - (i+1)).
   \end{align*}
 \end{proof}
 
