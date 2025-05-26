@@ -853,33 +853,3 @@ and increase $n$ towards infinity:
   Therefore, we have reached $x'$ again and the algorithm becomes periodic.
 \end{proof}
 %end{periodicity}
-
-%begin{inverse golden ratio}
-\iffalse
-\begin{definition}
-  Given a polynomial $p = \sum_{i=0}^n c_i x^n$, its \emph{reciprocal polynomial},
-  denoted as $p^*$, is defined as
-  \[
-    p^*(x) = x^n p(x^{-1}) = a_n + a_{n-1} x + \dots + a_0 x^n.
-  \]
-\end{definition}
-
-\begin{example}
-  The reciprocal of the golden ratio polynomial $x^2 - x - 1$ is
-  \begin{align*}
-    x^2 + x - 1,
-  \end{align*}
-  which has a root at $ψ = 1/φ$.
-\end{example}
-
-\begin{lemma}
-  Let $p$ be a polynomial. Then, $a$ is a root of $p$ if and only if $a^{-1}$ is a root of $p^*$.
-\end{lemma}
-
-\begin{proof}
-  Let $a$ be a root of $p$. It follows $p^*(a^{-1}) = a^n p(a) = a^n \cdot 0 = 0$.
-  Now let $a^{-1}$ be a root of $p^*$. Then $p^*(a^{-1}) = a^n p(a) = 0$.
-  By construction, $a$ cannot be zero and therefore we must have $p(a) = 0$.
-\end{proof}
-\fi
-%end{inverse golden ratio}
