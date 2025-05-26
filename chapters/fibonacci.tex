@@ -147,9 +147,9 @@ which follows from the continued fraction.
 % TODO: We should also discuss the thing about idempotence under the choice of the pivot.
 % TODO: Should we have a discussion about why we choose this particular linear system.
 % TODO: The discussion about the linear system should go in the generalized Euclidean algorithm chapter
+% TODO: We should explain that very large values give the least decrease, but also give the most decrease in the following iteration
 
-For the generalisation of Fibonacci numbers with respect to the generalized
-Euclidean algorithm,
+For the generalisation of Fibonacci numbers,
 we must find a sequence which similarly has a quotient of $1$ at each iteration.
 However, the problem is that no single definitive sequence can exist.
 With the generalized Euclidean algorithm we have an additional choice with the
@@ -173,14 +173,14 @@ So we begin with this strategy and see how the Fibonacci numbers are defined.
 % TODO: Maybe it's better to show the numbers in the ratios, since we explain
 % that they approach some golden ratio anyways
 \begin{table}[tbp]
-  \caption{The first 10 $d$-bonacci numbers with $d = 1, …, 5$ and their golden ratios.}
+  \caption{The first 10 $d$-bonacci numbers for $d = 1, …, 5$ and their golden ratios.}
   \label{tbl:min-fibonacci}
   \centering
   \input{tables/min-fibonacci}
 \end{table}
 
 \begin{definition}
-  The Fibonacci numbers for this strategy are defined as
+  The Fibonacci numbers for the minimum strategy are defined as
   \begin{enumerate}
     \item $F(0) = F(1) = ⋯ = F(d) = 1$.
     \item $F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d)$.
@@ -190,82 +190,74 @@ So we begin with this strategy and see how the Fibonacci numbers are defined.
   In general, they are known as the $d$-bonacci numbers.
 \end{definition}
 
-For these numbers, we use the solution vector
+For these numbers, we use the solution vector $x = (x₁, …, x_d)$ with
 \[
-  x =
-  \left(
-    \frac{F(n)}{F(n + 1)},\;
-    \frac{F(n) + F(n - 1)}{F(n + 1)},\;
-    ⋯,\;
-    \frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - d)}{F(n + 1)}\;
-  \right).
+  x_i = \frac{\sum_{k=0}^i F(n - i)}{F(n)}.
 \]
-The smallest fractional value in this vector is $x₁$, so we pivot with $ℓ = 1$ first.
+Because $F(n) = F(n - 1) + ⋯ + F(n - d - 1) > F(n - 1) + ⋯ + F(n - i)$,
+each $x_i$ is bounded between $1$ and $2$.
+Thus, each $x_i$ has a fractional value of $1$.
+The smallest one is $x₁$, so we pivot with $ℓ = 1$ first.
+Let $x' = \mathrm{pivot}_ℓ(x)$, then the first value is
 \begin{align*}
-  \{x₁'\}
-  & = \left\{\frac{1}{\{x₁\}}\right\}
-  = \left\{\frac{F(n + 1)}{F(n)}\right\}
+  x₁' &
+  = \frac{1}{\{x₁\}}
+  = \frac{1}{x₁ - 1}
+  = \frac{F(n)}{F(n - 1)}
   = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
 \end{align*}
-This gives us the value for $x_d$, if we would have started with $F(n)$ instead of $F(n+1)$.
+This equals the value of $x_d$, if we would have started with $F(n-1)$ instead of $F(n)$.
 The other values in our input vector $x$ are calculated as follows:
 \begin{align*}
-  \{xᵢ'\}
-  & = \left\{\frac{\{xᵢ\}}{\{x₁\}}\right\} \\
-  & = \left\{\frac{F(n) + F(n - 1) + ⋯ + F(n + 1 - i)}{F(n + 1)} · \frac{F(n + 1)}{F(n)}\right\} \\
-  & = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
+  xᵢ'
+  & = \frac{\{xᵢ\}}{\{x₁\}} = \frac{xᵢ - 1}{x₁ - 1} \\
+  & = \frac{F(n - 1) + ⋯ + F(n - i)}{F(n + 1)} · \frac{F(n)}{F(n - 1)} \\
+  & = \frac{F(n - 1) + ⋯ + F(n - i)}{F(n - 1)}.
 \end{align*}
-So in the next iteration the value $x_i$ has the same value as $x_{i+1}$ if we
-would have started with $F(n)$.
+So in the next iteration the value $x_i'$ has the same value as $x_{i-1}$, if we
+would have started with $F(n - 1)$.
 Therefore, in the next iteration the smallest fractional value must be $x_2$.
-We continue this until we have cycled through all variables.
-
-Another example would be the opposite strategy: Choosing the maximum in each iteration.
-In this case, the Fibonacci numbers are defined as
-\begin{align*}
-  F(0) = \dots = F(d) = 1, \qquad F(n + 1) = F(n) + F(n - d).
-\end{align*}
-
-The golden ratios for these numbers is the limit
-\[
-  φ = \lim_{n → ∞} \frac{F(n + 1)}{F(n)}.
-\]
+If we repeat this a total of $d$ times, then we end up where we started, but
+each term is shifted backwards by $d$ steps.
+To reach the end, we need a total $n$ steps.
 
 % TODO: There should be a note, that we're taking the actual minimum, so we
 % stop once we see any zero. Because at that point, we're cycling.
 
-The following lemma shows that the $\mathrm{pivot}$ operation can also be
-viewed as a multi-dimensional division with remainder operation, where we have
-a set of integers $p₁, …, p_d$ and divide them by one element $p_ℓ$.
+For the worst-case analysis, we first need the following lemma, which shows
+that the $\mathrm{pivot}$ operation from Equation~\ref{eq:modified-update-rule}
+can be viewed as a multi-dimensional division with remainder operation, where
+we have a set of integers $p₁, …, p_d, q$ and divide them by one particular
+element $p_ℓ$.
 
 \begin{lemma}
   \label{lem:divmod}
   % TODO: This should basically prove that pivot is just division with
   % remainder
-  Let $x ∈ ℚ^d$ and $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$.
-  Suppose $x = (p₁/q, p₂/q, …, p_d/q)$ and $x' = (p₁'/q', p₂'/q', …, p_d'/q')$
-  with each having at least one irreducible fraction.
-  Furthermore, let $x_{(k)} = p_{(k)}/q$ and $x_{(k)}' = p_{(k)}'/q'$ denote
-  the $k$-th smallest element in each vector, respectively.
+  Let $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$
+  and $x' = \left(\frac{p₁'}{q'}, \frac{p₂'}{q'}, …, \frac{p_d'}{q'}\right)$
+  with $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$.
+  % TODO: Do we need gcd = 1?
+  %Suppose $\gcd(q, p₁, …, p_d) = 1$ and $\gcd(q', p₁', …, p_d') = 1$, then
   Then,
   \[
-    q ≥ p_{(d)}',
+    q = p_ℓ',
     \qquad
-    p_ℓ ≥ a_{(d)} p_{(d)}' + q',
+    p_ℓ = a_ℓ p_ℓ' + q',
     \qquad
-    p_i ≥ a_{(i)} p_{(d)}' + p_{(i)}'
+    p_i = a_i p_ℓ' + p_i',
   \]
-  for every $i ≤ d - 1$ and $a = \floor{x}$.
+  for every $i ∈ \{1, …, d\}$ and $a = \floor{x}$.
 \end{lemma}
 
 \begin{proof}
   % TODO: Reference the rule
-  By the update rule, we have
+  By definition of $\mathrm{pivot}$, we have
   \[
-    \frac{p_ℓ'}{q'} = \frac{1}{\frac{p_ℓ}{q} - a_ℓ} = \frac{q}{p_ℓ - a_ℓ q}
+    x_ℓ' = \frac{p_ℓ'}{q'} = \frac{1}{\frac{p_ℓ}{q} - a_ℓ} = \frac{q}{p_ℓ - a_ℓ q}.
   \]
   Therefore, $q = p_ℓ'$ and $p_ℓ = a_ℓ q + q' = a_ℓ p_ℓ' + q'$.
-  For the remaining elements $x_i = p_i/q$ with $i ≠ ℓ$, we have
+  For the remaining elements, we have
   \[
     \frac{p_i'}{q'} = \frac{\frac{p_i}{q} - a_i}{\frac{p_ℓ}{q} - a_ℓ} = \frac{p_i - a_i q}{p_ℓ - a_ℓ q}.
   \]
@@ -276,68 +268,150 @@ To show that the $d$-bonacci numbers are the worst-case for the minimum
 strategy, we first need a few requirements.
 The first is that the vector $x$ is strictly positive,
 which can be easily solved by ignoring the first iteration.
-If $x$ contains any negative values, then applying one step of the algorithm
-produces a strictly positive vector.
+In the second iteration, $x$ must always be positive.
 The second requirement is that the values in $x$ are all different.
 The reasoning behind this requirement is that one could easily check if there
 are two elements $x_i, x_j$ with $x_i = x_j$.
 Pivoting with either $ℓ = i$ or $ℓ = j$ removes the other element from the
 vector, since the element will be zero in the next iteration.
+Hence, this step will always be more efficient than pivoting a different element.
 With these requirements, we can show that the $d$-bonacci numbers are the worst-case.
 
 \begin{theorem}
   Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$.
-  If the algorithm requires at least $n ≥ 0$ steps for $x$ when taking the
-  minimum fractional value at each step, then there exists a permutation $σ$
-  such that
+  If the algorithm requires at least $n ≥ 0$ steps for the vector $x$ when
+  taking the minimum fractional value at each step, then there exists a permutation $σ$ such
+  that
   \[
-    q ≥ F(n),
+    q ≥ F(n+d),
     \qquad
-    p_{σ(i)} ≥ \sum_{k = 0}^i F(n - k),
+    p_{σ(i)} ≥ \sum_{k = 0}^i F(n+d - k),
     \text{ for every } i ≤ d.
   \]
 \end{theorem}
 
 \begin{proof}
-  For $n = d$, we have
+  Suppose we require $n = 0$ steps.
+  Since each value of $p₁, …, p_d, q$ must be distinct,
+  there has to be one out of the $d+1$ integers,
+  which is greater than $k$ for each $k ∈ \{1, …, d+1\}$.
+  However, the first $d+1$ Fibonacci numbers have the values:
   \begin{align*}
-    q ≥ F(d) = 1,
+    F(d) = 1,
     \qquad
-    p_{σ(i)} ≥ \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
+    \sum_{k=0}^i F(d - k) = i + 1 \text{ for every } i ≤ d.
   \end{align*}
-  These bounds are the smallest bounds we can have, since any smaller set of
-  integers does not even satisfy $0 < q < p_{σ(1)} < ⋯ < p_{σ(d)}$.
-  Furthermore, any other set of numbers requires at least $0$ steps, so
-  the theorem holds for $n = d$.
+  Furthermore, the smallest value the denominator $q$ can assume is $1$.
+  By ordering the elements accordingly,
+  we can find a permutation $σ$ such that
+  the bounds for this theorem are satisfied.
 
   % TODO: Fix indices
-  Suppose the algorithm requires $n$ steps for some input $x' = (p₁'/q', …, p_d'/q')$.
-  The particular order of the values in $x'$ does not matter for the strategy.
-  Hence, we can assume without loss of generality that $q' < p_2' < p_3' < … < p_d' < p_1'$.
-  By induction, $q' ≥ F(n)$ and because $p_1'$ is the largest value,
+  Suppose the algorithm requires $n+1$ steps for some input $x = (p₁/q, …, p_d/q)$.
+  Hence, $x' = \mathrm{pivot}_ℓ(x)$ requires $n$ steps and by induction,
+  there exists a permutation $σ$ such that $q' ≥ F(n)$ and
   \begin{align*}
-    p_{σ(1)}' & ≥ \sum_{k=0}^d F(n - k) = F(n + 1).
+    p_{σ(i)}' & ≥ \sum_{k=0}^i F(n - k) = F(n + 1).
   \end{align*}
-  Similarly, because all other values with $i ≠ 1$ are shifted one place to the
-  left, we have
-  \begin{align*}
-    p_{(i)}' & ≥ \sum_{k=0}^i F(n - k) = \sum_{k=1}^{i+1} F(n + 1 - k) \text{ for } 2 ≤ i ≤ d.
-  \end{align*}
-  Let $x ∈ ℚ^d$ such that $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$ and $a = \floor{x}$.
+  We assume without loss of generality that $σ(d)$ is the largest element.
+  Hence, we have to pivot with $ℓ = σ(d)$.
+  Let $a = \floor{x}$, then $a_i ≥ 1$ by construction.
   From Lemma~\ref{lem:divmod}, it follows that
   \begin{align*}
-    q
-    & ≥ p_{(d)}' ≥ F(n+1), \\
-    p_{(1)}
-    & ≥ a_{(1)} p_{(d)}' + q' ≥ F(n + 1) + F(n) = \sum_{k=0}^1 F(n + 1 - k) \\
-    p_{(i)}
-    & ≥ a_{(i)} p_{(d)}' + p_{(i)}' ≥ F(n + 1) + ∑_{k=0}^i F(n - k) = ∑_{k=0}^{i+1} F(n + 1 - k).
+    q        & = p_{σ(d)}' ≥ F(n+1),                                                   \\
+    p_{σ(d)} & = a_{σ(d)} p_{σ(d)}' + q' ≥ F(n + 1) + F(n) = \sum_{k=0}^1 F(n + 1 - k) \\
+    p_{σ(i)} & = a_{σ(d)} p_{σ(d)}' + p_{σ(i)}' ≥ F(n + 1) + ∑_{k=0}^i F(n - k) = ∑_{k=0}^{i+1} F(n + 1 - k).
   \end{align*}
-  The permutation $π$ which orders $x$ might not be the same as $σ$.
-  However, if two elements are swapped, then we can easily swap the bounds, too.
-  Therefore, the theorem also holds for $n+1$.
+  We construct a new permutation $σ'$ which orders the bounds correctly
+  using $σ'(1) = σ(d)$ and $σ'(i) = σ(i+1)$ for the other indices.
 \end{proof}
 
+% TODO: Explain how this can be used to bound the time
+Using the contrapositive of the theorem, it follows that if a vector $x$
+has only one value smaller than the listed bounds, then it must take less than
+$n$ steps.
+Furthermore, we have seen that the Fibonacci numbers require exactly $n$ steps.
+Therefore, these Fibonacci numbers are the worst-case input for the
+minimum strategy.
+This mirrors how classical Fibonacci numbers are the worst-case for the
+classical Euclidean algorithm.
+
+In the same spirit,
+we can ask whether this generalization of Fibonacci also lead to a generalization of the golden ratio.
+The classical Fibonacci numbers approach the golden ratio, when dividing consecutive numbers.
+Therefore, we look at what values the $d$-bonacci numbers approach by dividing consecutive numbers.
+This limit can be considered a multi-dimensional generalization of the golden ratio.
+For now, we will assume that these ratios are converging.
+A general proof of convergence will be shown in a later section.
+
+\begin{theorem}
+  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ$,
+  where $φ$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - ⋯ - 1$.
+\end{theorem}
+% TODO: Add note about convergence towards some sort of golden ratio
+
+\begin{proof}
+  By assumption, the ratios are approach some limit $r$.
+  Then,
+  \[
+    r
+    = \lim_{n → ∞} \frac{F(n+1)}{F(n)}
+    = \lim_{n → ∞} \left(1 + \frac{F(n-1)}{F(n)} + \frac{F(n-2)}{F(n)} + ⋯ + \frac{F(n-d)}{F(n)}\right).
+  \]
+  Each ratio in the sum can be rewritten as a product of ratios with
+  consecutive Fibonacci numbers, since
+  \[
+    \frac{F(n - i)}{F(n)}
+    = \frac{F(n - i)}{F(n - i + 1)} · \frac{F(n - i + 1)}{F(n - i + 2)} ⋯ \frac{F(n - 1)}{F(n)}.
+  \]
+  By assumption, each ratio approaches $L^{-1}$ as $n$ increases towards infinity.
+  Therefore,
+  \[
+    r = 1 + \frac{1}{r} + \frac{1}{r^2} + ⋯ + \frac{1}{r^d},
+  \]
+  which is equivalent to $r^{d+1} - r^d - ⋯ - r - 1 = 0$.
+  Furthermore, the ratios are always positive.
+  Hence, $r = φ$.
+\end{proof}
+
+\begin{corollary}
+  The ratios $F(n + i)/F(n)$ converge towards $φ^i$ for any $i ≥ 0$.
+\end{corollary}
+
+We can then replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
+We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
+\[
+  x_i
+  = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
+  = \sum_{k=0}^i φ^k.
+\]
+Importantly, the algorithm is periodic for this input vector.
+We have already seen for the approximate solution with Fibonacci numbers
+that $d$ steps shifts each number backwards by $d$.
+For the algebraic solution, this means that it stays the same after $d$ steps.
+
+\begin{theorem}
+  The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
+  with $x_i = \sum_{k=0}^i φ^k$ when taking the minimum fractional value.
+\end{theorem}
+
+\begin{proof}
+  %The integer part of each $x_i$ is still $1$.
+  The first value $x₁$ is the smallest again, so $ℓ = 1$.
+  In the following iteration, we have
+  \[
+    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{φ + φ^2 + ⋯ + φ^i}{φ} = 1 + φ + ⋯ + φ^{i-1} = x_{i-1}.
+  \]
+  and
+  \[
+    x_1' = \frac{1}{\{x_1\}} = \frac{1}{φ} = 1 + φ + ⋯ + φ^d = x_d.
+  \]
+  Therefore, we reach the original input vector after $d$ iterations.
+\end{proof}
+
+% TODO: What property do the ratios have? Are they similar to the golden ratio?
+
+\iffalse
 % ==============================================================================
 \section{Higher-Order Fibonacci Numbers for the Maximum Strategy}
 % ==============================================================================
