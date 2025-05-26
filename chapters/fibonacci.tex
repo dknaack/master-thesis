@@ -107,19 +107,18 @@ infinity the convergents tend towards the golden ratio $φ$.
 \fi
 
 \begin{theorem}
-  $\lim_{n → ∞} \frac{F(n+1)}{F(n)} = φ$.
+  The ratios $\frac{F(n+1)}{F(n)}$ converge towards the golden ratio $φ$ as $n$ increases.
 \end{theorem}
 
 \begin{proof}
-  First, to show that the continued fraction $[1; 1, …, 1]$ actually evaluates
-  to the ratio of consecutive Fibonacci numbers, we use the formula from
-  Lemma~\ref{lem:cf-wallis}:
+  First, we show that the ratios are converging by mapping it to the continued fraction $[1; \overline{1}]$.
+  By Lemma~\ref{lem:cf-wallis}, we can calculate the convergents of the continued fraction as
   \[
     p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}.
   \]
-  Because $a_n = 1$ for every $n ≥ 0$ and $p_{-1} = 1, p_{-2} = 0$,
-  the Fibonacci sequence and the sequence $p_n$ are the same.
-  This is also true for $q_n$, but $q_{-1} = 0$ and $q_{-2} = 1$, so the sequence lags one step behind $p_n$.
+  The continued fraction consists solely of ones,
+  so the Fibonacci sequence and the sequence $p_n$ are identical.
+  The same is true for $q_n$, but $q_{-1} = 0$ and $q_{-2} = 1$, so the sequence lags one step behind $p_n$.
   Therefore, the convergents are actually $F(n+1)/F(n)$.
   The convergence is already given by Lemma~\vref{lem:cf-approx},
   so all that remains to be shown is that they actually converge to the golden ratio $φ$.
@@ -133,26 +132,12 @@ infinity the convergents tend towards the golden ratio $φ$.
 
 % TODO: Metallic means
 
-\begin{example}
-  Let $φ$ be the golden ratio,
-  which satisfies $φ^2 - φ - 1 = 0$
-  and has an approximate value of $1.618$.
-  The algorithm proceeds as follows:
-  \[
-    \begin{array}{rclcrcl}
-      φ & = & 1 & · & 1   & + & φ - 1 \\
-         1 & = & 1 & · & (φ - 1) & + & (2 - φ) \\
-       φ - 1 & = & 1 & · & (2 - φ) & + & (2φ - 3) \\
-       2 - φ & = & 1 & · & (2φ - 3) & + & (5 - 3φ) \\
-       & \vdots &
-    \end{array}
-  \]
-\end{example}
-
 In summary,
 the defining property of Fibonacci numbers with respect to the Euclidean
 algorithm is that they represent the worst-case for the algorithm.
 At each step, they have a quotient of $1$, so they decrease slower than any other pair of integers.
+Additionally, their ratios approximate the golden ratio,
+which follows from the continued fraction.
 
 % ==============================================================================
 \section{Higher-Order Fibonacci Numbers for the Minimum Strategy}
