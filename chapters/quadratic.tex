@@ -616,7 +616,7 @@ and the odd convergents are part of the Klein polygon $K_1$ spanned by $(x, 1)$ 
 This is shown in the following theorem.
 
 \begin{theorem}
-  The Klein polygons $K_0$ and $K_1$ are exactly equal to the
+  The Klein polygons $K_0$ and $K_1$ are equal to the
   convex hull of the even and odd convergents, respectively.
 \end{theorem}
 
@@ -634,9 +634,8 @@ This is shown in the following theorem.
 \end{proof}
 
 \begin{corollary}
-  The vertices of the Klein polygons $K_0$ and $K_1$ are exactly equal to the even
-  convergents $(b_{2n})_{n ≥ -1}$ and odd convergents $(b_{2n+1})_{n ≥
-  -1}$, respectively.
+  The vertices of $K_0$ and $K_1$ are equal to the
+  even and odd convergents, respectively.
 \end{corollary}
 
 % ==============================================================================
@@ -648,11 +647,11 @@ This section is about the second part of Hermite's question for quadratic
 irrationals, i.e. whether the continued fraction of a number is periodic if and only
 if the number is a quadratic irrational.
 Formally, we call a continued fraction $[a₀; a₁, …]$ \emph{periodic}
-if there exists a starting index $K ≥ 0$ and a period $ℓ ≥ 1$ such that $aₖ = a_{k+ℓ}$ for every $k ≥ K$.
-A continued fraction is called \emph{purely periodic} if $K = 0$,
+if there exists a starting index $k₀ ≥ 0$ and a period $ℓ ≥ 1$ such that $aₖ = a_{k+ℓ}$ for every $k ≥ k₀$.
+A continued fraction is called \emph{purely periodic} if $k₀ = 0$,
 i.e. the period starts immediately.
 For a periodic continued fraction starting at $K$ with length $ℓ$,
-we will denote it as $[a₀; a₁, …, a_{K-1}, \overline{a_K, …, a_{K+ℓ}}]$.
+we will denote it as $[a₀; a₁, …, a_{k₀-1}, \overline{a_{k₀}, …, a_{k₀+ℓ}}]$.
 This is similar to how in decimal notation, we denote a period with a bar over the digits,
 e.g. $1/3 = 0.\overline{3}$.
 In a continued fraction, we similarly denote the period with a line over the
@@ -690,7 +689,7 @@ in the proof.
   For each pair of convergent vectors $b_{n-1}, b_{n-2}$, we can use the
   complete quotient $x_ℓ$ to find an intersection point with the line $(x, 1)$
   and since $x_ℓ = x$, we can also use $x$ itself.
-  Stated differently, there exists a $λ ∈ ℝ$ such that
+  Stated differently, there exists a scalar $λ ∈ ℝ$ such that
   \[
     B_ℓ
     \begin{pmatrix}
@@ -709,20 +708,20 @@ in the proof.
   and $λ$ is the eigenvalue.
   Because $B$ is a 2-by-2 matrix,
   the eigenvalue can only be a quadratic irrational.
-  The eigenvector is a solution to the linear system $(B_ℓ - λ I_2) (x, 1) = 0$,
+  The eigenvector is a solution to the linear system $(B_ℓ - λ I) (x, 1)^⊤ = 0$,
   where the coefficients come from the field $ℚ(λ)$.
   Therefore, $x$ must be a quadratic irrational.
 
-  We proceed with the eventually-periodic case
-  where some index $k ≥ 0$ exists after which the period begins.
+  We proceed with the eventually-periodic case.
+  Suppose $x$ is periodic only after some index $k ≥ 0$,
+  then $xₖ = [a_k; a_{k+1}, …]$ is a quadratic irrational.
   By Lemma~\ref{lem:cf-wallis},
   \[
     x = \frac{p_{k-1} x_k + p_{k-2}}{q_{k-1} x_k + q_{k-2}}.
   \]
-  Because $x$ is a rational expression of $x_k$,
+  Because $x$ is a rational expression of $x_k$ with integer coefficients,
   it lives in the same field as $x_k$.
-  The continued fraction for $x_k$ is purely periodic, so $x_k$ is a quadratic irrational.
-  But then $x$ is one, too.
+  Therefore, $x$ is a quadratic irrational, too.
 \end{proof}
 
 % TODO: Figure for shift of Klein polygon
@@ -741,7 +740,7 @@ quadratic field $ℚ(x)$.
 The number $x$ is a quadratic irrational, so $ℚ(x)$ is isomorphic to a
 two-dimensional vector space.
 Each vector $b_n$ then has an associated multiplication matrix $M_n$,
-where determinant of this matrix is the algebraic norm $N(b_n)$ of the vectors.
+where determinant of this matrix defines the algebraic norm $N(pₙ + qₙ x)$.
 We show that this norm is bounded independently of $n$.
 
 \begin{lemma}
@@ -749,14 +748,14 @@ We show that this norm is bounded independently of $n$.
 \end{lemma}
 
 \begin{proof}
-  Suppose $x$ satisfies $Ax^2 + Bx + C = 0$ with $A, B, C ∈ ℤ$.
-  Then, The norm for any element $p + qx ∈ ℚ(x)$ is
+  Suppose $x$ satisfies the equation $Ax^2 + Bx + C = 0$ with $A, B, C ∈ ℤ$,
+  then any element $p + qx ∈ ℚ(x)$ has the algebraic norm
   \[
     N(p + qx) = Ap^2 + Bpq + Cq^2.
   \]
-  By Lemma~\ref{lem:cf-approx}, there exists some $δₙ ∈ ℝ$ with $|δₙ| < 1$
-  such that $pₙ = qₙ x + \frac{δₙ}{qₙ}$.
-  Therefore, we can bound the norm by
+  By Lemma~\ref{lem:cf-approx}, the convergent approximates $x$ by a ratio of $1/qₙ^2$.
+  Hence, there exists some number $δₙ ∈ ℝ$ with $|δₙ| < 1$ such that $pₙ = qₙ x + \frac{δₙ}{qₙ}$.
+  We use this to bound the norm:
   \begin{align*}
     |N(p_n + q_n x)|
     & = |A pₙ^2 + B pₙ qₙ + C qₙ^2| \\
@@ -767,24 +766,27 @@ We show that this norm is bounded independently of $n$.
 \end{proof}
 
 From the lemma, it follows that there must be two different convergent vectors
-$b_n, b_m$, which have the same norm.
-Each vector has a corresponding element $p_n + q_n x$ and $p_m + q_m x$ in the quadratic field $ℚ(x)$.
-Hence, there must be some element $ε ∈ ℚ(x)$ with $N(ε) = 1$ such that
+$b_n, b_m$, whose corresponding elements $p_n + q_n x$ and $p_m + q_m x$ have the same norm.
+However, they are not the same, so there must be some number $ε ≠ 1$ in the field
+$ℚ(x)$ with $N(ε) = 1$ such that
 \[
-  ε (p_n + q_n x) = p_m + q_m x.
+  ε · (p_n + q_n x) = p_m + q_m x.
 \]
-However, $ε$ is not $1$ since $b_n$ and $b_m$ are different vectors.
-An immediate consequence of this is the following corollary:
+The number $ε$ must have a multiplication matrix fundamentally different from
+the identity matrix, but it still has determinant $1$.
+Such a number is called a \emph{fundamental unit}
+and quadratic fields always have a fundamental unit.
+An immediate consequence of this is the following lemma:
 
-\begin{corollary}
-  For every quadratic irrational $x$, there exists an integer matrix $U ≠ I_2$
+\begin{lemma}
+  For every quadratic irrational $x$, there exists an integer matrix $U ≠ I$
   with determinant $1$, which has eigenvectors $(x, 1)$ and $(\overline{x}, 1)$.
-\end{corollary}
+\end{lemma}
 
 \begin{example}
   \label{ex:sqrt2-unit}
   Consider $x = \sqrt{2}$.
-  The fundamental unit is $3 + 2\sqrt{2}$ since $3^2 - 2 · 2^2 = 1$.
+  The fundamental unit $ε$ is $3 + 2\sqrt{2}$ since $3^2 - 2 · 2^2 = 1$.
   It has the multiplication matrix
   \[
     U = \begin{pmatrix}
@@ -871,7 +873,7 @@ points along the boundary.
     = U \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\})
     = \mathrm{conv}(UC ∩ Uℤ^2 \setminus \{(0, 0)\}).
   \end{align*}
-  But $U$ is unimodular, so $Uℤ^2 = ℤ^2$, and $C$ is the cone spanned by the
+  But $U$ has determinant $1$, so $Uℤ^2 = ℤ^2$, and $C$ is the cone spanned by the
   eigenvectors of $U$ and they have positive eigenvalues, so $UC = C$.
   Thus, $K$ is invariant under $U$.
   Similarly, the boundary $Π(K)$ must also be invariant under this transformation.
@@ -894,27 +896,37 @@ points along the boundary.
   Hence, the continued fraction is periodic after some point.
 \end{proof}
 
+% TODO: Fix this example
 \begin{example}
   Consider the matrix $U$ from Example~\ref{ex:sqrt2-unit}.
-  The matrix has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors
+  As we have seen, $U$ has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors
   and it has determinant $1$.
   Furthermore, the matrix shifts each convergents by two,
   because
   \[
-    B_n = B_{n-2} S^2 R S^2 R
-    \qquad
+    B_n = B_{n-2} (S^2 R)^2
+    \quad
     \text{ and }
-    \qquad
-    S^2 R S^2 R =
+    \quad
+    SRS^2RS =
     \begin{pmatrix}
-      1 & 2 \\
       1 & 1 \\
-    \end{pmatrix}^2
+      0 & 1 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      1 & 0 \\
+      2 & 1 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      1 & 1 \\
+      0 & 1 \\
+    \end{pmatrix}
     =
     \begin{pmatrix}
       3 & 4 \\
       2 & 3 \\
-    \end{pmatrix}.
+    \end{pmatrix}
+    = U.
   \]
-  So, $B_{n+2} = U B_n$ for every $n ≥ 1$.
+  Therefore, $B_{n+2} = U B_n$.
 \end{example}
