@@ -530,6 +530,25 @@ We have already seen for the approximate solution with Fibonacci numbers
 that $d$ steps shifts each number backwards by $d$.
 For the algebraic solution, this means that it stays the same after $d$ steps.
 
+\begin{theorem}
+  The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
+  with $x_i = ψ_d^i$ when taking the minimum fractional value.
+\end{theorem}
+
+\begin{proof}
+  %The integer part of each $x_i$ is still $1$.
+  The first value $x₁$ is the smallest again, so $ℓ = 1$.
+  In the following iteration, we have
+  \[
+    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{ψ_d + ψ_d^2 + ⋯ + ψ_d^i}{ψ_d} = 1 + ψ_d + ⋯ + ψ_d^{i-1} = x_{i-1}.
+  \]
+  and
+  \[
+    x_1' = \frac{1}{\{x_1\}} = \frac{1}{ψ_d} = 1 + ψ_d + ⋯ + ψ_d^d = x_d.
+  \]
+  Therefore, we reach the original input vector after $d$ iterations.
+\end{proof}
+
 % Worst-case analysis, which does not work!
 \iffalse
 
