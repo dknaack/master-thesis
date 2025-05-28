@@ -411,7 +411,6 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 
 % TODO: What property do the ratios have? Are they similar to the golden ratio?
 
-\iffalse
 % ==============================================================================
 \section{Higher-Order Fibonacci Numbers for the Maximum Strategy}
 % ==============================================================================
@@ -485,6 +484,54 @@ and the last element is
   = \frac{\frac{F(n-d) + F(n)}{F(n)} - 1}{\frac{F(n-1)}{F(n)}}
   = \frac{F(n-d)}{F(n-1)}.
 \end{align*}
+
+\begin{theorem}
+  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ$,
+  where $φ$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - 1$.
+\end{theorem}
+
+\begin{proof}
+  By assumption, the ratios are approach some limit $r$.
+  Then,
+  \[
+    r
+    = \lim_{n → ∞} \frac{F(n+1)}{F(n)}
+    = \lim_{n → ∞} \left(1 + \frac{F(n-d)}{F(n)}\right).
+  \]
+  The ratio $F(n-d)/F(n)$ in the sum can be rewritten as a product of ratios with
+  consecutive Fibonacci numbers, since
+  \[
+    \frac{F(n - d)}{F(n)}
+    = \frac{F(n - d)}{F(n - d + 1)} · \frac{F(n - d + 1)}{F(n - d + 2)} ⋯ \frac{F(n - 1)}{F(n)}.
+  \]
+  By assumption, each ratio approaches $r^{-1}$ as $n$ increases towards infinity.
+  Therefore,
+  \[
+    r = 1 + \frac{1}{r^d},
+  \]
+  which is equivalent to the equation $r^{d+1} - r^d - 1 = 0$.
+  Furthermore, the ratios are always positive.
+  Hence, $r = φ$.
+\end{proof}
+
+\begin{corollary}
+  The ratios $F(n + i)/F(n)$ converge towards $φ^i$ for any $i ≥ 0$.
+\end{corollary}
+
+We can then replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
+We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
+\[
+  x_i
+  = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
+  = \sum_{k=0}^i φ^k.
+\]
+Importantly, the algorithm is periodic for this input vector.
+We have already seen for the approximate solution with Fibonacci numbers
+that $d$ steps shifts each number backwards by $d$.
+For the algebraic solution, this means that it stays the same after $d$ steps.
+
+% Worst-case analysis, which does not work!
+\iffalse
 
 \begin{theorem}
   Suppose the Euclidean algorithm requires at least $n$ steps for $x = (p₁/q, …, p_d/q)$
