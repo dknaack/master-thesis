@@ -836,6 +836,7 @@ So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2},
 Using this equation, we can show that the ratios are bounded.
 
 \begin{lemma}
+  \label{lem:fib-bounded}
   The ratios $r_n$ are bounded between $1$ and $d+1$.
 \end{lemma}
 
@@ -945,7 +946,7 @@ where $s_n$ is always increasing and $t_n$ is decreasing.
     s_{n+i} ≥ s_{n+i-1} + c δ ≥ s_{n+i-2} + 2c δ ≥ \dots ≥ s_n + i c δ
   \]
   and $s_{n+i}$ would always increase as $i$ approaches infinity,
-  which contradicts the previous lemma.
+  which contradicts Lemma~\ref{lem:fib-bounded}.
   Therefore, $δ = 0$ and it follows that $s_n$ and $t_n$ are approaching the same limit.
 \end{proof}
 
