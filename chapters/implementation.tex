@@ -376,6 +376,20 @@ In summary, the following deterministic strategies were tried:
     we choose the one which produces the best convergent $r^{(n)}$,
     which means that it minimizes the distance to the original input vector.
     This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
+  \item
+    The algorithm of Tamura and Yasutomi \cite{Tamura09},
+    which for a given vector $x = (x₁, x₂)$ chooses
+    \[
+      ℓ =
+      \begin{cases}
+        1, & \text{ if } \frac{x₁}{\sqrt{N(x₁)}} > \frac{x₂}{\sqrt{N(x₂)}}, \\
+        2, & \text{ if } \frac{x₁}{\sqrt{N(x₁)}} < \frac{x₂}{\sqrt{N(x₂)}}.
+      \end{cases}
+    \]
+    The algorithm relies on the field norm,
+    so it is unclear how this could be extended to any real number.
+    Nevertheless, all that is needed is the existence of a path, so such a
+    strategy would be sufficient for a periodic representation.
 \end{itemize}
 % TODO: For how many steps did we run the construction?
 The fixed strategies were the easiest to implement and therefore also the
