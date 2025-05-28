@@ -345,8 +345,8 @@ For now, we will assume that these ratios are converging.
 A general proof of convergence will be shown in a later section.
 
 \begin{theorem}
-  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ$,
-  where $φ$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - ⋯ - 1$.
+  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ_d$,
+  where $φ_d$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - ⋯ - 1$.
 \end{theorem}
 % TODO: Add note about convergence towards some sort of golden ratio
 
@@ -371,11 +371,11 @@ A general proof of convergence will be shown in a later section.
   \]
   which is equivalent to $r^{d+1} - r^d - ⋯ - r - 1 = 0$.
   Furthermore, the ratios are always positive.
-  Hence, $r = φ$.
+  Hence, $r = φ_d$.
 \end{proof}
 
 \begin{corollary}
-  The ratios $F(n + i)/F(n)$ converge towards $φ^i$ for any $i ≥ 0$.
+  The ratios $F(n + i)/F(n)$ converge towards $φ_d^i$ for any $i ≥ 0$.
 \end{corollary}
 
 We can then replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
@@ -383,7 +383,7 @@ We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
 \[
   x_i
   = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
-  = \sum_{k=0}^i φ^k.
+  = \sum_{k=0}^i φ_d^k.
 \]
 Importantly, the algorithm is periodic for this input vector.
 We have already seen for the approximate solution with Fibonacci numbers
@@ -392,7 +392,7 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 
 \begin{theorem}
   The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
-  with $x_i = \sum_{k=0}^i φ^k$ when taking the minimum fractional value.
+  with $x_i = \sum_{k=0}^i φ_d^k$ when taking the minimum fractional value.
 \end{theorem}
 
 \begin{proof}
@@ -400,11 +400,11 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
   The first value $x₁$ is the smallest again, so $ℓ = 1$.
   In the following iteration, we have
   \[
-    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{φ + φ^2 + ⋯ + φ^i}{φ} = 1 + φ + ⋯ + φ^{i-1} = x_{i-1}.
+    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{φ_d + φ_d^2 + ⋯ + φ_d^i}{φ_d} = 1 + φ_d + ⋯ + φ_d^{i-1} = x_{i-1}.
   \]
   and
   \[
-    x_1' = \frac{1}{\{x_1\}} = \frac{1}{φ} = 1 + φ + ⋯ + φ^d = x_d.
+    x_1' = \frac{1}{\{x_1\}} = \frac{1}{φ_d} = 1 + φ_d + ⋯ + φ_d^d = x_d.
   \]
   Therefore, we reach the original input vector after $d$ iterations.
 \end{proof}
@@ -486,8 +486,8 @@ and the last element is
 \end{align*}
 
 \begin{theorem}
-  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ$,
-  where $φ$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - 1$.
+  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $ψ_d$,
+  where $ψ_d$ is the positive real root of the polynomial $p_d(x) = x^{d+1} - x^d - 1$.
 \end{theorem}
 
 \begin{proof}
@@ -511,19 +511,19 @@ and the last element is
   \]
   which is equivalent to the equation $r^{d+1} - r^d - 1 = 0$.
   Furthermore, the ratios are always positive.
-  Hence, $r = φ$.
+  Hence, $r = ψ_d$.
 \end{proof}
 
 \begin{corollary}
-  The ratios $F(n + i)/F(n)$ converge towards $φ^i$ for any $i ≥ 0$.
+  The ratios $F(n + i)/F(n)$ converge towards $ψ_d^i$ for any $i ≥ 0$.
 \end{corollary}
 
-We can then replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
+We can then replace the ratios in the solution vector $x$ with the actual golden ratio $ψ_d$.
 We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
 \[
   x_i
   = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
-  = \sum_{k=0}^i φ^k.
+  = \sum_{k=0}^i ψ_d^k.
 \]
 Importantly, the algorithm is periodic for this input vector.
 We have already seen for the approximate solution with Fibonacci numbers
