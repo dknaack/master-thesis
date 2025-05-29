@@ -44,14 +44,36 @@ the hope is that it provides good approximations for multiple numbers at once.
 
 \section{Contributions of this Thesis}
 
-\begin{itemize}
-  \item Concepts from the Euclidean algorithm carry over to the generalized algorithm
-  \item Multi-dimensional continued fractions
-  \item Proof that the generalized Euclidean algorithm is periodic for a generalization of the metallic ratios
-  \item Proof that periodic MDCFs are algebraic numbers of degree $≤ d+1$.
-  \item Proof that MDCFs converge under certain conditions
-  \item Analysis of the periodicity of cubic roots and other irrational numbers
-\end{itemize}
+This thesis extends previous work on a generalization of continued fractions.
+
+This thesis introduces a lattice‐based generalization of the classical Euclidean
+algorithm in higher dimensions and uses it to construct multidimensional continued
+fractions (MDCFs) for arbitrary real vectors.  By modifying the division‐with‐remainder
+step—taking integer parts and iterating on fractional parts in a vector setting—I
+obtain a family of MDCF algorithms that extends and unifies all known JPA‐type methods.
+
+A first contribution is a worst‐case analysis of the generalized Euclidean algorithm.
+I show that, for inputs given by rational vectors of bit‐length $N$, the number of
+division steps grows at most exponentially in $N$, and I derive a corresponding
+sequence of “Fibonacci‐like” numbers and an associated golden‐ratio analogue.  This
+sequence not only motivates the MDCF construction but also provides explicit bounds
+on the running time of any lattice‐based Euclidean procedure.
+
+The core theoretical results concern the MDCFs themselves.  Under the mild technical
+assumption that each index in the continued‐fraction expansion is used infinitely
+often, I prove convergence of the MDCF expansion for all real vectors.  Moreover,
+I establish that any periodic MDCF expansion must encode an algebraic number of
+degree at most $d$, where $d$ is the dimension of the construction.  Together,
+these results offer a converse to Hermite’s question in one direction—periodicity
+implies algebraicity—and classify all JPA‐type algorithms within a single unified
+framework.
+
+Finally, I present an implementation of the MDCF algorithms and compare several
+construction strategies drawn from the literature.  By measuring approximation
+rates and observing empirical periodicity for known algebraic inputs, I evaluate
+the feasibility of each strategy in practice.  While the question of proving
+periodicity for algebraic vectors remains open, these experiments suggest that
+the lattice‐based approach is both efficient and promising for future study.
 
 \section{Related Work}
 
