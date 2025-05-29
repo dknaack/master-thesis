@@ -1,35 +1,46 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-\begin{itemize}
-  \item Motivation: Continued fractions for quadratic irrationals, Hermite's
-    question as generalization of the problem.
-  \item Application: Potentially for simultaneous Diophantine approximation
-  \item How: Using a generalization of the Euclidean algorithm
-\end{itemize}
+% Hook
+In 1848, Charles Hermite wrote a question to Jacobi on the representation of real numbers.
+He asked whether there exists a representation of the real numbers as a
+sequence of integers, which is periodic if and only if the represented number
+is a cubic irrational, i.e. the root of a cubic polynomial.
+Although he posed the question almost two centuries ago,
+the question remains unanswered until this day.
 
-Is there a representation of the real numbers as a sequence of integers such
-that the sequence is eventually periodic if and only if the real number is a
-cubic irrational?
+% Context
+His motivation for the question comes from the representation of real numbers as continued fractions.
+The standard way of representing numbers is through decimal notation.
+A number is represented by its integer part followed by a potentially infinite
+series of digits for the fractional part.
+This representation leads to a trivial check, whether the represented number is
+rational or not.
+The decimal number is finite if and only if the original number is rational.
+Continued fractions provide a similar check for quadratic irrationals.
+They are fractions of the form
+\[
+  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
+\]
+where $a₀, a₁, a₂, …$ are integers.
+Euler was one of the first mathematician to analyze these fractions
+and he showed that any periodic continued fraction is a quadratic irrational.
+Later, Lagrange showed the opposite direction,
+that every quadratic irrational has a periodic continued fraction.
+In his letters,
+Hermite was interested in a generalization of continued fraction,
+which would be periodic for cubic irrationals.
 
-\begin{problem}[Hermite's Problem]
-  Given a real number $x ∈ ℝ$,
-  find a sequence of natural numbers~$\{a_n\}_{n ≥ 0}$ such that
-  \begin{enumerate}
-    \item $\lim_{n → ∞} a_n = x$
-    \item There exists an index $N ≥ 0$ and a period $ℓ ≥ 1$ such that $a_n = a_{n+ℓ}$
-      for every $n ≥ N$ if and only if $x$ is a cubic irrational.
-  \end{enumerate}
-\end{problem}
-
-% TODO: Fix definition of eventually periodic
-More formally, we are looking for a function which maps any real number $r$ to
-a sequence $(a_n)_{n \in \N}$ such that $\lim_{n → ∞} a_n = r$ and
-$a_{k+n} = a_{\ell+n}$ for all $n \ge k$ and some $k \ne \ell$ if and only if there is a cubic polynomial $p$ such that $p(r) = 0$.
-Importantly, the function must map \emph{all} real numbers to a sequence.
-Nadir Murru \cite{Murru15} has already shown that there exists a mapping from all
-cubic irrationals to eventually periodic sequences.
-However, the author was unable to derive a sequence for all real numbers.
+% Why it's important -> Rational approximation -> Simultaneous approximation
+The appeal of such a representation lies in the remarkable effectiveness of continued fractions.
+Not only do they reveal algebraic properties of numbers through periodicity,
+they also provide exceptionally good rational approximations.
+Each truncation of a continued fraction gives a so-called \emph{convergent},
+a rational number that closely approximates the original input.
+In fact, these convergents are optimal:
+no better approximation with a smaller or equal denominator exists.
+For a generalization,
+the hope is that it provides good approximations for multiple numbers at once.
 
 \section{Contributions of this Thesis}
 
