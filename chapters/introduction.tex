@@ -77,46 +77,58 @@ the lattice‐based approach is both efficient and promising for future study.
 
 \section{Related Work}
 
-Since the question was initially posed to Jacobi, he was also the first one to tackle the question.
-He developed an algorithm which worked like the Euclidean algorithm but with three instead of two numbers.
+Since Hermite originally posed his question to Jacobi, it was Jacobi who first attempted to answer it.
+He developed an algorithm inspired by the Euclidean algorithm,
+but extended it to operate on triples of numbers rather than pairs.
 Using this algorithm, he sought to find a periodic representation for cubic irrationals
-and he was able to show that whenever his algorithm is periodic, then the input must be a cubic irrational.
-However, he was unable to prove the other direction.
+Jacobi showed that if his algorithm yields a periodic expansion,
+then the input must be a cubic irrational.
+However, he was unable to prove the converse -- that every cubic irrational leads to a periodic expansion in his algorithm.
 
-Perron extended Jacobi's work to arbitrarily many numbers \cite{Perron07}
-and it is therefore commonly called the Jacobi-Perron Algorithm (JPA).
+Later, Oskar Perron generalized Jacobi's method to arbitrary dimensions \cite{Perron07},
+resulting in what is now called the Jacobi–Perron Algorithm (JPA).
 His algorithm was further analyzed by Bernstein \cite{Bernstein71},
-who found an infinite class of cubic irrationals for which the algorithm
-becomes periodic \cite{Bernstein65, Bernstein64A, Bernstein64B}.
-Unfortunately, computations have indicated that the algorithm is not periodic
-for certain cube roots \cite{Elsner67}
-and the algorithm is no longer believed to be periodic for every cubic irrational.
-Therefore, many different algorithms have been developed \cite{Schweiger00,Hendy81,Schweiger13}.
+who identified explicit classes of cubic irrationals for which the JPA
+becomes periodic \cite{Bernstein64A, Bernstein65, Bernstein64B}.
+However, numerical computations by Elsner and Hasse \cite{Elsner67} have shown
+that the JPA seems to fail for certain cube roots,
+casting doubt on whether the algorithm could ever fully solve Hermite’s
+problem.
+As a result, numerous alternative algorithms have since been proposed
+\cite{Schweiger00, Hendy81, Schweiger13}.
 
-On the basis of the JPA,
-there are so-called bifurcating or ternary continued fractions \cite{Gupta00},
-which are one possible generalization of continued fractions to two dimensions.
-Murru has used these to find a periodic representation for every cubic irrrational.
-But this only solves the second part of Hermite's problem.
-The first part, the representation for every real number, remains unanswered by his solution.
+One such alternative is the family of bifurcating or ternary continued
+fractions \cite{Gupta00},
+which extend the classical continued fractions to two dimensions.
+Using this representation, Murru has constructed periodic expansions for all cubic irrationals \cite{Murru15}.
+While this addresses one half of Hermite’s question -- showing that every cubic
+irrational can be represented periodically -- it does not provide a
+representation for arbitrary real numbers, and thus does not resolve the full
+problem.
 
-Recently, Karpenkov has proposed a different algorithm \cite{Karpenkov21}, which he calls the $\sin^2$-algorithm.
-He has proven that his algorithm is periodic for every totally real cubic
-irrational; that is any root of a cubic polynomial, where all roots are real.
-He has proposed another algorithm, called the HAPD algorithm \cite{Karpenkov24}, which he
-conjectures to be periodic for all cubic irrationals.
-As of yet, his conjecture remains unproven.
+More recently, Karpenkov has proposed two new algorithms \cite{Karpenkov21, Karpenkov24}.
+The first is called the $\sin^2$ and he has shown that this algorithm
+becomes periodic for every totally real cubic irrational -- that is any roof of a cubic polynomial with three real roots.
+The second algorithm is called the HAPD algorithm \cite{Karpenkov24} and he
+conjectures that this algorithm is periodic for all cubic irrationals,
+though this conjecture remains unproven.
 
-Continued fractions have also been analyzed geometrically by Felix Klein \cite{Klein95}
-as point in an integer lattice.
-His interpretation can be used to geometrically prove Lagrange's theorem
-and this proof based on the work of Korkina \cite{Korkina96} will also be
-presented in this thesis.
-This has lead to a generalization of Lagrange's theorem to higher dimensions \cite{German08}.
+Such geometric viewpoints have a long history. Felix Klein famously interpreted
+continued fractions as points on integer lattices \cite{Klein95}, offering
+a visual and structural approach to understanding their behavior.
+This interpretation underlies a geometric proof of Lagrange’s theorem, which will
+also be presented in this thesis following the work of Korkina \cite{Korkina96}.
+These ideas have led to generalizations of Lagrange’s theorem
+to higher dimensions \cite{German08}, further motivating the study of
+multidimensional analogues.
 
-Apart from a generalization of continued fractions,
-there has also been effort into other directions.
-The notable example here is a generalization of the Minkowski question-mark function $?(x)$.
+Beyond continued fractions, related work has also explored alternative
+generalizations of classical number-theoretic functions.
+One notable direction is the extension of the Minkowski question-mark function
+to two dimensions \cite{Beaver04}, which maps quadratic irrationals to rationals in a highly structured way.
+Efforts to define higher-dimensional analogues of this function aim to mirror
+the relationship between algebraic numbers and their representations,
+offering yet another approach to answering Hermite’s question.
 
 \section{Structure of this Thesis}
 
