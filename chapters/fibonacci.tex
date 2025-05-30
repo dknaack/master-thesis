@@ -982,51 +982,6 @@ where $s_n$ is always increasing and $t_n$ is decreasing.
   The ratios $F(n + i) / F(n)$ converge to $φ^i$ for $i > 1$.
 \end{corollary}
 
-
-\iffalse
-%
-% Periodicity
-%
-
-% TODO: THIS DOES NOT WORK AT ALL, THE INTEGER PART IS NOT CORRECT!!!!!
-
-The previous theorem leads us straight to an algebraic solution vector $x$,
-for which the generalized Euclidean algorithm is periodic.
-We simply use the previous vector $x^{(n)}$ defined for the Fibonacci sequence
-and increase $n$ towards infinity:
-\begin{align*}
-  x_i
-  & = \lim_{n → ∞} x_i^{(n)} \\
-  & = \lim_{n → ∞} \frac{F(n - i)}{F(n)} + \sum_{k=1}^{i-1} c_{d-k} \lim_{n → ∞} \frac{F(n - k)}{F(n)} \\
-  & = φ^{d-i} + \sum_{k=1}^{i-1} c_{d-k} φ^{d-k}.
-\end{align*}
-
-\begin{theorem}
-  Let $φ$ be the root of a polynomial $x^{d+1} - c_d x^d - ⋯ - c₁ x - c₀$
-  with positive integers as coefficients.
-  Then, the generalized Euclidean algorithm is periodic for $x = (φ, φ^2, …, φ^d)$.
-\end{theorem}
-
-% TODO: Finish this proof
-\begin{proof}
-  We pivot with $ℓ = 1, 2, …, d$ twice.
-  In the first round, we get a vector $x'$ with
-  \[
-    x_i' = ...
-  \]
-  Once we have the vector $x'$, applying the generalized Euclidean algorithm
-  will produce the vector $x''$ with
-  \[
-    x_ℓ'' = …, x_i'' = …
-  \]
-  So the algorithm just rotates the elements one spot to the right.
-  Applying the algorithm $d$ times with the indices $1, 2, …, d$
-  amounts to a complete rotation where each value ends up where it started.
-  Therefore, we have reached $x'$ again and the algorithm becomes periodic.
-\end{proof}
-%end{periodicity}
-\fi
-
 This concludes the connection between Fibonacci numbers and their golden ratios.
 As previously shown, the ratios of $d$-bonacci numbers approach the root of the polynomial $x^{d+1} - x^d - ⋯ - x - 1$
 and the ratios of the other Fibonacci numbers approach the root of the polynomial $x^{d+1} - x^d - 1$.
