@@ -74,12 +74,17 @@ def fixed_strategy(sequence):
 def regular_strategy(offset):
     return lambda x, n: (n + offset) % len(x)
 
-def tamura_yasutomi(x, n):
+def tamura_yasutomi(d):
     def frac(x):
         return x - floor(x)
-    a = frac(x[0])**2 / frac(x[0]).norm()
-    b = frac(x[1])**2 / frac(x[1]).norm()
-    return 0 if a > b else 1
+
+    def strat(x, n):
+        y = list(x)
+        for i in range(d):
+            y[i] = frac(x[i])**(d+1) / abs(frac(x[i]).norm())
+        return y.index(max(y))
+
+    return strat
 
 class BestConvergentStrategy:
     def __init__(self, x, norm):
