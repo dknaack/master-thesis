@@ -53,18 +53,18 @@ complexity theory.
 
 \begin{theorem}
   \label{thm:lame}
-  If the Euclidean algorithm requires $n$ steps for $(a, b) ∈ ℤ_{> 0}^2$ with $a < b$,
+  If the Euclidean algorithm requires at least $n$ steps for $(a, b) ∈ ℤ_{> 0}^2$ with $a < b$,
   then $a ≥ F(n+2)$ and $b ≥ F(n+1)$.
 \end{theorem}
 
 \begin{proof}
-  For $n = 0$, we have $F(2) = 2$ and $F(2) = 1$
+  For $n = 0$, we have $F(2) = 2$ and $F(1) = 1$
   and they are the smallest pair of positive integers which require one step of
   the Euclidean algorithm.
   In fact, they are the smallest pair which satisfy $a < b$.
   So any pair, which takes only one step, must satisfy $a ≥ F(2)$ and $b ≥ F(1)$.
-  Suppose that the theorem holds for some $n ≥ 0$.
-  Let $(a, b)$ be an input which requires $n+1$ steps.
+  Next, suppose that the theorem holds for some $n ≥ 0$.
+  Let $(a, b)$ be an input pair which requires $n+1$ steps.
   Then, $a = qb + r$ for some integers $q, r ≥ 1$.
   For the pair $(b, r)$, the algorithm requires $n$ steps, so $b ≥ F(n+2)$ and
   $r ≥ F(n+1)$ by induction.
@@ -331,9 +331,9 @@ Using the contrapositive of the theorem, it follows that if a vector $x$
 has only one value smaller than the listed bounds, then it must take less than
 $n$ steps.
 Furthermore, we have seen that the Fibonacci numbers require exactly $n$ steps.
-Therefore, these Fibonacci numbers are the worst-case input for the
+Therefore, these Fibonacci numbers represent the worst-case input for the
 minimum strategy.
-This mirrors how classical Fibonacci numbers are the worst-case for the
+This mirrors how classical Fibonacci numbers represent the worst-case for the
 classical Euclidean algorithm.
 
 In the same spirit,
