@@ -115,3 +115,32 @@ class BestConvergentStrategy:
         a = floor_list(y)
         self.conv.append(a)
         return min
+
+class MinCost:
+    def __init__(self, x, norm):
+        from src.search import floor_list
+
+        self.input = x
+        self.conv = [floor_list(x)]
+        self.norm = norm
+
+    def __call__(self, x, n):
+        from src.search import floor_list
+
+        # Compute the distances for the next convergents
+        d = len(x)
+        cost = [0] * d
+        for l in range(d):
+            y = pivot(x, l)
+            approx = unpivot(self.conv + [floor_list(y)])
+            cost[l] = max([max(xi.numerator(), xi.numerator()) for xi in approx])
+
+        # Find the minimum
+        min = 1
+        for l in range(1, d):
+            if cost[min] >= cost[l]:
+                min = l
+        y = pivot(x, l)
+        a = floor_list(y)
+        self.conv.append(a)
+        return min
