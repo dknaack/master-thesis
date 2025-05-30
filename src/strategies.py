@@ -1,17 +1,6 @@
-from search import pivot, unpivot
+from src.search import pivot, unpivot
 from sage.all import *
 import random
-
-def floor_list(list):
-    return [floor(elem) for elem in list]
-
-def mdcf(coeffs):
-    if len(coeffs) == 0:
-        raise ValueError("The list is empty")
-    result, *coeffs = coeffs
-    for a in coeffs[::-1]:
-        result = unpivot(result, a)
-    return result
 
 #
 # Nondeterministic Strategies
