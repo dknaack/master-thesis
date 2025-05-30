@@ -415,23 +415,11 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 \section{Higher-Order Fibonacci Numbers for the Maximum Strategy}
 % ==============================================================================
 
-Choose the maximum fractional value, but never the actual maximum value.
-The reason behind the latter is that the maximum value is always the previous
-pivot element.
-Therefore, if we choose the same maximum element, we could end up choosing the
-same index over and over again.
-Hence, we remove this index from the consideration and only look at the maximum
-fractional value without the actual maximum.
-
-If we have a vector $x ∈ ℚ$, then pivoting with this strategy must result in a
-vector $x'$, where exactly one value is greater than $1$.
-Because $\{x_ℓ\}$ is the maximum, every other element has a smaller fractional
-value and $\{x_i\}/\{x_ℓ\}$ is smaller than $1$.
-For the analysis, we assume the same for the initial vector $x$.
-If $x$ does not satisfy these conditions, then we can iterate once and it has
-to satisfy them.
-
-The worst-case for this strategy are called maximum Fibonacci numbers and they
+The next strategy we will look at is the maximum strategy,
+where we choose the element with the largest fractional value.
+Although this leads to the worst possible decrease in terms of the determinant,
+it does provide another definition of Fibonacci sequences and a new golden ratio.
+The sequence for this strategy will be called maximum Fibonacci numbers and they
 are defined by the following recurrence relation:
 \begin{align*}
   F(n) =
@@ -440,8 +428,7 @@ are defined by the following recurrence relation:
     F(n - 1) + F(n - 1 - d), & \text{ if } n > 0.
   \end{cases}
 \end{align*}
-The first few terms of this sequences for different dimensions are listed in
-Table~\ref{tbl:max-fibonacci}.
+The first few terms of this sequences are listed in Table~\ref{tbl:max-fibonacci}.
 
 \begin{table}[tbp]
   \caption{The first 10 Fibonacci numbers for $d = 1, …, 5$ and their respective golden ratio.}
@@ -485,6 +472,34 @@ and the last element is
   = \frac{F(n-d)}{F(n-1)}.
 \end{align*}
 
+However, this time the maximum Fibonacci numbers do not represent the worst-case.
+At least, we cannot show any worst-case bounds using these numbers in the same way as before.
+The issue is that in the equation
+\[
+  p_ℓ = a_ℓ p_ℓ' + q'
+\]
+from Lemma~\ref{lem:divmod} we cannot bound $a_ℓ$ from below by $1$.
+The reason is that only element of $x$ can be greater than $1$
+and all other elements must be smaller than $1$.
+But that element does not have to be the pivot element,
+it could be another element.
+
+\begin{theorem}
+  There exists a vector $x = (p₁/q, …, p_d/q) ∈ ℚ^d$ which requires at least $n$ steps
+  and there is at least one element $p_i$ with $p_i < F(n-d)$
+\end{theorem}
+
+\begin{proof}
+  % TODO
+\end{proof}
+
+Although they do not represent the worst-case,
+they do lead to another golden ratio.
+Looking at the ratios $F(n+1)/F(n)$ again,
+they converge towards a limit.
+This limit represents the golden ratio $ψ_d$ for the sequence and
+the following theorem shows that they converge towards this ratio.
+
 \begin{theorem}
   If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $ψ_d$,
   where $ψ_d$ is the positive real root of the polynomial $p_d(x) = x^{d+1} - x^d - 1$.
@@ -518,8 +533,9 @@ and the last element is
   The ratios $F(n + i)/F(n)$ converge towards $ψ_d^i$ for any $i ≥ 0$.
 \end{corollary}
 
-We can then replace the ratios in the solution vector $x$ with the actual golden ratio $ψ_d$.
-We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
+We can then replace the ratios in the solution vector $x$ with the actual
+golden ratio $ψ_d$, again.
+The algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ is defined as
 \[
   x_i
   = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
@@ -529,6 +545,7 @@ Importantly, the algorithm is periodic for this input vector.
 We have already seen for the approximate solution with Fibonacci numbers
 that $d$ steps shifts each number backwards by $d$.
 For the algebraic solution, this means that it stays the same after $d$ steps.
+This gives us the second example of a periodic input for the generalized Euclidean algorithm.
 
 \begin{theorem}
   The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
