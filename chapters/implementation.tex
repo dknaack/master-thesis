@@ -219,24 +219,21 @@ The third is the deterministic search, which is used to compare the different
 strategies.
 \fi
 
+\iffalse
 % ==============================================================================
-\section{Results for Periodic MDCFs}
+\section{Periodic MDCFs for Cube Roots}
 % ==============================================================================
 
 % TODO: Measure the times for each MDCF and list them!
-For the first search, the cube roots $\sqrt[3]{2}$ to $\sqrt[3]{32}$ were tested.
+For the first search, the cube roots $\sqrt[3]{2}$ to $\sqrt[3]{100}$ were tested.
 The MDCFs for these roots is listed in Table~\ref{tbl:cubics}.
-For cubic irrationals there are $2^n$ possible sequences,
+For cubic irrationals there are $O(2^n)$ possible sequences,
 so the search is already quite expensive.
 The search for the first 30 cube roots had a maximum search depth of $24$ and
 this already took over two hours to complete.
-Almost half of the time was spent on the root for $\sqrt[3]{29}$.
-For this case specifically, I was unable to find a periodic representation.
-I tried searching for this case specifically with a larger search depth of $30$,
-but it still found no representation.
-Since the length of the period can vary greatly between the roots, it is
-difficult to say whether the search depth is too small or whether
-$\sqrt[3]{29}$ has no representation at all.
+Almost half of the time was spent on the root for $\sqrt[3]{29}$
+and it did not find a representation for this root.
+Instead, I used different strategies to find an MDCF for this root.
 
 Regarding the representation of the roots,
 there is no perceivable patterns between the roots and their length.
@@ -287,6 +284,7 @@ Finding periodic MDCFs for higher dimensions is even more difficult than two dim
 There are now $O(d^N)$ possible sequences with a maximum depth of $N$.
 So each search is exponentially more expensive than the cubic case.
 Some of the easier ones to find were again the roots identified by Bernstein.
+\fi
 
 % ==============================================================================
 \section{Usage in Simultaneous Approximation}
