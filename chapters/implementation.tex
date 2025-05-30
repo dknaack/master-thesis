@@ -157,35 +157,6 @@ the minimum fractional value, if $n$ is the length of the list $L$.
   \texttt{strat} \colon ℝ^d → \mathcal P(\{1, …, d\}), x ↦ \{ℓ_1, …, ℓ_k\}.
 \]
 
-% ==============================================================================
-\begin{Python}[
-    float=tbp,
-    numbers=left,
-    caption={
-      The implementation of the deterministic search.
-      The strategy \texttt{strat} only outputs a single index, which is used
-      for pivoting.
-      The search stops once a duplicate vector $x$ has been found and returns
-      the preperiod and period once found.
-    },
-    label={lst:det-search},
-  ]
-def deterministic_search(x, N, strat):
-  d = len(x)
-  seen = {x: 0}
-  for n in range(N):
-    l = strat(x)
-    x = pivot(x, l)
-    if x in seen:
-      j = seen[x]
-      start = L[:j]
-      period = L[j:i+1]
-      return start, period
-    else:
-      seen[y] = i + 1
-\end{Python}
-% ==============================================================================
-
 % Deterministic search
 For the deterministic search, a strategy $s$ is a function $R^d → \{1, …, d\}$
 which takes in the complete quotient $x^{(n)} ∈ ℝ^d$ of the input vector $x ∈ R^d$
@@ -287,6 +258,118 @@ Some of the easier ones to find were again the roots identified by Bernstein.
 \fi
 
 % ==============================================================================
+\section{Comparison of More Efficient Strategies}
+% ==============================================================================
+
+Considering the difficulty in finding higher-dimensional MDCFs,
+a more efficient search strategy is needed.
+When constructing the MDCF using the generalized Euclidean algorithm,
+we always have a choice for the pivot element $x_ℓ$.
+Ideally, we could just determine the pivot element solely from the vector $x$
+without resorting to a search down the tree.
+Therefore, I have compared different strategies which can be used for this purpose.
+Each strategy receives the current vector $x$ as well as the number of steps
+taken so far and outputs the next index to pivot with.
+The search for a periodic MDCF then works just like the brute-force search:
+If there is any vector which occured twice, then program terminates the search.
+
+% ==============================================================================
+\begin{Python}[
+    float=tbp,
+    numbers=left,
+    caption={
+      The implementation of the search for periodic MDCFs.
+      The strategy \texttt{strat} outputs a single index $ℓ$, which is used
+      for pivoting.
+      The search stops once a duplicate vector $x$ has been found and the
+      program returns the preperiod and period once found.
+    },
+    label={lst:det-search},
+  ]
+def search(x, N, strat):
+  seen = {x: 0}
+  for n in range(N):
+    l = strat(x)
+    x = pivot(x, l)
+    if x in seen:
+      j = seen[x]
+      start = L[:j]
+      period = L[j:i+1]
+      return start, period
+    else:
+      seen[y] = i + 1
+\end{Python}
+% ==============================================================================
+
+In summary, the following deterministic strategies were tried:
+\begin{itemize}
+  \item $\textbf{Min}, \textbf{Max}$: Choosing the minimum and maximum fractional value, respectively.
+    These are the strategies which have been analyzed in Chapter~\ref{ch:fibonacci}.
+  \item $\textbf{JPA}$: The Jacobi-Perron algorithm,
+    which chooses indices in a fixed order.
+    Specifically, it chooses the indices $1, 2, …, d$, and repeats this sequence indefinitely.
+  \item $\textbf{JPA}'$: A modification of the Jacobi-Perron algorithm introduced by Podsypanin \cite{Podsypanin77}.
+    Given a vector $x = (x₁, x₂)$ it chooses the index
+    \[
+      ℓ =
+      \begin{cases}
+        1, & \text{ if } x₁ > x₂, \\
+        2, & \text{ if } x₁ < x₂.
+      \end{cases}
+    \]
+    For higher dimensions, the algorithm chooses the largest element in $x$.
+  \item $\textbf{TY}$:
+    The algorithm of Tamura and Yasutomi \cite{Tamura09},
+    which is based on the idea of the modified JPA.
+    Given vector $x = (x₁, x₂)$, the algorithm chooses the index
+    \[
+      ℓ =
+      \begin{cases}
+        1, & \text{ if } \frac{x₁}{\sqrt{|N(x₁)|}} > \frac{x₂}{\sqrt{|N(x₂)|}}, \\
+        2, & \text{ if } \frac{x₁}{\sqrt{|N(x₁)|}} < \frac{x₂}{\sqrt{|N(x₂)|}}.
+      \end{cases}
+    \]
+    Again, the algorithm chooses the largest element in each iteration.
+    However, it scales down each element by the square root of its norm.
+    For higher dimensions, the algorithm chooses
+    \[
+      ℓ = \argmax_i \frac{x_i}{\sqrt[d+1]{|N(x_i)|}}.
+    \]
+  \item $\textbf{CC}$: Choosing the closest convergent.
+    Out of the $d$ possible indices,
+    we choose the one which produces the closest convergent $r^{(n)}$,
+    which means that it minimizes the distance to the original input vector.
+    This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
+\end{itemize}
+% TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
+% TODO: For how many steps did we run the construction?
+The fixed strategies were the easiest to implement and therefore also the
+fastest, so I ran them for a maximum number of $1000$ steps.
+The other strategies had a little more overhead, so I only ran them for a
+maximum of $100$ steps.
+
+Table~\ref{tbl:comparison} lists the results for this section.
+Out of all strategies, the best are clearly the one,
+which chooses the minimum fractional value, and the fixed strategy, which
+alternates between the first and second element.
+Surprisingly, the worst strategy for constructing MDCFs seems to be the one,
+which chooses the best convergent with either norm.
+It was unable to construct a single MDCF for any cube root.
+% Why was it unable to do so? Which indices did it choose? How well do the
+% other strategies approximate the original input vector? Are they better or
+% worse after some number of steps?
+
+Although the minimum strategy was able to find the most MDCFs,
+it was not able to find all MDCFs.
+Some cube roots were only found by other strategies,
+while others were only found by the minimum strategy.
+In conclusion, no perfect strategy has been found.
+This is not surprising,
+since what this search is likely aiming for is a fundamental unit in a cubic field.
+The problem of finding a fundamental unit is not trivial in higher degree fields. % TODO: cite
+For cubic fields, usually an instance of the LLL algorithm is used.
+
+% ==============================================================================
 \section{Usage in Simultaneous Approximation}
 % ==============================================================================
 
@@ -359,74 +442,3 @@ The specific constant for each root is listed in Table~\ref{tbl:approx-const}.
 % TODO: Add table for numbers which admit good approximations
 
 % TODO: What about transcendental numbers?
-
-% ==============================================================================
-\section{Comparison of More Efficient Pivot Strategies}
-% ==============================================================================
-
-Considering the difficulty in finding higher-dimensional MDCFs,
-a more efficient search strategy is needed.
-When constructing the MDCF using the generalized Euclidean algorithm,
-we always have a choice for the pivot element $x_ℓ$.
-Ideally, we could just determine the pivot element solely from the vector $x$
-without resorting to a search down the tree.
-Therefore, I have compared different strategies which can be used for this purpose.
-Each strategy receives the current vector $x$ as well as the number of steps
-taken so far and outputs the next index to pivot with.
-The search for a periodic MDCF then works just like the brute-force search:
-If there is any vector which occured twice, then program terminates the search.
-
-In summary, the following deterministic strategies were tried:
-\begin{itemize}
-  \item Choosing the minimum and maximum fractional value.
-  \item Fixed strategies,
-    which are defined for some list of indices $L = ℓ₀ ℓ₁ \dots ℓ_{k-1}$
-    and output $ℓ_{(n \bmod k)}$ after $n$ steps.
-    This also includes the Jacobi-Perron algorithm,
-    which always chooses the indices $1, 2, …, d$ in this order.
-  \item Choosing the best convergent.
-    Out of the $d$ possible indices,
-    we choose the one which produces the best convergent $r^{(n)}$,
-    which means that it minimizes the distance to the original input vector.
-    This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
-  \item
-    The algorithm of Tamura and Yasutomi \cite{Tamura09},
-    which for a given vector $x = (x₁, x₂)$ chooses
-    \[
-      ℓ =
-      \begin{cases}
-        1, & \text{ if } \frac{x₁}{\sqrt{N(x₁)}} > \frac{x₂}{\sqrt{N(x₂)}}, \\
-        2, & \text{ if } \frac{x₁}{\sqrt{N(x₁)}} < \frac{x₂}{\sqrt{N(x₂)}}.
-      \end{cases}
-    \]
-    The algorithm relies on the field norm,
-    so it is unclear how this could be extended to any real number.
-    Nevertheless, all that is needed is the existence of a path, so such a
-    strategy would be sufficient for a periodic representation.
-\end{itemize}
-% TODO: For how many steps did we run the construction?
-The fixed strategies were the easiest to implement and therefore also the
-fastest, so I ran them for a maximum number of $1000$ steps.
-The other strategies had a little more overhead, so I only ran them for a
-maximum of $100$ steps.
-
-Table~\ref{tbl:comparison} lists the results for this section.
-Out of all strategies, the best are clearly the one,
-which chooses the minimum fractional value, and the fixed strategy, which
-alternates between the first and second element.
-Surprisingly, the worst strategy for constructing MDCFs seems to be the one,
-which chooses the best convergent with either norm.
-It was unable to construct a single MDCF for any cube root.
-% Why was it unable to do so? Which indices did it choose? How well do the
-% other strategies approximate the original input vector? Are they better or
-% worse after some number of steps?
-
-Although the minimum strategy was able to find the most MDCFs,
-it was not able to find all MDCFs.
-Some cube roots were only found by other strategies,
-while others were only found by the minimum strategy.
-In conclusion, no perfect strategy was found.
-This is not surprising,
-since what this search is likely aiming for is a fundamental unit in a cubic field.
-The problem of finding a fundamental unit is not trivial in higher degree fields. % TODO: cite
-For cubic fields, usually an instance of the LLL algorithm is used.
