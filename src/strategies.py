@@ -56,6 +56,13 @@ def max_strategy(x, n):
 def jpa_strategy(x, n):
     return n % len(x)
 
+def modified_jpa(x, n):
+    def frac(x):
+        return x - floor(x)
+    a = frac(x[0])/frac(sum(x))
+    b = frac(x[1])/frac(sum(x))
+    return 0 if a > b else 1
+
 def random_strategy(x, n):
     d = len(x)
     indices = list(range(d))
