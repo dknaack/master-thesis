@@ -182,7 +182,7 @@ def nondeterministic_search(x, N, strat):
         for L in sequences:
             y = x
             seen = {y: 0}
-            for l in L:
+            for i, l in enumerate(L):
                 y = pivot(y, l)
                 seen[y] = i + 1
             for l in strat(x, L):
