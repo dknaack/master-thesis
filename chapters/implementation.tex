@@ -282,23 +282,31 @@ So each search is exponentially more expensive than the cubic case.
 Some of the easier ones to find were again the roots identified by Bernstein.
 
 % ==============================================================================
-\section{Results for the Approximation Rate of MDCFs}
+\section{Usage in Simultaneous Approximation}
 % ==============================================================================
 
-The second type of search was to see how well the different sequences
-approximate the original input vector.
-For continued fractions, we can always achieve a quadratic approximation, i.e.
+The continued fractions play an important role in Diophantine approximation,
+where the goal is to approximate real numbers using rational numbers.
+In Lemma~\vref{lem:cf-approx}, we have already seen that the convergents
+$pₙ/qₙ$ of a continued fraction $x$ approximate the represented number $x$
+particularly well.
+More specifically, that the convergents satisfy the bound
 \[
-  \left| x - \frac{p}{q} \right| < \frac{1}{q^2}.
+  \left|α - \frac{pₙ}{qₙ}\right| < \frac{1}{qₙ^2}.
 \]
-But in this case, we only have to approximate a single irrational number $x$.
-If we have to approximate multiple irrational numbers $x₁, …, x_d$ simultaneously,
-the best approximation $p₁/q, …, p_d/q$ that we can achieve satisfies
+The Lemma also follows from Dirichlet's approximation theorem.
+For its multidimensional counterpart,
+the question then is whether they approximate the vector particularly well.
+Approximating a vector instead of a single number is also known as simultaneous
+Diophantine approximation.
+We are now given an irrational vector $(α₁, …, α_d)$ and we have to find good
+approximations $(p₁/q, …, p_d/q) ∈ ℚ^d$ for every number at once.
+Using the simultaneous version of Dirichlet's approximation theorem \cite{Schmidt80},
+one can show that there are infinitely many rational vectors $(p₁/q, …, p_d/q)$,
+which satisfy
 \[
-  \left|x_i - \frac{p_i}{q}\right| < \frac{1}{q \, \sqrt[d]{q}} \qquad \text{ for every } i ≤ d.
+  \left|α_i - \frac{p_i}{q}\right| ≤ \frac{1}{q^{1 + 1/d}}.
 \]
-So for the second search I tested, whether there are MDCFs whose convergents
-satisfy this constraint.
 
 % TODO: When repeating the period multiple times, does this actually keep the
 % approximation bound intact or does it violate it after some point?
