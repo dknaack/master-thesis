@@ -93,6 +93,8 @@ def brute_force_search(x, N):
 
     - `None` if no periodic representation was found.
     """
+    from itertools import product
+
     d = len(x)
     indices = list(range(d))
     for n in range(N):
