@@ -342,7 +342,7 @@ The classical Fibonacci numbers approach the golden ratio, when dividing consecu
 Therefore, we look at what values the $d$-bonacci numbers approach by dividing consecutive numbers.
 This limit can be considered a multi-dimensional generalization of the golden ratio.
 For now, we will assume that these ratios are converging.
-A general proof of convergence will be shown in a later section.
+A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at the end of the chapter.
 
 \begin{theorem}
   If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ_d$,
@@ -775,6 +775,7 @@ where $x^{(n)}$ is the solution, in the following way:
 
 % ==============================================================================
 \section{Proof of Convergence for General Linear Recurrences}
+\label{sec:fib-conv}
 % ==============================================================================
 
 
@@ -783,85 +784,69 @@ where $x^{(n)}$ is the solution, in the following way:
 %
 
 
-Dividing two consecutive Fibonacci numbers approaches the golden ratio as $n$ increases.
-The golden ratio is a solution to the equation $x^2 - x - 1 = 0$.
-For higher dimensions, we will encounter similar polynomial equations with higher degree.
-The goal of this section is to generalize the relationship between linear
-recurrences like the Fibonacci sequence with their respective golden ratio.
-
-\begin{definition}
-  The \emph{characteristic polynomial} of a linear recurrence~$F$ with
-  nonnegative integer coefficients~$a_0, \dots, a_d$ is defined as
-  \[
-    p_F(x) = x^{d+1} - a_d x^d - a_{d-1} x^{d-1} - \dots - a_1 x - a_0.
-  \]
-\end{definition}
-
-% TODO: Why is the characteristic polynomial defined as such, any reason?
-
-\begin{example}
-  The characteristic polynomial of the $d$-bonacci sequence is
-  \[
-    x^{d+1} - x^d - ⋯ - x - 1.
-  \]
-\end{example}
-
-The root can be considered a generalization of the golden ratio.
-If we weaken the requirement that each coefficient $a_i$ is either $0$ or $1$ and
-instead allow any nonnegative number $a_i ∈ ℤ_{≥ 0}$, then this can be considered a
-generalization of the metallic means.
-
-The question for the higher-order Fibonacci sequence is whether they behave the
-same way the classical Fibonacci numbers do.
-Most importantly, whether their ratios
+We have seen that the ratios of consecutive Fibonacci numbers for both
+definition converges towards their own respective golden ratios.
+However, this was under the assumption that the ratios are converging in the first place.
+Therefore, we will show in this section that this is actually the case.
+To show this for both sequences at once, we use a general linear recurrence $F(n)$
+with the initial terms $F(0) = ⋯ = F(d) = 1$ and the remaining terms are
+defined according to the recurrence
+\[
+  F(n + 1) = c_d F(n) + c_{d-1} F(n-1) + ⋯ + c₁ F(n - d + 1) + c₀ F(n - d)
+\]
+with nonnegative integer coefficients $c₀, c₁, …, c_d$.
+We assume that the first and last coefficient, $c₀$ and $c_d$, are not zero.
+As an example, the $d$-bonacci sequence would have all coefficients set to one,
+whereas the other sequence would have only $c₀$ and $c_d$ set to one.
+The goal is to show that the ratios
 \[
   r_n
   := \frac{F(n+1)}{F(n)}
-  = \frac{a_0 F(n - d)}{F(n)} + \frac{a₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{a_{d-1} F(n-1)}{F(n)} + 1.
+  = \frac{c_0 F(n - d)}{F(n)} + \frac{c₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{c_{d-1} F(n-1)}{F(n)} + c_d
 \]
-are actually converging to the only positive real root of their characteristic
-polynomial $p_F$ or not.
-In the following, we will show that this is indeed the case.
-First, we rewrite the terms of the equation such that each ratio in the sum can
-be rewritten as a product of consecutive ratios $r_{n-i}$:
+are converging.
+
+The first step is to rewrite the terms of the recurrence such that each ratio
+between non-consecutive Fibonacci numbers can be rewritten as a product of
+ratios $r_{n-i}$:
 \begin{align*}
   \frac{F(n - d + i)}{F(n)}
   & = \frac{F(n - d + i + 1)}{F(n - d + i)} \frac{F(n - d + i + 2)}{F(n - d + i + 1)} \dots \frac{F(n-1)}{F(n)} \\
   & = \frac{1}{r_{n - d + i}} · \frac{1}{r_{n - d + i + 1}} · \dots · \frac{1}{r_{n-1}}.
 \end{align*}
-So we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$ as follows:
+Then we can calculate the ratio $r_n$ using the previous ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$ as follows:
 \[
-  r_n = 1 + \frac{a_d}{r_{n-1}} + \frac{a_{d-1}}{r_{n-1} r_{n-2}} + ⋯ + \frac{a₀}{r_{n-1} r_{n-2} \dots r_{n-d}}.
+  r_n = c_0 + \frac{c_1}{r_{n-1}} + \frac{c_2}{r_{n-1} r_{n-2}} + ⋯ + \frac{c_d}{r_{n-1} r_{n-2} \dots r_{n-d}}.
 \]
 Using this equation, we can show that the ratios are bounded.
 
 \begin{lemma}
   \label{lem:fib-bounded}
-  The ratios $r_n$ are bounded between $1$ and $d+1$.
+  The ratios $r_n$ are bounded between $1$ and $C := ∑_{k=0}^d c_d$.
 \end{lemma}
 
 \begin{proof}
   The first $d - 1$ ratios are all $1$.
   The ratio $r_d$ is equal to
   \[
-    \frac{F(d+1)}{F(d)} = \frac{F(0) + F(1) + ⋯ + F(d)}{F(d)} = \frac{1 + 1 + ⋯ + 1}{1} = d + 1,
+    \frac{F(d+1)}{F(d)} = \frac{F(0) + F(1) + ⋯ + F(d)}{F(d)} = \frac{c_d + ⋯ + c_0}{1} = C,
   \]
   which clearly satisfies the bounds of this lemma.
   By induction, suppose that the previous ratios $r_{n-1}, r_{n-2}, …, r_{n-d}$
   all satisfy the bound between $1$ and $d+1$.
   From previous consideration, we can reformulate the ratio $r_n$ as follows:
   \[
-    r_n = 1 + \frac{a₁}{r_{n-1}} + \frac{a₂}{r_{n-1} r_{n-2}} + \dots + \frac{a_d}{r_{n-1} r_{n-2} \dots r_{n-d}}.
+    r_n = c₀ + \frac{c₁}{r_{n-1}} + \frac{c₂}{r_{n-1} r_{n-2}} + \dots + \frac{c_d}{r_{n-1} r_{n-2} \dots r_{n-d}}.
   \]
-  Since $r_{n-i} ≤ d+1$, we can bound $r_n$ from below by
+  Since $r_{n-i} ≤ C$, we can bound $r_n$ from below by
   \[
-    r_n ≥ 1 + \frac{a₁}{d+1} + \frac{a₂}{(d+1)^2} + \dots + \frac{a_d}{(d+1)^d} ≥ 1
+    r_n ≥ c₀ + \frac{c₁}{C} + \frac{c₂}{C^2} + \dots + \frac{c_d}{C^d} ≥ 1
   \]
   and since $r_{n-i} ≥ 1$, we can bound $r_n$ from above by
   \[
-    r_n ≤ 1 + \frac{a₁}{1} + \frac{a₂}{1} + \dots + \frac{a_d}{1} ≤ d+1.
+    r_n ≤ c₀ + \frac{c₁}{1} + \frac{c₂}{1} + \dots + \frac{c_d}{1} ≤ C.
   \]
-  Hence, $1 ≤ r_n ≤ d+1$ for every $n ≥ 0$.
+  Hence, $1 ≤ r_n ≤ C$ for every $n ≥ 0$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -891,10 +876,11 @@ The sequences are
 \[
   s_n = \min\{r_n, r_{n-1}, …, r_{n-d} \}, \qquad t_n = \max\{r_n, r_{n-1}, …, r_{n-d}\}
 \]
-Because $r_n$ clearly lies between the two sequences, so it must converge to the same limit as $s_n$ and $t_n$.
+Because $r_n$ clearly lies between the two sequences, it must converge to the same limit as $s_n$ and $t_n$.
 For these sequences, we already know from the previous lemma that they are bounded,
 so it only remains to be shown that they are monotone,
-where $s_n$ is always increasing and $t_n$ is decreasing.
+i.e. $s_n$ is increasing and $t_n$ is decreasing.
+After which we can show that they are converging to the same limit.
 
 \begin{lemma}
   The sequences $s_n$ and $t_n$ are monotone.
