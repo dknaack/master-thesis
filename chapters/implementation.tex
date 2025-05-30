@@ -1,23 +1,28 @@
 \chapter{Experimental Analysis on Multi-Dimensional Continued Fractions}
 \label{ch:implementation}
 
-We have already seen in Chapter~\ref{ch:fibonacci},
-that the simplest periodic MDCFs compose a special class of polynomials,
-which can be interpreted as a generalization of the metallic ratios in higher
-dimensions.
-However, this still leaves the question, whether all algebraic numbers of degree $≤ d+1$
-have a periodic $d$-dimensional continued fraction.
-Within the scope of this thesis, I was unable to prove this question in
-general, but I will nevertheless present my evidence for this conjecture.
+In the previous chapter, we have analyzed
+In particular, we saw that most MDCFs converge,
+and that any periodic MDCF consists of algebraic numbers.
+The former solves the first part of Hermite's question, but the latter solves
+only one direction of the second part.
+The first part of this chapter will focus on the remaining direction:
+whether every algebraic number admits a periodic MDCF.
 
-% TODO: Rewrite this part
-In this chapter, I present more examples of periodic MDCFs for common algebraic numbers.
-These were all found using a special program, which implements part of the generalized Euclidean algorithm.
-The chapter begins by outlining how the program was implemented and which search strategies were used.
-I then present the results for the periodic MDCFs, followed by a discussion of
-their significance and implications for further research.
-The main focus of this analysis has been on cubic irrationals,
-but there is a small discussion on algebraic numbers with higher degree at the end of the chapter.
+We have already seen in Chapter~\ref{ch:fibonacci},
+that the simplest periodic MDCFs can be considered a generalization of the
+golden ratio.
+The first part of this chapter extends this result by presenting further
+examples of periodic MDCF for algebraic numbers.
+These include a wide range of cube roots,
+all of which appear to have periodic representations under one particular strategy.
+While this does not amount to a proof, the evidence strongly supports
+the possibility of a positive answer to the second part of Hermite’s question.
+
+The second part of this chapter focuses on the approximation rate of MDCFs.
+For ordinary continued fractions, the convergents are known to give
+exceptionally good approximations to irrational numbers.
+Here, we test whether MDCFs offer similar approximation behavior in higher dimensions.
 
 % ==============================================================================
 \section{Implementation details}
