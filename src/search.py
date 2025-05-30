@@ -4,34 +4,74 @@ def frac(x):
     return x - floor(x)
 
 def pivot(x, *indices):
-    y = [0 for _ in x]
     for l in indices:
+        y = list(x)
         assert frac(x[l]) != 0, "xl cannot be zero"
         for i in range(len(x)):
             if i == l:
                 y[i] = 1 / frac(x[i])
             else:
                 y[i] = frac(x[i]) / frac(x[l])
-    return tuple(y)
+        x = tuple(y)
+    return x
 
-def unpivot(x, a):
+def unpivot(coeffs):
+    x = coeffs.pop()
     d = len(x)
 
-    # Determine the pivot, which is the maximum element
-    l = None
-    for i in range(d):
-        if l is None or x[l] < x[i]:
-            l = i
+    while len(coeffs) > 0:
+        # Determine the pivot, which is the maximum element
+        l = None
+        for i in range(d):
+            if l is None or x[l] < x[i]:
+                l = i
 
-    # Unpivot using x[l]
-    y = [0 for _ in range(d)]
-    for i in range(d):
-        if i == l:
-            y[i] = a[i] + 1 / x[i]
-        else:
-            y[i] = a[i] + x[i] / x[l]
+        # Unpivot using x[l]
+        a = coeffs.pop()
+        y = list(x)
+        for i in range(d):
+            if i == l:
+                y[i] = a[i] + 1 / x[i]
+            else:
+                y[i] = a[i] + x[i] / x[l]
+        x = y
 
-    return tuple(y)
+    return tuple(x)
+
+def floor_list(x):
+    return [floor(xi) for xi in x]
+
+def convergent(x, *indices):
+    a = floor_list(x)
+    coeffs = [tuple(a)]
+    for l in indices:
+        x = pivot(x, l)
+        a = floor_list(x)
+        coeffs.append(tuple(a))
+    return coeffs
+
+def convergent_matrix(x, *indices):
+    d = len(x)
+
+    def reflect(pivot, d=d):
+        result = identity_matrix(d+1)
+        result.swap_columns(0, pivot+1)
+        return result
+
+    def skew(a, d=d):
+        result = identity_matrix(d+1)
+        result.set_column(0, [1, *a])
+        return result
+
+    result = identity_matrix(d+1)
+    a = floor_list(x)
+    result *= skew(a)
+    for l in indices:
+        x = pivot(x, l)
+        a = floor_list(x)
+        result *= reflect(l)
+        result *= skew(a)
+    return result
 
 def brute_force_search(x, N):
     """
