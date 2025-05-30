@@ -195,3 +195,42 @@ def nondeterministic_search(x, N, strat):
                 else:
                     new_sequences.append(L + [l])
         sequences = new_sequences
+
+def heuristic_search(x, N):
+    from heapq import heappush, heappop
+
+    def cost2(seq):
+        y = unpivot(convergent(x, *seq))
+        q = lcm([yi.denominator() for yi in y])
+        p = max([yi.numerator() for yi in y])
+        return max(p, q)
+
+    def cost(seq):
+        A = convergent_matrix(x, *seq)
+        v = A.eigenvectors_right()[0][1][0]
+        return -max(abs(RR(vi/xi)) for xi, vi in zip(x, v))
+
+    def cost3(seq):
+        y = unpivot(convergent(x, *seq))
+        return max(abs(xi - yi) for xi, yi in zip(x, y))
+
+    d = len(x)
+    pq = []
+    heappush(pq, (0, []))
+    for n in range(N):
+        _cost, seq = heappop(pq)
+
+        y = x
+        seen = {y: 0}
+        for i, l in enumerate(seq):
+            y = pivot(y, l)
+            seen[y] = i + 1
+        for l in range(d):
+            z = pivot(y, l)
+            if z in seen:
+                j = seen[z]
+                start = seq[:j]
+                period = seq[j:]
+                return start, period
+            new_seq = seq + [l]
+            heappush(pq, (cost(new_seq), new_seq))
