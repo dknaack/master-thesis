@@ -378,17 +378,18 @@ where the goal is to approximate real numbers using rational numbers.
 In Lemma~\vref{lem:cf-approx}, we have already seen that the convergents
 $pₙ/qₙ$ of a continued fraction $x$ approximate the represented number $x$
 particularly well.
-More specifically, that the convergents satisfy the bound
+More specifically, that every convergent satisfies the bound
 \[
   \left|α - \frac{pₙ}{qₙ}\right| < \frac{1}{qₙ^2}.
 \]
 The Lemma also follows from Dirichlet's approximation theorem.
+
 For its multidimensional counterpart,
-the question then is whether they approximate the vector particularly well.
+the question is whether they approximate the vector particularly well.
 Approximating a vector instead of a single number is also known as simultaneous
 Diophantine approximation.
-We are now given an irrational vector $(α₁, …, α_d)$ and we have to find good
-approximations $(p₁/q, …, p_d/q) ∈ ℚ^d$ for every number at once.
+Given an irrational vector $(α₁, …, α_d)$, the task is to find a good
+rational approximation $(p₁/q, …, p_d/q)$ for every number $α_i$ at once.
 Using the simultaneous version of Dirichlet's approximation theorem \cite{Schmidt80},
 one can show that there are infinitely many rational vectors $(p₁/q, …, p_d/q)$,
 which satisfy
@@ -398,20 +399,24 @@ which satisfy
   \quad
   \text{ for every } i ∈ \{1, …, d\}.
 \end{equation}
-The idea would be that all convergents would satisfy this approximation bound.
+Such vectors will be called \emph{good rational approximations} of $(α₁, …, α_d)$.
+The idea would be that the convergents of MDCFs are such good rational approximations.
 However, if that is not the case, there is still a possibility that some path
-during the construction satisfies the approximation bound.
+during the construction has good rational approximations.
 From strongest to weakest, I have analyzed the following questions:
 \begin{enumerate}
-  \item Do all paths have convergents which satisfy the approximation bound?
-  \item Is there a path where all convergents satisfy the approximation bound?
-  \item Is there a path where infinitely many convergents satisfy the approximation bound?
+  \item Do all paths have convergents which are good rational approximations?
+  \item Is there a path where all convergents are good rational approximations?
+  \item Is there a path where infinitely many convergents are good rational approximations?
 \end{enumerate}
 
-The algorithm for answering these question utilizes a breadth-first search over the tree.
-It only expands a node $x ∈ ℝ^d$, if the convergent vector $r^{(n)}$ of this
-path is a good approximation, i.e. satisfies the bound from
-Equation~\ref{eq:sim-approx}.
+To answer these question,
+I have implemented a breadth-first search over the construction of an MDCF for the vector $x$.
+The search begins with the root $x^{(0)} = x$ and it expands a node $x^{(n)} ∈ ℝ^d$
+by adding the vector $\mathrm{pivot}_ℓ(x^{(n)})$ for every $ℓ ∈ \{1, …, d\}$ to the queue.
+However, it only expands a node $x^{(n)}$
+if its convergent vector $r^{(n)}$ is a good approximation,
+i.e. satisfies the bound from Equation~\ref{eq:sim-approx}.
 Otherwise, the node is considered a leaf.
 The search terminates either after a maximum number of steps is reached or if
 there are no more nodes in the queue.
@@ -434,20 +439,18 @@ So some cubic roots can have different MDCFs
 and not all of them must necessarily be good simultaneous approximations.
 
 The most surprising result of this analysis is that there are some cubic roots
-for which this approximation rate is not possible at all times.
-Perron already suggested that his algorithm does not satisfy this bound,
+for which there exists no path which satisfies the approximation bound of Equation~\ref{eq:sim-approx}.
+Perron already suggested that his algorithm does not satisfy this bound \cite{Perron07},
 so a simple strategy ought to violate the bound at some point.
 However, it turns out that no strategy can keep the approximation bound at each step.
-In the search, only convergents which satisfy the approximation bound make it to the next round.
-So it is possible that no convergents make it and for some cubic roots this is actually the case.
-One example is $\sqrt[3]{5}$.
+One example is the vector $(\sqrt[3]{5}, \sqrt[3]{25})$.
 In this case, the number of convergents starts out growing but quickly drops
 after only a few number of iterations.
 
 Since not all cubic roots can be approximated well using MDCFs,
 I weakened the bound to allow all convergents which satisfy
 \[
-  \left|x_i - \frac{p_i}{q}\right| < \frac{c}{q \, \sqrt[d]{q}} \qquad \text{ for every } i ≤ d,
+  \left|x_i - \frac{p_i}{q}\right| < \frac{c}{q^{1 + 1/d}} \qquad \text{ for every } i ≤ d,
 \]
 where $c$ is some constant independent of $n$.
 The specific constant for each root is listed in Table~\ref{tbl:approx-const}.
