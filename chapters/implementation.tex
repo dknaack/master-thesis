@@ -392,9 +392,12 @@ approximations $(p₁/q, …, p_d/q) ∈ ℚ^d$ for every number at once.
 Using the simultaneous version of Dirichlet's approximation theorem \cite{Schmidt80},
 one can show that there are infinitely many rational vectors $(p₁/q, …, p_d/q)$,
 which satisfy
-\[
-  \left|α_i - \frac{p_i}{q}\right| ≤ \frac{1}{q^{1 + 1/d}}.
-\]
+\begin{equation}
+  \label{eq:sim-approx}
+  \left|α_i - \frac{p_i}{q}\right| ≤ \frac{1}{q^{1 + 1/d}}
+  \quad
+  \text{ for every } i ∈ \{1, …, d\}.
+\end{equation}
 The idea would be that all convergents would satisfy this approximation bound.
 However, if that is not the case, there is still a possibility that some path
 during the construction satisfies the approximation bound.
@@ -404,6 +407,20 @@ From strongest to weakest, I have analyzed the following questions:
   \item Is there a path where all convergents satisfy the approximation bound?
   \item Is there a path where infinitely many convergents satisfy the approximation bound?
 \end{enumerate}
+
+The algorithm for answering these question utilizes a breadth-first search over the tree.
+It only expands a node $x ∈ ℝ^d$, if the convergent vector $r^{(n)}$ of this
+path is a good approximation, i.e. satisfies the bound from
+Equation~\ref{eq:sim-approx}.
+Otherwise, the node is considered a leaf.
+The search terminates either after a maximum number of steps is reached or if
+there are no more nodes in the queue.
+The latter of which would show that there are examples, where no path with the
+given approximation bound exists.
+This covers the first and second questions.
+For the third question, I have implemented a brute-force search,
+which simply tries all possible sequences to test for the approximation rate.
+The goal would be to see how many convergents satisfy the approximation bound.
 
 Figure~\ref{fig:results-approx} shows the results of this analysis.
 
