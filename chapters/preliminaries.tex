@@ -1,43 +1,25 @@
-\chapter{Algebraic Number Theory}
+\chapter{Preliminaries}
 \label{ch:preliminaries}
 
-In this chapter, I recount many important definitions and theorem from
-algebraic number theory, which will be used in the later chapters.
-For a more comprehensive overview of this topic, see \cite{Dummit04}.
+In this chapter, I recount many important definitions and theorems, which will
+be used in the later chapters.
+This includes a brief overview of algebraic number theory and a recount of the
+classical Euclidean algorithm.
+This chapter draws on standard results from algebraic number theory, as
+presented in \cite{Dummit04}.
 
-\section{Rings, Ideals, Integral Domains}
+\section{The Euclidean Algorithm}
 
-\begin{definition}
-  A \emph{ring} is a set $R$ equipped with two binary operators, addition $+$
-  and multiplication $·$, and two elements $0_R$ and $1_R$ of $R$, which satisfy
-  the following properties:
-  \begin{enumerate}
-    \item \textbf{Associativity}: $a + (b + c) = (a + b) + c$ and $a · (b · c) = (a · b) · c$ for every $a, b, c ∈ R$.
-    \item \textbf{Identity}: $0_R + a = a$ and $1_R · a = a$ for every $a ∈ R$.
-    \item \textbf{Additive Inverse}: For every $a ∈ R$, there exists an element $b ∈ R$ such that $a + b = 0_R$.
-    \item \textbf{Distributivity}: For every $a, b, c ∈ R$,
-      \begin{align*}
-        a + (b · c) = (a + b) · (a + c), \\
-        a · (b + c) = (a · b) + (a · c).
-      \end{align*}
-    \item \textbf{Commutativity}: $a + b = b + a$ and $a · b = b · a$ for every $a, b ∈ R$.
-  \end{enumerate}
-\end{definition}
+We begin with the Euclidean algorithm,
+since it stands at the center of this thesis:
+It is used to construct continued fractions,
+it is the basis of the generalized Euclidean algorithm
+and through its worst-case analysis it leads to the Fibonacci numbers and their
+generalization to higher dimensions.
 
-\begin{definition}
-  An \emph{integral domain} is a ring $R$ in which $1 ≠ 0$ and for every $a, b ∈ R$,
-  \[
-    ab = 0 \implies a = 0 \text{ or } b = 0.
-  \]
-\end{definition}
-
-\begin{definition}
-  A \emph{unit} in a ring $R$ is any element $u ∈ R$,
-  which has a multiplicative inverse,
-  i.e. there exists an element $v ∈ R$ such that $uv = 1_R$.
-\end{definition}
-
-\section{The Euclidean Algorithm and Euclidean Domains}
+The input to the algorithm is a pair of integers $a, b$ with $a > b$ and the
+goal is to find the greatest common divisor between the two numbers. The
+algorithm works in two steps.
 
 \begin{Pseudocode}
 algorithm Euclidean(a, b)
@@ -49,42 +31,49 @@ algorithm Euclidean(a, b)
 end
 \end{Pseudocode}
 
+In summary, the Euclidean algorithm uses the following steps:
 \begin{itemize}
   \item \textbf{Modulo}: $b' ← a \bmod b$.
   \item \textbf{Exchange}: $(a, b) ← (b', a)$.
   \item \textbf{Termination}: $b = 0$
 \end{itemize}
 
-\begin{proposition}
-  The ratio $b/a$ decreases by at least $1/2$ over two iterations.
-\end{proposition}
-
-\begin{proof}
-  Suppose $b/a > 1/2$ in the first iteration.
-  Over two iterations, we have
-  \[
-    \frac{b}{a} · \frac{a \bmod b}{b}
-    ≤ \frac{b}{a} · \frac{a - b}{b}
-    = 1 - \frac{b}{a}
-    < 1 - \frac{1}{2}
-    = \frac{1}{2}.
-  \]
-  Therefore, it decreases by at least $1/2$ over two iterations.
-\end{proof}
+The Euclidean algorithm not only works on integers,
+but can be extended to any ring with a division with remainder operation.
+Recall that a ring is a set $R$ equipped with two operations -- addition and
+multiplication -- that behaves like the integers:
+it forms an abelian group under addition and is closed under multiplication,
+which is associative and distributes over addition.
+A ring need not have multiplicative inverses or a multiplicative identity.
+In this thesis, all rings will contain $1$ and be commutative unless stated
+otherwise.
 
 \begin{definition}
-  A \emph{Euclidean domain} is an integral domain $R$ with a function $f$,
+  An \emph{integral domain} is a ring $R$ in which $1 ≠ 0$ and for every $a, b ∈ R$,
+  \[
+    ab = 0 \implies a = 0 \text{ or } b = 0.
+  \]
+\end{definition}
+
+An integral domain is a ring without zero divisors.
+The Euclidean algorithm can be extended to any integral domain,
+which defines an additional division with remainder operation.
+Such a ring is called an Euclidean domain.
+
+\begin{definition}
+  A \emph{Euclidean domain} $(R, f)$ is an integral domain $R$ with a function $f$,
   which maps any nonzero element of $R$ to a nonnegative integer,
   such that for every two elements $a$ and $b$ of $R$, there exist elements $q$ and $r$ of $R$ with
   \[
     a = qb + r \quad \text{ and } \quad r = 0 \text{ or } f(r) < f(b).
   \]
   The element $q$ is called the \emph{quotient} and $r$ is called the \emph{remainder}.
+  The function $f$ is called a \emph{Euclidean function}.
 \end{definition}
 
 \begin{example}
   % TODO: Real numbers using a different division with remainder
-  Consider the real numbers with $f(r) = r$.
+  Consider the real numbers with the Euclidean function $f(r) = r$.
   One possible division just uses the quotient $q = ab^{-1}$.
   However,
   another possible division operation would be
@@ -94,77 +83,107 @@ end
 \end{example}
 
 \begin{example}
-  % TODO: Polynomial rings as a more complex example
+  Consider the ring $ℚ[x]$ of polynomials with rational coefficients.
+  For any two polynomials $f(x), g(x) ∈ ℚ[x]$,
+  we can find polynomials $q(x), r(x) ∈ ℚ[x]$ such that
+  \[
+    f(x) = q(x) g(x) + r(x)
+    \quad
+    \text{ and }
+    \quad
+    \deg(r) ≤ \deg(f).
+  \]
+  In this case, $\deg(f)$ is the Euclidean function and $q(x), r(x)$ are
+  the quotient and remainder, respectively.
 \end{example}
 
-% TODO: Euclidean domains, irreducibility of polynomials
+\begin{definition}
+  A polynomial $f(x) ∈ ℚ[x]$ is \emph{irreducible},
+  if there exists no polynomial $g(x)$ which divides $f(x)$.
+\end{definition}
 
 \section{Algebraic Numbers}
 
-In this thesis, we will consider algebraic numbers which are roots of polynomials
-\[
-  p(x) = a_{d+1} x^{d+1} + a_d x^d + \dots + a_1 x + a_0
-\]
-with $aᵢ ∈ ℤ$ and $p$ is irreducible.
-
-\begin{itemize}
-  \item Quadratic fields as vector spaces
-  \item Algebraic field extensions
-  \item Monic polynomials, irreducible polynomials
-  \item Rational expressions, polynomial rings
-  \item the degree of a field extension $[K : L]$
-  \item Finitely-generated field extensions
-  \item Finite-degree field extensions
-\end{itemize}
-
-A rational expression of a number $α$ is a fraction of two polynomials, i.e.
-\[
-  \frac{p(α)}{q(α)} = \frac{pₙ α^n + \dots + p₁ α + p₀}{qₙ α^n + \dots + q₁ α + q₀}.
-\]
-The set of all rational expressions of an algebraic number $α$ is denoted as $ℚ(α)$.
-Another formulation would be that $ℚ(α)$ is the smallest field containing $α$
-and the rational numbers as a subfield.
-
-\begin{theorem}
-  The field $ℚ(α)$ is isomorphic to $ℚ[x]/⟨f(x)⟩$.
-\end{theorem}
-
 \begin{definition}
-  Let $L/K$ be a field extension and $α ∈ L$.
-  If $α$ satisfies
-  \[
-    α^n + c_{n-1} α^{n-1} + ⋯ + c_1 α + c_0 = 0
-  \]
-  with $c₀, c₁, …, c_{n-1} ∈ K$,
-  then $α$ is called \emph{algebraic over $K$}.
-  Furthermore, if every $α ∈ L$ is \emph{algebraic over $K$}, then $L$ is called
-  algebraic over $K$ and $L/K$ is an \emph{algebraic field extension}.
+  A real number $α$ is said to be \emph{algebraic} if its the root of some polynomial
+  with integer coefficients.
+  If $α$ is not algebraic, then it is said to be \emph{transcendental}.
 \end{definition}
 
-Although, elements of a field $L$ can only be algebraic over another field $K$,
-we will only look at elements which are algebraic over $ℚ$.
-In this thesis, an \emph{algebraic number} will mean any number $x ∈ ℝ$, which
-is algebraic over $ℚ$.
+The set of algebraic numbers includes many familiar constants, such as $\sqrt{2}$ or $\frac{1}{2}$,
+and plays a central role in number theory.
+Transcendental numbers, such as $\pi$ and $e$, are those which cannot be expressed
+as roots of integer polynomials, and are far less well understood.
+This thesis focuses only on algebraic numbers and, in particular, on their
+representation using continued fractions and their generalizations.
+
+\begin{lemma}
+  If $α$ is algebraic, then there exists a unique monic polynomial $f_α(x) ∈ ℚ[x]$
+  of smallest degree with $α$ as a root.
+\end{lemma}
+
+Every algebraic number is associated with a unique monic polynomial over the rational numbers
+of minimal degree, known as its \emph{minimal polynomial}.
+This polynomial is irreducible and captures essential information about the algebraic number.
+Its degree also determines the size of the smallest number field containing the number.
 
 \begin{definition}
-  Let $L/K$ be a field extension.
-  The degree $[L : K]$ is defined as the dimension of the vector space $L$ over $K$.
-  A field extension is finite if its degree $[L : K]$ is finite.
+  A field $K$ is an \emph{number field} if it is a finite extension of $ℚ$.
+  The \emph{degree} of the number field is defined as the degree of the field
+  extension $[K : ℚ]$, i.e. the dimension of $K$ as a vector space over $ℚ$.
 \end{definition}
 
-A basis for this vector space would be $(1, α, …, α^{n-1})$, for example.
+Number fields form the natural setting for studying algebraic numbers.
+By adjoining an algebraic number to $ℚ$, one obtains a field that contains all
+rational linear combinations of its powers, up to the degree of its minimal polynomial.
+These fields have finite dimension over $ℚ$, and that dimension is referred to as their degree.
 
-If we fix a particular element $α ∈ L$, then multiplication with $α$ is a linear operation:
+\begin{example}
+  \hfill
+  \begin{enumerate}
+    \item The rational numbers form a number field and they have degree $1$.
+    \item The quadratic field $ℚ(\sqrt{2})$ is a number field.
+      Any element in $ ℚ(\sqrt{2})$ can be written as $a + b \sqrt{2}$ with $a,b ∈ ℚ$
+      and it is therefore a number field with degree $[ℚ(\sqrt{2}) : ℚ] = 2$.
+    \item The field $ℚ(\sqrt[3]{2})$ is a number field.
+      It contains all elements of the form $a + b \sqrt[3]{2} + c \sqrt[3]{2^2}$ with $a,b,c ∈ ℚ$.
+      Therefore, $1, \sqrt[3]{{2}}, \sqrt[3]{4}$ forms a basis for the vector space over $ℚ$
+      and the field $ℚ(\sqrt[3]{2})$ has degree $[ℚ(\sqrt[3]{2}) : ℚ] = 3$.
+  \end{enumerate}
+\end{example}
+
+An important construction associated with number fields is the \emph{field norm}.
+It provides a way of assigning a rational number to each element of a number field,
+and can be defined using linear algebra.
+Multiplication by an element $α ∈ K$ can be viewed as a linear transformation on $K$,
+and the norm is defined as the determinant of this transformation.
+For example, consider the field $ℚ(\sqrt{2})$ with basis $\{1, \sqrt{2}\}$.
+Let $α = 1 + \sqrt{2}$.
+Then for any element $x = a + b \sqrt{2}$, we compute
 \[
-  M_α : L → L, M_α(x) = α · x.
+  αx = (1 + \sqrt{2})(a + b \sqrt{2}) = a + a \sqrt{2} + b \sqrt{2} + 2b = (a + 2b) + (a + b)\sqrt{2}.
 \]
+So in the basis $\{1, \sqrt{2}\}$, this corresponds to the matrix
+\[
+  M_α =
+  \begin{pmatrix}
+    1 & 2 \\
+    1 & 1
+  \end{pmatrix}.
+\]
+The norm $N_{K/ℚ}(α)$ is then the determinant of $M_α$, which is $1 \cdot 1 - 2 \cdot 1 = -1$.
 
 \begin{definition}
-  Let $L/K$ be an algebraic field extension.
-  The norm of an element $α ∈ L$ is defined as the determinant of $M_α$.
+  Let $K$ be a number field.
+  The \emph{field norm} $N_{K/ℚ}(α)$ of an element $α$ of $K$ is defined as the
+  determinant of its multiplication matrix $M_α$.
 \end{definition}
 
-From this, it is straightforward to show that the norm is multiplicatively linear:
-\[
-  N(α · β) = N(α) · N(β).
-\]
+An immediate consequence of the definition is multiplicativity:
+the norm of a product is equal to the product of the norms.
+This makes it a valuable tool for reasoning about algebraic equations
+and for connecting the arithmetic of $K$ to that of $ℚ$.
+
+\begin{lemma}
+  For every $α, β ∈ K$, their product has the norm $N_{K/ℚ}(αβ) = N_{K/ℚ}(α) · N_{K/ℚ}(β)$.
+\end{lemma}
