@@ -1,21 +1,21 @@
 \chapter{Preliminaries}
 \label{ch:preliminaries}
 
-In this chapter, I recount many important definitions and theorems, which will
-be used in the later chapters.
-This includes a brief overview of algebraic number theory and a recount of the
-classical Euclidean algorithm.
-This chapter draws on standard results from algebraic number theory, as
-presented in \cite{Dummit04}.
+This chapter introduces the foundational concepts needed throughout this thesis.
+We begin with the most important topic first,
+which is the Euclidean algorithm.
+It serves as the basis of continued fractions and its generalization.
+Through its analysis, it also leads to one of the first practical applications
+of the Fibonacci numbers.
+We proceed with the basics of algebraic number theory,
+which is needed for the second part of Hermite's problem.
+Finally, I give a brief introduction to lattice theory,
+which is not only needed for the generalization of the Euclidean algorithm,
+but also for the geometry of the continued fractions.
 
+% ==============================================================================
 \section{The Euclidean Algorithm}
-
-We begin with the Euclidean algorithm,
-since it stands at the center of this thesis:
-It is used to construct continued fractions,
-it is the basis of the generalized Euclidean algorithm
-and through its worst-case analysis it leads to the Fibonacci numbers and their
-generalization to higher dimensions.
+% ==============================================================================
 
 The input to the algorithm is a pair of integers $a, b$ with $a > b$ and the
 goal is to find the greatest common divisor between the two numbers. The
