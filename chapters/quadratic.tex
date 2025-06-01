@@ -139,12 +139,11 @@ The correctness is shown by the following lemma.
 % TODO: Should we jump out of the gate with this problem?
 The first part of Hermite's question requires a representation of the real numbers.
 This means we have to find a unique continued fraction $[r₀; r₁, …]$ for every real number $x$.
-Although the definition of a continued fraction allows real numbers,
-for the representation we restrict ourselves to continued fractions which only
-contain integers.
+Although we have allowed real numbers in them so far,
+we will now restrict them to only integer coefficients.
 More specifically, we will only look at continued fractions $[a₀; a₁, a₂, …]$
-where $a₀$ can be any integer but $aᵢ$ has to be a positive integer for every $i > 0$.
-However, these constraints do not guarantee a unique representation alone.
+where the first coefficient $a₀$ can be any integer but the remaining ones have to be positive.
+These constraints do not guarantee a unique representation alone.
 Consider $x = 3/2$, with the current requirements there are two possible representations:
 \[
   x = [1; 1, 1] = 1 + \cfrac{1}{1 + \cfrac{1}{1}} \qquad \text{ or } \qquad x = [1; 2] = 1 + \cfrac{1}{2}.
@@ -158,8 +157,10 @@ We use the Euclidean algorithm to construct the continued fraction for a number 
 More specifically, if $x = p/q$, then we run the algorithm with the input pair $(p, q)$.
 At each step, we keep track of the quotient,
 which will be used as a coefficient in the continued fraction.
-So if $p = a₀q + r$ is the first division step, then the quotient $a₀$ will be
-the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ of $p/q$.
+So if we calculate $p = a₀q + r$ in the first division step, then the quotient $a₀$ will be
+the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ for $p/q$.
+This is also the reason why we allow $a₀$ to be negative.
+If the fraction $p/q$ is negative, then $a₀$ is negative, too.
 
 \begin{example}
   Consider $x = 13/5$.
@@ -221,13 +222,21 @@ Therefore, we cannot use the Euclidean algorithm directly to construct a
 continued fraction.
 
 Instead, we use a slightly different algorithm shown in Listing~\ref{lst:cont-frac}.
-A continued fraction, which consists solely of positive integers, must always be greater than $1$.
-
+The algorithm is adapted from the Euclidean algorithm.
+It only receives a single number $x$ and calculates the continued fraction $[a₀; a₁, …]$ for this number.
+It begins with $x₀ = x$ and computes the integer part $\floor{x₀}$,
+which will be the first coefficient.
+Then, it continues with $x₁ = 1/\{x₀\}$.
+These steps are repeated until $xₙ = 0$.
 The terms $x_n$ are also called the \emph{$n$-th complete quotient} of $x$.
-The result is a continued fraction $[a₀; a₁, …]$ for each number $x ∈ ℝ$.
+
+\begin{example}
+  % TODO: Example for an irrational number.
+\end{example}
+
 Because the continued fraction $[a₀; a₁, …]$ is made up of integers and the
 ones after $a₀$ are all positive, its integer part is entirely determined by
-the first coefficient $a₀$ and its fractional part is determined by $[a₁; a₂, …]$.
+the first coefficient $a₀$ and its fractional part is determined by $[0; a₁, a₂, …]$.
 
 \begin{Pseudocode}[
     float={tbp},
@@ -296,6 +305,17 @@ But the ratios between the longer and shorter sides remain the same since
 Therefore, in the next rectangle only one square of length $φ - 1$ will be
 removed again.
 \fi
+
+% TODO: Explain that we need to show that it converges
+By definition,
+a number $x ∈ ℝ$ can be represented by a continued fraction $[a₀; a₁, …]$
+if and only if
+\[
+  x = \lim_{n → ∞} [a₀; a₁, …, aₙ].
+\]
+In other words, the convergents must approach the number $x$ as $n$ increases.
+Thus, the next step is a proof that convergents actually approach the number $x$.
+The first step towards this proof will be the following lemma:
 
 \begin{lemma}
   \label{lem:cf-det}
@@ -407,7 +427,9 @@ continued fractions of quadratic irrationals.
   \centering
   \includestandalone{figures/klein-polygon}
   \caption{
-    The convergents of $\sqrt{2}$ as two-dimensional vectors.
+    The convergents $pₙ/qₙ$ of $\sqrt{2}$ as vectors $bₙ = (pₙ, qₙ)^⊤$.
+    The even and odd convergents form two different polygonal chains which
+    approach the irrational line given by $x/y = \sqrt{2}$.
   }
   \label{fig:klein-polygon}
 \end{figure}
@@ -865,17 +887,19 @@ points along the boundary.
 
 \begin{proof}
   For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
-  nonidentity matrix $U$ with $\det(U) = 1$ which has $(x, 1)^⊤$ and
-  $(\overline{x}, 1)^⊤$ as eigenvectors of this matrix.
+  unimodular matrix $U$ which has $(x, 1)^⊤$ and $(\overline{x}, 1)^⊤$ as eigenvectors.
   Applying $U$ on the Klein polygon, we have
   \begin{align*}
     UK
     = U \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\})
     = \mathrm{conv}(UC ∩ Uℤ^2 \setminus \{(0, 0)\}).
   \end{align*}
-  But $U$ has determinant $1$, so $Uℤ^2 = ℤ^2$, and $C$ is the cone spanned by the
-  eigenvectors of $U$ and they have positive eigenvalues, so $UC = C$.
+  The matrix $U$ is unimodular, so by Lemma~\ref{lem:unimodular}, $Uℤ^2 = ℤ^2$.
+  Any vector in $C$ is a positive linear combination of the vectors $(x, 1)^⊤$ and $(\overline x, 1)^⊤$.
+  Since $U$ has these as eigenvectors with positive eigenvalues,
+  the linear combination remains positive and $UC = C$.
   Thus, $K$ is invariant under $U$.
+
   Similarly, the boundary $Π(K)$ must also be invariant under this transformation.
   Because $U$ preserves the orientation of vectors and is not the identity, it
   must shift the integer points along the boundary.
