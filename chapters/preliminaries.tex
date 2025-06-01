@@ -20,18 +20,44 @@ but also for the geometry of the continued fractions.
 The input to the algorithm is a pair of integers $a, b$ with $a > b$ and the
 goal is to find the greatest common divisor between the two numbers. The
 algorithm works in two steps.
+The first step is to calculate the remainder of $a$ with respect to $b$.
+We find an integer $q$ for the quotient and a remainder $r < b$ such that
+\[
+  a = q b + r.
+\]
+The next step exchanges $a$ with $b$ and $b$ with $r$.
+The algorithm continues with these two steps until $r = 0$.
 
-\begin{Pseudocode}
-algorithm Euclidean(a, b)
-  while $b ≠ 0$ do
-    $b' ← a \bmod b$ // modulo
-    $(a, b) ← (b', a)$ // exchange
-  end
-  return $a$
-end
-\end{Pseudocode}
+\begin{lemma}
+  Suppose $a = qb + r$, then $\gcd(a, b) = \gcd(b, r)$.
+\end{lemma}
 
-In summary, the Euclidean algorithm uses the following steps:
+\begin{proof}
+  Suppose $d = \gcd(b, r)$, then $b = b'd$ and $r = r'd$ for some $b', d' ∈ ℤ$.
+  But then $d$ must divide $a$, since $a = qb + r = d(qb' + r')$.
+  Thus, $d$ is a divisor of $a$ and we have $d ≤ \gcd(a, b)$.
+  Next, suppose $d = \gcd(a, b)$.
+  Because $d$ divides $a = qb + r$ and $b$,
+  it must also divide $r$.
+  Hence, $d ≤ \gcd(b, r)$.
+  Combining both directions, we get the equality $\gcd(a, b) = \gcd(b, r)$.
+\end{proof}
+
+\begin{example}
+  Let $a = 252$ and $b = 105$.
+  The Euclidean algorithm proceeds as follows:
+  \begin{align*}
+    252 & = 2 · 105 + 42 \\
+    105 & = 2 · 42 + 21 \\
+    42 & = 2 · 21 + 0.
+  \end{align*}
+  Thus, $21$ is the greatest common divisor between $252$ and $105$.
+\end{example}
+
+Since $r < b$, the Euclidean algorithm must terminate at some point.
+Therefore, it correctly calculates the greatest common divisor between the two
+inputs $a$ and $b$.
+In summary, the algorithm uses the following steps:
 \begin{itemize}
   \item \textbf{Modulo}: $b' ← a \bmod b$.
   \item \textbf{Exchange}: $(a, b) ← (b', a)$.
