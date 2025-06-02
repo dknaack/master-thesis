@@ -369,31 +369,24 @@ In summary, the following deterministic strategies were tried:
 \end{itemize}
 % TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
 % TODO: For how many steps did we run the construction?
-The fixed strategies were the easiest to implement and therefore also the
-fastest, so I ran them for a maximum number of $1000$ steps.
-The other strategies had a little more overhead, so I only ran them for a
-maximum of $100$ steps.
 
 Table~\ref{tbl:comparison} lists the results for this section.
-Out of all strategies, the best are clearly the one,
-which chooses the minimum fractional value, and the fixed strategy, which
-alternates between the first and second element.
-Surprisingly, the worst strategy for constructing MDCFs seems to be the one,
-which chooses the best convergent with either norm.
-It was unable to construct a single MDCF for any cube root.
-% Why was it unable to do so? Which indices did it choose? How well do the
-% other strategies approximate the original input vector? Are they better or
-% worse after some number of steps?
+The clear winner is the algorithm by Tamura and Yatusomi.
+It has found a periodic representation for every cubic irrational I tested.
 
-Although the minimum strategy was able to find the most MDCFs,
-it was not able to find all MDCFs.
-Some cube roots were only found by other strategies,
-while others were only found by the minimum strategy.
-In conclusion, no perfect strategy has been found.
-This is not surprising,
-since what this search is likely aiming for is a fundamental unit in a cubic field.
-The problem of finding a fundamental unit is not trivial in higher degree fields. % TODO: cite
-For cubic fields, usually an instance of the LLL algorithm is used.
+Since Tamura and Yasutomi's algorithm worked so well,
+I have also tested it on fifth, sixth and seventh roots
+from $\sqrt[d]{2}$ up to $\sqrt[d]{200}$.
+After fourth roots, the algorithm no longer returns a periodic MDCF for all roots.
+In fact, I have only found periodic MDCFs for the following roots:
+\begin{itemize}
+  \item Fifth roots:
+    \sqrt[5]{2}, \sqrt[5]{7}, \sqrt[5]{11}, \sqrt[5]{13}, \sqrt[5]{19},
+    \sqrt[5]{25}, \sqrt[5]{29}, \sqrt[5]{31}, \sqrt[5]{33}, \sqrt[5]{59},
+    \sqrt[5]{82}, \sqrt[5]{123}, \sqrt[5]{152}.
+  \item Sixth roots: \sqrt[6]{18}, \sqrt[6]{65}, \sqrt[6]{66},\sqrt[6]{198}.
+  \item Seventh roots: \sqrt[6]{2}.
+\end{itemize}
 
 % ==============================================================================
 \section{Usage in Simultaneous Approximation}
