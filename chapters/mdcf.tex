@@ -6,23 +6,23 @@ periodic sequence of integers.
 The continued fractions were constructed using the Euclidean algorithm.
 Naturally, we can generalize continued fractions to higher dimensions using the
 generalized Euclidean algorithm.
-This leads to a concept of Multi-Dimensional Continued Fractions (MDCFs), which could
+This leads to a concept of Multi-Dimensional Continued Fractions (MCFs), which could
 potentially be an answer of Hermite's question.
 Since they are based on the generalized Euclidean algorithm,
 they extend previous generalizations of continued fractions based on the
 Jacobi-Perron algorithm, like bifurcating or ternary continued fractions \cite{Gupta00}.
 
-This chapter introduces the concept of MDCFs and discusses their potential as
+This chapter introduces the concept of MCFs and discusses their potential as
 an answer to Hermite's question.
 We begin by defining what they are and deriving many properties similar to
 continued fractions.
-The chapter contains two main results for MDCFs.
+The chapter contains two main results for MCFs.
 The first is that they converge under certain conditions
-and the second is that periodic MDCFs always consist of algebraic numbers with degree $≤ d+1$.
-For the latter, we will first analyze the geometry behind MDCFs in the same
+and the second is that periodic MCFs always consist of algebraic numbers with degree $≤ d+1$.
+For the latter, we will first analyze the geometry behind MCFs in the same
 style as Klein did for continued fractions.
 What is missing from this chapter is the other direction,
-that MDCFs containing certain algebraic numbers are always periodic.
+that MCFs containing certain algebraic numbers are always periodic.
 This will be discussed in more detail in the next chapter.
 
 % ==============================================================================
@@ -54,9 +54,9 @@ element $\floor{x}$ as a coefficient of the multi-dimensional continued
 fraction.
 Then, we get the subsequent coefficients by iterating over this vector using
 the $\mathrm{pivot}$ operation.
-This gives us a top-down construction of MDCFs, but we defined continued
+This gives us a top-down construction of MCFs, but we defined continued
 fractions are defined in a bottom-up fashion.
-For a bottom-up definition of the MDCFs, we have to reverse the pivot operation.
+For a bottom-up definition of the MCFs, we have to reverse the pivot operation.
 The inverse operation can be derived as follows:
 Let $x ∈ ℝ^d$ and $a = \floor{x}$.
 If $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ$, then
@@ -89,7 +89,7 @@ In summary, we have
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}^{-1}(a, x') = x.
 \]
 
-Using this inverse operation we can directly derive the bottom-up definition for MDCFs.
+Using this inverse operation we can directly derive the bottom-up definition for MCFs.
 So far we have only used integer vectors $a ∈ ℤ^d$,
 however, in the definition we will allow any real vector, just like with the continued fractions.
 Again this is for subsequent lemmas, where we will need rational or even real vectors coefficients.
@@ -118,21 +118,21 @@ The other values in the vector $r^{(n)}$ can assume any non-negative value.
 
 The terminology from one-dimensional continued fractions naturally carry over to its
 multi-dimensional counterpart.
-Given an infinite MDCF representation~$[a₀; a_1, …]$ of a vector $x ∈ ℝ^d$, we define the following:
+Given an infinite MCF representation~$[a₀; a_1, …]$ of a vector $x ∈ ℝ^d$, we define the following:
 
 \begin{itemize}
-  \item The \emph{$k$-th convergent} of $x$ is the finite MDCF $[r^{(0)}; r^{(1)}, …, r^{(n)}]$.
-  \item The \emph{$k$-th complete quotient} is the MDCF $[r^{(n)}; r^{(n+1)}, …]$.
-  \item The MDCF is \emph{eventually periodic} if there exists an index~$n₀ ≥ 0$
+  \item The \emph{$k$-th convergent} of $x$ is the finite MCF $[r^{(0)}; r^{(1)}, …, r^{(n)}]$.
+  \item The \emph{$k$-th complete quotient} is the MCF $[r^{(n)}; r^{(n+1)}, …]$.
+  \item The MCF is \emph{eventually periodic} if there exists an index~$n₀ ≥ 0$
     and a period~$k ≥ 1$ such that $aₙ = a_{n+k}$ and $ℓₙ = ℓ_{n+k}$
     for every $n ≥ n₀$.
-    The MDCF is \emph{purely periodic} if $n₀ = 0$.
+    The MCF is \emph{purely periodic} if $n₀ = 0$.
 \end{itemize}
 
-For the analysis of MDCFs,
+For the analysis of MCFs,
 we begin with two lemmas which generalize Lemma~\ref{lem:cf-nesting} and
 Lemma~\vref{lem:cf-wallis}.
-The first allows us to merge the last two coefficients of an MDCF.
+The first allows us to merge the last two coefficients of an MCF.
 The second gives us a formula for calculating the convergents.
 
 \begin{lemma}
@@ -164,13 +164,13 @@ In the lemma for continued fractions,
 we defined the convergents of a continued fraction~$pₙ/qₙ$
 using a fractional transformation based on the previous two
 terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
-For MDCFs, we can similarly derive a recursive formula to derive the values of
+For MCFs, we can similarly derive a recursive formula to derive the values of
 the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
 Deriving the sequence is more involved than the one-dimensional case since
 there is an additional index $ℓ$ at each step.
 
 The sequence is essentially the generalized Euclidean algorithm, but in reverse.
-Just like the MDCF is the application of the inverse pivot operation.
+Just like the MCF is the application of the inverse pivot operation.
 In the algorithm, we begin with a basis $B ∈ ℤ^{d×d}$ and a vector $c ∈ ℤ^d$.
 First, we find a solution $x$ to $Bx = c$ and then we exchange $c$ with $B_ℓ$
 and $B_ℓ$ with the remainder $B\{x\} = Bx - Ba_i$.
@@ -279,20 +279,20 @@ such they ensure that they converge to a limit as $n$ increases.
 % not really from him, but just based on his version.
 % TODO: We should mention somewhere that a^{(n)} is always positive.
 % TODO: The indices here are wrong...
-So far in our analysis, we have implicitly assumed that the MDCF $[a^{(0)}; a^{(1)}, a^{(2)} …]$
+So far in our analysis, we have implicitly assumed that the MCF $[a^{(0)}; a^{(1)}, a^{(2)} …]$
 constructed using the generalized Euclidean algorithm always converges to the
 original input vector $x ∈ ℝ^d$.
 The aim of this section is to show that the convergents actually live up to
 their name and converge towards the vector $x$ as $n$ increases.
-Since we have used the Euclidean algorithm to construct the MDCF,
+Since we have used the Euclidean algorithm to construct the MCF,
 we can assume that all vectors $a^{(n)}$ are positive integers even the first
 one $a^{(0)}$.
 Although the first coefficient can be negative, we can safely assume that its
 not since the second coefficient is always positive.
 Therefore, we simply prove the convergence for the second complete quotient $x^{(1)} =
-[a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MDCF.
+[a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MCF.
 Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
-which means that the MDCF is infinite.
+which means that the MCF is infinite.
 We denote with $x^{(n)}$ the $n$-th complete quotient of $x$
 and if $ℓ$ is the index of the largest element in $x^{(n)}$,
 then the $n$-th convergent of $x$ is denoted as
@@ -312,35 +312,35 @@ In his version, he required that there exists some constant $c > 0$ such that
   0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ,
 \]
 where $ℓ$ is the index of the largest element in $x^{(n)}$.
-This condition is always satisfied by MDCFs.
+This condition is always satisfied by MCFs.
 Because $ℓ$ is the index of the largest element in $x^{(n)}$
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
 the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
 Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
 Hence, this condition is satisfied for $c = 1$.
 
-The second requirement is specifically for MDCFs.
-Each MDCF is constructed using the generalized Euclidean algorithm and one
+The second requirement is specifically for MCFs.
+Each MCF is constructed using the generalized Euclidean algorithm and one
 possible choice of indices $ℓ₁, ℓ₂, …$ between $1$ and $d$.
 In the opposite direction, this means that the complete quotients can have different elements as their maximum.
-The second requirement then states that during the construction of the MDCF
+The second requirement then states that during the construction of the MCF
 we use every index infinitely often.
 Again, in the opposite direction, this means that for each $i ∈ \{1, …, d\}$,
 there are infinitely many complete quotients which have $x_i^{(n)}$ as their
 largest element.
 This requirement is already given in the Jacobi-Perron algorithm,
 but not in the generalized Euclidean algorithm.
-So we need this specifically for MDCFs.
+So we need this specifically for MCFs.
 
 \begin{example}
-  Consider the MDCF $[(2, 1); \overline{(2, 1)}]$.
+  Consider the MCF $[(2, 1); \overline{(2, 1)}]$.
   The maximum in the first complete quotient is $x^{(1)}_1$,
   because the coefficient $a^{(1)} = (2, 1)$ determines the integer part
   for all elements in $x^{(1)}$ and the next complete quotient $x^{(2)}$
   only determines the fractional part.
   Therefore, the first element must be the largest.
   However, then it does not satisfy the second requirement.
-  Therefore, the following proof won't apply to this MDCF.
+  Therefore, the following proof won't apply to this MCF.
 \end{example}
 
 The vector $r^{(n)}$ is only one possible convergent out of several.
@@ -492,7 +492,7 @@ such that the convex hull always shrinks by a constant amount.
   \centering
   \includegraphics{build/convergence.pdf}
   \caption{
-    Illustration of the proof for the convergence of MDCFs.
+    Illustration of the proof for the convergence of MCFs.
     The points $r^{(i)}, r^{(j)}$ and $r^{(k)}$ represent the convergents and $x$ is
     the vector, which is approximated by them.
     If $r^{(k)}$ is the convergent of the current iteration,
@@ -576,7 +576,7 @@ This is the main idea behind the following proof.
 We have shown that $s^{(n)}$ and $t^{(n)}$ converge to the same limit
 and that $r^{(n)}$ therefore also converges to that limit.
 What remains to be shown is what they converge to,
-which is the original vector $x$ used for construction of the MDCF.
+which is the original vector $x$ used for construction of the MCF.
 
 % TODO: Fix statement, i.e. ℓₙ no longer exists...
 \begin{theorem}
@@ -733,10 +733,10 @@ determinant $±1$.
 Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in
 the projective space $\mathbb{RP}^{d+1}$.
-Using this notion, we can reformulate the MDCF as a series of matrix multiplications.
+Using this notion, we can reformulate the MCF as a series of matrix multiplications.
 In the following $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$
 and the matrix $R(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
-The definition of the MDCFs can then be written as
+The definition of the MCFs can then be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
   [a^{(0)}; a^{(1)}, …, a^{(n)}] = T(a₀) · S(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
@@ -804,25 +804,25 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
 \end{proof}
 
 % ==============================================================================
-\section{Periodic Multi-Dimensional Continued Fractions}
+\section{Algebraic Numbers and Periodicity}
 % ==============================================================================
 
-The proof for periodic MDCFs is based on the same theorem for the Jacobi-Perron
+The proof for periodic MCFs is based on the same theorem for the Jacobi-Perron
 algorithm, originally proven by Perron \cite{Perron07}.
 We begin with the purely periodic case.
-The idea behind this proof is that in a purely periodic MDCF of a vector $x ∈ ℝ^d$,
+The idea behind this proof is that in a purely periodic MCF of a vector $x ∈ ℝ^d$,
 the vector itself is an eigenvector for one of the matrices $B^{(k)}$.
 Furthermore, the elements of this eigenvector can only be algebraic numbers with degree $≤ d+1$.
 
 \begin{lemma}
   \label{lem:mdcf-purely-periodic}
-  If there exists a purely periodic MDCF for $x ∈ ℝ^d$,
+  If there exists a purely periodic MCF for $x ∈ ℝ^d$,
   then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
 \end{lemma}
 
 % TODO: Should we use x ≡ y or [x] = [y]?
 \begin{proof}
-  If the MDCF is purely periodic, then there is some index $n ≥ 1$ such that $x = x^{(n)}$.
+  If the MCF is purely periodic, then there is some index $n ≥ 1$ such that $x = x^{(n)}$.
   Let $\hat x = [1, x₁, …, x_d]$ and $\hat x^{(n)} = [1, x_1^{(n)}, …, x_d^{(n)}]$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
@@ -850,14 +850,14 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 
 \begin{theorem}
   \label{thm:mdcf-periodic}
-  If there exists a periodic MDCF for $x ∈ ℝ^d$,
+  If there exists a periodic MCF for $x ∈ ℝ^d$,
   then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
 \end{theorem}
 
 \begin{proof}
-  Given such a MDCF for $x$, let $x^{(k)}$ denote the $k$-th complete quotient
+  Given such a MCF for $x$, let $x^{(k)}$ denote the $k$-th complete quotient
   of this fraction.
-  Suppose that the MDCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
+  Suppose that the MCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
   $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
   By Lemma~\ref{lem:mdcf-wallis'},
   \[
