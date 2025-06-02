@@ -290,15 +290,6 @@ which could more easily find MDCFs for cube roots.
   \input{tables/cubics2.tex}
 \end{table}
 
-The code used for the comparison is shown in Listing~\ref{lst:det-search}.
-It is a search on the tree guided by a specific strategy.
-Each strategy is given the current input vector $x^{(n)}$ beginning with $x^{(0)} = x$.
-It would then output one index $ℓ$ and the search would continue with
-$x^{(1)} = \mathrm{pivot}_ℓ(x^{(0)})$.
-The search would continue until we find a duplicate vector $x^{(n)} = x^{(m)}$
-with $n < m$ on the path determined by the strategy.
-Since they are the same, $x^{(n)}$ would mark the beginning of the period.
-
 % ==============================================================================
 \begin{Python}[
     float=tbp,
@@ -327,14 +318,29 @@ def search(x, N, strat):
 \end{Python}
 % ==============================================================================
 
-In summary, the following deterministic strategies were tried:
+The code used for the comparison is shown in Listing~\ref{lst:det-search}.
+It is a search on the tree guided by a specific strategy.
+Each strategy is given the current input vector $x^{(n)}$ beginning with $x^{(0)} = x$.
+It would then output one index $ℓ$ and the search would continue with
+$x^{(1)} = \mathrm{pivot}_ℓ(x^{(0)})$.
+The search would continue until we find a duplicate vector $x^{(n)} = x^{(m)}$
+with $n < m$ on the path determined by the strategy.
+Since they are the same, $x^{(n)}$ would mark the beginning of the period.
+
+In these experiments, I focused on the cubic case with $d=2$, testing vectors of
+the form $(\sqrt[3]{n}, \sqrt[3]{n^2})$, where $n$ is an integer from $2$ to $1000$.
+Each strategy was applied to these inputs with a maximum of $1000$ iterations per run.
+A periodic representation was considered successfully found if a duplicate
+vector appeared within this step limit. If no such duplicate occurred, the
+strategy was marked as unsuccessful for that input.
+In summary, the following strategies were tried:
 \begin{itemize}
   \item $\textbf{Min}, \textbf{Max}$: Choosing the minimum and maximum fractional value, respectively.
     These are the strategies which have been analyzed in Chapter~\ref{ch:fibonacci}.
   \item $\textbf{JPA}$: The Jacobi-Perron algorithm,
     which chooses indices in a fixed order.
     Specifically, it chooses the indices $1, 2, …, d$, and repeats this sequence indefinitely.
-  \item $\textbf{JPA}'$: A modification of the Jacobi-Perron algorithm introduced by Podsypanin \cite{Podsypanin77}.
+  \item $\textbf{JPA}\star$: A modification of the Jacobi-Perron algorithm introduced by Podsypanin \cite{Podsypanin77}.
     Given a vector $x = (x₁, x₂)$ it chooses the index
     \[
       ℓ =
@@ -359,25 +365,25 @@ In summary, the following deterministic strategies were tried:
     However, it scales down each element by the square root of its norm.
     For higher dimensions, the algorithm chooses
     \[
-      ℓ = \argmax_i \frac{x_i}{\sqrt[d+1]{|N(x_i)|}}.
+      ℓ = \argmax_i \frac{x_i}{\sqrt[d]{|N(x_i)|}}.
     \]
+    % TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
   \item $\textbf{CC}$: Choosing the closest convergent.
     Out of the $d$ possible indices,
     we choose the one which produces the closest convergent $r^{(n)}$,
     which means that it minimizes the distance to the original input vector.
     This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
 \end{itemize}
-% TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
-% TODO: For how many steps did we run the construction?
 
 Table~\ref{tbl:comparison} lists the results for this section.
 The clear winner is the algorithm by Tamura and Yatusomi.
 It has found a periodic representation for every cubic irrational I tested.
+% TODO: Describe the results
 
 Since Tamura and Yasutomi's algorithm worked so well,
 I have also tested it on fifth, sixth and seventh roots
 from $\sqrt[d]{2}$ up to $\sqrt[d]{200}$.
-After fourth roots, the algorithm no longer returns a periodic MDCF for all roots.
+Beginning with the fifth roots, the algorithm no longer returns a periodic MDCF for all roots.
 In fact, I have only found periodic MDCFs for the following roots:
 \begin{itemize}
   \item Fifth roots:
