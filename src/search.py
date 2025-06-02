@@ -1,4 +1,5 @@
 from sage.all import *
+from sys import stdout
 
 def frac(x):
     return x - floor(x)
@@ -111,7 +112,7 @@ def brute_force_search(x, N):
                 else:
                     seen[y] = i + 1
 
-def deterministic_search(x, N, strat):
+def deterministic_search(x, N, strat, name='Unknown'):
     """
     Searches only one possible sequences of a given maximum length to find a
     periodic representation of the given input.
@@ -139,6 +140,10 @@ def deterministic_search(x, N, strat):
     L = []
     seen = {y: 0}
     for n in range(N):
+        if (n & 31) == 1:
+            print(name, n, end='\r')
+            stdout.flush()
+
         l = strat(y, n)
         L.append(l)
         y = pivot(y, l)
