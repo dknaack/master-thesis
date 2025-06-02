@@ -233,17 +233,6 @@ So other roots with a short periodic sequence are $\sqrt[3]{65}, \sqrt[3]{66}$,
 for example.
 
 \begin{table}[tbp]
-  \caption{
-    The shortest periodic index sequences for cube roots found using the
-    brute-force search algorithm. The maximum search depth was set to $20$ and
-    only the sequence for $29$ was not found. The roots for $8$ and $27$ are
-    omitted since they are perfect cubes.}
-  \label{tbl:cubics}
-  \centering
-  \input{tables/cubics2.tex}
-\end{table}
-
-\begin{table}[tbp]
   \caption{Representation of $ψ = \sqrt[3]{4}$ using the brute-force search.}
   \label{table:cube-root-4}
   \centering
@@ -261,17 +250,54 @@ Some of the easier ones to find were again the roots identified by Bernstein.
 \section{Comparison of More Efficient Strategies}
 % ==============================================================================
 
-Considering the difficulty in finding higher-dimensional MDCFs,
-a more efficient search strategy is needed.
-When constructing the MDCF using the generalized Euclidean algorithm,
-we always have a choice for the pivot element $x_ℓ$.
-Ideally, we could just determine the pivot element solely from the vector $x$
-without resorting to a search down the tree.
-Therefore, I have compared different strategies which can be used for this purpose.
-Each strategy receives the current vector $x$ as well as the number of steps
-taken so far and outputs the next index to pivot with.
-The search for a periodic MDCF then works just like the brute-force search:
-If there is any vector which occured twice, then program terminates the search.
+The first part of the analysis is meant to find periodic MDCFs for cubic
+irrationals.
+For the construction, we use the $\mathrm{pivot}$ operation from generalized
+Euclidean algorithm and some sequence of indices, which we pivot with.
+The choice of our indices essentially defines a tree
+with the initial input vector $x$ as the root
+and subsequent nodes as complete quotients of one MDCF.
+The edges in this tree are the indices $ℓ$, which we use to get from one
+complete quotient $x^{(n)}$ to another $x^{(n+1)}$ by computing $x^{(n+1)} =
+\mathrm{pivot}_ℓ(x^{(n)})$.
+We have found a periodic representation if there is a path from the root to a
+node such that the last node occurs twice on the path.
+
+Initially I tried searching for the MDCF of cube roots
+using a brute-force search.
+For any irrational vector $x$,
+I tried every possible sequence of indices,
+which could be used for the construction of an MDCF.
+Using this search, I was only able to find the cube roots from $\sqrt[3]{2}$
+and $\sqrt[3]{32}$ with the exception of $\sqrt[3]{29}$.
+The results are listed in Table~\ref{tbl:cubics}.
+The MDCFs I found using this search are the shortest possible representation
+for the number, when we measure the combined length of the preperiod and
+period.
+Since there are a total of $O(2^N)$ sequences,
+the search took quite a lot of time.
+Therefore, I proceeded to look into better strategies,
+which could more easily find MDCFs for cube roots.
+
+\begin{table}[tbp]
+  \caption{
+    The shortest periodic index sequences for cube roots found using the
+    brute-force search algorithm. The maximum search depth was set to $20$ and
+    only the sequence for $29$ was not found. The roots for $8$ and $27$ are
+    omitted since they are perfect cubes.}
+  \label{tbl:cubics}
+  \centering
+  \input{tables/cubics2.tex}
+\end{table}
+
+The code used for the comparison is shown in Listing~\ref{lst:det-search}.
+It is a search on the tree guided by a specific strategy.
+Each strategy is given the current input vector $x^{(n)}$ beginning with $x^{(0)} = x$.
+It would then output one index $ℓ$ and the search would continue with
+$x^{(1)} = \mathrm{pivot}_ℓ(x^{(0)})$.
+The search would continue until we find a duplicate vector $x^{(n)} = x^{(m)}$
+with $n < m$ on the path determined by the strategy.
+Since they are the same, $x^{(n)}$ would mark the beginning of the period.
 
 % ==============================================================================
 \begin{Python}[
