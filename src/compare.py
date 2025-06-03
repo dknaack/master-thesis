@@ -26,7 +26,7 @@ with open('tables/comparison.tsv', 'w') as f:
     total = 0
     R = QQ['x']
     x = R.gen()
-    for a in range(2, 50):
+    for a in range(2, 1000):
         p = x**(d+1) - a
         if not p.is_irreducible():
             continue
