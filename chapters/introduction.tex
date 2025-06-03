@@ -70,36 +70,57 @@ At each step, he still chooses the smallest element at each iteration.
 \section{Contributions of this Thesis}
 % ==============================================================================
 
-This thesis extends previous work on a generalization of continued fractions.
+This thesis extends previous work on multidimensional continued fractions (MCFs).
+The JPA usually only considers the smallest number in each iteration,
+however there are algorithms based on the JPA which choose a different number,
+like choosing the largest or choosing some number based on a cost function.
+In this thesis, I present a whole class of MCFs,
+which encompass all of these JPA-type algorithms.
+The main contributions regarding the MCFs are as follows:
+\begin{enumerate}
+  \item \textbf{Convergence}:
+    I establish sufficient conditions under which the proposed class of MCFs
+    algorithms converges.
+    This generalizes known convergence results for the JPA to a wider family of
+    transformations and solves the first part of Hermite's question.
+  \item \textbf{Algebraicity from Periodicity}:
+    I prove that if a multidimensional continued fraction expansion becomes
+    eventually periodic, then the original input vector consists of algebraic
+    numbers.
+    This result extends the classical correspondence between periodicity and
+    quadratic irrationals in one dimension to higher-dimensional settings.
+    This solves one direction of the second part to Hermite's question.
+    It still leaves open the question whether algebraic numbers always lead to
+    periodic MCFs.
+\end{enumerate}
 
-This thesis introduces a lattice‐based generalization of the classical Euclidean
-algorithm in higher dimensions and uses it to construct multidimensional continued
-fractions (MDCFs) for arbitrary real vectors.  By modifying the division‐with‐remainder
-step—taking integer parts and iterating on fractional parts in a vector setting—I
-obtain a family of MDCF algorithms that extends and unifies all known JPA‐type methods.
+In addition to these theoretical results,
+I have performed an experimental analysis on the MCFs.
+The aim of this analysis was to see which strategies could be used
+to construct periodic MCFs for algebraic numbers
+and I provide a comparison of existing JPA-type algorithms,
+which can be used for constructing MCFs of cubic and quartic irrationals.
+One strategy shows particular promise in the construction,
+since it has provided a periodic MCF for any cubic and quartic irrational I tested.
 
-A first contribution is a worst‐case analysis of the generalized Euclidean algorithm.
-I show that, for inputs given by rational vectors of bit‐length $N$, the number of
-division steps grows at most exponentially in $N$, and I derive a corresponding
-sequence of “Fibonacci‐like” numbers and an associated golden‐ratio analogue.  This
-sequence not only motivates the MDCF construction but also provides explicit bounds
-on the running time of any lattice‐based Euclidean procedure.
+The second type of analysis was focused on the application of MCFs.
+Since ordinary continued fractions can be used for the best rational approximations
+of a single real numbers, the idea for MCFs would be that they provide the best
+rational approximations of real vectors.
+With my analysis, I show that not all convergents lead to good rational approximations.
+I give one specific example where no MCF produces good rational
+approximations of a vector at all times.
 
-The core theoretical results concern the MDCFs themselves.  Under the mild technical
-assumption that each index in the continued‐fraction expansion is used infinitely
-often, I prove convergence of the MDCF expansion for all real vectors.  Moreover,
-I establish that any periodic MDCF expansion must encode an algebraic number of
-degree at most $d$, where $d$ is the dimension of the construction.  Together,
-these results offer a converse to Hermite’s question in one direction—periodicity
-implies algebraicity—and classify all JPA‐type algorithms within a single unified
-framework.
-
-Finally, I present an implementation of the MDCF algorithms and compare several
-construction strategies drawn from the literature.  By measuring approximation
-rates and observing empirical periodicity for known algebraic inputs, I evaluate
-the feasibility of each strategy in practice.  While the question of proving
-periodicity for algebraic vectors remains open, these experiments suggest that
-the lattice‐based approach is both efficient and promising for future study.
+The basis of these MCFs is a generalization of the Euclidean algorithm from
+Klein and Reuter \cite{Klein24}.
+The initial aim was to analyze the algorithm on its worst-case performance
+and whether there exists some generalization of Fibonacci numbers,
+which represent the worst-case for the classical Euclidean algorithm.
+As such, a side result of this thesis is a proof that such Fibonacci numbers do
+exist at least for one strategy and, more importantly, that they represent the
+worst-case for this strategy.
+Using these numbers, I derive the multidimensional analogue of the golden
+ratio, which can be seen as one of the simplest example of a periodic MCF.
 
 % ==============================================================================
 \section{Related Work}
