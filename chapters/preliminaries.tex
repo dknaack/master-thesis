@@ -1,60 +1,61 @@
 \chapter{Preliminaries}
 \label{ch:preliminaries}
 
-This chapter introduces the foundational concepts needed throughout this thesis.
+This chapter introduces key concepts needed throughout this thesis.
 We begin with the most important topic first,
 which is the Euclidean algorithm.
 It serves as the basis of continued fractions and its generalization.
-Through its analysis, it also leads to one of the first practical applications
+Its analysis also leads to one of the first practical applications
 of the Fibonacci numbers.
 We proceed with the basics of algebraic number theory,
 which is needed for the second part of Hermite's problem.
 Finally, I give a brief introduction to lattice theory,
-which is not only needed for the generalization of the Euclidean algorithm,
-but also for the geometry of the continued fractions.
+which is needed not only for the generalization of the Euclidean algorithm
+but also for understanding the geometry of the continued fractions.
 
 % ==============================================================================
 \section{The Euclidean Algorithm}
 % ==============================================================================
 
-The input to the algorithm is a pair of integers $a, b$ with $a > b$ and the
-goal is to find the greatest common divisor between the two numbers. The
-algorithm works in two steps.
-The first step is to calculate the remainder of $a$ with respect to $b$.
+The input to the algorithm is a pair of integers $(a, b)$ with $a > b$ and the
+goal is to find the greatest common divisor between the two inputs.
+The algorithm works in two steps.
+The first step is to calculate the remainder when $a$ is divided by $b$.
 We find an integer $q$ for the quotient and a remainder $r < b$ such that
 \[
   a = q b + r.
 \]
-The next step exchanges $a$ with $b$ and $b$ with $r$.
-The algorithm continues with these two steps until $r = 0$.
+In the next step, $a$ is exchanged with $b$ and $b$ with $r$.
+The algorithm continues with these two steps until the remainder $r$ equals zero.
 
 \begin{lemma}
-  Suppose $a = qb + r$, then $\gcd(a, b) = \gcd(b, r)$.
+  If $a = qb + r$, then $\gcd(a, b) = \gcd(b, r)$.
 \end{lemma}
 
 \begin{proof}
-  Suppose $d = \gcd(b, r)$, then $b = b'd$ and $r = r'd$ for some $b', d' ∈ ℤ$.
-  But then $d$ must divide $a$, since $a = qb + r = d(qb' + r')$.
-  Thus, $d$ is a divisor of $a$ and we have $d ≤ \gcd(a, b)$.
-  Next, suppose $d = \gcd(a, b)$.
+  Suppose $d = \gcd(b, r)$, then $b = b'd$ and $r = r'd$ for some integers $b'$ and $r'$.
+  But then $d$ must also divide $a$, since $a = qb + r = d(qb' + r')$.
+  Thus, $d ≤ \gcd(a, b)$.
+  Next, suppose that $d = \gcd(a, b)$.
   Because $d$ divides $a = qb + r$ and $b$,
   it must also divide $r$.
   Hence, $d ≤ \gcd(b, r)$.
-  Combining both directions, we get the equality $\gcd(a, b) = \gcd(b, r)$.
+  Combining both inequalities, we get $\gcd(a, b) = \gcd(b, r)$.
 \end{proof}
 
 \begin{example}
   Let $a = 252$ and $b = 105$.
   The Euclidean algorithm proceeds as follows:
-  \begin{align*}
+  \begin{alignat*}{2}
     252 & = 2 · 105 + 42 \\
     105 & = 2 · 42 + 21 \\
     42 & = 2 · 21 + 0.
-  \end{align*}
-  Thus, $21$ is the greatest common divisor between $252$ and $105$.
+  \end{alignat*}
+  Thus, the greatest common divisor of $252$ and $105$ is $21$.
 \end{example}
 
-Since $r < b$, the Euclidean algorithm must terminate at some point.
+Since $r < b$, the inputs decrease at each iteration
+and the Euclidean algorithm must terminate at some point.
 Therefore, it correctly calculates the greatest common divisor between the two
 inputs $a$ and $b$.
 In summary, the algorithm uses the following steps:
@@ -109,60 +110,86 @@ Such a ring is called an Euclidean domain.
 \end{example}
 
 \begin{example}
-  Consider the ring $ℚ[x]$ of polynomials with rational coefficients.
-  For any two polynomials $f(x), g(x) ∈ ℚ[x]$,
-  we can find polynomials $q(x), r(x) ∈ ℚ[x]$ such that
+  Consider the ring $ℚ[X]$ of polynomials with rational coefficients.
+  For any two polynomials $f(X), g(X) ∈ ℚ[X]$,
+  we can find polynomials $q(X), r(X) ∈ ℚ[X]$
+  using polynomial division such that
   \[
-    f(x) = q(x) g(x) + r(x)
+    f(X) = q(X) g(X) + r(X)
     \quad
     \text{ and }
     \quad
     \deg(r) ≤ \deg(f).
   \]
-  In this case, $\deg(f)$ is the Euclidean function and $q(x), r(x)$ are
+  In this case, $\deg(f)$ is the Euclidean function and $q(X), r(X)$ are
   the quotient and remainder, respectively.
 \end{example}
 
 \begin{definition}
-  A polynomial $f(x) ∈ ℚ[x]$ is \emph{irreducible},
-  if there exists no polynomial $g(x)$ which divides $f(x)$.
+  A polynomial $f(X) ∈ ℚ[X]$ is \emph{irreducible},
+  if there exists no polynomial $g(X)$ which divides $f(X)$.
 \end{definition}
 
+% ==============================================================================
 \section{Algebraic Numbers}
+% ==============================================================================
+
+This section draws on standard results from algebraic number theory, as presented in \cite{Dummit04}.
+For a given field $K ⊆ L$ and an subset $S ⊆ L$,
+the set $K(S)$ denotes the smallest field containing $K$ and $S$.
+In the case that the set $S$ contains a single element $α ∈ L$, we simplify the
+expression $ℚ(\{α\})$ to $ℚ(α)$.
+In this thesis, we will mostly consider fields $ℚ(α)$ where the element $α$ is an algebraic number.
 
 \begin{definition}
-  A real number $α$ is said to be \emph{algebraic} if its the root of some polynomial
+  A complex number $α$ is said to be \emph{algebraic} if its the root of some polynomial
   with integer coefficients.
   If $α$ is not algebraic, then it is said to be \emph{transcendental}.
 \end{definition}
 
 The set of algebraic numbers includes many familiar constants, such as $\sqrt{2}$ or $\frac{1}{2}$,
 and plays a central role in number theory.
-Transcendental numbers, such as $\pi$ and $e$, are those which cannot be expressed
-as roots of integer polynomials, and are far less well understood.
-This thesis focuses only on algebraic numbers and, in particular, on their
-representation using continued fractions and their generalizations.
+As it stands, the definition currently only states that it must be a root of some polynomial.
+However, we can identify each algebraic number by one unique polynomial.
 
 \begin{lemma}
-  If $α$ is algebraic, then there exists a unique monic polynomial $f_α(x) ∈ ℚ[x]$
+  If $α$ is algebraic, then there exists a unique monic polynomial $f_α(X) ∈ ℚ[X]$
   of smallest degree with $α$ as a root.
 \end{lemma}
 
+\begin{proof}
+  For a contradiction, suppose there exists another monic polynomial $g(X) ≠
+  f_α(X)$ with $\deg(g) = \deg(f_α)$.
+  Then we can find polynomials $q(X), r(X) ∈ ℚ[X]$ such that
+  \[
+    g(X) = q(X) f_α(X) + r(X), \qquad \text{ with } r(X) = 0 \text{ or } \deg(r) < \deg(f_α).
+  \]
+  If $r(X) = 0$, then $q(X)$ has to have degree $0$.
+  However, then either $q(X) = 1$, which means $f_α(X) = g(X)$ or one of
+  the two polynomials is not monic.
+  Both options would contradict our assumptions.
+
+  Therefore, we must have $r(X) ≠ 0$.
+  Because $f_α(α) = 0$ and $g(α) = 0$, we must also have $r(α) = 0$.
+  However, then $r(X)$ would be a polynomial with smaller degree than $f(X)$
+  and it would have $α$ as a root, which is a contradiction.
+  Thus, $f_α$ is the unique monic polynomial for $α$.
+\end{proof}
+
 Every algebraic number is associated with a unique monic polynomial over the rational numbers
 of minimal degree, known as its \emph{minimal polynomial}.
-This polynomial is irreducible and captures essential information about the algebraic number.
-Its degree also determines the size of the smallest number field containing the number.
+Using the minimal polynomial, we define the \emph{degree} of an algebraic
+number as the degree of its minimal polynomial.
+For example, $\sqrt[3]{2}$ would have degree $3$,
+since its minimal polynomial is $X^3 - 2$.
+Algebraic numbers of degree $2$ are called \emph{quadratic irrationals}
+and algebraic numbers of degree $3$ are called \emph{cubic irrationals}.
 
 \begin{definition}
   A field $K$ is an \emph{number field} if it is a finite extension of $ℚ$.
   The \emph{degree} of the number field is defined as the degree of the field
   extension $[K : ℚ]$, i.e. the dimension of $K$ as a vector space over $ℚ$.
 \end{definition}
-
-Number fields form the natural setting for studying algebraic numbers.
-By adjoining an algebraic number to $ℚ$, one obtains a field that contains all
-rational linear combinations of its powers, up to the degree of its minimal polynomial.
-These fields have finite dimension over $ℚ$, and that dimension is referred to as their degree.
 
 \begin{example}
   \hfill
@@ -178,18 +205,16 @@ These fields have finite dimension over $ℚ$, and that dimension is referred to
   \end{enumerate}
 \end{example}
 
-An important construction associated with number fields is the \emph{field norm}.
-It provides a way of assigning a rational number to each element of a number field,
-and can be defined using linear algebra.
-Multiplication by an element $α ∈ K$ can be viewed as a linear transformation on $K$,
-and the norm is defined as the determinant of this transformation.
-For example, consider the field $ℚ(\sqrt{2})$ with basis $\{1, \sqrt{2}\}$.
-Let $α = 1 + \sqrt{2}$.
-Then for any element $x = a + b \sqrt{2}$, we compute
+Multiplication by a fixed element $α ∈ K$ of a number field $K$ can be viewed
+as a linear transformation on its corresponding vector space.
+For example, consider the field $ℚ(\sqrt{2})$ with basis $\{1, \sqrt{2}\}$
+and one element $α = 1 + \sqrt{2}$.
+Fixing this element, we can calculate the multiplication of $α$ with any $x = a
++ b \sqrt{2} ∈ ℚ(\sqrt{2})$ as follows:
 \[
   αx = (1 + \sqrt{2})(a + b \sqrt{2}) = a + a \sqrt{2} + b \sqrt{2} + 2b = (a + 2b) + (a + b)\sqrt{2}.
 \]
-So in the basis $\{1, \sqrt{2}\}$, this corresponds to the matrix
+In the basis $\{1, \sqrt{2}\}$, this corresponds to the matrix
 \[
   M_α =
   \begin{pmatrix}
@@ -197,7 +222,8 @@ So in the basis $\{1, \sqrt{2}\}$, this corresponds to the matrix
     1 & 1
   \end{pmatrix}.
 \]
-The norm $N_{K/ℚ}(α)$ is then the determinant of $M_α$, which is $1 \cdot 1 - 2 \cdot 1 = -1$.
+This matrix can be defined for any element in any number field $K$.
+We will make use of the determinant of this matrix:
 
 \begin{definition}
   Let $K$ be a number field.
@@ -211,12 +237,16 @@ This makes it a valuable tool for reasoning about algebraic equations
 and for connecting the arithmetic of $K$ to that of $ℚ$.
 
 \begin{lemma}
-  For every $α, β ∈ K$, their product has the norm $N_{K/ℚ}(αβ) = N_{K/ℚ}(α) · N_{K/ℚ}(β)$.
+  For every $α, β ∈ K$, we have $N_{K/ℚ}(αβ) = N_{K/ℚ}(α) · N_{K/ℚ}(β)$.
 \end{lemma}
 
 % ==============================================================================
-\section{Lattice Theory}
+\section{Lattices}
 % ==============================================================================
+
+This section is heavily based on the lecture notes by Rothvoss
+\cite{Rothvoss23} and the book by Micciancio and Goldwasser~\cite{Micciancio02}.
+We begin with the introduction of lattices.
 
 One of the fundamental structures in linear algebra is the vector space.
 Given a set of vectors $A = \{A_1, …, A_n\} ∈ ℝ^d$, the span of $A$ is the set
@@ -225,16 +255,32 @@ A lattice is similarly defined over a set of vectors $A$, but instead of linear
 combinations of vectors, a lattice consists of only integral linear
 combinations.
 
+% TODO: Should we allow real vectors?
 \begin{definition}
-  Given a matrix $A ∈ ℤ^{d × n}$, the \emph{lattice} over the basis $B$ is defined as
+  Let $A$ be an integer matrix with column vectors $A_1, \dots, A_n ∈ ℤ^d$.
+  The \emph{lattice} generated by $A$ is defined as
   \[
-    \mathcal{L}(A) = \left\{\, A₁z₁ + \dots + A_n z_n \mid z_1, \dots, z_n ∈ ℤ^d \,\right\}.
+    \mathcal{L}(A) = A ℤ^d
+    = \left\{\, z_1 A_1 + \dots + z_n A_n \mid z_1, \dots, z_n \in ℤ \,\right\}.
   \]
-  The \emph{rank} of $\mathcal{L}(A)$ is defined as the rank of the matrix $A$
-  and the \emph{dimension} of the lattice $\mathcal{L}(A)$ is $d$.
-  If $\mathrm{rank}(A) = d$, then $\mathcal{L}(A)$ is called a \emph{full rank}
-  lattice and $A$ is a \emph{basis} for the lattice.
+  The \emph{rank} of $\mathcal{L}(A)$ is defined as the rank of the matrix $A$.
+  The \emph{dimension} of the lattice is $d$.
+  If $\mathrm{rank}(A) = d$,
+  then $\mathcal{L}(A)$ is called a \emph{full-rank lattice} in $ℝ^d$,
+  and the columns of $A$ form a \emph{basis} of the lattice.
 \end{definition}
+
+Different sets of column vectors can generate the same lattice.
+That is, a lattice $L$ can have multiple different bases.
+If two matrices $B, B' \in \mathbb{Z}^{d \times d}$ generate the same lattice,
+then they must be related by a matrix $U \in \mathbb{Z}^{d \times d}$
+such that
+\[
+  B' = BU.
+\]
+To ensure that $B$ and $B'$ generate exactly the same set of integer linear combinations,
+the matrix $U$ must preserve volume and invertibility over $ℤ$.
+This leads to the following definition.
 
 \begin{definition}
   A matrix $U ∈ ℤ^{n×n}$ is \emph{unimodular} if $\det(U) = ±1$.
@@ -244,38 +290,68 @@ combinations.
   If $U$ is unimodular, then $U^{-1}$ is unimodular.
 \end{lemma}
 
+\begin{proof}
+  We begin by showing that $U^{-1}$ consists of integer entries.
+  Let $U^{(ij)}$ denote the matrix $U$ where the $i$-th column is replaced by the $j$-th unit vector $e_j$.
+  Then, $\det(U^{(ij)}) ∈ ℤ$, and by Cramer's rule,
+  \[
+    U_{ij}^{-1} = \frac{\det(U^{(ij)})}{\det(U)}
+  \]
+  For the determinant, we have $\det(U^{-1}) = (\det(U))^{-1} = ±1$.
+  Thus, the inverse $U^{-1}$ is unimodular.
+\end{proof}
+
 \begin{lemma}
+  \label{lem:unimodular}
   Let $B$ and $B'$ be two bases.
   The lattices $\mathcal L(B)$ and $\mathcal L(B')$ are the same if and only if
   there exists a unimodular matrix $U ∈ ℤ^{n×n}$ such that $B' = BU$.
 \end{lemma}
 
 \begin{proof}
-  If $\mathcal{L}(B) = \mathcal{L}(B')$, then $U = B^{-1} B'$ has determinant $\det(B^{-1} B') = $
-  linear combination of the column vectors of $B$, so $B' = BU$ for some $U ∈ ℤ^{n×n}$.
-  Since both $B$ and $B'$ are bases of the same full-rank lattice, they must have
-  the same determinant up to sign.
-  Thus, $\det(U) = ±1$, and $U$ is unimodular.
+  Suppose $B' = BU$ for some unimodular matrix $U ∈ ℤ^{n×n}$.
+  The function $f \colon ℤ^n → ℤ^n, f(x) = Ux$ is a bijection.
+  Thus, any vector $y ∈ ℤ^n$ has a corresponding vector $x ∈ ℤ^n$ with $y = Ux$.
+  Hence,
+  \[
+    \mathcal L(B)  = \{ B λ \mid λ ∈ ℤ^n \} = \{ B' U λ \mid λ ∈ ℤ^n \} = \mathcal L(B').
+  \]
 
-  If $B' = BU$ and $U$ is unimodular,
+  Next, suppose $\mathcal L(B) = \mathcal L(B')$.
+  Then, any vector in $B$ can be represented in a integral combination of the
+  vectors of $B'$ and vice-versa.
+  These coefficients can be combined into matrices $U, V ∈ ℤ^{n×n}$ such that $B' = BU$ and $B = B'V$.
+  Thus, the determinant of $B$ is
+  \[
+    \det(B) = \det(BUV) = \det(B) \det(U) \det(V).
+  \]
+  Since $U$ and $V$ are both integer matrices,
+  they must have determinant $±1$.
 \end{proof}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics{build/lattice.pdf}
   \caption{
-    A two-dimensional lattice $\mathcal L(B)$ with the basis vectors $B_1 = (2,
-    1)$ and $B_2 = (1, 3)$. The fundamental parallelepiped $Π(B)$ is colored in
-    {\color{cyan}cyan}.
+    A two-dimensional lattice $\mathcal L(B)$ with the basis vectors $B_1 = (2, 1)$
+    and $B_2 = (1, 3)$.
+    The fundamental parallelepiped $Π(B)$ is colored in {\color{cyan}cyan}.
   }
 \end{figure}
+
+While different bases may generate the same lattice, the geometric region they
+span still captures the same volume and structure.
+To study this structure more concretely, we consider the region formed by all
+linear combinations of the basis vectors with coefficients in the unit
+interval.
+This region is a geometric representation of the “unit cell” of the lattice
 
 \begin{definition}
   The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with a basis $B ∈ ℤ^{d×d}$ is defined as
   \[
     Π(B) = \left\{\, B₁ x₁ + \dots + B_d x_d \mid x_1, \dots, x_d ∈ [0, 1) \,\right\}.
   \]
-  The volume of this parallelepiped is
+  The \emph{volume} of this parallelepiped is
   \[
     \mathrm{vol}(Π(B)) = |\det(B)|.
   \]
