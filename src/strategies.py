@@ -1,4 +1,4 @@
-from src.search import pivot, unpivot
+from search import pivot, unpivot, floor_list
 from sage.all import *
 import random
 
@@ -23,7 +23,7 @@ class ApproxStrategy:
                 ys = pivot(ys, i)
                 cf += [floor_list(ys)]
             else:
-                conv = mdcf(cf)
+                conv = unpivot(cf)
                 q = lcm([x.denominator() for x in conv])
 
                 # Check if the convergent is a good simultaneous approximation
@@ -35,7 +35,10 @@ class ApproxStrategy:
 # Deterministic Strategies
 #
 
-def min_strategy(x, n):
+def frac(x):
+    return x - floor(x)
+
+def fracmin(x, n):
     l = None
     for i, xi in enumerate(x):
         if frac(xi) == 0:
@@ -44,7 +47,7 @@ def min_strategy(x, n):
             l = i
     return l
 
-def max_strategy(x, n):
+def fracmax(x, n):
     l = None
     for i, xi in enumerate(x):
         if frac(xi) == 0:
@@ -53,7 +56,7 @@ def max_strategy(x, n):
             l = i
     return l
 
-def jpa_strategy(x, n):
+def jacobi_perron(x, n):
     return n % len(x)
 
 def modified_jpa(x, n):
@@ -98,7 +101,7 @@ class BestConvergentStrategy:
         dist = [0] * d
         for l in range(d):
             y = pivot(x, l)
-            approx = mdcf(self.conv + [floor_list(y)])
+            approx = unpivot(self.conv + [floor_list(y)])
             diff = [abs(xi - yi) for xi, yi in zip(self.input, approx)]
             if self.norm == 'max':
                 dist[l] = max(diff)
@@ -118,15 +121,11 @@ class BestConvergentStrategy:
 
 class MinCost:
     def __init__(self, x, norm):
-        from src.search import floor_list
-
         self.input = x
         self.conv = [floor_list(x)]
         self.norm = norm
 
     def __call__(self, x, n):
-        from src.search import floor_list
-
         # Compute the distances for the next convergents
         d = len(x)
         cost = [0] * d
