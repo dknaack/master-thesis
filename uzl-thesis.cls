@@ -1099,7 +1099,7 @@
     \uzlcheckfont{ClearSans-Regular.ttf}{truetype fonts}{Clear Sans}{clearsans}
     \setmainfont{TeX Gyre Pagella}
     \setmathfont{TeX Gyre Pagella Math}
-    \setmathfont[range=\mathcal]{cmsy10}
+    %\setmathfont[range=\mathcal]{cmsy10}
     \setsansfont[Scale=0.95]{Clear Sans}
     \setmonofont[
       Scale=1.05,
