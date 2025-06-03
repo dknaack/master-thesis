@@ -279,17 +279,6 @@ the search took quite a lot of time.
 Therefore, I proceeded to look into better strategies,
 which could more easily find MDCFs for cube roots.
 
-\begin{table}[tbp]
-  \caption{
-    The shortest periodic index sequences for cube roots found using the
-    brute-force search algorithm. The maximum search depth was set to $20$ and
-    only the sequence for $29$ was not found. The roots for $8$ and $27$ are
-    omitted since they are perfect cubes.}
-  \label{tbl:cubics}
-  \centering
-  \input{tables/cubics2.tex}
-\end{table}
-
 % ==============================================================================
 \begin{Python}[
     float=tbp,
@@ -317,6 +306,18 @@ def search(x, N, strat):
       seen[y] = i + 1
 \end{Python}
 % ==============================================================================
+
+\begin{table}[tbp]
+  \caption{
+    The shortest periodic MCFs for cube roots found using a
+    brute-force search. The maximum search depth was set to $20$ and
+    only the sequence for $29$ was not found. The roots for $8$ and $27$ are
+    omitted since they are perfect cubes.}
+  \label{tbl:cubics}
+  \centering
+  % TODO: Remove the index sequence from the representation
+  \input{tables/cubics2.tex}
+\end{table}
 
 The code used for the comparison is shown in Listing~\ref{lst:det-search}.
 It is a search on the tree guided by a specific strategy.
@@ -368,6 +369,11 @@ In summary, the following strategies were tried:
       ℓ = \argmax_i \frac{x_i}{\sqrt[d]{|N(x_i)|}}.
     \]
     % TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
+    The authors have proven that the vector
+    $(\sqrt[3]{m^3+1} - m, \sqrt[3]{(m^3 + 1)^2} - m^2)$ is periodic under their algorithm
+    as well as any vector $(α, α^2)$, where $α$ is an algebraic number defined by $x^3 - mx + 1 = 0$ with $m ≥ 3$.
+    However, their testing has shown that it is periodic for many other cubic
+    irrationals.
   \item $\textbf{CC}$: Choosing the closest convergent.
     Out of the $d$ possible indices,
     we choose the one which produces the closest convergent $r^{(n)}$,
@@ -375,10 +381,27 @@ In summary, the following strategies were tried:
     This is measured either using the Euclidean norm $\|x - r^{(n)}\|_2$ or using the maximum norm $\|x - r^{(n)}\|_{\infty}$.
 \end{itemize}
 
-Table~\ref{tbl:comparison} lists the results for this section.
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/comparison}
+  \caption{
+    The number of periodic MCFs found using the strategies described in the text.
+    A total of $990$ cube roots were tested ranging from $\sqrt[3]{2}$ to $\sqrt[3]{999}$.
+  }
+  \label{fig:comparison}
+\end{figure}
+
+Figure~\ref{fig:comparison} shows the results for this section.
 The clear winner is the algorithm by Tamura and Yatusomi.
-It has found a periodic representation for every cubic irrational I tested.
-% TODO: Describe the results
+It has found a periodic representation for almost every cubic irrational I tested.
+The only cube roots it didn't find were the largest roots,
+since at that point the maximum number of steps is too low.
+Increasing the maximum solves the issue and the strategy would have also found
+a periodic representation for these roots.
+The JPA and the Min strategy faired slightly worse and managed to find a
+periodic representation for only 10\% of the roots.
+By far the worst strategies were choosing the closest convergents and choosing
+the maximum fractional value.
 
 Since Tamura and Yasutomi's algorithm worked so well,
 I have also tested it on fifth, sixth and seventh roots
@@ -498,3 +521,7 @@ The specific constant for each root is listed in Table~\ref{tbl:approx-const}.
 % TODO: Add table for numbers which admit good approximations
 
 % TODO: What about transcendental numbers?
+
+% TODO: Conclusion -- They're not as simple as continued fractions, where the
+% convergents immediately lead to the best rational approximations. But they
+% could still turn out to have good rational approximations on each path.
