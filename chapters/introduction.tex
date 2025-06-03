@@ -6,10 +6,10 @@ He asked whether there exists a representation of the real numbers as a
 sequence of integers, which is periodic if and only if the represented number
 is a cubic irrational, i.e. the root of a cubic polynomial.
 Although he posed the question almost two centuries ago,
-the question remains unanswered until this day.
+it remains unanswered until this day.
 
 His motivation for the question comes from the representation of real numbers as continued fractions.
-The standard way of representing numbers is through decimal notation.
+The standard way to represent numbers is through decimal notation.
 A number is represented by its integer part followed by a potentially infinite
 series of digits for the fractional part.
 This representation leads to a trivial check, whether the represented number is
@@ -21,12 +21,12 @@ They are fractions of the form
   a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
 \]
 where $a₀, a₁, a₂, …$ are integers.
-Euler was one of the first mathematician to analyze these fractions
+Euler was one of the first mathematicians to analyze these fractions
 and he showed that any periodic continued fraction is a quadratic irrational.
 Later, Lagrange showed the opposite direction,
 that every quadratic irrational has a periodic continued fraction.
 In his letters,
-Hermite was interested in a generalization of continued fraction,
+Hermite was interested in a generalization of continued fractions,
 which would be periodic for cubic irrationals.
 
 The appeal of such a representation lies in the remarkable effectiveness of continued fractions.
@@ -39,9 +39,9 @@ no better approximation with a smaller or equal denominator exists.
 For a generalization,
 the hope is that it provides good approximations for multiple numbers at once.
 
+Hermite's question can be easily generalized from cubic irrationals to any algebraic number:
 Does there exist a representation of the real numbers as a sequence of
-integers such that the representation is periodic if and only if the
-represented number is a cubic irrational?
+integers that is periodic if and only if the represented number is a algebraic number of degree $d$?
 There are two parts to this question.
 The first is the representation of real numbers as a sequence of integers.
 Each finite subsequence of the representation should give us a rational number,
@@ -50,6 +50,21 @@ The second part is about the periodicity of the integer sequence.
 It should repeat after some point if and only if the represented is a cubic irrational.
 A more general question would ask whether such a periodic sequence exists for
 algebraic numbers of a fixed degree.
+
+Since Hermite originally posed his question to Jacobi, it was Jacobi who first attempted to answer it.
+He developed an algorithm inspired by the Euclidean algorithm,
+which calculates the greatest common divisor of three numbers instead of two.
+At each step,
+the algorithm chooses the smallest number and uses it to divide the other two.
+In the next triple, the other two numbers are replaced by their remainder.
+This process is continued until the greatest common divisor is found.
+
+Later, Oskar Perron generalized Jacobi's method to arbitrary dimensions \cite{Perron07},
+resulting in what is now called the Jacobi–Perron Algorithm (JPA).
+His algorithm is essentially a generalization of the Euclidean algorithm to $n$ numbers.
+At each step, he still chooses the smallest element at each iteration.
+
+% TODO: Should we begin with the Jacobi-Perron algorithm here?
 
 % ==============================================================================
 \section{Contributions of this Thesis}
