@@ -5,7 +5,7 @@
 \begin{tikzpicture}
 \begin{axis}[
     width=8cm,
-    height=5cm,
+    height=6cm,
     % Remove the frame
     axis line style={draw=none},
     % Remove the ticks
@@ -36,8 +36,9 @@
 \begin{tikzpicture}
 \begin{axis}[
     width=8cm,
-    height=5cm,
-    mark size=1.2pt,
+    height=6cm,
+    mark size=1.5pt,
+    axis lines=left,
 ]
 
   \addplot+[only marks, mark=x, black!50] table [x={Polynomial}, y={Period Length}, col sep=tab] {tables/period-length-ty.tsv};
