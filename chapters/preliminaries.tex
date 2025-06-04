@@ -139,7 +139,7 @@ For a given field $K ⊆ L$ and an subset $S ⊆ L$,
 the set $K(S)$ denotes the smallest field containing $K$ and $S$.
 In the case that the set $S$ contains a single element $α ∈ L$, we simplify the
 expression $ℚ(\{α\})$ to $ℚ(α)$.
-In this thesis, we will mostly consider fields $ℚ(α)$ where the element $α$ is an algebraic number.
+In this thesis, we consider fields $ℚ(α)$ where the element $α$ is an algebraic number.
 
 \begin{definition}
   A complex number $α$ is said to be \emph{algebraic} if its the root of some polynomial
@@ -153,42 +153,52 @@ As it stands, the definition currently only states that it must be a root of som
 However, we can identify each algebraic number by one unique polynomial.
 
 \begin{lemma}
-  If $α$ is algebraic, then there exists a unique monic polynomial $f_α(X) ∈ ℚ[X]$
+  If $α$ is algebraic, then there exists a unique monic polynomial $m_α(X) ∈ ℚ[X]$
   of smallest degree with $α$ as a root.
 \end{lemma}
 
 \begin{proof}
   For a contradiction, suppose there exists another monic polynomial $g(X) ≠
-  f_α(X)$ with $\deg(g) = \deg(f_α)$.
+  m_α(X)$ with $\deg(g) = \deg(m_α)$.
   Then we can find polynomials $q(X), r(X) ∈ ℚ[X]$ such that
   \[
-    g(X) = q(X) f_α(X) + r(X), \qquad \text{ with } r(X) = 0 \text{ or } \deg(r) < \deg(f_α).
+    g(X) = q(X) m_α(X) + r(X), \qquad \text{ with } r(X) = 0 \text{ or } \deg(r) < \deg(m_α).
   \]
   If $r(X) = 0$, then $q(X)$ has to have degree $0$.
-  However, then either $q(X) = 1$, which means $f_α(X) = g(X)$ or one of
+  However, then either $q(X) = 1$, which means $m_α(X) = g(X)$ or one of
   the two polynomials is not monic.
   Both options would contradict our assumptions.
 
   Therefore, we must have $r(X) ≠ 0$.
-  Because $f_α(α) = 0$ and $g(α) = 0$, we must also have $r(α) = 0$.
+  Because $m_α(α) = 0$ and $g(α) = 0$, we must also have $r(α) = 0$.
   However, then $r(X)$ would be a polynomial with smaller degree than $f(X)$
   and it would have $α$ as a root, which is a contradiction.
-  Thus, $f_α$ is the unique monic polynomial for $α$.
+  Thus, $m_α$ is the unique monic polynomial for $α$.
 \end{proof}
 
 Every algebraic number is associated with a unique monic polynomial over the rational numbers
 of minimal degree, known as its \emph{minimal polynomial}.
-Using the minimal polynomial, we define the \emph{degree} of an algebraic
-number as the degree of its minimal polynomial.
-For example, $\sqrt[3]{2}$ would have degree $3$,
-since its minimal polynomial is $X^3 - 2$.
-Algebraic numbers of degree $2$ are called \emph{quadratic irrationals}
-and algebraic numbers of degree $3$ are called \emph{cubic irrationals}.
+Since $m_α(α) = 0$,
+we can think of $ℚ(α)$ as the set of rational polynomials in $α$ modulo $m_α$.
+Therefore, any polynomial expression in $α$ with degree higher than $\deg(m_α)$
+can be replaced by an expression with lower degree.
+Hence, every element in $ℚ(α)$ can be expressed as
+\[
+  a₀ + a₁ α + ⋯ + a_{n-1} α^{n-1},
+\]
+where $n$ is the degree of the minimal polynomial $m_α$
+and the coefficients $a₀, a₁, …, a_{n-1}$ are rational numbers.
+Thus,
+we can consider the field $ℚ(α)$ as a vector space over $ℚ$
+with the set $\{1, α, …, α^{n-1}\}$ as a basis.
+Then,
+any element in $ℚ(α)$ can be expressed as a linear combination of this basis.
+% TODO: Explain vector space over ℚ
 
 \begin{definition}
   A field $K$ is an \emph{number field} if it is a finite extension of $ℚ$.
-  The \emph{degree} of the number field is defined as the degree of the field
-  extension $[K : ℚ]$, i.e. the dimension of $K$ as a vector space over $ℚ$.
+  The \emph{degree} of the number field $[K : ℚ]$ is defined as the dimension
+  of $K$ as a vector space over $ℚ$.
 \end{definition}
 
 \begin{example}
