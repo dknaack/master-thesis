@@ -1,0 +1,58 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[
+    clip=false,
+    width=8cm,
+    height=6cm,
+    mark size=1.5pt,
+    axis lines=left,
+    % Use logarithmic y axis,
+    ymode=log,
+    xmin=0,
+    xmax=20,
+    xlabel={$n$},
+]
+
+  \addplot+[mark=none, black, opacity=0.2, unbounded coords=jump] table [col sep=tab] {tables/approx-points.tsv};
+  \addplot+[mark=none, domain=0:19, black, dashed] {2^x} node[pos=1, above right] {$2^n$};
+
+  \addplot+[mark=none, red, thick] coordinates {
+    (0, 1) (1, 2) (2, 3) (3, 3) (4, 1)
+  } node[below] {$\sqrt[3]{5}$};
+
+  \addplot+[mark=none, blue, thick] coordinates {
+    (0, 1) (1, 2) (2, 4) (3, 5) (4, 5) (5, 7) (6, 8) (7, 9) (8, 9) (9, 14) (10, 18)
+    (11, 15) (12, 18) (13, 16) (14, 19) (15, 20) (16, 24) (17, 23) (18, 24) (19, 23)
+  } node[pos=1, right] {$\sqrt[3]{100}$};
+
+  \addplot+[mark=none, blue, thick] coordinates {
+    (0, 1) (1, 2) (2, 4) (3, 6) (4, 8) (5, 12) (6, 20) (7, 34) (8, 57) (9, 93)
+    (10, 150) (11, 247) (12, 423) (13, 762) (14, 1450) (15, 2860) (16, 5710)
+    (17, 11420) (18, 22840) (19, 45680)
+  } node[pos=1, right] {$\sqrt[3]{9}$};
+
+  \addplot+[mark=none, red, thick, solid] coordinates {
+    (0, 1) (1, 2) (2, 2) (3, 2) (4, 2) (5, 3) (6, 4) (7, 4) (8, 6) (9, 10)
+    (10, 13) (11, 13) (12, 13) (13, 14) (14, 12) (15, 8) (16, 3) (17, 2)
+  } node[below] {$\sqrt[3]{74}$};
+
+\end{axis}
+\end{tikzpicture}
+
+\iffalse
+\begin{tikzpicture}
+  \pie[radius=1.5, sum=auto, text=legend]{
+    64/{$1/q^{1+1/d}$},
+    27/{$2/q^{1+1/d}$},
+    4/{$3/q^{1+1/d}$},
+    1/{$≥4/q^{1+1/d}$}
+  }
+\end{tikzpicture}
+\fi
+
+\end{document}
+
+

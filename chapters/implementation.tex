@@ -262,8 +262,21 @@ For the third question, I have implemented a brute-force search,
 which simply tries all possible sequences to test for the approximation rate.
 The goal would be to see how many convergents satisfy the approximation bound.
 
-Figure~\ref{fig:results-approx} shows the results of this analysis.
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/approximation}
+  \caption{
+    The number of convergents $r^{(n)}$ for each cube root, which
+    satisfy the approximation bound.
+    Four examples are given,
+    two of which, $\sqrt[3]{9}$ and $\sqrt[3]{100}$, seem to have infinitely
+    many convergents which satisfy the approximation bound and the other two,
+    $\sqrt[3]{5}$ and $\sqrt[3]{74}$ do not.
+  }
+  \label{fig:results-approx}
+\end{figure}
 
+Figure~\ref{fig:results-approx} shows the results of this analysis.
 % TODO: When repeating the period multiple times, does this actually keep the
 % approximation bound intact or does it violate it after some point?
 For most cubic roots from the previous test,
@@ -284,24 +297,12 @@ after only a few number of iterations.
 
 Since not all cubic roots can be approximated well using MDCFs,
 I weakened the bound to allow all convergents which satisfy
-\[
+\begin{equation}
+  \label{eq:sim-approx-weak}
   \left|x_i - \frac{p_i}{q}\right| < \frac{c}{q^{1 + 1/d}} \qquad \text{ for every } i ≤ d,
-\]
+\end{equation}
 where $c$ is some constant independent of $n$.
-The specific constant for each root is listed in Table~\ref{tbl:approx-const}.
-% TODO: Make the actual table
-\begin{table}[tbp]
-  \centering
-  \begin{tabular}{cc}
-    \uzlhline
-    Root & Constant \\
-    \hline
-    TODO & TODO \\
-    \uzlhline
-  \end{tabular}
-  \caption{Approximation constants for the cubic roots.}
-  \label{tbl:approx-const}
-\end{table}
+The specific constant for each root is shown in Figure~\ref{fig:results-approx}.
 
 % TODO: Add plot for growth
 
