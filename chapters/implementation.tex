@@ -237,15 +237,10 @@ Such vectors will be called \emph{good rational approximations} of $(α₁, …,
 The idea would be that the convergents of MDCFs are such good rational approximations.
 However, if that is not the case, there is still a possibility that some path
 during the construction has good rational approximations.
-From strongest to weakest, I have analyzed the following questions:
-\begin{enumerate}
-  \item Do all paths have convergents which are good rational approximations?
-  \item Is there a path where all convergents are good rational approximations?
-  \item Is there a path where infinitely many convergents are good rational approximations?
-\end{enumerate}
+To study this behavior, I did a brief analysis on the number of convergents,
+which satisfy this bound.
 
-To answer these question,
-I have implemented a breadth-first search over the construction of an MDCF for the vector $x$.
+The implementation consists of a breadth-first search over the construction of an MDCF for the vector $x$.
 The search begins with the root $x^{(0)} = x$ and it expands a node $x^{(n)} ∈ ℝ^d$
 by adding the vector $\mathrm{pivot}_ℓ(x^{(n)})$ for every $ℓ ∈ \{1, …, d\}$ to the queue.
 However, it only expands a node $x^{(n)}$
@@ -254,12 +249,21 @@ i.e. satisfies the bound from Equation~\ref{eq:sim-approx}.
 Otherwise, the node is considered a leaf.
 The search terminates either after a maximum number of steps is reached or if
 there are no more nodes in the queue.
-The latter of which would show that there are examples, where no path with the
-given approximation bound exists.
-This covers the first and second questions.
-For the third question, I have implemented a brute-force search,
-which simply tries all possible sequences to test for the approximation rate.
-The goal would be to see how many convergents satisfy the approximation bound.
+At each step, I keep track of the number of nodes, which are active.
+The goal of this search is to see how many convergents satisfy the
+approximation bound.
+
+Since this is very similar to a brute-force search,
+I could only run the algorithm with a maximum of $20$ steps
+and I only ran it with $d = 2$.
+As the input, I have used the cube roots again.
+Since the golden ratio is the most irrational number
+in terms of approximation,
+I used the cube roots as they would represent the worst-case for the
+approximation using MCFs.
+In total,
+I tested the cube roots from $\sqrt[3]{2}$ to $\sqrt[3]{100}$ amounting to a
+total of $96$ cube roots, when removing the perfect cubes.
 
 \begin{figure}[tbp]
   \centering
@@ -284,7 +288,6 @@ However, they are notably different MDCFs than those found in the brute-force
 search.
 So some cubic roots can have different MDCFs
 and not all of them must necessarily be good simultaneous approximations.
-
 The most surprising result of this analysis is that there are some cubic roots
 for which there exists no path which satisfies the approximation bound of Equation~\ref{eq:sim-approx}.
 Perron already suggested that his algorithm does not satisfy this bound \cite{Perron07},
@@ -294,6 +297,7 @@ One example is the vector $(\sqrt[3]{5}, \sqrt[3]{25})$.
 In this case, the number of convergents starts out growing but quickly drops
 after only a few number of iterations.
 
+\iffalse
 Since not all cubic roots can be approximated well using MDCFs,
 I weakened the bound to allow all convergents which satisfy
 \begin{equation}
@@ -302,18 +306,22 @@ I weakened the bound to allow all convergents which satisfy
 \end{equation}
 where $c$ is some constant independent of $n$.
 The specific constant for each root is shown in Figure~\ref{fig:results-approx}.
-
-% TODO: Add plot for growth
+\fi
 
 % TODO: Add table for numbers which admit good approximations
 
 % TODO: What about transcendental numbers?
 
-% TODO: Conclusion -- They're not as simple as continued fractions, where the
-% convergents immediately lead to the best rational approximations. But they
-% could still turn out to have good rational approximations on each path.
-
-The analysis shows that not all convergents of an MCF can be the best rational
-approximations.
+% Conclusion:
+The analysis shows that for some cube roots,
+there is no MCF whose convergents produce good rational approximations.
+Therefore, MCFs generally do not mirror continued fractions;
+they do not provide good rational approximations for real vectors in general.
 However, the converse is still possible, i.e. that the best rational
 approximations are convergents of some MCF.
+% TODO: If we end up using Klein polyhedra, uncomment this:
+% This seems especially likely if they share a connection with the Klein polyhedra.
+% Since then the area between the convergent is empty and they continue to
+% approach the irrational line by the given vector.
+Thus, they could still be useful for the field of simultaneous Diophantine
+approximation.
