@@ -162,23 +162,26 @@ In summary, the following strategies were tried:
   \centering
   \includestandalone{figures/comparison}
   \caption{
-    The number of periodic MCFs found using the strategies described in the text.
+    The number of periodic MCFs found (left) using the strategies described in the
+    text and the length of their period (right).
     A total of $990$ cube roots were tested ranging from $\sqrt[3]{2}$ to $\sqrt[3]{999}$.
   }
   \label{fig:comparison}
 \end{figure}
 
-Figure~\ref{fig:comparison} shows the results for this section.
+Figure~\ref{fig:comparison} shows the total number of MCFs found using each strategy.
 The clear winner is the algorithm by Tamura and Yatusomi.
 It has found a periodic representation for almost every cubic irrational I tested.
-The only cube roots it didn't find were the largest roots,
+The only cube roots it didn't find were the largest ones,
 since at that point the maximum number of steps is too low.
-Increasing the maximum solves the issue and the strategy would have also found
-a periodic representation for these roots.
+Increasing the number of steps solves the issue and the strategy would have
+also found a periodic representation for these roots.
 The JPA and the Min strategy faired slightly worse and managed to find a
 periodic representation for only 10\% of the roots.
 By far the worst strategies were choosing the closest convergents and choosing
 the maximum fractional value.
+
+% TODO: Quartic irrationals
 
 Since Tamura and Yasutomi's algorithm worked so well,
 I have also tested it on fifth, sixth and seventh roots
