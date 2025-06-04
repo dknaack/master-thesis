@@ -1,4 +1,4 @@
-\chapter{Multi-Dimensional Continued Fractions}
+\chapter{Multidimensional Continued Fractions}
 \label{ch:mdcf}
 
 For quadratic irrationals, we used continued fractions to represent them as a
@@ -6,7 +6,7 @@ periodic sequence of integers.
 The continued fractions were constructed using the Euclidean algorithm.
 Naturally, we can generalize continued fractions to higher dimensions using the
 generalized Euclidean algorithm.
-This leads to a concept of Multi-Dimensional Continued Fractions (MCFs), which could
+This leads to a concept of Multidimensional Continued Fractions (MCFs), which could
 potentially be an answer of Hermite's question.
 Since they are based on the generalized Euclidean algorithm,
 they extend previous generalizations of continued fractions based on the
@@ -47,10 +47,10 @@ So the integer part of the solution $x$ represents the first coefficient for
 the continued fraction of $a/b$ and the fractional part $\{a/b\}$ is the
 inverse of the next continued fraction.
 
-The multi-dimensional continued fraction can now be easily derived from the
+The multidimensional continued fraction can now be easily derived from the
 solution vector $x$ in higher dimensions.
 Specifically, given a vector $x ∈ ℝ^d$, we take the integer part of each
-element $\floor{x}$ as a coefficient of the multi-dimensional continued
+element $\floor{x}$ as a coefficient of the multidimensional continued
 fraction.
 Then, we get the subsequent coefficients by iterating over this vector using
 the $\mathrm{pivot}$ operation.
@@ -113,11 +113,11 @@ Again this is for subsequent lemmas, where we will need rational or even real ve
 For the representation to be correct, we require $\max_i r_i^{(n)} ≠ 0$ for $n ≥ 1$.
 This is similar to the continued fractions, where only the first value could be zero,
 while all subsequent values had to be positive.
-For the multi-dimensional counterpart we only require that the pivot element is not zero.
+For the multidimensional counterpart we only require that the pivot element is not zero.
 The other values in the vector $r^{(n)}$ can assume any non-negative value.
 
 The terminology from one-dimensional continued fractions naturally carry over to its
-multi-dimensional counterpart.
+multidimensional counterpart.
 Given an infinite MCF representation~$[a₀; a_1, …]$ of a vector $x ∈ ℝ^d$, we define the following:
 
 \begin{itemize}
@@ -270,7 +270,7 @@ such they ensure that they converge to a limit as $n$ increases.
 \end{proof}
 
 % ==============================================================================
-\section{Convergence of Multi-Dimensional Continued Fractions}
+\section{Convergence of Multidimensional Continued Fractions}
 % ==============================================================================
 
 % TODO: Maybe we should call r^{(n)} the primary convergent and the other ones
@@ -634,7 +634,7 @@ In the geometrical interpretation of continued fractions,
 we represented each convergent $pₙ/qₙ$ as a two-dimensional vector $(pₙ, qₙ)$.
 These vectors approached an irrational line spanned by the vector $(1, α)$
 where $α$ is some irrational number.
-For the generalization to multi-dimensional continued fractions,
+For the generalization to multidimensional continued fractions,
 we represent each convergent,
 which is a $d$-dimensional rational vector,
 as a $(d+1)$-dimensional integer vector.

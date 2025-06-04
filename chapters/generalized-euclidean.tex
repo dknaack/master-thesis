@@ -14,7 +14,7 @@ which is a generalization of the Euclidean algorithm.
 While the Euclidean algorithm works with integers,
 the generalized version works with vectors.
 It solves the problem of lattice basis computation,
-which can be seen as a multi-dimensional analogue of computing the greatest
+which can be seen as a multidimensional analogue of computing the greatest
 common divisor.
 
 % ==============================================================================
@@ -45,7 +45,7 @@ Instead, we have to find new basis vectors for this lattice.
 The problem of finding a basis for a lattice is known as \emph{lattice basis computation}.
 The input for this problem is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
 is to find a basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
-The problem can also be seen as a multi-dimensional analogue of
+The problem can also be seen as a multidimensional analogue of
 computing the greatest common divisor from a given set of numbers.
 Indeed, we can view a set of numbers $a₁, a₂, …, aₙ ∈ ℤ$ as the basis vectors
 of the one-dimensional lattice
@@ -108,7 +108,7 @@ given a solution $x$ to $Bx = a$,
 \[
   a = B\floor{x} + B\{x\} = z + r.
 \]
-This is essentially a multi-dimensional division with remainder operation inside a lattice.
+This is essentially a multidimensional division with remainder operation inside a lattice.
 It allows us to define a modulo operation for the algorithm as follows:
 \[
   a \pmod{Π(B)} := a - B\floor{B^{-1} a}.
