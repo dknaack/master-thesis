@@ -566,64 +566,7 @@ This gives us the second example of a periodic input for the generalized Euclide
   Therefore, we reach the original input vector after $d$ iterations.
 \end{proof}
 
-% Worst-case analysis, which does not work!
 \iffalse
-
-\begin{theorem}
-  Suppose the Euclidean algorithm requires at least $n$ steps for $x = (p₁/q, …, p_d/q)$
-  with $0 < p₁ < ⋯ < p_{d-1} < q < p_d$ when taking the maximum fractional value at each step.
-  Then, there exists a permutation $σ$ such that
-  \[
-    q ≥ F(n+d),
-    \qquad
-    p_{σ(d)} ≥ F(n + d) + F(n),
-    \qquad
-    p_{σ(i)} ≥ F(n + i)
-    \quad
-    \text{ for every } i ≤ d - 1.
-  \]
-\end{theorem}
-
-\begin{proof}
-  For $n = 0$, we have
-  \[
-    \left(\frac{F(2)}{F(1)}, \frac{F(3)}{F(1)}, …, \frac{F(d+1)}{F(1)} \right)
-    = \left(\frac{2}{1}, \frac{3}{1}, …, \frac{d+1}{1} \right).
-  \]
-  This is the first positive input, which satisfies the ordering and it requires only one step.
-  Therefore, any other input that requires one step must be larger.
-  Now suppose that the theorem holds for any $n ≥ 0$.
-  Let $x ∈ ℚ^d$ and $a = \floor{x}$.
-  Suppose that $x' = \mathrm{pivot}_ℓ(x) = (p₁'/q', …, p_d'/q')$ requires at
-  least $n$ steps, where $ℓ$ is chosen according to the strategy.
-  By induction, there exists a permutation $σ$ such that
-  \begin{align*}
-    q'        & ≥ F(n),                     \\
-    p_{σ(d)}' & ≥ F(n) + F(n - d) = F(n+1), \\
-    p_{σ(i)}' & ≥ F(n - i)
-    \text{ for every } i ≤ d - 1.
-  \end{align*}
-  We assume without loss of generality that $σ(i) = i$ and that it orders the elements in increasing order.
-  Because $p_{σ(d)}$ is the largest element in $x'$, we have $ℓ = σ(d) = d$.
-  However, $x_ℓ$ cannot be the largest element in $x$ because of the strategy.
-  Therefore, $a_ℓ = 0$ and there exists another element $x_k$ with $k ≠ ℓ$ and $a_k ≥ 1$.
-  Futhermore, that element must come before $x_ℓ$ since $ℓ = d$.
-  We can now bound $x$ using $x'$ and Lemma~\ref{lem:divmod}:
-  \begin{align*}
-    q   & = p_ℓ' ≥ F(n+1), \\
-    p_ℓ & = a_ℓ p_ℓ' + q' = q' ≥ F(n) ≥ F((n+1) - 1), \\
-    p_k & = a_k p_ℓ' + p_k' ≥ p_ℓ' + p_k' ≥ F(n + 1) + F(n + 1 - (k + 1)), \\
-    p_i & = a_k p_ℓ' + p_i' ≥ p_i' ≥ F(n - i) = F((n+1) - (i+1)).
-  \end{align*}
-  where $i < ℓ = d$ and $i ≠ k$.
-  We're missing the bound for $F(n+1) + F(n+1 - d)$ and $F(n + 1 - k)$.
-  The former follows from the bound of $p_k$.
-  Because $k < ℓ$, we have
-  \begin{align*}
-    p_k & ≥ F(n + 1) + F(n + 1 - (k + 1)) ≥ F(n+1) + F(n+1 - d).
-  \end{align*}
-\end{proof}
-
 % ==============================================================================
 \section{Combining both Strategies into the Minimax Strategy}
 % ==============================================================================
