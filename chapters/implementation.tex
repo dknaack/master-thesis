@@ -135,15 +135,15 @@ In summary, the following strategies were tried:
     \[
       ℓ =
       \begin{cases}
-        1, & \text{ if } \frac{x₁}{\sqrt{|N(x₁)|}} > \frac{x₂}{\sqrt{|N(x₂)|}}, \\
-        2, & \text{ if } \frac{x₁}{\sqrt{|N(x₁)|}} < \frac{x₂}{\sqrt{|N(x₂)|}}.
+        1, & \text{ if } \frac{\{x₁\}}{\sqrt{|N(\{x₁\})|}} > \frac{\{x₂\}}{\sqrt{|N(\{x₂\})|}}, \\
+        2, & \text{ if } \frac{\{x₁\}}{\sqrt{|N(\{x₁\})|}} < \frac{\{x₂\}}{\sqrt{|N(\{x₂\})|}}.
       \end{cases}
     \]
     Again, the algorithm chooses the largest element in each iteration.
     However, it scales down each element by the square root of its norm.
     For higher dimensions, the algorithm chooses
     \[
-      ℓ = \argmax_i \frac{x_i}{\sqrt[d]{|N(x_i)|}}.
+      ℓ = \argmax_i \frac{\{x_i\}}{\sqrt[d]{|N(\{x_i\})|}}.
     \]
     % TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
     The authors have proven that the vector

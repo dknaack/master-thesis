@@ -140,7 +140,7 @@ Additionally, their ratios approximate the golden ratio,
 which follows from the continued fraction.
 
 % ==============================================================================
-\section{A Higher-Order Fibonacci Sequence for the Minimum Strategy}
+\section{Fibonacci Numbers under the Minimum Strategy}
 % ==============================================================================
 
 % TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
@@ -412,98 +412,103 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 % TODO: What property do the ratios have? Are they similar to the golden ratio?
 
 % ==============================================================================
-\section{A Higher-Order Fibonacci Sequence for the Maximum Strategy}
+\section{Improving the Minimum Strategy over Two Iterations}
 % ==============================================================================
 
-The next strategy we will look at is the maximum strategy,
-where we choose the element with the largest fractional value.
-Although this leads to the worst possible decrease in terms of the determinant,
-it does provide another definition of Fibonacci sequences and a new golden ratio.
-The sequence for this strategy will be called maximum Fibonacci numbers and they
-are defined by the following recurrence relation:
-\begin{align*}
-  F(n) =
-  \begin{cases}
-    1, & \text{ if } n ≤ 0, \\
-    F(n - 1) + F(n - 1 - d), & \text{ if } n > 0.
-  \end{cases}
-\end{align*}
-The first few terms of this sequences are listed in Table~\ref{tbl:max-fibonacci}.
-
-\begin{table}[tbp]
-  \caption{The first 10 Fibonacci numbers for $d = 1, …, 5$ and their respective golden ratio.}
-  \label{tbl:max-fibonacci}
-  \centering
-  \input{tables/max-fibonacci}
-\end{table}
-
-To construct the solution vector $x$ for these numbers, we choose a consecutive
-ratio of two Fibonacci numbers for each $x_i$, where the index $i$ determines
-the distance between the two.
-More specifically, we choose the vector
-\begin{align*}
-  x = \left(
-    \frac{F(n-1)}{F(n)},
-    \frac{F(n-2)}{F(n)},
-    …,
-    \frac{F(n-(d-1)}{F(n)},
-    \frac{F(n-d) + F(n)}{F(n)} \right).
-\end{align*}
-
-This time, we pivot with the largest fractional value, which is $x_1$.
-Let $a = \floor{x}$, then the next vector is $x' = (x₁', …, x_d')$ where
-the first element is
-\begin{align*}
-  x_1'
-  = \frac{1}{\left\{\frac{F(n-1)}{F(n)}\right\}}
-  = \frac{F(n)}{F(n-1)}
-  = \frac{F(n-1) + F(n-1-d)}{F(n)},
-\end{align*}
-the elements with $i ≤ d - 1$ are
-\begin{align*}
-  x_i'
-  = \frac{\frac{F(n-i)}{F(n)}}{\frac{F(n-1)}{F(n)}}
-  = \frac{F(n-i)}{F(n-1)}
-\end{align*}
-and the last element is
-\begin{align*}
-  x_d'
-  = \frac{\frac{F(n-d) + F(n)}{F(n)} - 1}{\frac{F(n-1)}{F(n)}}
-  = \frac{F(n-d)}{F(n-1)}.
-\end{align*}
-
-However, this time the maximum Fibonacci numbers do not represent the worst-case.
-At least, we cannot show any worst-case bounds using these numbers in the same way as before.
-The issue is that in the equation
-\[
-  p_ℓ = a_ℓ p_ℓ' + q'
-\]
-from Lemma~\ref{lem:divmod} we cannot bound $a_ℓ$ from below by $1$.
-The reason is that only element of $x$ can be greater than $1$
-and all other elements must be smaller than $1$.
-But that element does not have to be the pivot element,
-it could be another element.
-Therefore, we cannot use these Fibonacci numbers to bound the worst-case.
+We can achieve a much better decrease if we minimize over two iterations instead of just one.
+We assume that the values are ordered in increasing order by their fractional
+value, i.e. $\{x₁\} ≤ \{x₂\} ≤ ⋯ ≤ \{x_d\}$.
+In the first iteration, we choose the index $ℓ$, which minimizes $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
+In the second iteration, we choose $ℓ + 1$.
+Whereas the Fibonacci numbers for the minimum strategy only occur,
+when analyzing the whole execution of the algorithm,
+the Fibonacci numbers for this strategy occur already after two iterations.
 
 \begin{theorem}
-  There exists a vector $x = (p₁/q, …, p_d/q) ∈ ℚ^d$ which requires at least $n$ steps
-  and there is at least one element $p_i$ with $p_i < F(n-d)$
+  The determinant decreases by at least $ψ_d$ over two iterations,
+  where $ψ_d$ is the root of $x(x+1)^d - 1$.
 \end{theorem}
 
 \begin{proof}
-  % TODO
+  We assume without loss of generality that every value in $x$
+  lies between $0$ and $1$.
+  The decrease in the second iteration is the largest
+  when all ratios are equal, i.e.
+  \[
+    x₁ = \frac{x₂}{x₁} - 1 = ⋯ = \frac{x_d}{x_{d-1}} - 1 = \frac{1}{x_d} - 1.
+  \]
+  The first equation gives us $x₂ = x₁(x₁ + 1)$.
+
+  Next, we show via induction that $x_i = x₁ (x₁ + 1)^{i-1}$.
+  The case $i = 1$ is trivial and we shown the case $i = 2$ just now.
+  Thus, we proceed with the induction step.
+  Suppose that $x_{i+1} = x₁ (x₁ + 1)^{i-1}$.
+  The other equations (except the last) result in
+  \[
+    \frac{x_{i+1}}{x_i} - 1 = \frac{x_i}{x_{i-1}} - 1 \iff
+    x_{i+1}
+    = \frac{x_i^2}{x_{i-1}}
+    = \frac{(x_1 (x₁ + 1)^{i-1})^2}{x₁ (x₁ + 1)^{i-2}}
+    = x₁ (x₁ + 1)^{i+1}
+    .
+  \]
+  Thus, we have $x_i = x₁(x₁ + 1)^{i-1}$.
+  Finally, the last equation leads to the polynomial
+  \[
+    \frac{x_d^2}{x_{d-1}} = 1
+    \iff
+    x₁ (x₁ + 1)^d - 1 = 0,
+  \]
+  which is the exact definition of $ψ_d$.
 \end{proof}
 
-Although they do not represent the worst-case,
-they do lead to another golden ratio.
-Looking at the ratios $F(n+1)/F(n)$ again,
-they converge towards a limit.
-This limit represents the golden ratio $ψ_d$ for the sequence and
-the following theorem shows that they converge towards this ratio.
+From the proof, we know that $x_i = ψ_d (ψ_d + 1)^{i-1}$.
+However, this is input is not periodic under this strategy.
+It only gives a bound over two iterations.
+Nevertheless, we can use a different strategy under which the input becomes periodic.
+
+The new strategy chooses the largest fractional value.
+Because $ψ_d$ is positive and $ψ_d (ψ_d + 1)^d = 1$,
+the values $x_i$ strictly lie between $0$ and $1$.
+Therefore, $x_d$ is the largest value.
+Pivoting with $x_d$ results in the vector $x' = (x₁', …, x_d')$ with
+\[
+  x_d' = \frac{1}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d + 1
+  \quad
+  \text{ and }
+  \quad
+  x_i' = \frac{ψ_d (ψ_d + 1)^{i-1}}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d (ψ_d + 1)^i.
+\]
+Note that the fractional values have not changed in $x'$
+except that now $x_{d-1}$ has the largest fraction value.
+If we were to begin with $x_i = ψ_d (ψ_d + 1)^{i-1} + 1$ instead,
+then $x' = \mathrm{pivot}_d(x)$ would be an exact permutation of $x$.
+Thus, we found a new periodic input for the generalized Euclidean algorithm.
 
 \begin{theorem}
-  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $ψ_d$,
-  where $ψ_d$ is the positive real root of the polynomial $p_d(x) = x^{d+1} - x^d - 1$.
+  The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
+  with $x_i = ψ_d (ψ_d + 1)^i + 1$ when taking the minimum fractional value.
+\end{theorem}
+
+To find the Fibonacci numbers we have to go backwards:
+We already have a definition of a golden ratio $ψ_d$,
+so we have find a linear recurrence which converges to $ψ_d$.
+In its current form, we cannot easily find such a linear recurrence.
+Instead, we will use the root $θ_d = ψ_d + 1$.
+Then,
+\[
+  ψ_d (ψ_d + 1)^d - 1 = 0
+  \iff
+  θ_d^{d+1} - θ^d - 1 = 0.
+\]
+Using this equation, we define the new Fibonacci numbers as
+\[
+  F(n + d + 1) = F(n + d) + F(n + 1).
+\]
+We can then show that their ratios are converging towards the root $θ_d$.
+
+\begin{theorem}
+  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $θ_d$.
 \end{theorem}
 
 \begin{proof}
@@ -531,60 +536,75 @@ the following theorem shows that they converge towards this ratio.
 \end{proof}
 
 \begin{corollary}
-  The ratios $F(n + i)/F(n)$ converge towards $ψ_d^i$ for any $i ≥ 0$.
+  If the ratios $\frac{F(n+1)}{F(n)} - 1$ are converging, then they approach $ψ_d$.
 \end{corollary}
 
-We can then replace the ratios in the solution vector $x$ with the actual
-golden ratio $ψ_d$, again.
-The algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ is defined as
+We can now construct a vector $x$ using these Fibonacci numbers.
+Specifically, we choose the vector
+\begin{align*}
+  x = \left(
+    \frac{F(n-1)}{F(n)},
+    \frac{F(n-2)}{F(n)},
+    …,
+    \frac{F(n-(d-1)}{F(n)},
+    \frac{F(n-d) + F(n)}{F(n)} \right).
+\end{align*}
+We pivot with the largest fractional value, which is $x_1$.
+The next vector is $x' = (x₁', …, x_d')$ where
+the first element is
+\begin{align*}
+  x_1'
+  = \frac{1}{\left\{\frac{F(n-1)}{F(n)}\right\}}
+  = \frac{F(n)}{F(n-1)}
+  = \frac{F(n-1) + F(n-1-d)}{F(n)},
+\end{align*}
+the elements with $i ≤ d - 1$ are
+\begin{align*}
+  x_i'
+  = \frac{\frac{F(n-i)}{F(n)}}{\frac{F(n-1)}{F(n)}}
+  = \frac{F(n-i)}{F(n-1)}
+\end{align*}
+and the last element is
+\begin{align*}
+  x_d'
+  = \frac{\frac{F(n-d) + F(n)}{F(n)} - 1}{\frac{F(n-1)}{F(n)}}
+  = \frac{F(n-d)}{F(n-1)}.
+\end{align*}
+
+However, this time the maximum Fibonacci numbers do not represent the worst-case,
+even for the new strategy.
+The issue is that in the equation
 \[
-  x_i
-  = \lim_{n → ∞} \sum_{k=0}^i \frac{F(n - i)}{F(n)}
-  = \sum_{k=0}^i ψ_d^k.
+  p_ℓ = a_ℓ p_ℓ' + q'
 \]
-Importantly, the algorithm is periodic for this input vector.
-We have already seen for the approximate solution with Fibonacci numbers
-that $d$ steps shifts each number backwards by $d$.
-For the algebraic solution, this means that it stays the same after $d$ steps.
-This gives us the second example of a periodic input for the generalized Euclidean algorithm.
-
-\begin{theorem}
-  The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
-  with $x_i = ψ_d^i$ when taking the minimum fractional value.
-\end{theorem}
-
-\begin{proof}
-  %The integer part of each $x_i$ is still $1$.
-  The first value $x₁$ is the smallest again, so $ℓ = 1$.
-  In the following iteration, we have
-  \[
-    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{ψ_d + ψ_d^2 + ⋯ + ψ_d^i}{ψ_d} = 1 + ψ_d + ⋯ + ψ_d^{i-1} = x_{i-1}.
-  \]
-  and
-  \[
-    x_1' = \frac{1}{\{x_1\}} = \frac{1}{ψ_d} = 1 + ψ_d + ⋯ + ψ_d^d = x_d.
-  \]
-  Therefore, we reach the original input vector after $d$ iterations.
-\end{proof}
+from Lemma~\ref{lem:divmod} we cannot bound $a_ℓ$ from below by $1$.
+The reason is that only element of $x$ can be greater than $1$
+and all other elements must be smaller than $1$.
+But that element does not have to be the pivot element,
+it could be another element.
+Therefore, we cannot use these Fibonacci numbers to bound the worst-case
+in the same way.
+Nevertheless, their ratios still lead to the root $θ_d$, which is periodic
+under this strategy.
 
 % ==============================================================================
-\section{Convergence of each Fibonacci Sequence towards their Golden Ratio}
+\section{Convergence of General Linear Recurrences}
 \label{sec:fib-conv}
 % ==============================================================================
 
 
 We have seen that the ratios of consecutive Fibonacci numbers for both
 definition converges towards their own respective golden ratios.
-However, this was under the assumption that the ratios are converging in the first place.
-Therefore, we will show in this section that this is actually the case.
+However, this was under the assumption that the ratios are converging.
+In this section, we will show in this section that this is actually the case.
 To show this for both sequences at once, we use a general linear recurrence $F(n)$
-with the initial terms $F(0) = ⋯ = F(d) = 1$ and the remaining terms are
-defined according to the recurrence
+with the initial terms $F(0) = ⋯ = F(d) = 1$ and with the remaining terms
+defined according to
 \[
   F(n + 1) = c_d F(n) + c_{d-1} F(n-1) + ⋯ + c₁ F(n - d + 1) + c₀ F(n - d)
 \]
-with nonnegative integer coefficients $c₀, c₁, …, c_d$.
-We assume that the first and last coefficient, $c₀$ and $c_d$, are not zero.
+for some nonnegative integer coefficients $c₀, c₁, …, c_d$.
+We assume that the first coefficent $c₀$ and the last $c_d$ are not zero.
 As an example, the $d$-bonacci sequence would have all coefficients set to one,
 whereas the other sequence would have only $c₀$ and $c_d$ set to one.
 The goal is to show that the ratios
