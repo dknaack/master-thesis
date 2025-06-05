@@ -288,6 +288,7 @@ Although the first coefficient can be negative, we can safely assume that its
 not since the second coefficient is always positive.
 Therefore, we simply prove the convergence for the second complete quotient $x^{(1)} =
 [a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MCF.
+
 Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
 which means that the MCF is infinite.
 We denote with $x^{(n)}$ the $n$-th complete quotient of $x$
@@ -296,7 +297,7 @@ then the $n$-th convergent of $x$ is denoted as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
-  = \left( \frac{P_{1ℓ}^{(n)}}{Q_{ℓ}^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_{ℓ}^{(n)}} \right).
+  = \left( \frac{P_{1ℓ}^{(n)}}{Q_ℓ^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_ℓ^{(n)}} \right).
 \]
 
 The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
@@ -304,13 +305,13 @@ For the proof we need two more requirements.
 The first comes from Perron's original proof.
 In his version, he required that there exists some constant $A > 0$ such that
 \[
-  0 < \frac{1}{a_{ℓ}^{(n)}} ≤ A
+  0 < \frac{1}{a_ℓ^{(n)}} ≤ A
   \quad \text{ and } \quad
-  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
+  0 ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
 \]
 where $ℓ$ is the index of the largest element in $x^{(n)}$.
 This condition is always satisfied by MCFs.
-Because $ℓ$ is the index of the largest element in $x^{(n)}$
+Because $x_ℓ^{(n)}$ is the largest element
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
 the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
 Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
@@ -455,6 +456,9 @@ However, we can change one of the other convergents.
 But the area available for the next convergent $r^{(n)}$ is restricted by this lemma
 such that the convex hull always shrinks by a constant amount.
 
+% TODO: We could maybe save this by only stating that this occurs infinitely often.
+% I think so, because if this cannot happen less than $d$ times. Otherwise, we must have a duplicate index.
+% -> This should also work if we're doing this for any index.
 \begin{lemma}
   \label{lem:lambda-pos}
   There exists one index $ℓ^+ ∈ \{0, …, d\}$ with $λ_{ℓ^+}^{(n)} > 1/C$ for some integer $C > 0$.
