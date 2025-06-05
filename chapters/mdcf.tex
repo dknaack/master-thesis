@@ -212,7 +212,7 @@ This matches the behavior of the algorithm in reverse.
 We begin with the vector $P_0^{(-1)} = 0$ since the Euclidean algorithm
 would end with a zero vector.
 Then, the formula calculates a new vector using an integral combination of the
-old vectors and stores it in $P_{ℓ_n}^{(n)}$.
+old vectors and stores it in $P_ℓ^{(n)}$.
 This corresponds directly to the modulo and exchange operation of the
 generalized Euclidean algorithm.
 As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, the
@@ -252,12 +252,12 @@ such they ensure that they converge to a limit as $n$ increases.
   where the fraction is expanded with $x_ℓ/x_ℓ$ such that the numerator and denominator are each multiplied by $x_ℓ$.
   The numerator can then be simplified as follows:
   \begin{align*}
-    & \hphantom{{} = {}} x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} y_ℓ + \sum_{i ≠ ℓ, i ≠ 0} P_i^{(n-1)} y_i \right) \\
-    & = x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} \left( r_ℓ^{(n)} + \frac{1}{x_ℓ} \right) + \sum_{i ≠ ℓ, i ≠ 0} P_i^{(n-1)} \left(r_i^{(n)} + \frac{x_i}{x_ℓ} \right) \right) \\
-    & = P_0^{(n-1)} x_ℓ + P_ℓ^{(n-1)} r_ℓ^{(n)} x_ℓ + P_ℓ^{(n-1)} + \sum_{i ≠ 0, i ≠ ℓ} P_i^{(n-1)} r_i^{(n)} x_ℓ + P_i^{(n-1)} x_i \\
-    & = \underbrace{\left( P_0^{(n-1)} + P_ℓ^{(n-1)} r_ℓ^{(n)} + \sum_{i ≠ 0, i ≠ ℓ} P_i^{(n-1)} r_i^{(n)} \right)}_{P_ℓ^{(n)}} x_ℓ
+    & \hphantom{{} = {}} x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} y_ℓ + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} y_i \right) \\
+    & = x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} \left( r_ℓ^{(n)} + \frac{1}{x_ℓ} \right) + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} \left(r_i^{(n)} + \frac{x_i}{x_ℓ} \right) \right) \\
+    & = P_0^{(n-1)} x_ℓ + P_ℓ^{(n-1)} r_ℓ^{(n)} x_ℓ + P_ℓ^{(n-1)} + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} r_i^{(n)} x_ℓ + P_i^{(n-1)} x_i \\
+    & = \underbrace{\left( P_0^{(n-1)} + P_ℓ^{(n-1)} r_ℓ^{(n)} + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} r_i^{(n)} \right)}_{P_ℓ^{(n)}} x_ℓ
       + \underbrace{P_ℓ^{(n-1)}}_{P_0^{(n)}}
-      + \sum_{i ≠ 0, i ≠ ℓ} \underbrace{P_i^{(n)}}_{P_i^{(n)}} x_i \\
+      + \sum_{i ∉ \{0,ℓ\}} \underbrace{P_i^{(n)}}_{P_i^{(n)}} x_i \\
     & = P_0^{(n)} + P_1^{(n)} x_1 + ⋯ + P_d^{(n)} x_d.
   \end{align*}
   The simplification for the denominator is identical.
