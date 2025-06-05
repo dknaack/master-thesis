@@ -9,22 +9,23 @@ Although he posed the question almost two centuries ago,
 it remains unanswered until this day.
 
 His motivation for the question comes from the representation of real numbers as continued fractions.
-The standard way to represent numbers is through decimal notation.
-A number is represented by its integer part followed by a potentially infinite
-series of digits for the fractional part.
-This representation leads to a trivial check, whether the represented number is
-rational or not.
-The decimal number is finite if and only if the original number is rational.
+The standard way to represent numbers is through decimal notation,
+where a number is represented by its integer part followed by a potentially
+infinite series of digits for the fractional part.
+This representation allows one to easily check, whether the represented number
+is rational or not.
+If the decimal expansion of a number is eventually periodic, then the number is rational.
 Continued fractions provide a similar check for quadratic irrationals.
 They are fractions of the form
 \[
   a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
 \]
 where $a₀, a₁, a₂, …$ are integers.
-Euler was one of the first mathematicians to analyze these fractions
-and he showed that any periodic continued fraction is a quadratic irrational.
-Later, Lagrange showed the opposite direction,
-that every quadratic irrational has a periodic continued fraction.
+If the sequence is eventually periodic,
+then the represented number must be a quadratic irrational.
+More importantly, the converse is also true:
+If a number is a quadratic irrational,
+then its continued fraction expansion must be eventually periodic.
 In his letters,
 Hermite was interested in a generalization of continued fractions,
 which would be periodic for cubic irrationals.
@@ -33,17 +34,22 @@ which would be periodic for cubic irrationals.
 % "The main goal in Diophantine approximation is to approximate real number by rational numbers"
 % "It turns out that truncating an infinite continued fraction to a finite one produces the best rational approximation"
 % "Furthermore, the best rational approximations are always finite continued fractions."
-The appeal of such a representation lies in the remarkable effectiveness of continued fractions.
-Not only do they reveal algebraic properties of numbers through periodicity,
-they also provide exceptionally good rational approximations.
-Each truncation of a continued fraction gives a so-called \emph{convergent},
-a rational number that closely approximates the original input.
+Such a generalization would not only be useful for its algebraic properties,
+but they could also play an important role in other fields.
+For example, the continued fractions play an important role in the field of
+Diophantine approximation, where the goal is to approximate real numbers using
+rational numbers as closely as possible.
+It turns out that the best rational approximations are exactly those provided by continued fractions.
+Truncating a continued fraction gives a so-called \emph{convergent}
+and these convergents closely approximate the represented number.
 In fact, these convergents are optimal:
 no better approximation with a smaller or equal denominator exists.
-For a generalization,
-the hope is that it provides good approximations for multiple numbers at once.
+A generalization of continued fractions could serve a similar role in the field
+of simultaneous Diophantine approximation, where the goal is to approximate
+multiple real numbers at once with a rational vector.
 
-Hermite's question can be easily generalized from cubic irrationals to any algebraic number:
+Hermite's original question only applies to cubic irrationals,
+but it can be easily generalized to any algebraic number:
 Does there exist a representation of the real numbers as a sequence of
 integers that is periodic if and only if the represented number is a algebraic number of degree $d$?
 There are two parts to this question.
@@ -55,20 +61,18 @@ It should repeat after some point if and only if the represented is a cubic irra
 A more general question would ask whether such a periodic sequence exists for
 algebraic numbers of a fixed degree.
 
-Since Hermite originally posed his question to Jacobi, it was Jacobi who first attempted to answer it.
-He developed an algorithm inspired by the Euclidean algorithm,
+Since Hermite originally posed his question to Jacobi, it was he who first
+attempted to answer it.
+He developed an algorithm \cite{Jacobi68} inspired by the Euclidean algorithm,
 which calculates the greatest common divisor of three numbers instead of two.
 At each step,
 the algorithm chooses the smallest number and uses it to divide the other two.
 In the next triple, the other two numbers are replaced by their remainder.
 This process is continued until the greatest common divisor is found.
-
 Later, Oskar Perron generalized Jacobi's method to arbitrary dimensions \cite{Perron07},
 resulting in what is now called the Jacobi–Perron Algorithm (JPA).
 His algorithm is essentially a generalization of the Euclidean algorithm to $n$ numbers.
 At each step, he still chooses the smallest element at each iteration.
-
-% TODO: Should we begin with the Jacobi-Perron algorithm here?
 
 % ==============================================================================
 \section{Contributions of this Thesis}
@@ -77,10 +81,11 @@ At each step, he still chooses the smallest element at each iteration.
 This thesis extends previous work on multidimensional continued fractions (MCFs).
 The JPA usually only considers the smallest number in each iteration,
 however there are algorithms based on the JPA which choose a different number,
-like choosing the largest or choosing some number based on a cost function.
+like choosing the largest number \cite{Podsypanin77} or choosing some number
+based on a cost function \cite{Tamura09}.
 In this thesis, I present a whole class of MCFs,
-which encompass all of these JPA-type algorithms.
-The main contributions regarding the MCFs are as follows:
+which encompass all JPA-type algorithms.
+The main contributions regarding these MCFs are as follows:
 \begin{enumerate}
   \item \textbf{Convergence}:
     I establish sufficient conditions under which the proposed class of MCFs
@@ -91,9 +96,7 @@ The main contributions regarding the MCFs are as follows:
     I prove that if a multidimensional continued fraction expansion becomes
     eventually periodic, then the original input vector consists of algebraic
     numbers.
-    This result extends the classical correspondence between periodicity and
-    quadratic irrationals in one dimension to higher-dimensional settings.
-    This solves one direction of the second part to Hermite's question.
+    This solves one direction for the second part of Hermite's question.
     It still leaves open the question whether algebraic numbers always lead to
     periodic MCFs.
 \end{enumerate}
@@ -132,7 +135,7 @@ ratio, which can be seen as one of the simplest example of a periodic MCF.
 
 As previously mentioned,
 one of the first algorithms studied for this problem is the JPA.
-The algorithm was later analyzed by Bernstein \cite{Bernstein71},
+The algorithm was analyzed by Bernstein \cite{Bernstein71} again,
 who identified explicit classes of cubic irrationals for which the JPA
 becomes periodic \cite{Bernstein64A, Bernstein65, Bernstein64B}.
 However, numerical computations by Elsner and Hasse \cite{Elsner67} have shown
@@ -149,7 +152,7 @@ cubic irrationals \cite{Murru15}.
 While this addresses one half of Hermite’s question --
 showing that every cubic irrational can be represented periodically --
 it does not provide a representation for arbitrary real numbers,
-and thus does not resolve the full problem.
+and thus, it does not provide a full answer to Hermite's question.
 
 More recently, Karpenkov has proposed two new algorithms \cite{Karpenkov21, Karpenkov24}.
 The first is called the $\sin^2$-algorithm and he has shown that this algorithm
@@ -159,26 +162,30 @@ The second algorithm is called the HAPD algorithm \cite{Karpenkov24} and he
 conjectures that this algorithm is periodic for all cubic irrationals,
 although this conjecture remains unproven.
 
-Such geometric viewpoints have a long history.
-Felix Klein famously interpreted continued fractions as points on integer
-lattices \cite{Klein95}, offering a visual and structural approach to
-understanding their behavior.
-This interpretation underlies a geometric proof of Lagrange’s theorem, which
-will also be presented in this thesis following the work of
-Korkina~\cite{Korkina96}.
+Apart from the algorithmic approach,
+there has also been significant effort in a geometric generalization of
+continued fractions.
+Felix Klein famously interpreted the convergents of a continued fractions as
+points on integer lattices \cite{Klein95}.
+His interpretation has lead to a geometric proof of Lagrange’s theorem, which
+will also be presented in this thesis following the work of Korkina~\cite{Korkina96}.
 Arnol'd has suggested a generalization of this interpretation to higher
-dimensions \cite{Arnold98} and it was conjectured that they satisfy an
-equivalent of Lagrange's theorem but in higher dimensions.
-This was eventually proven by German \cite{German08}, further motivating the
-study of multidimensional analogues.
+dimensions \cite{Arnold98} and it was conjectured that they satisfy a
+multidimensional equivalent of Lagrange's theorem,
+which shows that every quadratic irrational has an eventually periodic
+continued fraction.
+This conjecture was eventually proven by German \cite{German08},
+which indicates that there could be a connection between the multidimensional
+continued fractions and algebraic numbers.
 
-Beyond continued fractions, there have been alternative
+Beyond multidimensional continued fractions, there have been alternative
 generalizations of classical number-theoretic functions.
-One notable direction is the extension of the Minkowski question-mark function
-to two dimensions \cite{Beaver04}, which maps quadratic irrationals to rationals in a highly structured way.
+One notable example is the Minkowski question-mark function $?(x)$,
+which maps a quadratic irrational $x$ to a rational number.
 Efforts to define higher-dimensional analogues of this function aim to mirror
-the relationship between algebraic numbers and their representations,
-offering yet another approach to answering Hermite’s question.
+the relationship between algebraic numbers and their representations.
+There has been an extension of this function to two dimensions \cite{Beaver04},
+but this has not solved Hermite's question, yet.
 
 % ==============================================================================
 \section{Structure of this Thesis}
