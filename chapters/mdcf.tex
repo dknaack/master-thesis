@@ -305,11 +305,11 @@ then the $n$-th convergent of $x$ is denoted as
 The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
 For the proof we need two more requirements.
 The first comes from Perron's original proof.
-In his version, he required that there exists some constant $c > 0$ such that
+In his version, he required that there exists some constant $A > 0$ such that
 \[
-  0 < \frac{1}{a_{ℓ}^{(n)}} ≤ c
+  0 < \frac{1}{a_{ℓ}^{(n)}} ≤ A
   \quad \text{ and } \quad
-  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ c \quad \text{ for every } i ≠ ℓ,
+  0 ≤ \frac{a_i^{(n)}}{a_{ℓ}^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
 \]
 where $ℓ$ is the index of the largest element in $x^{(n)}$.
 This condition is always satisfied by MCFs.
@@ -317,7 +317,7 @@ Because $ℓ$ is the index of the largest element in $x^{(n)}$
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
 the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
 Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
-Hence, this condition is satisfied for $c = 1$.
+Hence, this condition is satisfied for $A = 1$.
 
 The second requirement is specifically for MCFs.
 Each MCF is constructed using the generalized Euclidean algorithm and one
@@ -380,7 +380,7 @@ secondary convergents.
   Because of the requirement that every index has occurred at least once,
   the denominators $Q_k^{(n-1)}$ of the convex combination cannot be zero.
   Therefore, this is a valid representation of the convergent $r_i^{(n)}$.
-  For the coefficients $λ_i$, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
+  For the coefficients themselves, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
   The first property follows from the definition of $Q_ℓ^{(n)}$:
   \[
     Q_ℓ^{(n)} = Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}
@@ -389,10 +389,9 @@ secondary convergents.
   \[
     1 = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}} + \frac{Q_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)} + ⋯ + \frac{Q_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)} = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)}.
   \]
-  The second property follows from the fact that $a^{(n)}$ is non-negative.
-  Therefore, $Q_ℓ^{(n)}$ is always less than or equal to $a_i^{(n)}
-  Q_i^{(n-1)}$ for every index $i ≤ d$ and $λ_i$ is always bounded
-  between $0$ and $1$.
+  The second property follows from the fact that every vector $a^{(n)}$ is nonnegative.
+  Therefore, the denominator $Q_ℓ^{(n)}$ is always less than or equal to $a_i^{(n)} Q_i^{(n-1)}$ and
+  $λ_i$ is always bounded between $0$ and $1$.
 \end{proof}
 
 Next, we enclose the secondary convergents inside an axis-aligned bounding box.
@@ -461,7 +460,7 @@ such that the convex hull always shrinks by a constant amount.
 
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $ℓ^+ ∈ \{0, 1, …, d\}$ with $λ_{ℓ^+}^{(n)} > \frac{1}{M}$ for some constant $M > 0$.
+  There exists one index $ℓ^+ ∈ \{0, …, d\}$ with $λ_{ℓ^+}^{(n)} > 1/C$ for some integer $C > 0$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
@@ -478,14 +477,14 @@ such that the convex hull always shrinks by a constant amount.
     \frac{λ_i^{(n)}}{λ_{ℓ^+}^{(n)}}
     = \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}} · \frac{Q_i^{(n-1)}}{Q_{ℓ^+}^{(n-1)}}
     ≤ \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}}
-    ≤ c,
+    ≤ A,
   \]
-  or equivalently $λᵢ^{(n)} ≤ c λ_{ℓ^+}^{(n)}$.
+  or equivalently $λᵢ^{(n)} ≤ A λ_{ℓ^+}^{(n)}$.
   But then,
   \[
-    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_{ℓ^+}^{(n)} (1 + dc).
+    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_{ℓ^+}^{(n)} (1 + dA).
   \]
-  Therefore, $λ_{ℓ^+}^{(n)} ≥ 1/M$ with $M = 1 + dc > 0$.
+  Therefore, $λ_{ℓ^+}^{(n)} ≥ 1/C$ with $C = 1 + dA > 0$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -550,23 +549,23 @@ This is the main idea behind the following proof.
   \begin{align*}
     r_i^{(n)} - s_i > λ_{ℓ}^{(n)} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
-  Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $M$
+  Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $C$
   which bounds $λ_{ℓ}^{(n)}$ from below.
   It follows that
   \begin{align*}
-    r_i^{(n)} - s_i > \frac{1}{M} \left( r_i^{(n-1)} - s_i \right) - ε
+    r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε
   \end{align*}
-  for some constant $M > 0$.
+  for some constant $C > 0$.
   Advancing this inequality from $n$ to $n+1, n+2, …, n+k$ results in the new
   inequality
   \begin{align*}
-    r_i^{(n+k)} - s_i > \frac{1}{M^k} \left( r_i^{(n-1)} - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
+    r_i^{(n+k)} - s_i > \frac{1}{C^k} \left( r_i^{(n-1)} - s_i \right) - ε\left( \frac{1}{C} + \frac{1}{C^2} + ⋯ + \frac{1}{C^{k-1}} \right).
   \end{align*}
   Since every index occurs infinitely often,
   there must be one index $n$ where $r_i^{(n-1)} ≤ t_i$
   and another index $n+k$ where $r_i^{(n+k)} ≥ s_i$.
   \begin{align*}
-    0 > \frac{1}{M^k} \left( t_i - s_i \right) - ε\left( \frac{1}{M} + \frac{1}{M^2} + ⋯ + \frac{1}{M^{k-1}} \right).
+    0 > \frac{1}{C^k} \left( t_i - s_i \right) - ε\left( \frac{1}{C} + \frac{1}{C^2} + ⋯ + \frac{1}{C^{k-1}} \right).
   \end{align*}
   But $ε$ can be chosen arbitrarily small,
   which is a contradiction to the fact that $t_i - s_i > 0$.
