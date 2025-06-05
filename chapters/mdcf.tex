@@ -357,9 +357,9 @@ secondary convergents.
 % TODO: We should probably add superscripts to the lambdas as they depend on n.
 \begin{lemma}
   \label{lem:conv-conv}
-  There exists $λ₀, λ₁, …, λ_d ≥ 0$ with $λ₀ + λ₁ + ⋯ + λ_d = 1$ such that
+  There exists $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)} ≥ 0$ with $λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} = 1$ such that
   \[
-    r_i^{(n)} = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+    r_i^{(n)} = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
 \end{lemma}
 
@@ -387,7 +387,7 @@ secondary convergents.
   \]
   which is equivalent to
   \[
-    1 = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}} + \frac{Q_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)} + ⋯ + \frac{Q_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)} = λ₀ + λ₁ + ⋯ + λ_d.
+    1 = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}} + \frac{Q_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)} + ⋯ + \frac{Q_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)} = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)}.
   \]
   The second property follows from the fact that $a^{(n)}$ is non-negative.
   Therefore, $Q_ℓ^{(n)}$ is always less than or equal to $a_i^{(n)}
@@ -425,8 +425,8 @@ By the monotone-convergence theorem, the sequences must converge.
   Using Lemma~\ref{lem:conv-conv},
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}
-    & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & ≥ λ₀ s_i^{(n-1)} + λ₁ s_i^{(n-1)} + ⋯ + λ_d s_i^{(n-1)}
+    & = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & ≥ λ₀^{(n)} s_i^{(n-1)} + λ₁^{(n)} s_i^{(n-1)} + ⋯ + λ_d^{(n)} s_i^{(n-1)}
       = s_i^{(n-1)}.
   \end{align*}
   The bound for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ is even easier since
@@ -446,9 +446,9 @@ By the monotone-convergence theorem, the sequences must converge.
 
 In order to show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
 converging to the same limit, we first need this crucial lemma about the
-coefficients $λ₀, λ₁, …, λ_d$ from Lemma~\ref{lem:conv-conv}.
+coefficients $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)}$ from Lemma~\ref{lem:conv-conv}.
 % TODO: Actually add the figure here. Or do we wanna use the combined one, which is already here?
-The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
+%The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
 It states that one of the coefficients is always greater than some constant
 independently of $n$ and importantly that coefficient is for the previous convergent $r^{(n-1)}$.
 From the recurrence for the convergents,
@@ -461,31 +461,31 @@ such that the convex hull always shrinks by a constant amount.
 
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $ℓ$ with $λ_ℓ > \frac{1}{M}$ for some positive constant $M$.
+  There exists one index $ℓ^+ ∈ \{0, 1, …, d\}$ with $λ_{ℓ^+}^{(n)} > \frac{1}{M}$ for some constant $M > 0$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
 \begin{proof}
-  Let $ℓ$ be the index of the largest element in the previous complete quotient $x^{(n-1)}$.
+  Let $ℓ^+$ be the index of the largest element in the previous complete quotient $x^{(n-1)}$.
   Using the initial requirements for the coefficients $a_i^{(n)}$ and the fact
   that
   \[
-    Q_ℓ^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d ≥ Q_i^{(n-2)} = Q_i^{(n-1)}
+    Q_{ℓ^+}^{(n-1)} > Q_i^{(n-1)}
   \]
   for every $i ≠ ℓ$.
   It follows that
   \[
-    \frac{λ_i}{λ_ℓ}
-    = \frac{a_i^{(n)}}{a_ℓ^{(n)}} · \frac{Q_i^{(n-1)}}{Q_ℓ^{(n-1)}}
-    ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}}
+    \frac{λ_i^{(n)}}{λ_{ℓ^+}^{(n)}}
+    = \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}} · \frac{Q_i^{(n-1)}}{Q_{ℓ^+}^{(n-1)}}
+    ≤ \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}}
     ≤ c,
   \]
-  or equivalently $λᵢ ≤ c λ_ℓ$.
+  or equivalently $λᵢ^{(n)} ≤ c λ_{ℓ^+}^{(n)}$.
   But then,
   \[
-    1 = λ₀ + λ₁ + ⋯ + λ_d ≤ λ_ℓ (1 + dc).
+    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_{ℓ^+}^{(n)} (1 + dc).
   \]
-  Therefore, $λ_ℓ ≥ 1/M$ with $M = 1 + dc > 0$.
+  Therefore, $λ_{ℓ^+}^{(n)} ≥ 1/M$ with $M = 1 + dc > 0$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -498,7 +498,7 @@ such that the convex hull always shrinks by a constant amount.
     If $r^{(k)}$ is the convergent of the current iteration,
     then either $r^{(i)}$ or $r^{(j)}$ has to be moved in the next iteration.
     However, neither can go in the red triangle,
-    since $λ_k > 1/M$.
+    since $λ_k^{(n)} > 1/M$.
   }
   \label{fig:convergence}
 \end{figure}
@@ -542,16 +542,16 @@ This is the main idea behind the following proof.
   %$Q_i^{(n-1)} = Q_i^{(n-2)}$ and $Q_k^{(n-1)} = Q_0^{(n-2)} + Q_1^{(n-2)} a_1^{(n-1)} + ⋯ + Q_d^{(n-2)} a_d^{(n-1)}$. % TODO: Why was this here?
   \begin{align*}
     r_i^{(n)}
-    & = λ₀ \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁ \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & > \lambda_{ℓ} \frac{P_{iℓ}^{(n-1)}}{Q_{ℓ}^{(n-1)}} + \sum_{i ≠ k} λ_i (s_i - ε) \\
-    & = \lambda_{ℓ} r_i^{(n-1)} + (1 - λ_ℓ) (s_i - ε),
+    & = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & > λ_{ℓ}^{(n)} \frac{P_{iℓ}^{(n-1)}}{Q_{ℓ}^{(n-1)}} + \sum_{i ≠ k} λ_i^{(n)} (s_i - ε) \\
+    & = λ_{ℓ}^{(n)} r_i^{(n-1)} + (1 - λ_ℓ^{(n)}) (s_i - ε),
   \end{align*}
   or equivalently
   \begin{align*}
-    r_i^{(n)} - s_i > λ_{ℓ} \left( r_i^{(n-1)} - s_i \right) - ε.
+    r_i^{(n)} - s_i > λ_{ℓ}^{(n)} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
   Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $M$
-  which bounds $λ_{ℓ}$ from below.
+  which bounds $λ_{ℓ}^{(n)}$ from below.
   It follows that
   \begin{align*}
     r_i^{(n)} - s_i > \frac{1}{M} \left( r_i^{(n-1)} - s_i \right) - ε
@@ -596,13 +596,14 @@ which is the original vector $x$ used for construction of the MCF.
   \]
   Using a similar argument as Lemma~\ref{lem:conv-conv}, we can represent this
   as a convex combination
-  \[
-    x_i = λ₀' \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁' \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d' \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
-    \quad
+  \begin{align*}
+    x_i & = μ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + μ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + μ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
+    \\
+    &
     \text{ with }
     \quad
-    λ_i' = x_i^{(n)} \frac{Q_i^{(n-1)}}{Q_ℓ^{(n)}}.
-  \]
+    μ_i^{(n)} = x_i^{(n)} \frac{Q_i^{(n-1)}}{Q_0^{(n-1)} + Q_d^{(n)} x_1^{(n)} + ⋯ + Q_d^{(n-1)} x_d^{(n)}}.
+  \end{align*}
   From the previous lemma, we know that $r^{(n)}$ converges to some limit $x' ∈ ℝ^d$.
   Since every index occurs infinitely often,
   we can find an index $m ≤ n - 1$ such that the primary convergent $r_i^{(m)}$ is
@@ -613,12 +614,12 @@ which is the original vector $x$ used for construction of the MCF.
   Thus, for each secondary convergent there are sufficiently small values $ε₀, ε₁, …, ε_d$ such that
   \begin{align*}
     x_i
-    & = λ₀' \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + λ₁' \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + λ_d' \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & = λ₀' (x_i' - ε₀) + λ₁' (x_i - ε₁) + ⋯ + λ_d' (x_d - ε_d) \\
-    & = x_i' - (λ₀' ε₀ + λ₁' ε₁ + λ_d' ε_d).
+    & = μ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + μ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + μ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
+    & = μ₀^{(n)} (x_i' - ε₀) + μ₁^{(n)} (x_i - ε₁) + ⋯ + μ_d^{(n)} (x_d - ε_d) \\
+    & = x_i' - (μ₀^{(n)} ε₀ + μ₁^{(n)} ε₁ + μ_d^{(n)} ε_d).
   \end{align*}
   However, as $n$ increases the values $εᵢ$ must become arbitrarily small
-  and because the coefficients $λ₀', λ₁', …, λ_d'$ all lie between $0$ and $1$,
+  and because the coefficients $μ₀^{(n)}, μ₁^{(n)}, …, μ_d^{(n)}$ all lie between $0$ and $1$,
   we can conclude that $x_i = x_i'$.
 \end{proof}
 
@@ -804,6 +805,38 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
   Lemma~\ref{lem:mdcf-wallis}.
 \end{proof}
 
+\iffalse
+% TODO: Klein polyhedra?
+Last but not least,
+there also exists a generalization of Klein polygons to higher dimensions.
+For three dimensions, they are known as Klein polyhedra
+and in general they are known as Klein polytopes.
+
+\begin{definition}
+  Let $B = \{b₁, …, b_d\} ⊆ ℝ^d$ be a basis and let $C = \{ λ₁ b₁ + ⋯ + λ_d b_d \mid λ_i ≥ 0 \}$.
+  The \emph{Klein polytope} $K$ generated by $B$ is defined as
+  \[
+    K = \mathrm{conv}(C ∩ ℤ^d \setminus \{\symbf 0\}).
+  \]
+\end{definition}
+
+The connection between Klein polytopes and the convergents is not clear to me, however.
+As before, we can show that the area between the convergents is empty.
+The idea for a Klein polyhedra is visualized in Figure~\ref{fig:klein-polytope}.
+This time, we consider the parallelepiped between the secondary convergents of the
+current iteration and the previous iteration.
+The number of integer points inside this parallelepiped can be calculated using
+the determinant between the convergents.
+Although the parallelepiped is not empty,
+all of its integer points must be its the boundary.
+Therefore, the volume between the convergents is empty.
+
+Similarly,
+Equation~\ref{eq:??} already shows that the line lies inside the convex hull of
+the secondary convergents
+and the convergence shows that the area of the convergents decreases towards zero.
+\fi
+
 % ==============================================================================
 \section{Algebraic Numbers and Periodicity}
 % ==============================================================================
@@ -818,7 +851,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 \begin{lemma}
   \label{lem:mdcf-purely-periodic}
   If there exists a purely periodic MCF for $x ∈ ℝ^d$,
-  then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
+  then $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{lemma}
 
 % TODO: Should we use x ≡ y or [x] = [y]?
@@ -840,19 +873,19 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   \]
   Each coefficient in this linear system is either an integer or $λ$ and is
   therefore contained in the field $ℚ(λ)$.
-  Hence, the elements of $\hat x$ must come from the same
-  field $ℚ(λ)$ and they must be algebraic numbers with the same degree.
+  Hence, we have $[ℚ(\hat x_0, \hat x_1, …, \hat x_d) : ℚ] ≤ d+1$.
 
   Finally, the eigenvector $\hat x$ has to be projected back from homogeneous coordinates $x$.
   Since $xᵢ = \hat xᵢ / \hat x₀$ and the values $\hat xᵢ$ and $\hat x₀$ are members of the field $ℚ(λ)$,
   the projected value $xᵢ$ must also be contained in the same field.
-  Therefore, each element in $x$ is an algebraic number of degree $≤ d+1$.
+  Therefore, each element in $x$ is an algebraic number
+  and we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{proof}
 
 \begin{theorem}
   \label{thm:mdcf-periodic}
   If there exists a periodic MCF for $x ∈ ℝ^d$,
-  then each $xᵢ$ is contained in an algebraic field with degree $≤ d+1$.
+  then $[ℚ(x₁, …, x_d) : ℚ] ≤ d + 1$.
 \end{theorem}
 
 \begin{proof}
@@ -874,10 +907,11 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   % that.
   From the Lemma~\ref{lem:mdcf-purely-periodic},
   it follows that the elements of $\hat x^{(k)}$
-  are contained in a field $ℚ(λ)$ with degree $≤ d+1$.
+  are contained in a field $ℚ(λ)$ with degree $[ℚ(λ) : ℚ] ≤ d+1$.
   Since $B^{(k)}$ consists solely of integers, every element in $x$ is contained in the same field $ℚ(λ)$.
-  Therefore, they must also be algebraic numbers of degree $≤ d+1$.
+  Therefore, they must also be algebraic numbers
+  and we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{proof}
 
 % TODO: There should be a discussion about the potential for answering
-% Hermite's question here...
+% Hermite's question here... We could use thm:unimodular-algebraic, which links algebraic numbers with a unimodular matrix. Using the multidimensional generalization of Lagrange's theorem, we have a periodic chain
