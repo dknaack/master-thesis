@@ -375,14 +375,27 @@ We will make use of the determinant of this matrix:
   determinant of its multiplication matrix $M_α$.
 \end{definition}
 
-An immediate consequence of the definition is multiplicativity:
-the norm of a product is equal to the product of the norms.
-This makes it a valuable tool for reasoning about algebraic equations
-and for connecting the arithmetic of $K$ to that of $ℚ$.
-
-\begin{lemma}
-  For every $α, β ∈ K$, we have $N_{K/ℚ}(αβ) = N_{K/ℚ}(α) · N_{K/ℚ}(β)$.
-\end{lemma}
+\begin{example}
+  Consider a quadratic field $K = ℚ(\sqrt{d})$ for some non-perfect square $d$.
+  Each element $α ∈ ℚ(\sqrt{d})$ can be represented as $a + b \sqrt{d}$ for some $a, b ∈ ℚ$.
+  The multiplication matrix of $α$ is
+  \[
+    M_α =
+    \begin{pmatrix}
+      a & bd \\
+      b & a \\
+    \end{pmatrix},
+  \]
+  since
+  $(a + b \sqrt{d}) · 1 = a + b \sqrt{d}$ and
+  $(a + b \sqrt{d}) · \sqrt{d} = bd + a \sqrt{d}$.
+  The norm of any element $α ∈ ℚ(\sqrt{d})$ is then defined as
+  \[
+    N_{K/ℚ}(a + b \sqrt{d}) = a^2 - d b^2.
+  \]
+  The elements in the ring $ℤ[\sqrt{d}]$ with norm $±1$
+  are instances of Pell's equation.
+\end{example}
 
 The field $ℚ(α)$ forms an $n$-dimensional vector space using the power basis
 and the ring $ℤ[α]$ forms an $n$-dimensional lattice using the same basis.
