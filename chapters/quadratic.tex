@@ -221,35 +221,57 @@ and that is by definition not possible.
 Therefore, we cannot use the Euclidean algorithm directly to construct a
 continued fraction.
 
-Instead, we use a slightly different algorithm shown in Listing~\ref{lst:cont-frac}.
-The algorithm is adapted from the Euclidean algorithm.
-It only receives a single number $x$ and calculates the continued fraction $[a₀; a₁, …]$ for this number.
-It begins with $x₀ = x$ and computes the integer part $\floor{x₀}$,
-which will be the first coefficient.
-Then, it continues with $x₁ = 1/\{x₀\}$.
-These steps are repeated until $xₙ = 0$.
-The terms $x_n$ are also called the \emph{$n$-th complete quotient} of $x$.
+Instead, we take a different approach.
+For a given number $x₀ ∈ ℝ$,
+we begin the algorithm with the input $(x₀, 1)$
+and we use the division from Example~\vref{ex:real-divmod}, i.e.
+we split $x$ into its integer and fractional part:
+\[
+  x = \floor{x} · 1 + \{x\}
+\]
+In the next iteration, we take the pair $(1, \{x\})$ and rescale it by
+$1/\{x\}$ such that we have $1$ as the second element.
+Then, the next input pair is $(x₁, 1) = (1/\{x₀\}, 1)$
+and  we repeat the division step:
+\[
+  \frac{1}{\{x\}} = \floor{\frac{1}{\{x\}}} + \left\{ \frac{1}{\{x\}} \right\}.
+\]
+We continue this process until $xₙ = 0$.
+At each step, we take the integer part $aₙ = \floor{xₙ}$ as one coefficient in
+the continued fraction $[a₀; a₁, …]$ of $x$.
 
 \begin{example}
-  % TODO: Example for an irrational number.
+  Consider $x = 13/5$, again.
+  The new algorithm computes
+  \begin{align*}
+    \frac{13}{5} & = 2 + \frac{3}{5} \\
+    \frac{5}{3} & = 1 + \frac{2}{3} \\
+    \frac{3}{2} & = 1 + \frac{1}{2} \\
+    \frac{2}{1} & = 2 + 0.
+  \end{align*}
+  Thus, we get the same continued fraction $[2; 1, 1, 2]$ for $13/5$.
+\end{example}
+
+\begin{example}
+  Consider $x = \sqrt{2}$, which has an integer part of $1$.
+  The first iteration of the algorithm results in
+  \[
+    \sqrt{2} = 1 + (\sqrt{2} - 1).
+  \]
+  The inverse of $\sqrt{2} - 1$ is $\sqrt{2} + 1$,
+  since $(\sqrt{2} - 1)(\sqrt{2} + 1) = 2 - 1 = 1$.
+  Thus, the next input pair is $(\sqrt{2} + 1, 1)$ and the algorithm computes
+  \[
+    \sqrt{2} = 2 + (\sqrt{2} - 1).
+  \]
+  After this step,
+  the algorithm cycles.
+  Therefore, the continued fraction for $\sqrt{2}$ is $[2; 1, 1, …]$.
 \end{example}
 
 Because the continued fraction $[a₀; a₁, …]$ is made up of integers and the
 ones after $a₀$ are all positive, its integer part is entirely determined by
 the first coefficient $a₀$ and its fractional part is determined by $[0; a₁, a₂, …]$.
-
-\begin{Pseudocode}[
-    float={tbp},
-    label={lst:cont-frac},
-    caption={Algorithm to construct a continued fraction {$[a₀; a₁, …]$} for any $x ∈ ℝ$.}]
-$x₀ ← x$
-$n ← 0$
-while $xₙ ≠ 0$ do
-  $aₙ ← \floor{xₙ}$
-  $x_{n+1} ← \frac{1}{xₙ - aₙ}$
-  $n ← n + 1$
-end
-\end{Pseudocode}
 
 \begin{lemma}
   Let $n ≥ 1$ and $a₁, …, aₙ ∈ \Z_{> 0}$.
@@ -678,22 +700,7 @@ This is similar to how in decimal notation, we denote a period with a bar over t
 e.g. $1/3 = 0.\overline{3}$.
 In a continued fraction, we similarly denote the period with a line over the
 coefficients that are infinitely repeated.
-
-\begin{example}
-  We construct the continued fraction for $x = \sqrt{2}$.
-  Because it lies between $1$ and $2$, the first term must be $a₀ = 1$.
-  The next complete quotient is
-  \[
-    x₁ = \frac{1}{\sqrt{2} - 1} = \frac{\sqrt{2} + 1}{(\sqrt{2} - 1)(\sqrt{2} + 1)} = \sqrt{2} + 1.
-  \]
-  It lies between $2$ and $3$,
-  so the next term is $a₁ = 2$.
-  However, the next complete quotient is the same, since
-  \[
-    x₂ = \frac{1}{x₁ - 2} = \frac{1}{\sqrt{2} - 1} = \sqrt{2} + 1 = x₁.
-  \]
-  Therefore, terms will repeat and the resulting continued fraction for $\sqrt{2}$ is $[1; \overline{2}]$.
-\end{example}
+For example, $\sqrt{2} = [1; \overline{2}]$.
 
 For the proof, we have to show two directions.
 The first is that every periodic continued fraction is a quadratic irrational
