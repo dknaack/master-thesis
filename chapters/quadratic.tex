@@ -278,15 +278,15 @@ but such a continued fraction cannot be constructed using the algorithm.
 The algorithm would have to begin with a fractional part of $1$, which is impossible.
 
 % TODO: Explain that we need to show that it converges
-By definition,
-a number $x ∈ ℝ$ can be represented by a continued fraction $[a₀; a₁, …]$
-if and only if
+The next step is to show that this construction actually produces a correct
+representation for the number.
+By definition, a number $x ∈ ℝ$ is correctly represented by a continued
+fraction $[a₀; a₁, …]$ if and only if
 \[
   x = \lim_{n → ∞} [a₀; a₁, …, aₙ].
 \]
 In other words, the convergents must approach the number $x$ as $n$ increases.
-Thus, the next step is a proof that convergents actually approach the number $x$.
-The first step towards this proof will be the following lemma:
+Thus, the next step is to prove that convergents actually approach the number $x$.
 
 \begin{lemma}
   \label{lem:cf-det}
@@ -321,8 +321,8 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
 
 \begin{lemma}
   \label{lem:cf-approx}
-  Let $x ∈ ℝ$ and let $[a₀; a₁, …]$ be the continued fraction constructed using the algorithm from Listing~\ref{lst:cont-frac}.
-  If $pₙ/qₙ$ is the $n$-th convergent of the continued fraction, then
+  Let $x ∈ ℝ$ and let $[a₀; a₁, …]$ be its continued fraction expansion.
+  If $pₙ/qₙ$ is the $n$-th convergent, then
   \[
     \left| x - \frac{pₙ}{qₙ} \right| < \frac{1}{qₙ^2}.
   \]
@@ -352,9 +352,8 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
 
 We now have a continued fraction for both rational number and irrational numbers.
 What remains to be shown is that the continued fractions are unique.
-This would give us a representation for every real number $x ∈ ℝ$ using a
-continued fraction $[a₀; a₁, …]$, which is constructed using a version of the
-Euclidean algorithm.
+This gives us a unique representation for every real number $x ∈ ℝ$ by a
+continued fraction $[a₀; a₁, …]$.
 
 \begin{theorem}
   \label{thm:irrat-cf}
@@ -387,7 +386,7 @@ The geometrical view will also be useful for the second part of Hermite's questi
 
 The geometry of continued fraction was first analyzed by Klein \cite{Klein95}.
 He viewed the convergents $p_n/q_n$ of a continued fraction $[a₀; a₁, …]$ not
-as rational numbers lying on a one-dimensional number line,
+as rational numbers on a one-dimensional number line,
 but as a convergent \emph{vector} $bₙ = (pₙ, qₙ)$ in the two-dimensional integer lattice $ℤ^2$.
 Klein has shown many geometrical analogues of important theorems for continued fraction
 using these vectors.
