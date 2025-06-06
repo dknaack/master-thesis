@@ -273,45 +273,6 @@ Because the continued fraction $[a₀; a₁, …]$ is made up of integers and th
 ones after $a₀$ are all positive, its integer part is entirely determined by
 the first coefficient $a₀$ and its fractional part is determined by $[0; a₁, a₂, …]$.
 
-\iffalse
-\begin{figure}[tb]
-  \centering
-  \includestandalone{figures/golden-rectangle}
-  \caption{
-    The golden rectangle with side lengths $1$ and $φ$.
-    Cutting of one unit square from the rectangle gives another rectangle with lengths $φ - 1$ and $1$.
-    The ratio between the longer and shorter side remains the same.
-  }
-  \label{fig:golden-rectangle}
-\end{figure}
-
-\begin{example}
-  Consider the golden ratio $φ$.
-  It is the positive real root of the polynomial $p(x) = x^2 - x - 1$,
-  which means that it satisfies $φ = 1 + 1/φ$.
-  Since it is positive, we have $1 < φ = 1 + 1/φ < 2$ and $\floor{φ} = 1$.
-  This makes the construction of the continued fraction particularly simple since
-  \[
-    φ = 1 + \cfrac{1}{1 + \cfrac{1}{1 + \cfrac{1}{⋱}}}.
-  \]
-  So the golden ratio $φ$ is represented by $[1; \overline{1}]$.
-\end{example}
-
-For the golden ratio, there is also a geometric interpretation via the golden
-rectangle as shown in Figure~\ref{fig:golden-rectangle}.
-The golden rectangle has side lengths of $1$ and $φ$,
-and the Euclidean algorithm tries to remove as many unit squares inside the
-golden rectangle as possible.
-In this case, only one square is removed
-and we get a new rectangle with side lengths $1$ and $φ - 1$.
-But the ratios between the longer and shorter sides remain the same since
-\[
-  φ^2 - φ - 1 = 0 ⇔ φ(φ - 1) = 1 ⇔ \frac{φ}{1} = \frac{1}{φ - 1}.
-\]
-Therefore, in the next rectangle only one square of length $φ - 1$ will be
-removed again.
-\fi
-
 % TODO: Explain that we need to show that it converges
 By definition,
 a number $x ∈ ℝ$ can be represented by a continued fraction $[a₀; a₁, …]$
