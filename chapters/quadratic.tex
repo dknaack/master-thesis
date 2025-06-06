@@ -738,15 +738,16 @@ points along the boundary.
 \end{theorem}
 
 \begin{proof}
-  For any quadratic irrational $x$ with conjugate $\overline{x}$, we can find a
-  unimodular matrix $U$ which has $(x, 1)^⊤$ and $(\overline{x}, 1)^⊤$ as eigenvectors.
+  Let $\overline{x}$ denote the conjugate of $x$.
+  By Theorem~\ref{thm:unimodular-algebraic}, we can find a unimodular matrix $U$ for $x$,
+  which has $(x, 1)^⊤$ and $(\overline{x}, 1)^⊤$ as eigenvectors.
   Applying $U$ on the Klein polygon, we have
   \begin{align*}
     UK
     = U \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\})
     = \mathrm{conv}(UC ∩ Uℤ^2 \setminus \{(0, 0)\}).
   \end{align*}
-  The matrix $U$ is unimodular, so $Uℤ^2 = ℤ^2$ by Lemma~\ref{lem:unimodular}.
+  The matrix $U$ is unimodular, so by Lemma~\ref{lem:unimodular} we have $Uℤ^2 = ℤ^2$.
   Let $v ∈ C$.
   By definition of $C$,
   there exist coefficients $c₁, c₂ ≥ 0$ such that $v = c₁ (x, 1)^⊤ + c₂ (\overline{x}, 1)^⊤$.
@@ -772,7 +773,8 @@ points along the boundary.
       1 \\
     \end{pmatrix}
   \end{align*}
-  Furthermore, the eigenvalues are positive.
+  Furthermore, the eigenvalues must be positive.
+  If not, then we simply apply $U$ twice.
   Thus, $UC = C$ and $K$ must be invariant under $U$.
 
   Similarly, the boundary $Π(K)$ must also be invariant under this transformation.
