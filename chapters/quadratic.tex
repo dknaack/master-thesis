@@ -805,61 +805,6 @@ An immediate consequence of this is the following lemma:
   with determinant $1$, which has eigenvectors $(x, 1)$ and $(\overline{x}, 1)$.
 \end{lemma}
 
-\begin{example}
-  \label{ex:sqrt2-unit}
-  Consider $x = \sqrt{2}$.
-  The fundamental unit $ε$ is $3 + 2\sqrt{2}$ since $3^2 - 2 · 2^2 = 1$.
-  It has the multiplication matrix
-  \[
-    U = \begin{pmatrix}
-      3 & 4 \\
-      2 & 3 \\
-    \end{pmatrix},
-  \]
-  which has determinant $1$ by definition.
-  Furthermore,
-  \[
-    \begin{pmatrix}
-      3 & 4 \\
-      2 & 3 \\
-    \end{pmatrix}
-    \begin{pmatrix}
-      \sqrt{2} \\ 1 \\
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-      4 + 3\sqrt{2} \\
-      3 + 2\sqrt{2} \\
-    \end{pmatrix}
-    =
-    (3 + 2\sqrt{2})
-    \begin{pmatrix}
-      \sqrt{2} \\ 1 \\
-    \end{pmatrix}
-  \]
-  and
-  \[
-    \begin{pmatrix}
-      3 & 4 \\
-      2 & 3 \\
-    \end{pmatrix}
-    \begin{pmatrix}
-      -\sqrt{2} \\ 1 \\
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-      4 - 3\sqrt{2} \\
-      3 - 2\sqrt{2} \\
-    \end{pmatrix}
-    =
-    (3 - 2\sqrt{2})
-    \begin{pmatrix}
-      -\sqrt{2} \\ 1 \\
-    \end{pmatrix}.
-  \]
-  Therefore, it has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors.
-\end{example}
-
 \begin{figure}[tb]
   \centering
   \includestandalone{figures/full-klein-polygon}

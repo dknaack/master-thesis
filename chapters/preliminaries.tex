@@ -487,3 +487,59 @@ that is any root $β$ of $m_α(x)$ defines an eigenvector $(1, β, …, β^{n-1}
   \]
   Thus, $M_β x = β x$ and $x$ is an eigenvector of the unimodular matrix $M_β$.
 \end{proof}
+
+\begin{example}
+  \label{ex:sqrt2-unit}
+  Consider the field $ℚ(\sqrt{2})$.
+  One nontrivial unit in $ℚ(\sqrt{2})$ is $ε = 3 + 2\sqrt{2}$
+  since it has norm $3^2 - 2 · 2^2 = 1$.
+  It has the multiplication matrix
+  \[
+    U = \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix},
+  \]
+  which has determinant $1$ by definition.
+  Furthermore,
+  \[
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      \sqrt{2} \\ 1 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      4 + 3\sqrt{2} \\
+      3 + 2\sqrt{2} \\
+    \end{pmatrix}
+    =
+    (3 + 2\sqrt{2})
+    \begin{pmatrix}
+      \sqrt{2} \\ 1 \\
+    \end{pmatrix}
+  \]
+  and
+  \[
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+      -\sqrt{2} \\ 1 \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      4 - 3\sqrt{2} \\
+      3 - 2\sqrt{2} \\
+    \end{pmatrix}
+    =
+    (3 - 2\sqrt{2})
+    \begin{pmatrix}
+      -\sqrt{2} \\ 1 \\
+    \end{pmatrix}.
+  \]
+  Therefore, it has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors.
+\end{example}
