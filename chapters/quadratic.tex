@@ -273,22 +273,6 @@ Because the continued fraction $[a₀; a₁, …]$ is made up of integers and th
 ones after $a₀$ are all positive, its integer part is entirely determined by
 the first coefficient $a₀$ and its fractional part is determined by $[0; a₁, a₂, …]$.
 
-\begin{lemma}
-  Let $n ≥ 1$ and $a₁, …, aₙ ∈ \Z_{> 0}$.
-  Then, $[0; a₁, …, aₙ] < 1$.
-\end{lemma}
-
-\begin{proof}
-  For $n = 1$, the continued fraction is $[0; a₁] = \frac{1}{a₁}$.
-  Because $a₁ ≥ 2$, the whole continued fraction must be smaller than $1$.
-  Suppose that $[0; a₂, …, aₙ]$ is smaller than $1$.
-  Then the inverse is smaller than $1$ but still greater than $0$.
-  Therefore,
-  \[
-    [0; a₁, …, aₙ] = \frac{1}{[a₁; a₂, …, aₙ]} = \frac{1}{a₁ + [0; a₂, …, aₙ]} < 1. \qedhere
-  \]
-\end{proof}
-
 \iffalse
 \begin{figure}[tb]
   \centering
