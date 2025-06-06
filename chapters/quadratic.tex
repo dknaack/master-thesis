@@ -894,15 +894,39 @@ points along the boundary.
     = U \mathrm{conv}(C ∩ ℤ^2 \setminus \{(0, 0)\})
     = \mathrm{conv}(UC ∩ Uℤ^2 \setminus \{(0, 0)\}).
   \end{align*}
-  The matrix $U$ is unimodular, so by Lemma~\ref{lem:unimodular}, $Uℤ^2 = ℤ^2$.
-  Any vector in $C$ is a positive linear combination of the vectors $(x, 1)^⊤$ and $(\overline x, 1)^⊤$.
-  Since $U$ has these as eigenvectors with positive eigenvalues,
-  the linear combination remains positive and $UC = C$.
-  Thus, $K$ is invariant under $U$.
+  The matrix $U$ is unimodular, so $Uℤ^2 = ℤ^2$ by Lemma~\ref{lem:unimodular}.
+  Let $v ∈ C$.
+  By definition of $C$,
+  there exist coefficients $c₁, c₂ ≥ 0$ such that $v = c₁ (x, 1)^⊤ + c₂ (\overline{x}, 1)^⊤$.
+  Because the vectors of $C$ are eigenvectors of $U$, we have
+  \begin{align*}
+    U v
+    = c₁
+    U\begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    +
+    c₂ U\begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    = c₁ λ₁ \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+    + c₂ λ₂ \begin{pmatrix}
+      x \\
+      1 \\
+    \end{pmatrix}
+  \end{align*}
+  Furthermore, the eigenvalues are positive.
+  Thus, $UC = C$ and $K$ must be invariant under $U$.
 
   Similarly, the boundary $Π(K)$ must also be invariant under this transformation.
-  Because $U$ preserves the orientation of vectors and is not the identity, it
-  must shift the integer points along the boundary.
+  Because $U$ is a linear transformation which preserves the orientation of
+  vectors and is not the identity, it must shift the integer points along the
+  boundary.
   We assume that it shifts it in the positive direction,
   i.e. $B_{n+k} = U B_n$ for some $k ≥ 1$.
   If not, then we can choose $U^{-1}$ to shift them in the positive direction.
