@@ -712,55 +712,6 @@ Because the volume between $b_n$ and $b_{n-2}$ directly corresponds to
 the coefficients $a_0, a_1, a_2, …$ of the continued fraction,
 they must repeat at some point.
 
-The first task is to show that such a matrix actually exists.
-We show this by interpreting the convergent vectors as members of the
-quadratic field $ℚ(x)$.
-The number $x$ is a quadratic irrational, so $ℚ(x)$ is isomorphic to a
-two-dimensional vector space.
-Each vector $b_n$ then has an associated multiplication matrix $M_n$,
-where determinant of this matrix defines the algebraic norm $N(pₙ + qₙ x)$.
-We show that this norm is bounded independently of $n$.
-
-\begin{lemma}
-  The norm $N(p_n + q_n x)$ is bounded by some constant $c$.
-\end{lemma}
-
-\begin{proof}
-  Suppose $x$ satisfies the equation $Ax^2 + Bx + C = 0$ with $A, B, C ∈ ℤ$,
-  then any element $p + qx ∈ ℚ(x)$ has the algebraic norm
-  \[
-    N(p + qx) = Ap^2 + Bpq + Cq^2.
-  \]
-  By Lemma~\ref{lem:cf-approx}, the convergent approximates $x$ by a ratio of $1/qₙ^2$.
-  Hence, there exists some number $δₙ ∈ ℝ$ with $|δₙ| < 1$ such that $pₙ = qₙ x + \frac{δₙ}{qₙ}$.
-  We use this to bound the norm:
-  \begin{align*}
-    |N(p_n + q_n x)|
-    & = |A pₙ^2 + B pₙ qₙ + C qₙ^2| \\
-    & = \left|A \left(qₙ x + \frac{δₙ}{qₙ} \right)^2 + B \left(qₙ x + \frac{δₙ}{qₙ} \right) + C qₙ^2\right| \\
-    & = \left|\underbrace{(Ax^2 + Bx + C)}_{= 0} qₙ^2 + 2 A δₙ x + B \frac{δₙ}{qₙ} + A \frac{δₙ^2}{qₙ^2} \right| \\
-    & \le (2|x| + 1)|A| + |B|. \qedhere
-  \end{align*}
-\end{proof}
-
-From the lemma, it follows that there must be two different convergent vectors
-$b_n, b_m$, whose corresponding elements $p_n + q_n x$ and $p_m + q_m x$ have the same norm.
-However, they are not the same, so there must be some number $ε ≠ 1$ in the field
-$ℚ(x)$ with $N(ε) = 1$ such that
-\[
-  ε · (p_n + q_n x) = p_m + q_m x.
-\]
-The number $ε$ must have a multiplication matrix fundamentally different from
-the identity matrix, but it still has determinant $1$.
-Such a number is called a \emph{fundamental unit}
-and quadratic fields always have a fundamental unit.
-An immediate consequence of this is the following lemma:
-
-\begin{lemma}
-  For every quadratic irrational $x$, there exists an integer matrix $U ≠ I$
-  with determinant $1$, which has eigenvectors $(x, 1)$ and $(\overline{x}, 1)$.
-\end{lemma}
-
 \begin{figure}[tb]
   \centering
   \includestandalone{figures/full-klein-polygon}
