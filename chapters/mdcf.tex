@@ -288,36 +288,53 @@ Although the first coefficient can be negative, we can safely assume that its
 not since the second coefficient is always positive.
 Therefore, we simply prove the convergence for the second complete quotient $x^{(1)} =
 [a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MCF.
-
 Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
 which means that the MCF is infinite.
-We denote with $x^{(n)}$ the $n$-th complete quotient of $x$
-and if $ℓ$ is the index of the largest element in $x^{(n)}$,
+
+Let $ℓ_n$ be the sequence of indices used in construction of the MCF.
+The vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$
+and if $ℓ = ℓ_n$ is the index of the largest element in $x^{(n)}$,
 then the $n$-th convergent of $x$ is denoted as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
   = \left( \frac{P_{1ℓ}^{(n)}}{Q_ℓ^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_ℓ^{(n)}} \right).
+  = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}}
 \]
-
-The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
-For the proof we need two more requirements.
-The first comes from Perron's original proof.
-In his version, he required that there exists some constant $A > 0$ such that
+We will prove that
 \[
-  0 < \frac{1}{a_ℓ^{(n)}} ≤ A
-  \quad \text{ and } \quad
-  0 ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
+  x_i = \lim_{n → ∞} r_i^{(n)}
 \]
-where $ℓ$ is the index of the largest element in $x^{(n)}$.
-This condition is always satisfied by MCFs.
-Because $x_ℓ^{(n)}$ is the largest element
-and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
-the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
-Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
-Hence, this condition is satisfied for $A = 1$.
+The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
+For the proof we need three requirements:
+\begin{enumerate}
+  \item
+    For every $n ≥ 0$,
+    \[
+      0 < \frac{1}{a_ℓ^{(n)}} ≤ A
+      \quad \text{ and } \quad
+      0 ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
+    \]
+    where $ℓ$ is the index of the largest element in the complete quotient $x^{(n)}$.
 
-The second requirement is specifically for MCFs.
+    Because $x_ℓ^{(n)}$ is the largest element
+    and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
+    the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
+    Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
+    Hence, this condition is satisfied for $A = 1$.
+  \item
+    During the construction of the MCF,
+    every index $ℓ ∈ \{1, …, d\}$ is used infinitely often.
+    Formally, for every $N ≥ 0$, we can find an index $n ≥ N$ such that $ℓ_n = ℓ$.
+  \item
+    The distance between the same index is bounded.
+    More formally:
+    Then, for every $n ≥ 0$,
+    there exists an $m > n$ such that $ℓ_n = ℓ_m$ and $m ≤ n + L$
+    for some constant $L ≥ 1$.
+\end{enumerate}
+
+The last two requirements are specifically for MCFs.
 Each MCF is constructed using the generalized Euclidean algorithm and one
 possible choice of indices $ℓ₁, ℓ₂, …$ between $1$ and $d$.
 In the opposite direction, this means that the complete quotients can have different elements as their maximum.
@@ -326,9 +343,9 @@ we use every index infinitely often.
 Again, in the opposite direction, this means that for each $i ∈ \{1, …, d\}$,
 there are infinitely many complete quotients which have $x_i^{(n)}$ as their
 largest element.
-This requirement is already given in the Jacobi-Perron algorithm,
-but not in the generalized Euclidean algorithm.
-So we need this specifically for MCFs.
+These requirements are already satisfied by the Jacobi-Perron algorithm,
+but not by the generalized Euclidean algorithm.
+So we need these specifically for MCFs.
 
 \begin{example}
   Consider the MCF $[(2, 1); \overline{(2, 1)}]$.
@@ -355,15 +372,16 @@ secondary convergents.
 % TODO: We should probably add superscripts to the lambdas as they depend on n.
 \begin{lemma}
   \label{lem:conv-conv}
-  There exists $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)} ≥ 0$ with $λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} = 1$ such that
+  For some $N ≥ 0$,
+  there exist $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)} ≥ 0$ for every $n ≥ N$ with $λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} = 1$ such that
   \[
     r_i^{(n)} = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
 \end{lemma}
 
 \begin{proof}
-  We choose $n ≥ 0$ such that every element was the maximum at least once.
-  In particular, this means that $Q_i^{(n-1)} > 0$ for every $i ∈ \{1, …, d\}$.
+  We choose $N$ such that every index in the construction has been used at least once.
+  In particular, we choose $N$ such that all denominators $Q_i^{(n-1)}$ are not zero.
   Let $ℓ$ be the index of the largest element in $x^{(n)}$.
   By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ}^{(n)}$ using the previous values as follows:
   \begin{align*}
@@ -373,10 +391,14 @@ secondary convergents.
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
   \end{align*}
-  Using $λ_k = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $1 ≤ k ≤ d$ and $λ₀ = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
-  we can reformulate the convergent as the convex combination for this lemma.
-  Because of the requirement that every index has occurred at least once,
-  the denominators $Q_k^{(n-1)}$ of the convex combination cannot be zero.
+  Using the coefficients $λ_k^{(n)} = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $k ∈ \{1, …, d\}$
+  and $λ₀^{(n)} = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
+  we can reformulate the convergent $r^{(n)}$ as
+  \[
+    λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+  \]
+  Because $N$ was chosen large enough such that every index has occurred at least once,
+  the denominators $Q_i^{(n-1)}$ cannot be zero.
   Therefore, this is a valid representation of the convergent $r_i^{(n)}$.
   For the coefficients themselves, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
   The first property follows from the definition of $Q_ℓ^{(n)}$:
@@ -442,7 +464,7 @@ By the monotone-convergence theorem, the sequences must converge.
 \end{proof}
 
 In order to show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
-converging to the same limit, we first need this crucial lemma about the
+converging to the same limit, we first need the following crucial lemma about the
 coefficients $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)}$ from Lemma~\ref{lem:conv-conv}.
 % TODO: Actually add the figure here. Or do we wanna use the combined one, which is already here?
 %The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
@@ -461,31 +483,55 @@ such that the convex hull always shrinks by a constant amount.
 % -> This should also work if we're doing this for any index.
 \begin{lemma}
   \label{lem:lambda-pos}
-  There exists one index $ℓ^+ ∈ \{0, …, d\}$ with $λ_{ℓ^+}^{(n)} > 1/C$ for some integer $C > 0$.
+  Let $ℓ$ be the index of the largest element in $x^{(n)}$,
+  then $λ_ℓ^{(n)} > 1/C$ for some positive integer $C$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
 \begin{proof}
-  Let $ℓ^+$ be the index of the largest element in the previous complete quotient $x^{(n-1)}$.
-  Using the initial requirements for the coefficients $a_i^{(n)}$ and the fact
-  that
+  The ratio between the coefficients $λ_i^{(n)}$ and $λ_ℓ^{(n)}$ is
+  \begin{equation}
+    \label{eq:lambda-ratio}
+    \frac{λ_i^{(n)}}{λ_ℓ^{(n)}}
+    = \frac{a_i^{(n)}}{a_ℓ^{(n)}} · \frac{Q_i^{(n-1)}}{Q_ℓ^{(n-1)}}
+    ≤ A · \frac{Q_i^{(n-1)}}{Q_ℓ^{(n-1)}}.
+  \end{equation}
+  If $Q_i^{(n-1)} < Q_ℓ^{(n-1)}$,
+  then we can guarantee that $λ_ℓ^{(n)} ≥ 1/C$.
+  For $Q_0^{(n-1)} = Q_ℓ^{(n-1)}$, this is trivial.
+  But for the other values the issue is that $Q_i^{(n-1)}$ might be larger than $Q_ℓ^{(n-1)}$,
+  if $i$ is the pivot index, for example.
+  From the initial requirements it follows that after at most $L$ iterations,
+  we must have $ℓ$ as the pivot index again.
+  Therefore, there must have been some index $m$ before $n$ but after $n - L$
+  where the $ℓ = \argmax_i x_i^{(m)}$.
+  and $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
+  If $x^{(m)} = \mathrm{pivot}_ℓ(x^{(m-1)})$,
+  then we must have $x_ℓ^{(m+1)} = 1/\{x_ℓ^{(m)}\} > 1$
+  and therefore the integer part $a_ℓ^{(m+1)}$ must be at least $1$.
+  Hence,
   \[
-    Q_{ℓ^+}^{(n-1)} > Q_i^{(n-1)}
+    Q_k^{(m+1)}
+    = Q_0^{(m)} + Q_1^{(m)} a_1^{(m+1)} + ⋯ + Q_d^{(m)} a_d^{(m+1)}
+    ≥ a_ℓ^{(m+1)} Q_ℓ^{(m)}
+    ≥ \frac{1}{A} Q_ℓ^{(m)},
   \]
-  for every $i ≠ ℓ$.
-  It follows that
+  where $k$ is the pivot index for $x^{(m+1)}$.
+  We can repeat this step for every pivot index from $m$ to $n$
+  tracing back a bound from $Q_ℓ^{(m)}$ to $Q_i^{(n-1)}$.
+  This path consists of at most $L$ steps.
+  Thus, we can bound $Q_i^{(n-1)}$ from below by $Q_ℓ^{(n-1)}$ according to
   \[
-    \frac{λ_i^{(n)}}{λ_{ℓ^+}^{(n)}}
-    = \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}} · \frac{Q_i^{(n-1)}}{Q_{ℓ^+}^{(n-1)}}
-    ≤ \frac{a_i^{(n)}}{a_{ℓ^+}^{(n)}}
-    ≤ A,
+    Q_i^{(n-1)} ≥ \frac{1}{A^L} Q_ℓ^{(m)} = \frac{1}{A^L} Q_ℓ^{(n-1)},
   \]
-  or equivalently $λᵢ^{(n)} ≤ A λ_{ℓ^+}^{(n)}$.
-  But then,
+  which we can finally use to bound the fraction $Q_i^{(n-1)}/Q_ℓ^{(n-1)}$
+  of Equation~\ref{eq:lambda-ratio}.
+  The equation leads to the bound $λᵢ^{(n)} ≤ A^{L-1} λ_ℓ^{(n)}$,
+  from which it follows that
   \[
-    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_{ℓ^+}^{(n)} (1 + dA).
+    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_ℓ^{(n)} (1 + dA^{L-1}).
   \]
-  Therefore, $λ_{ℓ^+}^{(n)} ≥ 1/C$ with $C = 1 + dA > 0$.
+  Finally, if we set $C = 1 + dA^{L-1} > 0$, then $λ_ℓ^{(n)} > 1/C$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -557,14 +603,21 @@ This is the main idea behind the following proof.
     r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε
   \end{align*}
   for some constant $C > 0$.
-  Advancing this inequality from $n$ to $n+1, n+2, …, n+k$ results in the new
-  inequality
+  This inequality holds for infinitely many $n ≥ N$.
+  Therefore, we can advance $n$ to some point $n + k$
+  such that
   \begin{align*}
-    r_i^{(n+k)} - s_i > \frac{1}{C^k} \left( r_i^{(n-1)} - s_i \right) - ε\left( \frac{1}{C} + \frac{1}{C^2} + ⋯ + \frac{1}{C^{k-1}} \right).
+    r_i^{(n+k)} - s_i
+    & > \frac{1}{C} \left( r_i^{(n+k-1)} - s_i \right) - ε \\
+    & > \frac{1}{C} \left(\frac{1}{C} \left( r_i^{(n+k-2)} - s_i \right) - ε\right) - ε \\
+    & = \frac{1}{C^2} \left(r_i^{(n+k-2)} - s_i \right) - ε\left(1 + \frac{1}{C}\right) \\
+    & \, ⋮ \\
+    & > \frac{1}{C^k} \left( r_i^{(n-1)} - s_i \right) - ε\left( \frac{1}{C} + \frac{1}{C^2} + ⋯ + \frac{1}{C^{k-1}} \right).
   \end{align*}
   Since every index occurs infinitely often,
-  there must be one index $n$ where $r_i^{(n-1)} ≤ t_i$
+  we can find one index $n$ where $r_i^{(n-1)} ≤ t_i$
   and another index $n+k$ where $r_i^{(n+k)} ≥ s_i$.
+  Thus,
   \begin{align*}
     0 > \frac{1}{C^k} \left( t_i - s_i \right) - ε\left( \frac{1}{C} + \frac{1}{C^2} + ⋯ + \frac{1}{C^{k-1}} \right).
   \end{align*}
