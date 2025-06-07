@@ -159,7 +159,6 @@ The second gives us a formula for calculating the convergents.
 \end{proof}
 
 % TODO: Explain how to derive the sequences
-The second lemma is more complicated.
 In the lemma for continued fractions,
 we defined the convergents of a continued fraction~$pₙ/qₙ$
 using a fractional transformation based on the previous two
@@ -347,8 +346,11 @@ $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
 since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
 We will call $r^{(n)}$ the \emph{primary convergent} and the other ones
 \emph{secondary convergents}.
-When calculating a new convergent, we replace only one of the secondary convergents.
-The second requirement guarantees that we always move every convergent
+When updating the secondary convergents,
+we exchange $P_0^{(n)} / Q_0^{(n)}$ with $P_ℓ^{(n)}/Q_ℓ^{(n)}$
+and replace  $P_ℓ^{(n)}/Q_ℓ^{(n)}$ with a new vector.
+Thus, we only move one of the secondary convergents.
+The second requirement guarantees that we move every secondary convergent
 and the last requirement guarantees that we have moved every convergent after at most $L$ iterations.
 
 \begin{example}
@@ -408,9 +410,12 @@ and the last requirement guarantees that we have moved every convergent after at
   $λ_i$ is always bounded between $0$ and $1$.
 \end{proof}
 
-Next, we enclose the secondary convergents inside an axis-aligned bounding box.
-At each iteration, we define the box by its minimum and maximum corner points using the two sequences
-$s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ which are defined as
+The lemma shows that the next convergent lies inside the convex hull of the secondary convergents.
+We enclose the entire hull inside an axis-aligned bounding box
+and we show that this box converges to a single point,
+which implies the convergence of the original convergent sequence $r^{(n)}$.
+At each iteration, the bounding box is characterized by its minimum and maximum corner,
+which are defined as $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
 \[
   s_i^{(n)} = \min\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}
 \]
@@ -418,43 +423,37 @@ and
 \[
   t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}.
 \]
-We use this box to show the convergence via the squeeze theorem.
-The primary convergent $r^{(n)}$ lies inside the box since it is one of the
-secondary convergent vectors used in the definition of the sequences.
-So if $s^{(n)}$ and $t^{(n)}$ converge to the same limit, then $r^{(n)}$ must
-also converge to the same limit.
-For the convergence of $s^{(n)}$ and $t^{(n)}$, we show that each of them is
-monotone and bounded.
-By the monotone-convergence theorem, the sequences must converge.
+The primary convergent $r^{(n)}$ lies inside the box,
+since it is one of the secondary convergent vectors
+used in the definition of $s^{(n)}$ and $t^{(n)}$.
+Therefore, if $s^{(n)}$ and $t^{(n)}$ converge,
+then the sequence $r^{(n)}$ must converge, too.
 
 \begin{lemma}
-  The sequences $s_i^{(n)}$ and $t_i^{(n)}$ are monotone and bounded.
+  The sequences $s_i^{(n)}$ and $t_i^{(n)}$ converge.
 \end{lemma}
 
 \begin{proof}
-  We can bound the new convergent $r^{(n)}$ from below using the previous term $s^{(n-1)}$.
-  For the previous iteration, we already have $P_{ij}^{(n-1)}/Q_j^{(n-1)} ≥ s_i^{(n-1)}$
-  for every $j ∈ \{0, …, d\}$ by construction.
-  Using Lemma~\ref{lem:conv-conv},
+  We show that the sequences are monotone and bounded, which implies convergence.
+  We begin with $s^{(n)}$ and show that this sequence is non-decreasing.
+  The sequence is non-decreasing if every secondary convergent at iteration $n$
+  is greater than the previous minimum $s^{(n-1)}$.
+  Let $ℓ$ be the pivot index in iteration $n$.
+  From the previous iteration, we already have for every $j ≠ ℓ$:
+  \[
+    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)}.
+  \]
+  We can bound the primary convergent $r^{(n)}$ using Lemma~\ref{lem:conv-conv}, since
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}}
     & = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
     & ≥ λ₀^{(n)} s_i^{(n-1)} + λ₁^{(n)} s_i^{(n-1)} + ⋯ + λ_d^{(n)} s_i^{(n-1)}
       = s_i^{(n-1)}.
   \end{align*}
-  The bound for the other convergents $r_j^{(n)}$ with $j ≠ ℓ$ is even easier since
-  \[
-    \frac{P_{ij}^{(n)}}{Q_j^{(n)}} = \frac{P_{ij}^{(n-1)}}{Q_j^{(n-1)}} ≥ s_i^{(n-1)}.
-  \]
-  Using the same argument, we can bound each convergent from above by $t_i^{(n-1)}$.
-  Therefore, in each iteration all secondary convergents are
-  bounded between previous minimum~$s_i^{(n-1)}$ and previous maximum~$t_i^{(n-1)}$.
-  Hence, the next minimum~$s_i^{(n)}$ and the next maximum~$t_i^{(n)}$ must
-  also be bounded between the two terms.
-  In summary, we have
-  \[
-    s_i^{(n-1)} ≤ s_i^{(n)} ≤ r_i^{(n)} ≤ t_i^{(n)} ≤ t_i^{(n-1)}. \qedhere
-  \]
+  Thus, $s_i^{(n)} ≥ s_i^{(n-1)}$ and $s^{(n)}$ is non-decreasing.
+  We can show $t_i^{(n)} ≤ t_i^{(n-1)}$ by bounding the convergents from above using a similar argument.
+  Futhermore, $s_i^{(n)} ≤ t_i^{(n)}$ for every index $n ≥ 0$.
+  Thus, both sequences must converge.
 \end{proof}
 
 In order to show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
@@ -477,8 +476,8 @@ such that the convex hull always shrinks by a constant amount.
 % -> This should also work if we're doing this for any index.
 \begin{lemma}
   \label{lem:lambda-pos}
-  Let $ℓ$ be the index of the largest element in $x^{(n)}$,
-  then $λ_ℓ^{(n)} > 1/C$ for some positive integer $C$.
+  Let $ℓ$ be the pivot index in $x^{(n)}$,
+  then $λ_ℓ^{(n)} > 1/C$ for some integer $C > 0$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
@@ -492,34 +491,36 @@ such that the convex hull always shrinks by a constant amount.
   \end{equation}
   If $Q_i^{(n-1)} < Q_ℓ^{(n-1)}$,
   then we can guarantee that $λ_ℓ^{(n)} ≥ 1/C$.
-  For $Q_0^{(n-1)} = Q_ℓ^{(n-1)}$, this is trivial.
+  For $Q_0^{(n-1)} = Q_ℓ^{(n-2)}$, this is straightforward.
   But for the other values the issue is that $Q_i^{(n-1)}$ might be larger than $Q_ℓ^{(n-1)}$,
   if $i$ is the pivot index, for example.
-  From the initial requirements it follows that after at most $L$ iterations,
-  we must have $ℓ$ as the pivot index again.
-  Therefore, there must have been some index $m$ before $n$ but after $n - L$
-  where the $ℓ = \argmax_i x_i^{(m)}$.
-  and $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
+
+  We solve this issue using the initial requirements.
+  Specifically, the third requirement,
+  which states that after at most $L$ iterations,
+  we must have used $ℓ$ as the pivot index again.
+  Therefore, there must have been some index $m$ between $n$ and $n - L$
+  where we used $ℓ = \argmax_i x_i^{(m)}$ such that $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
   If $x^{(m)} = \mathrm{pivot}_ℓ(x^{(m-1)})$,
   then we must have $x_ℓ^{(m+1)} = 1/\{x_ℓ^{(m)}\} > 1$
   and therefore the integer part $a_ℓ^{(m+1)}$ must be at least $1$.
-  Hence,
+  Furthermore, if $k$ is the pivot index in the next iteration $m+1$,
+  then
   \[
     Q_k^{(m+1)}
     = Q_0^{(m)} + Q_1^{(m)} a_1^{(m+1)} + ⋯ + Q_d^{(m)} a_d^{(m+1)}
     ≥ a_ℓ^{(m+1)} Q_ℓ^{(m)}
-    ≥ \frac{1}{A} Q_ℓ^{(m)},
+    ≥ \frac{1}{A} Q_ℓ^{(m)}.
   \]
-  where $k$ is the pivot index for $x^{(m+1)}$.
   We can repeat this step for every pivot index from $m$ to $n$
-  tracing back a bound from $Q_ℓ^{(m)}$ to $Q_i^{(n-1)}$.
+  tracing the bound back from $Q_ℓ^{(m)}$ to $Q_i^{(n-1)}$.
   This path consists of at most $L$ steps.
   Thus, we can bound $Q_i^{(n-1)}$ from below by $Q_ℓ^{(n-1)}$ according to
   \[
     Q_i^{(n-1)} ≥ \frac{1}{A^L} Q_ℓ^{(m)} = \frac{1}{A^L} Q_ℓ^{(n-1)},
   \]
   which we can finally use to bound the fraction $Q_i^{(n-1)}/Q_ℓ^{(n-1)}$
-  of Equation~\ref{eq:lambda-ratio}.
+  from Equation~\ref{eq:lambda-ratio}.
   The equation leads to the bound $λᵢ^{(n)} ≤ A^{L-1} λ_ℓ^{(n)}$,
   from which it follows that
   \[
@@ -661,7 +662,7 @@ which is the original vector $x$ used for construction of the MCF.
   \begin{align*}
     x_i
     & = μ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + μ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + μ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & = μ₀^{(n)} (x_i' - ε₀) + μ₁^{(n)} (x_i - ε₁) + ⋯ + μ_d^{(n)} (x_d - ε_d) \\
+    & = μ₀^{(n)} (x_i' - ε₀) + μ₁^{(n)} (x_i' - ε₁) + ⋯ + μ_d^{(n)} (x_d' - ε_d) \\
     & = x_i' - (μ₀^{(n)} ε₀ + μ₁^{(n)} ε₁ + ⋯ + μ_d^{(n)} ε_d).
   \end{align*}
   However, as $n$ increases the values $εᵢ$ must become arbitrarily small
@@ -743,6 +744,7 @@ and vice-versa:
   \includestandalone{figures/projective-space}
   \caption{
     The convergents as vectors in a $(d+1)$-dimensional projective space.
+    The ordinary convergents are projections at the $x₀ = 1$ plane.
   }
   \label{fig:projective-space}
 \end{figure}
