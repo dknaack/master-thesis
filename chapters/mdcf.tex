@@ -291,9 +291,10 @@ Therefore, we simply prove the convergence for the second complete quotient $x^{
 Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
 which means that the MCF is infinite.
 
-Let $ℓ_n$ be the sequence of indices used in construction of the MCF.
-The vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$
-and if $ℓ = ℓ_n$ is the index of the largest element in $x^{(n)}$,
+We say that $ℓ ∈ \{1, …, d\}$ is the \emph{pivot index} of $x^{(n)}$,
+if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$,
+where the vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$.
+If $ℓ$ is the pivot index in $x^{(n)}$,
 then the $n$-th convergent of $x$ is denoted as
 \[
   r^{(n)}
@@ -305,7 +306,8 @@ We will prove that
 \[
   x_i = \lim_{n → ∞} r_i^{(n)}
 \]
-The convergence proof is based on Perron's proof \cite{Perron07} for the convergence of his algorithm.
+The proof is based on Perron's original proof \cite{Perron07} for the
+convergence of his algorithm.
 For the proof we need three requirements:
 \begin{enumerate}
   \item
@@ -319,13 +321,12 @@ For the proof we need three requirements:
   \item
     During the construction of the MCF,
     every index $ℓ ∈ \{1, …, d\}$ is used infinitely often.
-    Formally, for every $N ≥ 0$, we can find an index $n ≥ N$ such that $ℓ_n = ℓ$.
+    Formally, for every $ℓ ∈ \{1, …, d\}$ and $N ≥ 0$,
+    we can find an index $n ≥ N$ such that $ℓ$ is the pivot index of $x^{(n)}$.
   \item
-    The distance between the same index is bounded.
-    More formally:
-    Then, for every $n ≥ 0$,
-    there exists an $m > n$ such that $ℓ_n = ℓ_m$ and $m ≤ n + L$
-    for some constant $L ≥ 1$.
+    The distance between the same index is bounded by some constant $L$,
+    i.e. for every $n ≥ 0$ we can find a index $m ∈ \{n+1, …, n+L\}$ such that
+    the pivot indices of $x^{(m)}$ and $x^{(n)}$ are the same.
 \end{enumerate}
 
 The first requirement is already satisfied for $A = 1$.
