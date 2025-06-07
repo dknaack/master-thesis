@@ -32,6 +32,7 @@
   \draw (1, 0.5) node[below left] {$s$} rectangle (4, 2.5) node[above right] {$t$};
   \draw (ri) -- (rj) -- (rk) -- cycle;
 
+  \iffalse
   \coordinate (a) at ($(rk)!0.8!(ri)$);
   \coordinate (b) at ($(rk)!0.8!(rj)$);
   \path let
@@ -42,6 +43,7 @@
     \p5 = ($0.25*(\p1)+0.25*(\p2)+0.25*(\p3)+0.25*(\p4)$)
   in
     node at (\p5) {$λ_k < 1/M$};
+  \fi
 \end{tikzpicture}
 \end{document}
 
