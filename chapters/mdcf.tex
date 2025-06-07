@@ -583,15 +583,15 @@ This is the main idea behind the following proof.
   \begin{align*}
     r_i^{(n)}
     & = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}} \\
-    & > λ_{ℓ}^{(n)} \frac{P_{iℓ}^{(n-1)}}{Q_{ℓ}^{(n-1)}} + \sum_{i ≠ k} λ_i^{(n)} (s_i - ε) \\
-    & = λ_{ℓ}^{(n)} r_i^{(n-1)} + (1 - λ_ℓ^{(n)}) (s_i - ε),
+    & > λ_ℓ^{(n)} \frac{P_{iℓ}^{(n-1)}}{Q_ℓ^{(n-1)}} + \sum_{i ≠ ℓ} λ_i^{(n)} (s_i - ε) \\
+    & = λ_ℓ^{(n)} r_i^{(n-1)} + (1 - λ_ℓ^{(n)}) (s_i - ε),
   \end{align*}
   or equivalently
   \begin{align*}
-    r_i^{(n)} - s_i > λ_{ℓ}^{(n)} \left( r_i^{(n-1)} - s_i \right) - ε.
+    r_i^{(n)} - s_i > λ_ℓ^{(n)} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
   Lemma~\ref{lem:lambda-pos} tells us that there is a positive constant $C$
-  which bounds $λ_{ℓ}^{(n)}$ from below.
+  which bounds $λ_ℓ^{(n)}$ from below.
   It follows that
   \begin{align*}
     r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε
