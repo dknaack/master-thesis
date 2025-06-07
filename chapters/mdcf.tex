@@ -316,12 +316,6 @@ For the proof we need three requirements:
       0 ≤ \frac{a_i^{(n)}}{a_ℓ^{(n)}} ≤ A \quad \text{ for every } i ≠ ℓ,
     \]
     where $ℓ$ is the index of the largest element in the complete quotient $x^{(n)}$.
-
-    Because $x_ℓ^{(n)}$ is the largest element
-    and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
-    the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
-    Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
-    Hence, this condition is satisfied for $A = 1$.
   \item
     During the construction of the MCF,
     every index $ℓ ∈ \{1, …, d\}$ is used infinitely often.
@@ -334,18 +328,27 @@ For the proof we need three requirements:
     for some constant $L ≥ 1$.
 \end{enumerate}
 
+The first requirement is already satisfied for $A = 1$.
+Because $x_ℓ^{(n)}$ is the largest element
+and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
+the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
+Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
+Hence, this condition is satisfied for $A = 1$.
+Nevertheless,
+this condition can be used when replacing the floor function with a different function.
+If one can guarantee that the new function satisfies the first requirement,
+then the convergence will still hold.
+
 The last two requirements are specifically for MCFs.
-Each MCF is constructed using the generalized Euclidean algorithm and one
-possible choice of indices $ℓ₁, ℓ₂, …$ between $1$ and $d$.
-In the opposite direction, this means that the complete quotients can have different elements as their maximum.
-The second requirement then states that during the construction of the MCF
-we use every index infinitely often.
-Again, in the opposite direction, this means that for each $i ∈ \{1, …, d\}$,
-there are infinitely many complete quotients which have $x_i^{(n)}$ as their
-largest element.
-These requirements are already satisfied by the Jacobi-Perron algorithm,
-but not by the generalized Euclidean algorithm.
-So we need these specifically for MCFs.
+The vector $r^{(n)}$ is only one possible convergent out of several.
+If $n$ is large enough, then we can consider the other vectors
+$P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
+since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
+We will call $r^{(n)}$ the \emph{primary convergent} and the other ones
+\emph{secondary convergents}.
+When calculating a new convergent, we replace only one of the secondary convergents.
+The second requirement guarantees that we always move every convergent
+and the last requirement guarantees that we have moved every convergent after at most $L$ iterations.
 
 \begin{example}
   Consider the MCF $[(2, 1); \overline{(2, 1)}]$.
