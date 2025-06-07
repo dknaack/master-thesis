@@ -789,9 +789,9 @@ Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in
 the projective space $\mathbb{RP}^{d+1}$.
 Using this notion, we can reformulate the MCF as a series of matrix multiplications.
-In the following $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$
+Let $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$
 and the matrix $R(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
-The definition of the MCFs can then be written as
+Then, the definition of the MCFs can be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
   [a^{(0)}; a^{(1)}, …, a^{(n)}] = T(a₀) · S(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
@@ -822,7 +822,7 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
   \label{lem:mdcf-wallis'}
   Let $x ∈ ℝ^d$ and $\hat x = (1, x₁, …, x_d)$, then
   \[
-    [r^{(0)}; r^{(1)}, …, r^{(n-1)}, x] = [B^{(n-1)} \hat x]
+    [r^{(0)}; r^{(1)}, …, r^{(n-1)}, x] ~ B^{(n-1)} \hat x.
   \]
 \end{lemma}
 
