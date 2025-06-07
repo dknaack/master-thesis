@@ -633,7 +633,7 @@ This is the main idea behind the following proof.
     r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε
   \end{align*}
   for some constant $C > 0$.
-  This inequality holds for infinitely many $n ≥ N$.
+  This inequality holds for all $n ≥ N$.
   Therefore, we can advance $n$ to some point $n + k$
   such that
   \begin{align*}
@@ -703,16 +703,16 @@ which is the original vector $x$ used for construction of the MCF.
   we can conclude that $x_i = x_i'$.
 \end{proof}
 
-One important example where this theorem shows the convergence is periodic MCFs,
+One important example where this theorem applies is for periodic MCFs,
 where the period contains every index as a pivot index.
 Since the period is constant,
 the distance between the same pivot indices is also constant.
-Thus, they satisfy the initial requirements for this theorem.
-However, the theorem also includes other JPA-like algorithms.
-For example, we could construct the MCF based on some list of indices $[ℓ₁, ℓ₂, …, ℓₘ]$,
-which we would repeat indefinitely.
+Thus, they satisfy the requirements of this theorem.
+Besides periodic MCFs, the theorem also includes other JPA-like algorithms.
+For example, an algorithm may construct an MCF based on a fixed list of indices $[ℓ₁, ℓ₂, …, ℓₘ]$,
+which is repeated throughout the construction.
 If this list contains every possible index,
-then this theorem guarantees the convergence of the algorithm.
+then this theorem would guarantee the convergence.
 
 % ==============================================================================
 \section{Geometrical Interpretation}
@@ -756,7 +756,7 @@ This relation then defines the equivalence class of an element $a ∈ ℝ^{d+1}$
   [a] = \mathrm{span}(a) = \{ λ a \mid λ ∈ ℝ, λ ≠ 0 \}.
 \]
 Formally, this is known as a real \emph{projective space}, denoted as $\mathbb{RP}^{d+1}$.
-It is the set of equivalence classes $ℝ^{d+1} \setminus \{0\}$ defined by the
+It is the set of equivalence classes in $ℝ^{d+1} \setminus \{0\}$ defined by the
 equivalence relation $\sim$.
 An element $x$ of this space is denoted as $[x₀, x₁, …, x_d]$,
 where the square brackets indicate that this element is an equivalence
@@ -793,6 +793,7 @@ and vice-versa:
   \label{fig:projective-space}
 \end{figure}
 
+In this space, the pivot operation becomes a linear operation on the projective coordinates.
 For example, consider the vector $[1, x₁, x₂]$ and suppose that $0 ≤ x₁, x₂ < 1$.
 A pivot operation with $ℓ = 1$ would result in the vector $[1, 1/x₁, x₂/x₁]$.
 This vector is equivalent to $[x₁, 1, x₂]$.
@@ -837,19 +838,21 @@ Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in
 the projective space $\mathbb{RP}^{d+1}$.
 Using this notion, we can reformulate the MCF as a series of matrix multiplications.
-Let $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$
+Let $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$,
+which is equivalent to the identity matrix with $a$ as its first column,
 and the matrix $R(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
 Then, the definition of the MCFs can be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
-  [a^{(0)}; a^{(1)}, …, a^{(n)}] = T(a₀) · S(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
+  [a^{(0)}; a^{(1)}, …, a^{(n)}] = S(a₀) · R(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
 \]
 where $ℓ$ is the index of the largest element in $[a^{(1)}; a^{(2)}, …, a^{(n)}]$ and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
 
 We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
-Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $(B^{(n)})_{n ≥ 0}$,
-where one matrix $B^{(n)}$ consists of the column vectors $B₀^{(n)}, B₁^{(n)}, …, B_d^{(n)}$.
-We begin with the identity matrix, $B^{(0)} = I_d$, and update the matrix according to
+Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $(B^{(n)})_{n ≥ 0}$.
+Each matrix $B^{(n)}$ consists of the column vectors $B₀^{(n)}, B₁^{(n)}, …, B_d^{(n)}$.
+The sequence begins with $B^{(0)} = I_d$
+and the remaining terms are calculated according to the recurrence
 \begin{align*}
   B_{ℓₙ}^{(n)} = B^{(n-1)} \hat a^{(n)},
   \qquad B_i^{(n)} = B_i^{(n-1)},
@@ -977,7 +980,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   Hence, we have $[ℚ(\hat x_0, \hat x_1, …, \hat x_d) : ℚ] ≤ d+1$.
 
   Finally, the eigenvector $\hat x$ has to be projected back from homogeneous coordinates $x$.
-  Since $xᵢ = \hat xᵢ / \hat x₀$ and the values $\hat xᵢ$ and $\hat x₀$ are members of the field $ℚ(λ)$,
+  Since $xᵢ = \hat xᵢ / \hat x₀$ is a rational expression and the values $\hat xᵢ$ and $\hat x₀$ are members of the same field $ℚ(λ)$,
   the projected value $xᵢ$ must also be contained in the same field.
   Therefore, each element in $x$ is an algebraic number
   and we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
@@ -994,19 +997,16 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   of this fraction.
   Suppose that the MCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
   $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
-  By Lemma~\ref{lem:mdcf-wallis'},
-  \[
-    \hat x \sim B^{(k)} \hat x^{(k)},
-  \]
-  which means that very element in $x$ can be represented
+  By Lemma~\ref{lem:mdcf-wallis'}, $\hat x \sim B^{(k)} \hat x^{(k)}$,
+  which means that very element in the projection $x$ can be represented
   as a rational expression of $x^{(k)}$:
   \[
-    x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}},
+    x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}}.
   \]
   % TODO: I think we should be more precise here since the elements could be
   % inside different fields. They are not, but this sentence does not indicate
   % that.
-  From the Lemma~\ref{lem:mdcf-purely-periodic},
+  From Lemma~\ref{lem:mdcf-purely-periodic},
   it follows that the elements of $\hat x^{(k)}$
   are contained in a field $ℚ(λ)$ with degree $[ℚ(λ) : ℚ] ≤ d+1$.
   Since $B^{(k)}$ consists solely of integers, every element in $x$ is contained in the same field $ℚ(λ)$.
