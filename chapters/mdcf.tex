@@ -670,6 +670,17 @@ which is the original vector $x$ used for construction of the MCF.
   we can conclude that $x_i = x_i'$.
 \end{proof}
 
+One important example where this theorem shows the convergence is periodic MCFs,
+where the period contains every index as a pivot index.
+Since the period is constant,
+the distance between the same pivot indices is also constant.
+Thus, they satisfy the initial requirements for this theorem.
+However, the theorem also includes other JPA-like algorithms.
+For example, we could construct the MCF based on some list of indices $[ℓ₁, ℓ₂, …, ℓₘ]$,
+which we would repeat indefinitely.
+If this list contains every possible index,
+then this theorem guarantees the convergence of the algorithm.
+
 % ==============================================================================
 \section{Geometrical Interpretation}
 \label{sec:mdcf-geometry}
