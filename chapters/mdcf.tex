@@ -116,6 +116,31 @@ while all subsequent values had to be positive.
 For the multidimensional counterpart we only require that the pivot element is not zero.
 The other values in the vector $r^{(n)}$ can assume any non-negative value.
 
+\begin{example}
+  Consider the MCF $x = [(1,\, 2); (3,\, 2),\, (4,\, 5)]$.
+  By definition,
+  \begin{align*}
+    x & = \mathrm{pivot}^{-1}\Bigl((1,\, 2),\, [(3,\, 2); (3,\, 5)]\Bigr) \\
+      & = \mathrm{pivot}^{-1}\Bigl((1,\, 2),\, \mathrm{pivot}^{-1}\bigl((3,\, 2),\, [(3,\, 5)]\bigr)\Bigr) \\
+      & = \mathrm{pivot}^{-1}\Bigl((1,\, 2),\, \mathrm{pivot}^{-1}\bigl((3,\, 2),\, (3,\, 5)\bigr)\Bigr).
+  \end{align*}
+  We start with the inner most pivot operation,
+  where the largest element in $(4,\, 5)$ is $5$.
+  Therefore, we invert the second element and divide the first element by $5$
+  and we add the vector $(3,\, 2)$ to the result, which leads to
+  \begin{align*}
+    x & = \mathrm{pivot}^{-1}\bigl((1,\, 2),\, (3,\, 2) + (3/5,\, 1/5)\bigr)
+        = \mathrm{pivot}^{-1}\bigl((1,\, 2),\, (18/5,\, 11/5)\bigr).
+  \end{align*}
+  In the next iteration, $18/5$ is the largest element.
+  Therefore, we invert of the first element and divide the second element by $18/5$,
+  resulting in
+  \begin{align*}
+    x & = (1,\, 2) + (5/18,\, 11/5 · 5/18) = (23/18,\, 41/18).
+  \end{align*}
+  Thus, $[(1,\, 2); (3,\, 2),\, (3,\, 5)] = (23/18,\, 41/18)$.
+\end{example}
+
 The terminology from one-dimensional continued fractions naturally carry over to its
 multidimensional counterpart.
 Given an infinite MCF representation~$[r^{(0)}; r^{(1)}, …]$ of a vector $x ∈ ℝ^d$, we define the following:
