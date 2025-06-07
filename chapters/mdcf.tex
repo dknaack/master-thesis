@@ -281,23 +281,24 @@ original input vector $x ∈ ℝ^d$.
 The aim of this section is to show that the convergents actually live up to
 their name and converge towards the vector $x$ as $n$ increases.
 
-Let $x^{(n)}$ denote the $n$-th complete quotient of $x$
-and let $r^{(n)}$ denote the $n$-th convergent.
+Let $x ∈ ℝ$ and let $[a^{(0)}; a^{(1)}, …]$ be its MCF expansion,
+constructed using the generalized Euclidean algorithm.
+The vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$
+and $r^{(n)}$ denotes the $n$-th convergent.
 We say that $ℓ ∈ \{1, …, d\}$ is the \emph{pivot index} of $x^{(n)}$,
-if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$,
-If $ℓ$ is the pivot index in $x^{(n)}$,
-then the $n$-th convergent of $x$ is denoted as
+if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
+With this index $ℓ$, the $n$-th convergent is defined as
 \[
   r^{(n)}
   = (r_1^{(n)}, …, r_d^{(n)})
   = \left( \frac{P_{1ℓ}^{(n)}}{Q_ℓ^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_ℓ^{(n)}} \right)
   = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}}.
 \]
-We will prove that
+We say that $r^{(n)}$ converges towards $x$ if
 \[
   x_i = \lim_{n → ∞} r_i^{(n)} \text{ for every } i ∈ \{1, …, d\}.
 \]
-The proof is based on Perron's original proof \cite{Perron07} for the
+The proof for this is based on Perron's original proof \cite{Perron07} for the
 convergence of his algorithm.
 For the proof we need three additional requirements:
 \begin{enumerate}
