@@ -280,19 +280,11 @@ constructed using the generalized Euclidean algorithm always converges to the
 original input vector $x ∈ ℝ^d$.
 The aim of this section is to show that the convergents actually live up to
 their name and converge towards the vector $x$ as $n$ increases.
-Since we have used the Euclidean algorithm to construct the MCF,
-we can assume that all vectors $a^{(n)}$ are positive integers even the first
-one $a^{(0)}$.
-Although the first coefficient can be negative, we can safely assume that its
-not since the second coefficient is always positive.
-Therefore, we simply prove the convergence for the second complete quotient $x^{(1)} =
-[a^{(1)}; a^{(2)}, …]$ which leads to the convergence of the whole MCF.
-Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
-which means that the MCF is infinite.
 
+Let $x^{(n)}$ denote the $n$-th complete quotient of $x$
+and let $r^{(n)}$ denote the $n$-th convergent.
 We say that $ℓ ∈ \{1, …, d\}$ is the \emph{pivot index} of $x^{(n)}$,
 if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$,
-where the vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$.
 If $ℓ$ is the pivot index in $x^{(n)}$,
 then the $n$-th convergent of $x$ is denoted as
 \[
@@ -303,11 +295,11 @@ then the $n$-th convergent of $x$ is denoted as
 \]
 We will prove that
 \[
-  x_i = \lim_{n → ∞} r_i^{(n)}
+  x_i = \lim_{n → ∞} r_i^{(n)} \text{ for every } i ∈ \{1, …, d\}.
 \]
 The proof is based on Perron's original proof \cite{Perron07} for the
 convergence of his algorithm.
-For the proof we need three requirements:
+For the proof we need three additional requirements:
 \begin{enumerate}
   \item
     For every $n ≥ 0$,
@@ -363,6 +355,18 @@ and the last requirement guarantees that we have moved every convergent after at
   However, then it does not satisfy the second requirement.
   Therefore, the following proof won't apply to this MCF.
 \end{example}
+
+Since we use the Euclidean algorithm to construct an MCF,
+we can assume that all vectors $a^{(n)}$ are positive integers,
+including the initial coefficient $a^{(0)}$.
+Although the first coefficient could be negative,
+the second coefficient is always positive.
+If we can prove the convergence for the second complete quotient $x^{(1)} = [a^{(1)}; a^{(2)}, …]$,
+then this implies the convergence for the whole MCF.
+Thus, it suffices to show the convergence for the second complete quotient,
+which is positive.
+Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
+which means that the MCF is infinite.
 
 % TODO: We should probably add superscripts to the lambdas as they depend on n.
 \begin{lemma}
