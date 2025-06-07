@@ -347,14 +347,21 @@ The second requirement guarantees that we move every secondary convergent
 and the last requirement guarantees that we have moved every convergent after at most $L$ iterations.
 
 \begin{example}
-  Consider the MCF $[(2, 1); \overline{(2, 1)}]$.
-  The maximum in the first complete quotient is $x^{(1)}_1$,
-  because the coefficient $a^{(1)} = (2, 1)$ determines the integer part
-  for all elements in $x^{(1)}$ and the next complete quotient $x^{(2)}$
-  only determines the fractional part.
-  Therefore, the first element must be the largest.
-  However, then it does not satisfy the second requirement.
-  Therefore, the following proof won't apply to this MCF.
+  Consider the MCF $x = [(2, 1); \overline{(2, 1)}]$,
+  where the vector $(2, 1)$ repeats periodically.
+  This MCF does not meet the requirements for this section.
+  In this case, the first complete quotient is $x^{(1)}$, and the pivot index is $\ell = 1$,
+  since the coefficient $a^{(1)} = (2, 1)$ determines the integer part
+  of each coordinate in $x^{(1)}$, and $2$ is the largest entry.
+  The following complete quotient $x^{(2)}$ only affects the fractional part
+  of each coordinate, so the first coordinate continues to be the pivot.
+
+  However, this violates the second requirement of the proof,
+  which states that every index $\ell \in \{1, \dots, d\}$ must occur
+  as a pivot index infinitely often.
+  In this example, the pivot index is always $\ell = 1$,
+  so the other index (in this case, $2$) is never selected.
+  Therefore, the convergence proof presented in this section does not apply to this example.
 \end{example}
 
 Since we use the Euclidean algorithm to construct an MCF,
