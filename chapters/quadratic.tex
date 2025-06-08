@@ -20,11 +20,10 @@ we show that any quadratic irrational has a periodic continued fraction.
 \section{Definition and Basic Properties}
 % ==============================================================================
 
-We begin with a precise definition of continued fractions,
-focusing especially on infinite continued fractions.
 Although continued fractions are typically defined over a sequence of
 positive integers, we extend the definition to allow for real numbers.
 This will be useful for the theorems which follow.
+A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
 
 \begin{definition}
   Given a sequence $(rₙ)_{n≥0}$ of real numbers, the finite continued
@@ -38,10 +37,11 @@ This will be useful for the theorems which follow.
     r = \lim_{n → ∞} [r₀; r₁, …, rₙ]
   \]
   exists.
-  The continued fraction $[r₀; r₁, …, rₖ]$ is also called the \emph{$k$-th convergent} of $[r₀; r₁, …, r_n]$.
 \end{definition}
 
-% TODO: Definition is one-way, but the following lemma is the other way
+The definition gives us one way to calculate the value of a continued fraction.
+The following lemma gives us the other direction,
+starting from the last coefficient going right to left:
 
 \begin{lemma}
   \label{lem:cf-nesting}
@@ -65,9 +65,12 @@ This will be useful for the theorems which follow.
   \end{align*}
 \end{proof}
 
-For a continued fraction $[a₀; a₁, …]$ with integers,
-we denote each convergent $[a₀; a₁, …, aₙ]$ by a unique rational value $p/q$,
-which is called the \emph{canonical representation} of the convergent.
+The continued fraction $[r₀; r₁, …]$
+is called the \emph{$n$-th convergent} of $[r₀; r₁, …, rₙ]$.
+For a continued fraction $[a₀; a₁, …]$ with integer coefficients,
+we denote each convergent $[a₀; a₁, …, aₙ]$ by a unique rational value $p/q$.
+This is representation is called the \emph{canonical representation} of the
+convergent.
 We can define this representation inductively as follows:
 
 The canonical representation of the first convergent is simply
