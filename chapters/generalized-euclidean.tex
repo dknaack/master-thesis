@@ -22,12 +22,11 @@ common divisor.
 % ==============================================================================
 
 % TODO: Rewrite this section
-In a vector space, an over-defined set of vectors $A = \{A₁, …, Aₙ\}$ with $n > d$
-can be easily reduced to a basis $B$ with exactly $d$ vectors by taking $d$
-linearly independent vectors from the set $A$.
-In a lattice, it is not as simple.
-Taking only $d$ linearly independent vectors produces a different lattice than
-the whole set, in general.
+In a vector space, we can reduce any set of vectors $A = \{A₁, …, Aₙ\}$ with $n > d$
+to a basis $B$ such that both sets span the same vector space
+by taking $d$ linearly independent vectors from the set $A$.
+In a lattice, this is not as simple.
+Taking only $d$ linearly independent vectors can generate a different lattice than the initial set.
 For example, consider the matrix
 \[
   A = \begin{pmatrix}
@@ -35,18 +34,19 @@ For example, consider the matrix
     0 & 2 & 1 \\
   \end{pmatrix}.
 \]
-Taking any two columns $A_i, A_j$ of the matrix produces a linearly independent
-set, but no set produces the same lattice as the whole matrix.
-The missing vector $A_k$ cannot be reached by a simple integral combination of the
-other two vectors $A_i, A_j$.
+Taking any two linearly independent columns $A_i, A_j$
+produces a different lattice than the all column vectors combined.
+The reason is that the missing vector cannot be reached by an
+integral combination of the other two vectors $A_i, A_j$.
 Instead, we have to find new basis vectors for this lattice.
 
 % TODO: Note about the fact that we only care about one additional vector
 % TODO: Shouldn't it be the rank instead of n > d?
 The problem of finding a basis for a lattice is known as \emph{lattice basis computation}.
 The input for this problem is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
-is to find a basis which produces the same lattice, i.e. $\mathcal L(A) = \mathcal L(B)$.
-The problem can also be seen as a multidimensional analogue of
+is to find a basis which generates the same lattice,
+i.e. $\mathcal L(A) = \mathcal L(B)$.
+The problem can be seen as a multidimensional analogue of
 computing the greatest common divisor from a given set of numbers.
 Indeed, we can view a set of numbers $a₁, a₂, …, aₙ ∈ ℤ$ as the basis vectors
 of the one-dimensional lattice
@@ -56,7 +56,7 @@ of the one-dimensional lattice
 The greatest common divisor represents a reduced basis in this lattice.
 
 Since lattice basis computation is such a fundamental operation, it has many
-applications \cite{Ajtai96,Gentry08}.
+applications \cite{Ajtai96,Gentry08}. % TODO: Such as?
 Previous approaches for computing such bases either used a variant of the LLL
 algorithm~\cite{Lenstra82} or computed the Hermite normal form of the
 matrix~\cite{Storjohann96}.
