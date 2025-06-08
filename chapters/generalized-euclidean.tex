@@ -82,10 +82,13 @@ end
 \end{Pseudocode}
 
 The algorithm is shown in Listing~\ref{lst:generalized-euclidean}.
-It takes a matrix $B ∈ ℤ^{d × d}$ and a vector $c ∈ ℤ^d$ as input and finds a
-new basis $B'$ such that $\mathcal L(B) = \mathcal L(B ∪ \{c\})$.
+In this thesis, we only consider the case where we have one additional vector,
+i.e. $A ∈ ℤ^{d×(d+1)}$.
+We begin by taking a linearly independent subset $B ∈ ℤ^{d × d}$ of the columns of $A$,
+leaving behind one column vector $c ∈ ℤ^d$.
+The algorithm calculates a new basis $B'$ such that $\mathcal L(B) = \mathcal L(B ∪ \{c\})$.
 Its basic structure consists of two steps:
-A modulo operation and an exchange operation.
+A \emph{modulo} operation and an \emph{exchange} operation.
 The operations are similar to the Euclidean algorithm, where we first compute
 the modulo $a \bmod b$ and then swap the two inputs.
 
@@ -98,8 +101,8 @@ so the vector $a$ might not be in the lattice $\mathcal L(B)$.
 But the vector $z = B₁ \floor{x₁} + \dots + B_d \floor{x_d}$
 is a lattice point.
 We could say that $z = B\floor{x}$ is the integer part of the vector.
-The fractional part of $a$ would then be $r = a - z$.
-The fractional part is actually contained in what is known as the \emph{fundamental parallelepiped} of the lattice.
+The fractional part of $a$ would then be $r = a - z$,
+which is contained in the fundamental parallelepiped of the lattice.
 % TODO: Fix this part
 
 So in a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
