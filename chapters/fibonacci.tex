@@ -582,10 +582,10 @@ The reason is that only element of $x$ can be greater than $1$
 and all other elements must be smaller than $1$.
 But that element does not have to be the pivot element,
 it could be another element.
-Therefore, we cannot use these Fibonacci numbers to bound the worst-case
-in the same way.
-Nevertheless, their ratios still lead to the root $θ_d$, which is periodic
-under this strategy.
+Therefore, we cannot use them as a bound for the worst-case
+in the same way as we did before.
+Nevertheless, their ratios still lead to the root $θ_d$,
+which is periodic under this strategy.
 
 % ==============================================================================
 \section{Convergence of General Linear Recurrences}
@@ -604,9 +604,9 @@ defined according to
   F(n + 1) = c_d F(n) + c_{d-1} F(n-1) + ⋯ + c₁ F(n - d + 1) + c₀ F(n - d)
 \]
 for some nonnegative integer coefficients $c₀, c₁, …, c_d$.
-We assume that the first coefficent $c₀$ and the last $c_d$ are not zero.
-As an example, the $d$-bonacci sequence would have all coefficients set to one,
-whereas the other sequence would have only $c₀$ and $c_d$ set to one.
+We assume that $c₀$ and $c_d$ are not zero.
+For example, the $d$-bonacci sequence has $c_0 = ⋯ = c_d = 1$,
+whereas the other sequence has only $c₀ = c_d = 1$ and the remaining terms are zero.
 The goal is to show that the ratios
 \[
   r_n
