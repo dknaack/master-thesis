@@ -1,32 +1,65 @@
 \chapter{Conclusion \& Outlook}
 \label{ch:conclusion}
 
-With this thesis,
-I have shown that many Jacobi-Perron-type algorithms are converging
-and that for all of these algorithms,
-if they become periodic for some input vector,
-then that input must consist of algebraic numbers of degree $≤ d+1$.
-This covers the first part of Hermite's question on the representation
-and one direction of the second part.
-However, what is missing is the second direction,
-whether every algebraic number has a periodic representation.
-Although I was not able to prove this,
-the analysis in Chapter~\ref{ch:implementation} strongly suggests that this is
-indeed the case.
-In particular, the strategy by Tamura and Yasutomi has shown promise for
-finding periodic representation of cubic and quartic irrationals.
+The main objective of this thesis
+was to investigate Hermite's question
+on a new representation of real numbers,
+which is periodic if and only if the number is algebraic.
+The basis for this representation has been a generalization of Euclidean
+algorithm by \citeauthor{Klein24}.
+Throughout this thesis,
+we have seen that many concepts from the Euclidean algorithm naturally carry
+over to its generalization, such as the Fibonacci numbers or continued
+fractions.
 
-Another possibility is the generalization of Klein polygons.
+For the Fibonacci numbers,
+we saw that different strategies lead to different definitions of Fibonacci numbers.
+The first example of such numbers was for the minimum strategy,
+which chooses the smallest fractional value.
+For this strategy, the $d$-bonacci numbers represent the worst case,
+just like the Fibonacci numbers represent the worst case for the classical
+Euclidean algorithm.
+The second strategy improved upon this strategy by minimizing the ratio between two values over two iterations.
+For this strategy, its golden ratio and the corresponding Fibonacci numbers
+already came up when bounding the decrease of the determinant over just two iterations.
+Although the golden ratio is not periodic under the strategy itself,
+we have seen that the maximum strategy leads to periodicity.
+These two roots were the first examples of periodic inputs for the generalized Euclidean algorithm.
+
+Although Hermite's question remains unanswered,
+this thesis provides a different perspective on Jacobi-Perron-type algorithms.
+I have shown that many types of Jacobi-Perron algorithms are converging
+under the condition that every index is used during the construction and that
+the same indices are not too far apart.
+This covers the first part of Hermite's question.
+The second part of Hermite's question has been partially resolved in Section~\ref{sec:mcf-periodic},
+where we have seen that any periodic MCF leads to an algebraic number.
+
+What is missing is the second direction,
+whether every algebraic number has a periodic representation.
+Although in the scope of this thesis,
+I was not able to show this,
+the analysis in Chapter~\ref{ch:implementation}
+strongly suggests that this is indeed the case.
+In particular, the strategy by \citeauthor{Tamura09} has shown promise for
+finding periodic representation of cubic and quartic irrationals.
+The authors have already proven that their algorithm is periodic for certain
+classes of cubic polynomials.
+Future research into this algorithm could possibly lead to a periodic sequence
+for cubic and quartic irrationals.
+
+There are other directions, one can pursue for an answer of Hermite's question.
+One promising direction is the generalization of Klein polygons to higher dimensions.
 In Chapter~\ref{ch:quadratic},
 we have seen a geometric proof of Lagrange's theorem,
 which builds upon the notion of Klein polygons.
 A generalization of Klein polygons does exist in higher dimensions
 and they are known as Klein polyhedra.
-Furthermore, there exists a generalization of Lagrange's theorem \cite{German08}.
+Furthermore, there already exists a generalization of Lagrange's theorem by \citeauthor{German08}.
 However, the missing link is the connection between the convergents and the
 extreme points of such Klein polyhedra.
 For a proof, one would have to show that the extreme points are equivalent to
-the convergents of a Klein polyhedra.
-Section~\ref{sec:mdcf-geometry} already provides the necessary foundation for this.
+the convergents of the MCFs.
+Section~\ref{sec:mdcf-geometry} provides the necessary foundation for this.
 
 % TODO: Add note about how approximation doesn't work well with the multi-dimensional continued fractions
