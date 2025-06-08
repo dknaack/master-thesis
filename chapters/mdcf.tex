@@ -854,11 +854,11 @@ Each matrix $B^{(n)}$ consists of the column vectors $B₀^{(n)}, B₁^{(n)}, �
 The sequence begins with $B^{(0)} = I_d$
 and the remaining terms are calculated according to the recurrence
 \begin{align*}
-  B_{ℓₙ}^{(n)} = B^{(n-1)} \hat a^{(n)},
+  B_ℓ^{(n)} = B^{(n-1)} \hat a^{(n)},
   \qquad B_i^{(n)} = B_i^{(n-1)},
-  \qquad B_0^{(n)} = B_{ℓₙ}^{(n-1)},
+  \qquad B_0^{(n)} = B_ℓ^{(n-1)},
 \end{align*}
-where $\hat a^{(n)} = [1, a_1^{(n)}, …, a_d^{(n)}]$.
+where $ℓ$ is the pivot index and $\hat a^{(n)} = [1, a_1^{(n)}, …, a_d^{(n)}]$.
 By construction, $B^{(n)}$ is the combined matrix of the original sequences
 $P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mdcf-wallis}:
 \[
