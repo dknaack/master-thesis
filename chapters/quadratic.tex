@@ -3,45 +3,39 @@
 
 % TODO: Find a source for this chapter
 We begin with the case of quadratic irrationals.
-A quadratic irrational is any real number which is a root of a polynomial with degree $2$.
+A \emph{quadratic irrational} is any real number
+that is a root of a polynomial with degree $2$.
 For quadratic irrationals, it is already well known that they can be
-represented using periodic continued fractions,
-where continued fractions are fractions of the form
-\[
-  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}}
-\]
-with $a₀ ∈ ℤ$ and $a₁, a₂, … ∈ ℤ_{> 0}$.
-They are periodic when the sequence $a₀, a₁, a₂, …$ eventually repeats.
-In this chapter we will prove that the continued fractions of a number are
+represented using periodic continued fractions.
+
+In this chapter, we will prove that the continued fractions of a number are
 periodic if and only if the number is a quadratic irrational.
 Periodic continued fractions were first analyzed by Euler,
-who has shown that such continued fractions must be quadratic irrationals.
-Later, Lagrange \cite{Lagrange70} has proven the other direction, that
+who showed that such continued fractions must be quadratic irrationals.
+Later, Lagrange~\cite{Lagrange70} proved the other direction, that
 quadratic irrationals must always have periodic continued fractions.
+
 For the proof, we require many properties from the continued fractions.
 Specifically, we will show that continued fractions are always the best
 rational approximations of a real number.
-The continued fractions can also be interpreted geometrically.
-This was initially proposed by Klein \cite{Klein95},
-who viewed the continued fractions as points of a lattice.
-A similar geometrical interpretation will be used in a later chapter for the
-generalization of the continued fractions to higher dimensions.
+The continued fractions can also be interpreted geometrically,
+which was initially proposed by Klein~\cite{Klein95}.
+In his interpretation, he viewed the continued fractions as points in a two-dimensional lattice.
+Using his interpretation,
+we show that any quadratic irrational has a periodic continued fraction.
 
 % ==============================================================================
 \section{Definition and Basic Properties}
 % ==============================================================================
 
-We begin with a more precise definition of what a continued fraction is and in
-particular how infinite continued fractions are defined.
-Although continued fractions are typically defined over a sequence of positive integers,
-we extend the definition to allow for real numbers.
+We begin with a precise definition of continued fractions,
+focusing especially on infinite continued fractions.
+Although continued fractions are typically defined over a sequence of
+positive integers, we extend the definition to allow for real numbers.
 This will be useful for the theorems which follow.
-In general, $r₀, r₁, …$ will denote a sequence of real numbers
-and $a₀, a₁, …$ will denote a sequence of positive integers with the exception
-of the first entry $a₀$, which can be any integer.
 
 \begin{definition}
-  Given a sequence $(r_n)_{n ≥ 0}$ of real numbers, the finite continued
+  Given a sequence $(rₙ)_{n≥0}$ of real numbers, the finite continued
   fractions over this sequence are defined inductively as
   \[
     [r₀] = r₀, \qquad
@@ -52,28 +46,10 @@ of the first entry $a₀$, which can be any integer.
     r = \lim_{n → ∞} [r₀; r₁, …, rₙ]
   \]
   exists.
-  The fraction $[r₀; r₁, …, rₖ]$ is also called the \emph{$k$-th convergent} of $[r₀; r₁, …, r_n]$.
+  The continued fraction $[r₀; r₁, …, rₖ]$ is also called the \emph{$k$-th convergent} of $[r₀; r₁, …, r_n]$.
 \end{definition}
 
-If the sequence consists of positive integers,
-then each convergent $[a₀; a₁, …, aₙ]$ has a unique rational value $pₙ/qₙ$.
-This value can be calculated as follows:
-For a convergent with only one entry, the convergent is simply $[a₀] = a₀ = a₀/1$.
-The convergent of a longer fraction can be calculated by the following:
-\[
-  [a₀; a₁, …, aₙ]
-  = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
-  = a₀ + \frac{\tilde q_{n-1}}{\tilde p_{n-1}}
-  = \frac{\tilde p_{n-1} a₀ + \tilde q_{n-1}}{\tilde p_{n-1}},
-\]
-where $\tilde p_{n-1} / \tilde q_{n-1}$ is the convergent of $[a₁; a₂, …, aₙ]$.
-Of course, this requires calculating a convergent of a different continued
-fraction.
-Instead, we can use a more direct way to calculate the convergent $pₙ/qₙ$ from
-the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ of the same
-continued fractions.
-To prove this, we will first need the following lemma,
-which shows that we can also start from the back of a continued fraction.
+% TODO: Definition is one-way, but the following lemma is the other way
 
 \begin{lemma}
   \label{lem:cf-nesting}
@@ -97,12 +73,37 @@ which shows that we can also start from the back of a continued fraction.
   \end{align*}
 \end{proof}
 
-We can use the following recurrence relation to calculate the convergent $p_n/q_n$:
+For a continued fraction $[a₀; a₁, …]$ with integers,
+we denote each convergent $[a₀; a₁, …, aₙ]$ by a unique rational value $p/q$,
+which is called the \emph{canonical representation} of the convergent.
+We can define this representation inductively as follows:
+
+The canonical representation of the first convergent is simply
+\[
+  [a₀] = a₀.
+\]
+Suppose that the $(n-1)$-th convergent of $[a₁; a₂, …]$ is $p'/q'$,
+then the $n$-th convergent of the continued fractions $[a₀; a₁, …]$ is
+\[
+  [a₀; a₁, …, aₙ]
+  = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
+  = a₀ + \frac{q'}{p'}
+  = \frac{p_{n-1}' a₀ + q'}{p'}.
+\]
+Thus, the canonical representation $p/q$ of $[a₀; a₁, …, aₙ]$ is defined as:
+\begin{align*}
+  p = p' a₀ + q', \quad q = p'.
+\end{align*}
+
+Of course, this requires the convergent of a different continued fraction.
+Instead, we use a more direct way to calculate the canonical representation $pₙ/qₙ$
+from the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$
+of the same continued fraction.
+We use the following recurrence to calculate $p_n/q_n$:
 \begin{align*}
   p_n & = p_{n-1} r_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
   q_n & = q_{n-1} r_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0.
 \end{align*}
-The correctness is shown by the following lemma.
 
 \begin{lemma}
   \label{lem:cf-wallis}
@@ -132,8 +133,36 @@ The correctness is shown by the following lemma.
   \end{align*}
 \end{proof}
 
+The canonical representation of a convergent is unique
+if we cannot reduce the fraction $pₙ/qₙ$ any further.
+In other words, $pₙ$ and $qₙ$ have a greatest common divisor of $1$.
+By Bezout's identity, $pₙ$ and $qₙ$ have a greatest common divisor of $1$
+if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
+
+\begin{lemma}
+  \label{lem:cf-det}
+  $p_{n-1} q_{n-2} - q_{n-1} p_{n-2} = (-1)^n$ for $n ≥ -1$.
+\end{lemma}
+
+\begin{proof}
+  For $n = 0$, we have
+  \[
+    p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
+  \]
+  Suppose that the lemma holds for $n ≥ -1$, then
+  \begin{align*}
+    p_n q_{n-1} - q_n p_{n-1}
+    & = (p_{n-1} a_n + p_{n-2}) q_{n-1} - (q_{n-1} a_n + q_{n-2}) p_{n-1} \\
+    & = p_{n-2} q_{n-1} - q_{n-2} p_{n-1} \\
+    & = (-1) (p_{n-1} q_{n-2} - q_{n-1} p_{n-2}) \\
+    & = (-1)^{n+1}. \qedhere
+  \end{align*}
+\end{proof}
+
+Thus, the canoncial representation is unique.
+
 % ==============================================================================
-\section{Construction using the Euclidean Algorithm}
+\section{Construction Using the Euclidean Algorithm}
 % ==============================================================================
 
 % TODO: Should we jump out of the gate with this problem?
@@ -288,27 +317,7 @@ fraction $[a₀; a₁, …]$ if and only if
 In other words, the convergents must approach the number $x$ as $n$ increases.
 Thus, the next step is to prove that convergents actually approach the number $x$.
 
-\begin{lemma}
-  \label{lem:cf-det}
-  $p_{n-1} q_{n-2} - q_{n-1} p_{n-2} = (-1)^n$ for $n ≥ -1$.
-\end{lemma}
-
-\begin{proof}
-  For $n = 0$, we have
-  \[
-    p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
-  \]
-  Suppose that the lemma holds for $n ≥ -1$, then
-  \begin{align*}
-    p_n q_{n-1} - q_n p_{n-1}
-    & = (p_{n-1} a_n + p_{n-2}) q_{n-1} - (q_{n-1} a_n + q_{n-2}) p_{n-1} \\
-    & = p_{n-2} q_{n-1} - q_{n-2} p_{n-1} \\
-    & = (-1) (p_{n-1} q_{n-2} - q_{n-1} p_{n-2}) \\
-    & = (-1)^{n+1}. \qedhere
-  \end{align*}
-\end{proof}
-
-The lemma already gives us a hint towards the convergence of continued fractions,
+Lemma~\ref{lem:cf-det} already gives us a hint towards the convergence of continued fractions,
 because dividing the equation by $q_n q_{n-1}$ results in
 \[
   \frac{p_n}{q_n} - \frac{p_{n-1}}{q_{n-1}} = \frac{(-1)^{n+1}}{q_n q_{n-1}}.
@@ -381,7 +390,7 @@ to understand them better.
 The geometrical view will also be useful for the second part of Hermite's question.
 
 % ==============================================================================
-\section{Geometrical Interpretation Using Klein Polygons}
+\section{Geometrical Interpretation Based on Klein Polygons}
 % ==============================================================================
 
 The geometry of continued fraction was first analyzed by Klein \cite{Klein95}.
