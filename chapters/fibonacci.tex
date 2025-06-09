@@ -471,37 +471,47 @@ to bound the decrease of the determinant over two iterations.
   which is the exact definition of $ψ_d$.
 \end{proof}
 
-From the proof, we know that $x_i = ψ_d (ψ_d + 1)^{i-1}$.
-However, this is input is not periodic under this strategy.
-It only gives a bound over two iterations.
+As before, the proof leads to an algebraic solution vector $x = (x₁, …, x_d)$ defined by $x_i = ψ_d (ψ_d + 1)^{i-1}$
+and we consider, what happens with this vector under the specified strategy.
+Although the previous golden ratio $φ_d$ was periodic under the minimum strategy,
+the vector $x$ is not periodic under this strategy.
 Nevertheless, we can use a different strategy under which the input becomes periodic.
-
-The new strategy chooses the largest fractional value.
-Because $ψ_d$ is positive and $ψ_d (ψ_d + 1)^d = 1$,
-the values $x_i$ strictly lie between $0$ and $1$.
-Therefore, $x_d$ is the largest value.
-Pivoting with $x_d$ results in the vector $x' = (x₁', …, x_d')$ with
-\[
-  x_d' = \frac{1}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d + 1
-  \quad
-  \text{ and }
-  \quad
-  x_i' = \frac{ψ_d (ψ_d + 1)^{i-1}}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d (ψ_d + 1)^i.
-\]
-Note that the fractional values have not changed in $x'$
-except that now $x_{d-1}$ has the largest fraction value.
-If we were to begin with $x_i = ψ_d (ψ_d + 1)^{i-1} + 1$ instead,
-then $x' = \mathrm{pivot}_d(x)$ would be an exact permutation of $x$.
-Thus, we found a new periodic input for the generalized Euclidean algorithm.
 
 \begin{theorem}
   The generalized Euclidean algorithm is periodic for the real vector $x = (x₁, …, x_d)$
-  with $x_i = ψ_d (ψ_d + 1)^i + 1$ when taking the minimum fractional value.
+  with $x₁ = ψ_d + 1$ and $x_i = ψ_d (ψ_d + 1)^i + 1$ when taking the maximum fractional value.
 \end{theorem}
 
-To find the Fibonacci numbers we have to go backwards:
+\begin{proof}
+  Because $ψ_d$ is positive and $ψ_d (ψ_d + 1)^d = 1$,
+  the values $x_i$ strictly lie between $0$ and $1$
+  and $x_1$ lies between $1$ and $2$.
+  The largest fractional value is $x_d$,
+  since it has the highest power of $ψ_d + 1$.
+  Pivoting with $x_d$ results in the vector $x' = (x₁', …, x_d')$ with
+  \[
+    x_d' = \frac{1}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d + 1
+  \]
+  as well as
+  \[
+    x_1' = \frac{ψ_d + 1 - 1}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d (ψ_d + 1)
+    \quad
+    \text{ and }
+    \quad
+    x_i' = \frac{ψ_d (ψ_d + 1)^{i-1}}{ψ_d (ψ_d + 1)^{d-1}} = ψ_d (ψ_d + 1)^i.
+  \]
+  This follows from the definition of $ψ_d$, because
+  \[
+    ψ_d(ψ_d + 1)^d = 1 \iff \frac{1}{ψ(ψ_d + 1)^} = 1 \iff \frac{ψ_d (ψ_d + 1)^i}{ψ_d (ψ_d)}
+  \]
+  Note that the fractional values have not changed in $x'$
+  except that now $x_{d-1}$ has the largest fraction value.
+  Thus, $x$ is periodic if we repeat this step $d$ times.
+\end{proof}
+
+To find the Fibonacci numbers, we have to go backwards.
 We already have a definition of a golden ratio $ψ_d$,
-so we have find a linear recurrence which converges to $ψ_d$.
+so we have to find a linear recurrence which converges to $ψ_d$.
 In its current form, we cannot easily find such a linear recurrence.
 Instead, we will use the root $θ_d = ψ_d + 1$.
 Then,
