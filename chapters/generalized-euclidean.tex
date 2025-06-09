@@ -80,8 +80,10 @@ one-dimensional setting.
 solve $Bx = c$
 while $x$ is not integral do
   find $x_ℓ$ which is not integral
-  $c ← B_ℓ$
-  $B_ℓ ← B\{x\}$
+  // Modulo:
+  $r ← B\{x\}$
+  // Exchange:
+  $c ← B_ℓ$; $B_ℓ ← r$
   solve $Bx = c$
 end
 \end{Pseudocode}
