@@ -737,13 +737,13 @@ This relation then defines the equivalence class of an element $a ∈ ℝ^{d+1}$
 \[
   [a] = \mathrm{span}(a) = \{ λ a \mid λ ∈ ℝ, λ ≠ 0 \}.
 \]
-Formally, this is known as a real \emph{projective space}, denoted as $\mathbb{RP}^{d+1}$.
+Formally, this is known as a real \emph{projective space}, denoted as $\mathbb{RP}^d$.
 It is the set of equivalence classes in $ℝ^{d+1} \setminus \{0\}$ defined by the
 equivalence relation $\sim$.
 An element $x$ of this space is denoted as $[x₀, x₁, …, x_d]$,
 where the square brackets indicate that this element is an equivalence
 class.
-In summary, we have the following mappings from $ℝ^d$ to $\mathbb{RP}^{d+1}$
+In summary, we have the following mappings from $ℝ^d$ to $\mathbb{RP}^d$
 and vice-versa:
 
 \begin{center}
@@ -753,7 +753,7 @@ and vice-versa:
       nodes={text width=3cm, align=center},
     ] {
       \node (L0) {$\mathbb{R}^d$}; &
-      \node (R0) {$\mathbb{RP}^{d+1}$}; \\
+      \node (R0) {$\mathbb{RP}^d$}; \\
       \node (L1) {$(x₁, …, x_d)$}; &
       \node (R1) {$[1, x₁, …, x_d]$}; \\
       \node (L2) {$(x₁/x₀, …, x_d/x₀)$}; &
@@ -769,7 +769,7 @@ and vice-versa:
   \centering
   \includestandalone{figures/projective-space}
   \caption{
-    The convergents as vectors in a $(d+1)$-dimensional projective space.
+    The convergents as vectors in a $d$-dimensional projective space.
     The ordinary convergents are projections at the $x₀ = 1$ plane.
   }
   \label{fig:projective-space}
@@ -818,7 +818,7 @@ Importantly, each of those matrices has
 determinant $±1$.
 Therefore, the whole operation can be easily reversed by inverting the matrix.
 This is the equivalent of the inverse pivot operation in
-the projective space $\mathbb{RP}^{d+1}$.
+the projective space $\mathbb{RP}^d$.
 Using this notion, we can reformulate the MCF as a series of matrix multiplications.
 Let $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$,
 which is equivalent to the identity matrix with $a$ as its first column,
