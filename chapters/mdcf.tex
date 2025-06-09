@@ -1,6 +1,8 @@
 \chapter{Multidimensional Continued Fractions}
 \label{ch:mdcf}
 
+% TODO: This needs to be rewritten since we have already introduced a
+% representation in the previous chapter on the generalized Euclidean algorithm
 For quadratic irrationals, we used continued fractions to represent them as a
 periodic sequence of integers.
 The continued fractions were constructed using the Euclidean algorithm.
@@ -29,6 +31,10 @@ This will be discussed in more detail in the next chapter.
 \section{Construction Using the Generalized Euclidean Algorithm}
 % ==============================================================================
 
+% TODO: Why do we need a bottom-up definition? Because the construction only
+% associates the integer sequence with a real number, we don't have any way to
+% calculate which number it corresponds to.
+% Also, the top-down construction gives us no notion of convergents.
 The construction of MCFs using the generalized Euclidean algorithm gives us a
 top-down definition, where we start with a vector $x$ and derive its
 representation using the algorithm.
