@@ -705,20 +705,17 @@ then this theorem would guarantee the convergence.
 % continued fraction, they're kind of ambiguous. Maybe we should just switch to
 % regular parentheses instead.
 In the geometrical interpretation of continued fractions,
-we represented each convergent $pₙ/qₙ$ as a two-dimensional vector $(pₙ, qₙ)$.
-These vectors approached an irrational line spanned by the vector $(1, α)$
+each convergent $pₙ/qₙ$ is represented as a two-dimensional vector $(pₙ, qₙ)$.
+These vectors approach an irrational line spanned by the vector $(1, α)$
 where $α$ is some irrational number.
 For the generalization to multidimensional continued fractions,
-we represent each convergent,
-which is a $d$-dimensional rational vector,
+each convergent, which is a $d$-dimensional rational vector,
 as a $(d+1)$-dimensional integer vector.
-Specifically, given a vector $r^{(n)} = (p₁/q₁, …, p_d/q_d) ∈ ℚ^d$,
+Specifically, given a convergent $r^{(n)} = (p₁/q₁, …, p_d/q_d) ∈ ℚ^d$,
 we first find a common denominator $(p₁'/q, …, p_d'/q)$ and
 then we map it to the vector $\hat r = (q, p₁', …, p_d') ∈ ℤ^{d+1}$.
-We can go back from the integer vector to a rational vector
-by dividing each coordinate with the first and
-removing the first coordinate from the integer vector,
-i.e. given $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$, we map it back to $(x₁/x₀, …, x_d/x₀) ∈ ℚ^d$.
+Similarly, if we have a vector $(x₀, x₁, …, x_d) ∈ ℤ^{d+1}$,
+then we map it back to $(x₁/x₀, …, x_d/x₀) ∈ ℚ^d$.
 
 In this space, the representation for a particular convergent is not unique,
 there can be multiple integer vectors representing the same convergent.
@@ -731,7 +728,9 @@ This is because the scalar is eliminated when mapping it back to the rational ve
   ↦ \left(\frac{λ c₁}{λ c₀}, …, \frac{λ c_d}{λ c_0} \right)
   = \left(\frac{c₁}{c₀}, …, \frac{c_d}{c_0} \right).
 \]
-Therefore, two nonzero vectors $a, b ∈ ℝ^{d+1}$ are equivalent,
+
+We can extend this to any real vector in $ℝ^{d+1}$:
+Two nonzero vectors $a, b ∈ ℝ^{d+1}$ are equivalent,
 denoted as $a \sim b$, if $a = λ b$ for some scalar $λ ∈ ℝ$.
 This relation then defines the equivalence class of an element $a ∈ ℝ^{d+1}$ as
 \[
@@ -775,7 +774,9 @@ and vice-versa:
   \label{fig:projective-space}
 \end{figure}
 
-In this space, the pivot operation becomes a linear operation on the projective coordinates.
+Next, we consider the pivot operation in a projective space.
+Before we had to differentiate to cases to define the pivot operation,
+now the pivot operation is just a linear operation on the projective coordinates.
 For example, consider the vector $[1, x₁, x₂]$ and suppose that $0 ≤ x₁, x₂ < 1$.
 A pivot operation with $ℓ = 1$ would result in the vector $[1, 1/x₁, x₂/x₁]$.
 This vector is equivalent to $[x₁, 1, x₂]$.
@@ -794,8 +795,8 @@ the new coordinate $x₀$:
   =
   \begin{bmatrix} 1 \\ 1/x₁ \\ x₂/x₂ \\ \end{bmatrix}.
 \]
-If $x₁$ and $x₂$ are greater than $1$,
-then we first have to subtract the integer part from the vector $x$.
+If $x₁$ and $x₂$ have a nonzero integer part,
+then we first have to subtract this part from the vector $x$.
 In the projective space, this is equivalent to a series of skew operations:
 \[
   \begin{bmatrix}
@@ -814,21 +815,31 @@ In the projective space, this is equivalent to a series of skew operations:
   =
   \begin{bmatrix} 1 \\ x₁ - \floor{x₁} \\ x₂ - \floor{x₂} \\ \end{bmatrix}.
 \]
-Importantly, each of those matrices has
-determinant $±1$.
+In general,
+let $S(a)$ denote the skew matrix by a vector $a ∈ ℝ^d$,
+i.e. the identity matrix with zeros in the first column swapped with $a$,
+and let $R(ℓ)$ denote the permutation matrix,
+which swaps $x_ℓ$ with $x_0$.
+Then, we can define the pivot operation as
+\[
+  \mathrm{pivot}_ℓ(x) = R(ℓ) S(-\floor{x}) \hat x,
+\]
+where $\hat x = [1, x₁, …, x_d]$.
+
+Importantly, we can invert each matrix.
+For the matrix $S(a)$, we simply skew in the opposite direction
+and the matrix $R(ℓ)$ is its own inverse, since swapping the same coordinate
+twice yields the same vector.
 Therefore, the whole operation can be easily reversed by inverting the matrix.
-This is the equivalent of the inverse pivot operation in
-the projective space $\mathbb{RP}^d$.
-Using this notion, we can reformulate the MCF as a series of matrix multiplications.
-Let $S(a)$ denotes the translation by a vector $a ∈ ℝ^d$,
-which is equivalent to the identity matrix with $a$ as its first column,
-and the matrix $R(ℓ)$ denotes the swap of $x_ℓ$ with $x_0$.
-Then, the definition of the MCFs can be written as
+This is the equivalent of the inverse pivot operation in the projective space $\mathbb{RP}^d$.
+Thus, we can reformulate MCFs as a series of matrix multiplications.
+The projective definition of an MCF can be written as
 \[
   [a^{(0)}] = \hat a^{(0)}, \qquad
   [a^{(0)}; a^{(1)}, …, a^{(n)}] = S(a₀) · R(ℓ) · [a^{(1)}; a^{(2)}, …, a^{(n)}],
 \]
-where $ℓ$ is the index of the largest element in $[a^{(1)}; a^{(2)}, …, a^{(n)}]$ and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
+where $ℓ$ is the pivot index of $[a^{(1)}; a^{(2)}, …, a^{(n)}]$
+and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
 
 We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
 Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it to a single matrix sequence $(B^{(n)})_{n ≥ 0}$.
