@@ -418,15 +418,16 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 We can achieve a much better decrease if we minimize over two iterations instead of just one.
 We assume that the values are ordered in increasing order by their fractional
 value, i.e. $\{x₁\} ≤ \{x₂\} ≤ ⋯ ≤ \{x_d\}$.
-In the first iteration, we choose the index $ℓ$, which minimizes $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
-In the second iteration, we choose $ℓ + 1$.
+In the first iteration, we choose the index $ℓ ∈ \{1, …, d\}$,
+which minimizes the fractional value $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
+Then, we choose $ℓ + 1$ in the second iteration.
 Whereas the Fibonacci numbers for the minimum strategy only occur,
 when analyzing the whole execution of the algorithm,
 the Fibonacci numbers for this strategy occur already after two iterations.
 
 \begin{theorem}
   The determinant decreases by at least $ψ_d$ over two iterations,
-  where $ψ_d$ is the root of $x(x+1)^d - 1$.
+  where $ψ_d$ is the root of the polynomial $p(x) = x(x+1)^d - 1$.
 \end{theorem}
 
 \begin{proof}
