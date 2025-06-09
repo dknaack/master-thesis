@@ -328,18 +328,19 @@ In fact, for $d = 1$ the update rule matches the definition of continued fractio
     float=tbp,
     label={lst:modified-generalized-euclidean},
     caption={
-      The modified algorithm, where the solution $x$ remains entirely positive in each iterations.
-      The linear system from the original algorithm is replaced by the update rule.
-      The two negations ensure that the vectors represent the correct solution,
-      when the modified update rule from Equation~\ref{eq:modified-update-rule} is used.
+      The algorithm for constructing a multidimensional continued fraction
+      based on the generalized Euclidean algorithm.
+      It constructs a representation for a vector $x ∈ ℝ^d$
+      as a list ${[a^{(0)}; a^{(1)}, …]}$ with $a^{(n)} ∈ ℤ^d$
+      using the pivot operation from Equation~\ref{eq:modified-update-rule}.
     }]
-solve $Bx = c$
-while $x$ is not integral do
-  find $x_ℓ$ which is not integral
-  $c ← B_ℓ$
-  $B_ℓ ← -B\{x\}$
-  $B ← -B$
-  $x ← \mathrm{pivot}_ℓ(x)$
+$x^{(0)} ← x$
+$a^{(0)} ← \floor{x}$
+$n ← 0$
+while $a^{(n)} ≠ 0$ do
+  $x^{(n+1)} ← \mathrm{pivot}_ℓ(x^{(n)})$
+  $a^{(n+1)} ← \floor{x^{(n+1)}}$
+  $n ← n + 1$
 end
 \end{Pseudocode}
 
