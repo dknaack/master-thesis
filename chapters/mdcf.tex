@@ -29,61 +29,42 @@ This will be discussed in more detail in the next chapter.
 \section{Construction Using the Generalized Euclidean Algorithm}
 % ==============================================================================
 
-% TODO: We are already explaining this in the other chapter, so this needs to be REMOVED.
-To derive the continued fraction for a real number, we have used an algorithm
-similar to the Euclidean algorithm.
-In particular, we looked at the ratio $a/b$ between the two inputs $a$ and $b$,
-and we have used the integer part of that ratio as a coefficient in the
-continued fraction.
-Iterating the algorithm then gave us a unique representation for
-every real number.
-Since the Euclidean algorithm is just the generalized version for $d = 1$,
-we can easily extend this algorithm to higher dimensions.
-The generalized algorithm already contains some notion of a ratio in the form
-of the solution vector $x$.
-If $d = 1$, then the solution vector $x$ is a solution to the equation $bx = a$,
-where $a$ and $b$ are inputs for the classical Euclidean algorithm.
-So the integer part of the solution $x$ represents the first coefficient for
-the continued fraction of $a/b$ and the fractional part $\{a/b\}$ is the
-inverse of the next continued fraction.
+The construction of MCFs using the generalized Euclidean algorithm gives us a
+top-down definition, where we start with a vector $x$ and derive its
+representation using the algorithm.
+The continued fraction defined on page~\pageref{def:cont-frac}
+use a bottom-up definition:
+We begin with the continued fraction $[a₀]$ of a single coefficent
+and then we inductively define the continued fraction $[a₀; a₁, …, aₙ]$
+based on the smaller continued fraction $[a₁; a₂, …, aₙ]$.
+For MCFs, we can similarly derive a bottom-up definition based on the inverse
+pivot operation.
 
-The multidimensional continued fraction can now be easily derived from the
-solution vector $x$ in higher dimensions.
-Specifically, given a vector $x ∈ ℝ^d$, we take the integer part of each
-element $\floor{x}$ as a coefficient of the multidimensional continued
-fraction.
-Then, we get the subsequent coefficients by iterating over this vector using
-the $\mathrm{pivot}$ operation.
-This gives us a top-down construction of MCFs, but we defined continued
-fractions are defined in a bottom-up fashion.
-For a bottom-up definition of the MCFs, we have to reverse the pivot operation.
-The inverse operation can be derived as follows:
 Let $x ∈ ℝ^d$ and $a = \floor{x}$.
-If $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ$, then
+Suppose that $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ ∈ \{1, …, d\}$.
+We can derive $x$ from the vectors $x'$ and $a$ as follows:
+By definition,
 \[
-  \begin{array}{lcrlcr}
-    \displaystyle x_i' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ}, &
-    \displaystyle x_ℓ' & = & \displaystyle \frac{x_i - a_i}{x_ℓ - a_ℓ} \\[1em]
-  \end{array}
+  x_ℓ' = \frac{1}{x_ℓ - a_ℓ}
+  \; \text{ and } \;
+  x_i' = \frac{x_i - a_i}{x_ℓ - a_ℓ}
+  \; \text{ for all } i ≠ ℓ.
 \]
-for all $i ≠ ℓ$.
-For the inverse operation, we have to derive every element of $x$ from $x'$,
-which can be done by the following equations:
+By rearranging these equations, we can calculate $x$ from $x'$ and $a$ using
 \[
-  \begin{array}{lcrlcr}
-    \displaystyle x_i & = & a_i + \displaystyle \frac{x_i'}{x_ℓ'}, &
-    \displaystyle x_ℓ & = & a_ℓ + \displaystyle \frac{1}{x_ℓ'}
-  \end{array}
+  x_ℓ = a_ℓ + \frac{1}{x_ℓ'}
+  \; \text{ and } \;
+  x_i = a_i + \frac{x_i'}{x_ℓ'}
+  \; \text{ for all } i ≠ ℓ.
 \]
-This allows us to calculate the previous vector $x$ from the next vector $x'$,
-if we know the integer vector $a$.
-What we do not need for the inverse function is the index $ℓ$.
-The reason is that $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element,
-since $\{x_i\} < 1$ for every element.
+Thus, we have an inverse function of the pivot operation.
+
+The inverse function does not require the index $ℓ$ used in $x' = \mathrm{pivot}_ℓ(x)$.
+The reason is that $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element, since $\{x_i\} < 1$ for every element.
 So we can derive $ℓ$ from the vector $x'$ by finding the index of the largest element.
-We will denote the inverse function as $\mathrm{pivot}^{-1}$,
-it takes a vector $x' ∈ ℝ^d$ and an integer vector $a$
-and then calculates $x$ using the equations above.
+Therefore, the inverse function $\mathrm{pivot}^{-1}$ only takes
+a vector $x' ∈ ℝ^d$ and a vector $a ∈ ℤ^d$ as input.
+It calculates the vector $x$ according to the equations above.
 In summary, we have
 \[
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}^{-1}(a, x') = x.
@@ -114,7 +95,7 @@ For the representation to be correct, we require $\max_i r_i^{(n)} ≠ 0$ for $n
 This is similar to the continued fractions, where only the first value could be zero,
 while all subsequent values had to be positive.
 For the multidimensional counterpart we only require that the pivot element is not zero.
-The other values in the vector $r^{(n)}$ can assume any non-negative value.
+The other values in the coefficients $r^{(n)}$ can assume any non-negative value, including zero.
 
 \begin{example}
   Consider the MCF $x = [(1,\, 2); (3,\, 2),\, (4,\, 5)]$.
