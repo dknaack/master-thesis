@@ -296,9 +296,9 @@ The integer part $\floor{x}$ now defines a whole vector, which we use as
 one part in the integer sequence.
 This also gives us a representation of an entire vector not just a single number.
 Indeed, if we do not use the mapping, then we can find a representation for any real vector.
-Therefore, if $x, x', x'', …, x^{(n)}, …$ are the solution vectors at each iteration of the algorithm,
+Therefore, if $x, x', x'', …$ are the solution vectors at each iteration of the algorithm,
 then we represent the original input vector $x$ as a list of integer vectors
-$\left[\floor{x}, \floor{x'}, \floor{x''}, …, \floor{x^{(n)}}, …\right]$.
+$\left[\floor{x}; \floor{x'}, \floor{x''}, …\right]$.
 
 Since we only need the solution vector,
 we can use the update rule from Equation~\ref{eq:update}
@@ -334,9 +334,9 @@ In fact, for $d = 1$ the update rule matches the definition of continued fractio
       as a list ${[a^{(0)}; a^{(1)}, …]}$ with $a^{(n)} ∈ ℤ^d$
       using the pivot operation from Equation~\ref{eq:modified-update-rule}.
     }]
+$n ← 0$
 $x^{(0)} ← x$
 $a^{(0)} ← \floor{x}$
-$n ← 0$
 while $a^{(n)} ≠ 0$ do
   $x^{(n+1)} ← \mathrm{pivot}_ℓ(x^{(n)})$
   $a^{(n+1)} ← \floor{x^{(n+1)}}$
@@ -365,31 +365,21 @@ no longer negated:
   \end{cases}
 \end{align}
 By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
-The modified algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
-In the algorithm, first $B_ℓ$ is flipped and then the whole matrix $B$ is flipped,
-This is the same as only flipping the vectors $B_i$ for $i ≠ ℓ$.
-The difference between the two algorithms is essentially that we propagate the
-negation to the vectors $B_i$ instead of the elements $x_i'$.
-Hence, $x$ is totally positive after one iteration of the algorithm.
-We now have an easy way to represent real numbers,
-except that this representation is not unique.
+The final algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
 
 % TODO: We need to explain that this representation is not unique
 
-\begin{example}
-  % TODO: We should add an example here somewhere
-  Consider $x = (13/5, 8/5)$.
-  The vector has at least two different representations.
-  It can be represented as either $[(1,1); (1, 0), (1, 0)]$ or $[(1,1); (0, 1), (0, 1)]$,
-  since
-  \begin{align*}
-    (\underline{5/2}, 3/2) → (\underline{1/2}, 1) → (1, 0). \\
-    (5/2, \underline{3/2}) → (1, \underline{1/2}) → () \\
-    2/5
-  \end{align*}
-  Hence, the representation for $x$ is not unique.
-\end{example}
-
+Unfortunately, this representation is not unique.
+Consider the vector $x = (13/5, 8/5)$.
+It has at least two different representations.
+It can be represented as $[(1,1); (1, 0), (1, 0)]$ or $[(1,1); (0, 1), (0, 1)]$,
+since
+\begin{align*}
+  (\underline{5/2}, 3/2) → (\underline{1/2}, 1) → (1, 0). \\
+  (5/2, \underline{3/2}) → (1, \underline{1/2}) → () \\
+  2/5
+\end{align*}
+Hence, the representation for $x$ is not unique.
 To find a unique representation, all we need is a deterministic strategy,
 that decides which element $x_ℓ$ to choose for pivoting.
 For example, one possible strategy could be to choose the element with the
@@ -397,8 +387,7 @@ smallest fractional value.
 
 In conclusion,
 we represent a vector $x ∈ ℝ^d$ as a sequence of integer vectors by repeatedly
-applying the $\mathrm{pivot}$ operation on it either indefinitely or until
-$\{x\} = 0$.
+applying the $\mathrm{pivot}$ operation on it either indefinitely or until $x$ is integral.
 The index $ℓ$ is given according to some strategy and at each step we store
 $\floor{x}$ as one coefficient in the representation for $x$.
 We turn this into a representation for a single number $r ∈ ℝ$ by mapping each
