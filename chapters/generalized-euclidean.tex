@@ -71,7 +71,12 @@ one-dimensional setting.
 \begin{Pseudocode}[
     float=tb,
     label={lst:generalized-euclidean},
-    caption={The Generalized Euclidean Algorithm \cite{Klein24}.}]
+    caption={
+      The Generalized Euclidean Algorithm \cite{Klein24},
+      which given a basis $B$ and vector $c$
+      finds a new basis $B'$ which generates the same lattice.
+      It works in two steps: Modulo and exchange.
+    }]
 solve $Bx = c$
 while $x$ is not integral do
   find $x_ℓ$ which is not integral
