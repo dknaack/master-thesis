@@ -438,9 +438,11 @@ to bound the decrease of the determinant over two iterations.
 
 \begin{proof}
   We assume without loss of generality that every value in $x$
-  lies between $0$ and $1$.
+  lies between $0$ and $1$, such that $\{x_i\} = x_i$.
+  Furthermore, we assume that $\floor{x_ℓ/x_{ℓ-1}} = 1$ with the exception of $ℓ = 1$,
+  since any larger value would lead to a faster decrease.
   The decrease in the second iteration is the largest
-  when all ratios are equal, i.e.
+  when all ratios $\{x_ℓ/x_{ℓ-1}\}$ for $ℓ ∈ \{1, …, d\}$ are equal, i.e.
   \[
     x₁ = \frac{x₂}{x₁} - 1 = ⋯ = \frac{x_d}{x_{d-1}} - 1 = \frac{1}{x_d} - 1.
   \]
