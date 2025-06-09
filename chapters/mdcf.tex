@@ -173,62 +173,58 @@ The second gives us a formula for calculating the convergents.
 % TODO: Explain how to derive the sequences
 In the lemma for continued fractions,
 we defined the convergents of a continued fraction~$pₙ/qₙ$
-using a fractional transformation based on the previous two
-terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
+using a linear recurrence based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
 For MCFs, we can similarly derive a recursive formula to derive the values of
 the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
-Deriving the sequence is more involved than the one-dimensional case since
-there is an additional index $ℓ$ at each step.
+Deriving the sequence is more involved than the one-dimensional case,
+since we have an additional pivot index $ℓ$ at each step.
 
-The sequence is essentially the generalized Euclidean algorithm, but in reverse.
-Just like the MCF is the application of the inverse pivot operation.
-In the algorithm, we begin with a basis $B ∈ ℤ^{d×d}$ and a vector $c ∈ ℤ^d$.
-First, we find a solution $x$ to $Bx = c$ and then we exchange $c$ with $B_ℓ$
-and $B_ℓ$ with the remainder $B\{x\} = Bx - Ba_i$.
-We continue this process until $x$ is entirely integral.
-For the sequence, we reverse this process.
-We begin with an already reduced basis $B'$ and a vector $c'$, which is an
-integral combination of $B'$.
-Then, we exchange $B'_{ℓ}$ with $c'$ and $c'$ with $B' a_i + B'_{ℓ}$.
-We continue this process until $B x = c$.
-
-In total, there are two types of sequences:
-A sequence of $d+1$ vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)} ∈ ℤ^{d+1}$ and a sequence
-of $d+1$ scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)} ∈ ℤ$,
+There are two types of sequences:
+A sequence of vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)} ∈ ℤ^{d+1}$ and a sequence
+of scalars $Q_0^{(n)}\!,\, Q_1^{(n)}\!,\, …, Q_d^{(n)} ∈ ℤ$,
 which represent the denominators of the convergents.
-The sequences begin with
-\begin{align*}
-  P_0^{(-1)} & = 0, & P_i^{(-1)} & = e_i, \\
-  Q_0^{(-1)} & = 1, & Q_i^{(-1)} & = 0,
-\end{align*}
-for every $i ∈ \{1, …, d\}$ and the sequences are updated according to the
-following recurrences:
-\begin{align*}
-  P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} r_1^{(n)} + ⋯ + P_d^{(n-1)} r_d^{(n)}, &
-  P_i^{(n)} & = P_i^{(n-1)}, &
-  P_0^{(n)} & = P_{ℓₙ}^{(n-1)} \\
-  Q_ℓ^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} r_1^{(n)} + ⋯ + Q_d^{(n-1)} r_d^{(n)}, &
-  Q_i^{(n)} & = Q_i^{(n-1)}, &
-  Q_0^{(n)} & = Q_{ℓₙ}^{(n-1)},
-\end{align*}
-where $i ≠ ℓ$ and $ℓ$ is the index of the maximum element in the complete
-quotient $x^{(n)}$. % TODO: n or n - 1?
-What this sequence effectively does is reconstructing the lattice from an
-initial solution vector $x ∈ ℝ^d$ and its coefficient vectors $a_n$.
+The initial terms of these sequences are
+\[
+  \begin{aligned}
+    P_0^{(-1)} & = 0, & P_i^{(-1)} & = e_i, \\
+    Q_0^{(-1)} & = 1, & Q_i^{(-1)} & = 0,
+  \end{aligned}
+\]
+where $e_i$ is the $i$-th unit vector.
+For the remaining terms,
+Let $ℓ$ be the index of the maximum element in the complete quotient $x^{(n)}$.
+Then, the next terms in the sequences are:
+\[
+  \begin{aligned}
+    P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} r_1^{(n)} + ⋯ + P_d^{(n-1)} r_d^{(n)}, &
+    P_0^{(n)} & = P_{ℓₙ}^{(n-1)}, \\
+    Q_ℓ^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} r_1^{(n)} + ⋯ + Q_d^{(n-1)} r_d^{(n)}, &
+    Q_0^{(n)} & = Q_{ℓₙ}^{(n-1)}.
+  \end{aligned}
+\]
+The terms $P_i^{(n)}$ and $Q_i^{(n)}$ where $i ≠ ℓ$ are carried over from the previous iteration,
+i.e.
+\[
+  P_i^{(n)} = P_i^{(n-1)} \text{ and } Q_i^{(n)} = Q_i^{(n-1)}.
+\]
 
-Modelling this back to the Euclidean algorithm,
-the vectors $P_1^{(n)}, …, P_d^{(n)}$ represent the basis and $P_0^{(n)}$ is
-the additional vector, which is reduced during a run of the algorithm.
-This matches the behavior of the algorithm in reverse.
-We begin with the vector $P_0^{(-1)} = 0$ since the Euclidean algorithm
-would end with a zero vector.
+The idea behind these sequences is that they behave like the generalized
+Euclidean algorithm, but in reverse.
+We can consider the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ as the basis,
+which is reduced by the algorithm.
+The Euclidean algorithm terminates when one vector is an integral combination
+of the other vectors, because then the remainder is zero.
+The sequence $P_0^{(n)}$ starts with the zero vector,
+i.e. when the basis has been fully reduced.
+Therefore, $P_0^{(n)}$ represents the remainder $c$ and the vectors $P_1^{(n)},
+…, P_d^{(n)}$ represent the basis $B$.
 Then, the formula calculates a new vector using an integral combination of the
 old vectors and stores it in $P_ℓ^{(n)}$.
 This corresponds directly to the modulo and exchange operation of the
 generalized Euclidean algorithm.
-As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, the
-values $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ scale the vectors back down and as
-such they ensure that they converge to a limit as $n$ increases.
+As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, we
+divide them by the scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ to ensure that
+they converge to a limit as $n$ increases.
 
 % TODO: Ensure that this is correct for the first index!
 \begin{lemma}
