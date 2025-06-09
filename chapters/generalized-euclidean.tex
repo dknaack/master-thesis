@@ -355,25 +355,40 @@ no longer negated:
   \end{cases}
 \end{align}
 By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
-The final algorithm can be seen in Listing~\ref{lst:modified-generalized-euclidean}.
-
-% TODO: We need to explain that this representation is not unique
+The final algorithm for constructing MCFs can be seen in
+Listing~\ref{lst:modified-generalized-euclidean}.
 
 Unfortunately, this representation is not unique.
-Consider the vector $x = (13/5, 8/5)$.
-It has at least two different representations.
-It can be represented as $[(1,1); (1, 0), (1, 0)]$ or $[(1,1); (0, 1), (0, 1)]$,
-since
-\begin{align*}
-  (\underline{5/2}, 3/2) → (\underline{1/2}, 1) → (1, 0). \\
-  (5/2, \underline{3/2}) → (1, \underline{1/2}) → () \\
-  2/5
-\end{align*}
-Hence, the representation for $x$ is not unique.
 To find a unique representation, all we need is a deterministic strategy,
 that decides which element $x_ℓ$ to choose for pivoting.
-For example, one possible strategy could be to choose the element with the
-smallest fractional value.
+For example, one possible strategy could be choosing the smallest non-integral
+element or choosing the element with the smallest fractional value.
+
+\begin{example}
+  Consider the vector $x = (13/5, 8/5)$.
+  It has at least two different representations.
+  It can be represented as $[(2, 1); (1, 1), (1, 0), (2, 0)]$, since
+  \[
+    \begin{array}{lclcl}
+                                  &   & (13/5, \, 8/3) & = & (2, \, 1) + (3/5, \, 3/5) \\
+      \mathrm{pivot}_1(13/5, \, 8/5) & = & (5/3, \,  1)   & = & (1, \, 1) + (1/3, \, 0)   \\
+      \mathrm{pivot}_1(5/3, \, 1)    & = & (3/2, \,  0)   & = & (1, \, 0) + (1/2, \, 0)   \\
+      \mathrm{pivot}_1(3/2, \, 1)    & = & (2, \,    0)   & = & (2, \, 0) + (0, \, 0),
+    \end{array}
+  \]
+  or it can be represented as $[(2, 1); (1, 1), (0, 1), (0, 2)]$, since
+  \[
+    \begin{array}{lclcl}
+                                  &   & (13/5, \, 8/5) & = & (2, \, 1) + (3/5, \, 3/5) \\
+      \mathrm{pivot}_2(13/5, \, 8/5) & = & (1, \, 5/3)    & = & (1, \, 1) + (0, \, 1/3)   \\
+      \mathrm{pivot}_2(1, \, 5/3)    & = & (0, \, 3/2)    & = & (0, \, 1) + (0, \, 1/2)   \\
+      \mathrm{pivot}_2(0, \, 3/2)    & = & (0, \, 2)      & = & (0, \, 2) + (0, \, 0).
+    \end{array}
+  \]
+  Hence, the representation for $x$ is not unique.
+  However, if we choose $ℓ ∈ \{1, …, d\}$ such that $x_ℓ$ is the minimum
+  then $x$ is uniquely represented by $\bigl[(2, 1); (1, 1), (0, 1), (0, 2)\bigr]$.
+\end{example}
 
 In conclusion,
 we represent a vector $x ∈ ℝ^d$ as a sequence of integer vectors by repeatedly
