@@ -419,11 +419,17 @@ We can achieve a much better decrease if we minimize over two iterations instead
 We assume that the values are ordered in increasing order by their fractional
 value, i.e. $\{x₁\} ≤ \{x₂\} ≤ ⋯ ≤ \{x_d\}$.
 In the first iteration, we choose the index $ℓ ∈ \{1, …, d\}$,
-which minimizes the fractional value $\{\{x_{ℓ+1}\}/\{x_ℓ\}\}$.
+which minimizes the fractional value $\{\{x_ℓ\}/\{x_{ℓ-1}\}\}$
 Then, we choose $ℓ + 1$ in the second iteration.
+We additionally define $x₀ = 1$ and $x_{d+1} = 1$ such that we can choose $ℓ = 1$ in the first iteration and $ℓ = d$ in the second.
+The reasoning behind this strategy is that it minimizes the distance between the two closest values,
+if we measure the distance by their ratios.
+
 Whereas the Fibonacci numbers for the minimum strategy only occur,
 when analyzing the whole execution of the algorithm,
 the Fibonacci numbers for this strategy occur already after two iterations.
+In fact, we will go straight to the golden ratio for this strategy and use it
+to bound the decrease of the determinant over two iterations.
 
 \begin{theorem}
   The determinant decreases by at least $ψ_d$ over two iterations,
