@@ -100,39 +100,33 @@ The operations are similar to the Euclidean algorithm, where we first compute
 the modulo $a \bmod b$ and then swap the two inputs.
 
 First, we look at the modulo operation.
-Suppose we have a basis $B$ with vectors $B₁, …, B_d$, any vector $a ∈ ℝ^d$ can
-easily be represented as a linear combination $B₁x₁ + \dots + B_d x_d$ of the
-basis vectors.
-However, linear combinations are not integral combinations,
-so the vector $a$ might not be in the lattice $\mathcal L(B)$.
-But the vector $z = B₁ \floor{x₁} + \dots + B_d \floor{x_d}$
-is a lattice point.
-We could say that $z = B\floor{x}$ is the integer part of the vector.
-The fractional part of $a$ would then be $r = a - z$,
-which is contained in the fundamental parallelepiped of the lattice.
-% TODO: Fix this part
-
-So in a lattice, each point $a ∈ ℝ^d$ can be represented as a combination of a lattice point $z
-∈ \mathcal{L}(B)$ and a point in the fundamental parallelepiped $r ∈ Π(B)$.
-Specifically,
-given a solution $x$ to $Bx = a$,
+Suppose we have a basis $B ∈ ℤ^{d×d}$ with vectors $B₁, …, B_d$,
+any vector $a ∈ ℝ^d$ can easily be represented
+as a linear combination $B₁x₁ + \dots + B_d x_d$ of the basis vectors.
+However, the linear combination is not necessarily an integral combinations,
+so the vector $a$ might not be contained in the lattice $\mathcal L(B)$.
+But we can split the vector into an integral part,
+which is contained in the lattice,
+and a fractional part,
+which is contained in the fundamental parallelepiped.
+If $c = Bx$, then the vector $z = B \floor{x}$ is a lattice point
+and $r = c - z$ is contained in the fundamental parallelepiped.
+Thus, we can split $c$ into
 \[
-  a = B\floor{x} + B\{x\} = z + r.
+  c = B\floor{x} + B\{x\} = z + r.
 \]
 This is essentially a multidimensional division with remainder operation inside a lattice.
 It allows us to define a modulo operation for the algorithm as follows:
 \[
-  a \pmod{Π(B)} := a - B\floor{B^{-1} a}.
+  c \pmod{Π(B)} := c - B\floor{B^{-1} a}.
 \]
 It remains to be shown that applying this modulo operation on $a$ does not
 affect the underlying lattice $\mathcal L(B ∪ \{a\})$.
 
 \begin{lemma}
   \label{lem:lattice-mod}
-  Given a set of vectors $A = \{A_1, \dots, A_n\}$ with $A_i ∈ ℤ^d$
-  and a linearly independent subset $B$,
-  let $r = c \pmod{Π(B)}$ for any vector $c ∈ A \setminus B$.
-  Then,
+  Let $A = \{A_1, \dots, A_n\}$ with $A_i ∈ ℤ^d$ and let $B$ be a linearly independent subset of $A$.
+  If $r = c \pmod{Π(B)}$ for any vector $c ∈ A \setminus B$, then
   \[
     \mathcal L(A) = \mathcal L((A \setminus \{c\}) ∪ \{r\}).
   \]
@@ -152,18 +146,17 @@ On one side we have the basis $B$ and on the other we have the vector $c$.
 So a swap of the two inputs will not work.
 Instead, we swap $c$ with a single column $B_ℓ$ of the basis $B$,
 where the specific index $ℓ$ depends on the result from the modulo operation.
-For the modulo we solve a linear system $Bx = c$.
+For the modulo operation, we had to solve a linear system $Bx = c$.
 If one element $x_i$ is integral, then $c$ is already contained in the
 sub-lattice $\mathcal L(B_i)$.
-In the one-dimensional case, this means that $c$ is a multiple of $B_i$,
-so it wouldn't make sense to swap with $B_i$.
-Instead, we only exchange $c$ with a vector $B_ℓ$, where $x_ℓ$ is not integral
-and we swap $B_ℓ$ with the remainder $c \pmod{Π(B)}$.
+Therefore, it would not make sense to swap with $B_i$.
+Instead, we exchange $c$ with any vector $B_ℓ$, where $x_ℓ$ is not integral,
+and we swap the vector $B_ℓ$ with the remainder $r = c \, (\mathrm{mod} \, Π(B))$.
 
-The exchange operation also leads directly to the stop condition.
-The algorithm terminates when all the vector $x$ is entirely integral.
-In this case, the vector $c$ is an integral combination of the basis vectors,
-so we can leave it out of the basis.
+This also leads directly to the terminating condition.
+The algorithm terminates when the vector $x$ is entirely integral.
+In this case, the vector $c$ is an integral combination of all basis vectors,
+which means that we have found a new basis for the original lattice.
 
 \begin{lemma}
   \label{lem:termination}
