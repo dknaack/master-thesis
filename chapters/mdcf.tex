@@ -997,5 +997,17 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   and we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{proof}
 
-% TODO: There should be a discussion about the potential for answering
-% Hermite's question here... We could use thm:unimodular-algebraic, which links algebraic numbers with a unimodular matrix. Using the multidimensional generalization of Lagrange's theorem, we have a periodic chain
+This section has shown that a purely periodic multidimensional continued fraction must represent a vector of algebraic numbers.
+More precisely, the components of the vector lie in a number field of degree at
+most $d + 1$, where d is the dimension of the continued fraction.
+This result establishes one direction of Hermite's question in higher dimensions.
+The converse direction, however, remains open.
+
+Although Theorem~\ref{thm:unimodular-algebraic} shows that for any algebraic
+number $α$ there exists a unimodular matrix $U$ with eigenvector $(1, α, …, α^d)$,
+it remains unclear whether the existence of this matrix implies a periodic MCF.
+For two dimensions, we were able to show that the convergents and the vertices of a Klein polygon are equivalent.
+Since $U$ preserves the Klein polygon, it implies that the continued fraction is periodic.
+In higher dimensions the Klein polygon generalises to a Klein polytope.
+While there exists a multidimensional analogue of Lagrange's theorem \cite{German08},
+the connection between the convergents and the vertices of Klein polytopes is not known yet.
