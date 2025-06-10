@@ -24,6 +24,17 @@ We find an integer $q$ for the quotient and a remainder $r < b$ such that
 In the next step, $a$ is exchanged with $b$ and $b$ with $r$.
 The algorithm continues with these two steps until the remainder $r$ equals zero.
 
+\begin{example}
+  Let $a = 252$ and $b = 105$.
+  The Euclidean algorithm proceeds as follows:
+  \begin{alignat*}{2}
+    252 & = 2 · 105 + 42 \\
+    105 & = 2 · 42 + 21 \\
+    42 & = 2 · 21 + 0.
+  \end{alignat*}
+  Thus, the greatest common divisor of $252$ and $105$ is $21$.
+\end{example}
+
 \begin{lemma}
   If $a = qb + r$, then $\gcd(a, b) = \gcd(b, r)$.
 \end{lemma}
@@ -39,19 +50,8 @@ The algorithm continues with these two steps until the remainder $r$ equals zero
   Combining both inequalities, we get $\gcd(a, b) = \gcd(b, r)$.
 \end{proof}
 
-\begin{example}
-  Let $a = 252$ and $b = 105$.
-  The Euclidean algorithm proceeds as follows:
-  \begin{alignat*}{2}
-    252 & = 2 · 105 + 42 \\
-    105 & = 2 · 42 + 21 \\
-    42 & = 2 · 21 + 0.
-  \end{alignat*}
-  Thus, the greatest common divisor of $252$ and $105$ is $21$.
-\end{example}
-
-Since $r < b$, the inputs decrease at each iteration
-and the Euclidean algorithm must terminate at some point.
+Since $r < b$, the input decreases by at least $1$ after each iteration
+and the Euclidean algorithm terminates at some point.
 Therefore, it correctly calculates the greatest common divisor between the two
 inputs $a$ and $b$.
 In summary, the algorithm uses the following steps:
