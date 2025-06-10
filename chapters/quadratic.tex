@@ -803,25 +803,23 @@ points along the boundary.
 
 % TODO: Fix this example
 \begin{example}
-  Consider the matrix $U$ from Example~\vref{ex:sqrt2-unit},
-  which is the multiplication matrix for $ε = 3 + 2\sqrt{2} ∈ ℚ(α)$.
-  As the example shows, the matrix $U$ is unimodular and
-  it has $(\sqrt{2}, 1)$ and $(-\sqrt{2}, 1)$ as eigenvectors.
-  Furthermore, the matrix shifts each convergents by two,
-  because
+  Consider the continued fraction $[1; \overline{2}]$ of $\sqrt{2}$.
+  Even if we only know the first few terms of the continued fraction, i.e. that
+  $\sqrt{2} ≈ [1; 2]$, we can still deduce that it must be periodic.
+  We use the matrix representation to calculate the second convergent
   \[
-    B_n = B_{n-2} (S^2 R)^2
-    \quad
-    \text{ and }
-    \quad
-    SRS^2RS =
+    B_2 = B_1 S^2 R = B_0 S^1 R (S^2 R)^{n-1} = SRS · S^1 R (S^2 R)^{n-2}.
+  \]
+  The first three matrices in this product are
+  \[
+    SRS =
     \begin{pmatrix}
       1 & 1 \\
       0 & 1 \\
     \end{pmatrix}
     \begin{pmatrix}
       1 & 0 \\
-      2 & 1 \\
+      0 & 1 \\
     \end{pmatrix}
     \begin{pmatrix}
       1 & 1 \\
@@ -829,10 +827,13 @@ points along the boundary.
     \end{pmatrix}
     =
     \begin{pmatrix}
-      3 & 4 \\
-      2 & 3 \\
-    \end{pmatrix}
-    = U.
+      1 & 2 \\
+      1 & 1 \\
+    \end{pmatrix}.
   \]
-  Therefore, $B_{n+2} = U B_n$ and the continued fraction of $\sqrt{2}$ is periodic with period length $2$.
+  This matrix is the mutliplication matrix for $1 + \sqrt{2}$.
+  In Example~\vref{ex:sqrt2-unit},
+  we have already seen that this matrix has $(±\sqrt{2}, 1)$ as eigenvectors.
+  Therefore, if $B_2$ is a convergent, then so is $U^n B_2$.
+  Thus, the continued fraction of $\sqrt{2}$ is periodic.
 \end{example}
