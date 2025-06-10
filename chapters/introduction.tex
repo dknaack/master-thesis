@@ -60,6 +60,10 @@ It should repeat after some point if and only if the represented is a cubic irra
 A more general question would ask whether such a periodic sequence exists for
 algebraic numbers of a fixed degree.
 
+% ==============================================================================
+\section{The Jacobi-Perron Algorithm}
+% ==============================================================================
+
 Since Hermite originally posed his question to Jacobi, it was he who first
 attempted to answer it.
 He developed an algorithm \cite{Jacobi68} inspired by the Euclidean algorithm,
@@ -72,6 +76,37 @@ Later, Oskar Perron generalized Jacobi's method to arbitrary dimensions \cite{Pe
 resulting in what is now called the Jacobi–Perron Algorithm (JPA).
 His algorithm is essentially a generalization of the Euclidean algorithm to $n$ numbers.
 At each step, he still chooses the smallest element at each iteration.
+
+Continued fractions are typically constructed using the Gauss transformation,
+which is defined as
+\begin{align*}
+  T(x) = \frac{1}{x - \floor{x}}.
+\end{align*}
+This transformation is applied repeatedly until $T^m(x) = T^n(x)$ for $m ≠ n$,
+in which case the continued fraction is periodic.
+The Jacobi-Perron uses a similar transform,
+which takes a vector $x = (x₁, …, x_d)$ as input and calculates
+\begin{align*}
+  T(x₁, …, x_d) =
+  \left(
+  \frac{x_2 - \floor{x_2}}{x_1 - \floor{x_1}},
+  \frac{x_3 - \floor{x_3}}{x_1 - \floor{x_1}},
+  …,
+  \frac{x_d - \floor{x_d}}{x_1 - \floor{x_1}},
+  \frac{1}{x_1 - \floor{x_1}}
+  \right)
+\end{align*}
+Again, this transformation is applied repeatedly until $T^m(x) = T^n(x)$ for $m ≠ n$,
+at which point it becomes periodic.
+However, Perron has only shown one direction:
+If the algorithm becomes periodic, then $x$ is an algebraic number with degree $d+1$.
+In an attempt to find an algorithm, which solves both directions,
+previous work often replaces this transformation with a different one,
+which can be considered JPA-type algorithms.
+For example, a different transformation could use the second smallest number.
+They usually consider only one particular transformation and iterate this until a period has been found.
+Despite numerous different transformations being proposed,
+Hermite's question remains open.
 
 % ==============================================================================
 \section{Contributions of this Thesis}
