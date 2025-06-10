@@ -1,64 +1,60 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-The standard way to represent numbers is through decimal notation.
-A number is represented as a sequence of digits,
-where the integer part is separated from the (potentially infinite) fractional part.
-Using this representation,
-we can easily check if a number is rational or not.
-If the decimal expansion of a number is finite, then the number is clearly rational.
-However, the number is also rational if the fractional part is eventually periodic.
-Continued fractions extend this to roots of quadratic polynomials, also
-called quadratic irrationals.
-They are fractions of the form
-\[
-  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
-\]
-where $a₀, a₁, a₂, …$ are integers.
-Every number can be represented as a continued fraction
-and if that continued fraction is periodic, then the number must be a quadratic irrational.
-More importantly, the converse is also true:
-If a number is a quadratic irrational,
-then its continued fraction must be eventually periodic.
-Despite the existence of these periodic representations for rational and
-irrational numbers, there exists no periodic representation for cubic
-irrationals.
-
-This was originally asked by Charles Hermite,
-who in 1839 wrote a letter to Jacobi~\cite{Hermite50} about the
+In 1839, Charles Hermite wrote a letter to Jacobi~\cite{Hermite50} about the
 representation of real numbers.
-He asked whether there exists a representation of the real numbers as a
+He asked, whether there exists a representation of the real numbers as a
 sequence of integers, which is periodic if and only if the represented number
 is a cubic irrational, i.e. the root of a cubic polynomial.
 Although he posed the question nearly two centuries ago,
 it remains unanswered to this day.
 
-Such a representation would not only be useful for its algebraic properties,
-but they could also play an important role in other fields.
-For example, the continued fractions play an important role in the field of
-Diophantine approximation, where the goal is to approximate real numbers using
-rational numbers as closely as possible.
-It turns out that the best rational approximations are exactly those provided by continued fractions.
-Truncating a continued fraction gives a so-called \emph{convergent}
-and these convergents closely approximate the represented number.
-In fact, these convergents are optimal:
-no better approximation with a smaller or equal denominator exists.
+The standard way to represent numbers is through decimal notation.
+A number is represented as a sequence of digits, which begins with the integer
+part and is followed by a (potentially infinite) sequence of digits for the
+fractional part.
+If the decimal expansion of a number is finite, then the number is clearly rational.
+Furthermore, if the decimal expansion is periodic, then the number is rational, too.
+The same behavior occurs for continued fractions and quadratic irrationals.
+Continued fractions are fractions of the form
+\[
+  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
+\]
+where $a₀, a₁, a₂, …$ are integers.
+Any real number has a continued fraction expansion,
+which can be constructed using the Euclidean algorithm.
+If that continued fraction is periodic, then the number must be a quadratic irrational.
+More importantly, the converse is also true:
+If a number is a quadratic irrational,
+then its continued fraction must be eventually periodic.
+Naturally, we can ask whether we can extend this and
+find a periodic representation for cubic irrationals.
+However, no such representation exists as of yet.
+
+The interest in a generalization to cubic irrationals
+comes from the effectiveness of continued fractions in related fields.
+The primary example is Diophantine approximation, where the goal is to
+approximate real numbers using rational numbers as closely as possible.
+It turns out that the best rational approximations are exactly those provided
+by continued fractions.
 A generalization of continued fractions could serve a similar role in the field
 of simultaneous Diophantine approximation, where the goal is to approximate
-multiple real numbers at once with a rational vector.
+multiple real numbers at once with a single rational vector.
 
 Hermite's original question only applies to cubic irrationals,
 but it can be easily generalized to any algebraic number:
-Does there exist a representation of the real numbers as a sequence of
-integers that is periodic if and only if the represented number is a algebraic number of degree $d$?
+Does there exist a representation of the real numbers as a sequence of integers
+that is periodic if and only if the represented number is a algebraic number of
+degree $d$?
 There are two parts to this question.
 The first is the representation of real numbers as a sequence of integers.
 Each finite subsequence of the representation should give us a rational number,
 which approaches the represented number as the sequence grows larger.
 The second part is about the periodicity of the integer sequence.
-It should repeat after some point if and only if the represented is a cubic irrational.
-A more general question would ask whether such a periodic sequence exists for
-algebraic numbers of a fixed degree.
+In the original question, the sequence should repeat after some point if and
+only if the represented is a cubic irrational.
+The general question asks whether a periodic sequence exists for any algebraic
+number with a certain degree.
 
 % ==============================================================================
 \section{The Jacobi-Perron Algorithm}
