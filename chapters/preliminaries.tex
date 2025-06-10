@@ -224,28 +224,28 @@ This leads to the following definition.
   }
 \end{figure}
 
-While different bases may generate the same lattice, the geometric region they
-span still captures the same volume and structure.
+While different bases may generate the same lattice, the geometric region the
+basis spans still captures the same volume and structure.
 To study this structure more concretely, we consider the region formed by all
 linear combinations of the basis vectors with coefficients in the unit
 interval.
-This region is a geometric representation of the “unit cell” of the lattice
+This region is a geometric representation of the “unit cell” of the lattice.
 
 \begin{definition}
   The \emph{fundamental parallelepiped} of a lattice $\mathcal{L}(B)$ with a basis $B ∈ ℤ^{d×d}$ is defined as
   \[
     Π(B) = \left\{\, B₁ x₁ + \dots + B_d x_d \mid x_1, \dots, x_d ∈ [0, 1) \,\right\}.
   \]
-  The \emph{volume} of this parallelepiped is
+  The \emph{volume} of this parallelepiped is given by
   \[
     \mathrm{vol}(Π(B)) = |\det(B)|.
   \]
 \end{definition}
 
-A useful fact about the fundamental parallelepiped of a lattice $\mathcal L(B)$
-is that if $B$ is a square integer matrix, then the volume of the
-parallelepiped $Π(B)$ and the number of integer points $ℤ^n$ contained in
-$Π(B)$ is entirely determined by $\mathrm{det}(B)$, i.e.
+An important property of the fundamental parallelepiped is that
+for $B$ any square integer matrix, both the volume and the number of integer points
+inside the parallelepiped $Π(B)$ is entirely determined by $\mathrm{det}(B)$.
+Specifically,
 \[
   \mathrm{vol}(Π(B)) = |Π(B) ∩ ℤ^n| = |\det(B)|.
 \]
