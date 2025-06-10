@@ -1,7 +1,31 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-In 1839, Charles Hermite wrote a letter to Jacobi~\cite{Hermite50} about the
+The standard way to represent numbers is through decimal notation.
+A number is represented as a sequence of digits,
+where the integer part is separated from the (potentially infinite) fractional part.
+Using this representation,
+we can easily check if a number is rational or not.
+If the decimal expansion of a number is finite, then the number is clearly rational.
+However, the number is also rational if the fractional part is eventually periodic.
+Continued fractions extend this to roots of quadratic polynomials, also
+called quadratic irrationals.
+They are fractions of the form
+\[
+  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
+\]
+where $a₀, a₁, a₂, …$ are integers.
+Every number can be represented as a continued fraction
+and if that continued fraction is periodic, then the number must be a quadratic irrational.
+More importantly, the converse is also true:
+If a number is a quadratic irrational,
+then its continued fraction must be eventually periodic.
+Despite the existence of these periodic representations for rational and
+irrational numbers, there exists no periodic representation for cubic
+irrationals.
+
+This was originally asked by Charles Hermite,
+who in 1839 wrote a letter to Jacobi~\cite{Hermite50} about the
 representation of real numbers.
 He asked whether there exists a representation of the real numbers as a
 sequence of integers, which is periodic if and only if the represented number
@@ -9,30 +33,7 @@ is a cubic irrational, i.e. the root of a cubic polynomial.
 Although he posed the question nearly two centuries ago,
 it remains unanswered to this day.
 
-His motivation for the question comes from the representation of real numbers
-as continued fractions.
-The standard way to represent numbers is through decimal notation,
-where a number is represented by its integer part followed by a
-(potentially infinite) series of digits for the fractional part.
-This representation allows one to easily check, whether the represented number
-is rational or not.
-If the decimal expansion of a number is eventually periodic, then the number is rational.
-Continued fractions provide a similar check for quadratic irrationals.
-They are fractions of the form
-\[
-  a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
-\]
-where $a₀, a₁, a₂, …$ are integers.
-If the sequence is eventually periodic,
-then the represented number must be a quadratic irrational.
-More importantly, the converse is also true:
-If a number is a quadratic irrational,
-then its continued fraction expansion must be eventually periodic.
-
-In his letters,
-Hermite was interested in a generalization of continued fractions,
-which would be periodic for cubic irrationals.
-Such a generalization would not only be useful for its algebraic properties,
+Such a representation would not only be useful for its algebraic properties,
 but they could also play an important role in other fields.
 For example, the continued fractions play an important role in the field of
 Diophantine approximation, where the goal is to approximate real numbers using
