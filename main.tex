@@ -11,24 +11,34 @@
   Studiengang           = {Informatik},
   Datum                 = {18. Juni 2025},
   Abstract              = {
-    In 1839, Charles Hermite posed the question of whether every real number admits
-    a representation as a sequence of integers, periodic if and only if the number
-    is a cubic irrational.
-    While continued fractions solve this problem for
-    quadratic irrationals, no analogous representation is known for higher-degree
-    algebraic numbers.
-    Previous work has focused on a individual algorithms,
-    which find a periodic representation for any cubic irrational.
+    A number is a quadratic irrational if and only if it can be represented by
+    a periodic continued fraction.
+    In 1839, Charles Hermite asked Jacobi,
+    whether a similar representation for algebraic numbers of higher degree exists.
+    Although the question was posed nearly two centuries ago,
+    no known representation has been found.
+    Previous work has focused on individual algorithms,
+    but none of them have resolved the question.
     In contrast, this thesis considers a broader class of multidimensional
-    continued fractions,
-    which are based on a generalization of the Euclidean algorithm.
+    continued fractions, which unifies many of these algorithms under a single
+    framework.
 
-    It is shown that a subset of these multidimensional continued fractions converge,
-    and that all periodic multidimensional continued fractions lead to an algebraic number.
-    These results establish one direction of Hermite’s question in higher dimensions.
-    An experimental study complements the theoretical findings, providing
-    numerical evidence that a wide class of algebraic numbers -- including many
-    cube roots -- give rise to periodic MDCFs.
+    The basis of these continued fractions is a generalization of the Euclidean algorithm,
+    mirroring the already established connection between ordinary continued fractions and
+    the Euclidean algorithm.
+    I show that all periodic multidimensional continued fractions represent
+    algebraic numbers and that a subset of them always converges.
+    Moreover, I provide an experimental analysis comparing several algorithms
+    and examining their effectiveness in simultaneous Diophantine approximation.
+
+    % TODO: Maybe we should move this into contributions?
+    %The primary application of continued fractions has been the approximation
+    %of real numbers by rationals.
+    %The assumption is that multidimensional continued fractions serve a similar
+    %role in the approximation of real vectors.
+    %Despite this, I have found specific cases,
+    %where the multidimensional continued fractions are unable to approximate a
+    %real vector continuously.
   },
   Zusammenfassung       = {
     Im Jahr 1839 stellte Charles Hermite die Frage, ob jede reelle Zahl durch eine
