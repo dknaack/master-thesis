@@ -340,34 +340,46 @@ The basis is also known as the \emph{power basis}.
 
 Multiplication by a fixed element $α ∈ K$ of a number field $K$ can be viewed
 as a linear transformation on its corresponding vector space.
-For example, consider the field $ℚ(\sqrt{2})$ with basis $\{1, \sqrt{2}\}$
-and one element $α = 1 + \sqrt{2}$.
-Fixing this element, we can calculate the multiplication of $α$ with any $x = a
-+ b \sqrt{2} ∈ ℚ(\sqrt{2})$ as follows:
-\[
-  αx = (1 + \sqrt{2})(a + b \sqrt{2}) = a + a \sqrt{2} + b \sqrt{2} + 2b = (a + 2b) + (a + b)\sqrt{2}.
-\]
-In the basis $\{1, \sqrt{2}\}$, this corresponds to the matrix
-\[
-  M_α =
-  \begin{pmatrix}
-    1 & 2 \\
-    1 & 1
-  \end{pmatrix}.
-\]
-
-This matrix can be defined for any element in arbitrary number fields $ℚ(α)$.
 For an element $β ∈ ℚ(α)$ we begin by evaluating the
 multiplication of $β$ with one element $α^k$ of the power basis.
 The resulting element can be represented as a linear combination again,
 i.e.
 \[
-  β · α^k = \sum_{i=0}^{n-1} m_{jk} α^j
+  β · α^k = \sum_{j=0}^{n-1} m_{kj} α^j
 \]
 for some coefficients $m_{jk} ∈ ℚ$.
 This represents one row in the multiplication matrix.
 Combining each row into one matrix gives us the final multiplication matrix.
-We will make use of the determinant of this matrix:
+
+\begin{example}
+  \label{ex:mult-matrix}
+  Consider a quadratic field $K = ℚ(\sqrt{d})$ for some non-perfect square $d$.
+  Each element $α ∈ ℚ(\sqrt{d})$ can be represented as $a + b \sqrt{d}$ for some $a, b ∈ ℚ$.
+  The multiplication matrix of $α$ is
+  \[
+    M_α =
+    \begin{pmatrix}
+      a & bd \\
+      b & a \\
+    \end{pmatrix},
+  \]
+  since
+  $(a + b \sqrt{d}) · 1 = a + b \sqrt{d}$ and
+  $(a + b \sqrt{d}) · \sqrt{d} = bd + a \sqrt{d}$,
+  each of which represents one column in the multiplication matrix.
+\end{example}
+
+\begin{lemma}
+  Let $α$ be algebraic and let $α₁, …, α_n$ be its conjugates.
+  Then, any multiplication matrix of an element $β ∈ ℚ(α)$ has $(α_i^{n-1}, …, α_i, 1)$ as one of its eigenvectors.
+\end{lemma}
+
+\begin{proof}
+  This follows from the definition.
+  \[
+    (M_β α)_k = \sum_{j=0}^{n-1} m_{jk} α^j = β α^k.
+  \]
+\end{proof}
 
 \begin{definition}
   Let $K$ be a number field.
@@ -376,30 +388,15 @@ We will make use of the determinant of this matrix:
 \end{definition}
 
 \begin{example}
-  Consider a quadratic field $K = ℚ(\sqrt{d})$ for some non-perfect square $d$.
-  Each element $α ∈ ℚ(\sqrt{d})$ can be represented as $a + b \sqrt{d}$ for some $a, b ∈ ℚ$.
-  The multiplication matrix of $α$ is
-  \[
-    M_α =
-    \begin{pmatrix}
-      a & b \\
-      bd & a \\
-    \end{pmatrix},
-  \]
-  since
-  $(a + b \sqrt{d}) · 1 = a + b \sqrt{d}$ and
-  $(a + b \sqrt{d}) · \sqrt{d} = bd + a \sqrt{d}$,
-  each of which represents one row in the multiplication matrix.
-  The norm of any element $α ∈ ℚ(\sqrt{d})$ is then defined as
+  By Example~\ref{ex:mult-matrix},
+  the norm of an element $a + b \sqrt{d} ∈ ℚ(\sqrt{d})$ is
   \[
     N_{K/ℚ}(a + b \sqrt{d}) = a^2 - d b^2.
   \]
-  The elements in the ring $ℤ[\sqrt{d}]$ with norm $±1$
-  are instances of Pell's equation.
 \end{example}
 
-The number field $K = ℚ(α)$ forms an $n$-dimensional vector space using the power basis
-and the ring $ℤ[α]$ forms an $n$-dimensional lattice using the same basis.
+While the number field $K = ℚ(α)$ forms an $n$-dimensional vector space using
+the power basis, the ring $ℤ[α]$ forms an $n$-dimensional lattice under the same basis.
 If $ε ∈ ℤ[α]$ with $N_{K/ℚ}(ε) = 1$, then $ε^{-1} ∈ ℤ[α]$,
 since its multiplication matrix is unimodular.
 Thus, $ε$ is a unit in the ring $ℤ[α]$.
@@ -444,14 +441,12 @@ the ring of integers is equal to $ℤ\left[\frac{1+\sqrt{d}}{2}\right]$ if $d �
   If the minimal polynomial of $α$ contains rational coefficients,
   then $ℤ[α]$ cannot be an order, since $α ∈ ℤ[α]$.
   However, we can find a subring of $ℤ[α]$ which is an order.
-  Let $m_α(x) = x^n + a_{n-1} x^{n-1} + ⋯ + a_1 x + a_0$ be the minimal polynomial of $α$
-  and let $q$ be the common denominator of its coefficients.
+  Suppose $m_α(x) = x^n + a_{n-1} x^{n-1} + ⋯ + a_1 x + a_0$ is the minimal polynomial of $α$.
+  Let $q$ be the common denominator of its coefficients.
   Then, $q α$ is a root of the monic polynomial
-  \[
-    m_{qα}(x) = x^n + a_{n-1} q x^{n-1} + ⋯ + a_1 q^{n-1} + a_0 q^n,
-  \]
-  since
   \begin{align*}
+    m_{qα}(x) & = x^n + a_{n-1} q x^{n-1} + ⋯ + a_1 q^{n-1} + a_0 q^n,
+  \intertext{since}
     m_{qα}(qα)
     & = (qα)^n + a_{n-1} q (qα)^{n-1} + ⋯ + a_1 q^{n-1} (q α) + a_0 q^n \\
     & = q^n \underbrace{(α^n + a_{n-1} α^{n-1} + ⋯ + a_1 α + a_0)}_{= 0}
