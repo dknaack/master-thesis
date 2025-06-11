@@ -7,19 +7,19 @@ on a new representation of real numbers,
 which is periodic if and only if the number is algebraic.
 The basis for this representation has been a generalization of Euclidean
 algorithm by \citeauthor{Klein24}.
-Throughout this thesis,
+Although Hermite's question still remains open,
 we have seen that many concepts from the Euclidean algorithm naturally carry
 over to its generalization, such as the Fibonacci numbers or continued
 fractions.
 
-For the Fibonacci numbers,
+Beginning with the Fibonacci numbers,
 we saw that different strategies lead to different definitions of Fibonacci numbers.
 The first example of such numbers was for the minimum strategy,
 which chooses the smallest fractional value.
 For this strategy, the $d$-bonacci numbers represent the worst case,
 just like the Fibonacci numbers represent the worst case for the classical
 Euclidean algorithm.
-The second strategy improved upon this strategy by minimizing the ratio between two values over two iterations.
+The second strategy improves upon this strategy by minimizing the ratio between two values over two iterations.
 For this strategy, its golden ratio and the corresponding Fibonacci numbers
 already came up when bounding the decrease of the determinant over just two iterations.
 Although the golden ratio is not periodic under the strategy itself,
@@ -27,41 +27,58 @@ we have seen that the maximum strategy leads to periodicity.
 These two roots were the first examples of periodic inputs for the generalized Euclidean algorithm.
 
 % TODO: Explain how MCFs were constructed
+These examples led to the development of multidimensional continued fractions
+as presented in Chapter~\ref{ch:mdcf}.
+Instead of focusing on a single algorithm,
+the multidimensional continued fractions of this thesis encompass many of these
+algorithms under one framework.
+Many algorithms only choose the pivot index in their construction and for a
+selection of these algorithms we have seen in the comparison of
+Section~\ref{sec:comparison}, how they fit into the multidimensional
+continued fractions.
 
-Although Hermite's question remains unanswered,
-this thesis provides a different perspective on Jacobi-Perron-type algorithms.
-I have shown that many types of Jacobi-Perron algorithms are converging
-under the condition that every index is used during the construction and that
-the same indices are not too far apart.
-This covers the first part of Hermite's question.
-The second part of Hermite's question has been partially resolved in Section~\ref{sec:mcf-periodic},
-where we have seen that any periodic MCF leads to an algebraic number.
+Under this framework,
+I have shown that any algorithm, which chooses all possible pivot indices and
+chooses them not too far apart, leads to multidimensional continued fractions,
+which are converging.
+This covers algorithms like the classical Jacobi-Perron algorithm,
+but also other algorithms, which choose the pivot indices based on a fixed list.
+More importantly, it covers the first part of Hermite's question.
+It shows that many algorithms lead to a representation of the real numbers
+using the multidimensional continued fractions.
 
-What is missing is the second direction,
-whether every algebraic number has a periodic representation.
-Although in the scope of this thesis,
-I was not able to show this,
-the analysis in Chapter~\ref{ch:implementation}
-strongly suggests that this is indeed the case.
-In particular, the strategy by \citeauthor{Tamura09} has shown promise for
+While the first part of Hermite's question has been solved,
+the second part is only partially solved.
+Whereas the first part only asks of a representation of the real numbers,
+the second part states that the repersentation should be periodic if and only
+if the number is a cubic irrational (or algebraic number, in general).
+The first direction has been proven in Section~\ref{sec:mcf-periodic}.
+The proof is based on eigenvectors and shows that if the MCF of an irrational vector $x$ is
+purely periodic, then $x$ is one of the eigenvectors in the convergent matrix.
+% TODO: We have to define the convergent matrix
+
+Theorem~\ref{thm:unimodular-algebraic} suggests that we can always find a
+unimodular matrix with $x$ as one of its eigenvectors,
+thereby indicating that we should be able to find a periodic MCF.
+However, I was not able to show this in the scope of this thesis.
+Nevertheless, the analysis in Chapter~\ref{ch:implementation}
+strongly supports the conjecture.
+In particular, the algorithm by \citeauthor{Tamura09} has shown promise for
 finding periodic representation of cubic and quartic irrationals.
 The authors have already proven that their algorithm is periodic for certain
 classes of cubic polynomials.
 Future research into this algorithm could possibly lead to a periodic sequence
 for all cubic and quartic irrationals.
 
-There are other directions, one can pursue for an answer of Hermite's question.
-One promising direction is the generalization of Klein polygons to higher dimensions.
-In Chapter~\ref{ch:quadratic},
-we have seen a geometric proof of Lagrange's theorem,
-which builds upon the notion of Klein polygons.
-A generalization of Klein polygons does exist in higher dimensions
-and they are known as Klein polyhedra.
-Furthermore, there already exists a generalization of Lagrange's theorem by \citeauthor{German08}.
-However, the missing link is the connection between the convergents and the
-extreme points of such Klein polyhedra.
-For a proof, one would have to show that the extreme points are equivalent to
-the convergents of the MCFs.
+In the case of continued fractions,
+we were able to show that they are periodic only if the number is a quadratic irrational.
+The proof uses Klein polygons, which are preserved under a specific unimodular transformation
+and we can find such a transformation for every quadratic irrational.
+We can find a similar transformation for all algebraic numbers, but for the
+multidimensional continued fractions we are missing the connection between them
+and Klein polytopes.
+There already exists a generalization of Lagrange's theorem by \citeauthor{German08}~\cite{German08}.
+Therefore, only the connection to Klein polytopes is missing.
 Section~\ref{sec:mdcf-geometry} provides the necessary foundation for this.
 
 % TODO: Add note about how approximation doesn't work well with the multi-dimensional continued fractions
