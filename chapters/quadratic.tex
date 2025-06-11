@@ -161,8 +161,8 @@ if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
 % TODO: Should we jump out of the gate with this problem?
 The first part of Hermite's question requires a representation of the real numbers.
 This means we have to find a unique continued fraction $[r₀; r₁, …]$ for every real number $x$.
-Although we have allowed real numbers in them so far,
-we will now restrict them to only integer coefficients.
+So far, we have allowed continued fractions with real coefficients
+but for the construction we use only integer coefficients.
 More specifically, we will only look at continued fractions $[a₀; a₁, a₂, …]$
 where the first coefficient $a₀$ can be any integer but the remaining ones have to be positive.
 These constraints do not guarantee a unique representation alone.
@@ -353,6 +353,7 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
   \end{align*}
 \end{proof}
 
+% TODO: Mention that we can also prove the other direction
 We now have a continued fraction for both rational number and irrational numbers.
 What remains to be shown is that the continued fractions are unique.
 This gives us a unique representation for every real number $x ∈ ℝ$ by a
