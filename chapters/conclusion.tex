@@ -7,7 +7,11 @@ on a new representation of real numbers,
 which is periodic if and only if the number is algebraic.
 The basis for this representation has been a generalization of Euclidean
 algorithm by \citeauthor{Klein24}.
-Although Hermite's question still remains open,
+Specifically, I have used a small subroutine from the algorithm,
+which was used to update the old solution vector instead of solving a linear
+system in each iteration.
+This subroutine was then used as the basis of the multidimensional continued fractions.
+Although these were not enough to fully solve Hermite's question,
 we have seen that many concepts from the Euclidean algorithm naturally carry
 over to its generalization.
 
@@ -34,11 +38,16 @@ there does not exist a unique multidimensional continued fraction for every vect
 However, this choice provides more flexibility.
 Instead of focusing on a single algorithm, the multidimensional continued
 fractions unify many Jacobi-Perron-type algorithms under one framework.
+Additionally, they share many properties with continued fractions.
+For example, the linear recurrence for continued fractions proven in Lemma~\ref{lem:cf-wallis}
+has an equivalent sequence proven in Lemma~\ref{lem:mdcf-wallis} for
+multidimensional continued fractions.
 
-Under this framework,
-I have shown that any algorithm, which chooses all possible pivot indices and
-chooses these indices not too far apart, constructs multidimensional continued fractions,
-that are converging.
+The convergence of multidimensional continued fractions was proven in Section~\ref{sec:mcf-convergence}.
+The proof is considerably more complex than for continued fractions.
+However, it still shows that the multidimensional continued fractions are
+converging under any algorithm, which chooses all possible pivot indices and
+chooses these indices not too far apart.
 This covers algorithms like the classical Jacobi-Perron algorithm,
 but also other algorithms, which choose the pivot indices based on a fixed list.
 Most importantly, it establishes the first part of Hermite's question.
@@ -75,8 +84,8 @@ and we can find such a transformation for every quadratic irrational.
 We can find a similar transformation for all algebraic numbers, but for the
 multidimensional continued fractions we are missing the connection between them
 and Klein polytopes.
-There already exists a generalization of Lagrange's theorem by \citeauthor{German08}~\cite{German08}.
-Therefore, only the connection to Klein polytopes is missing.
-Section~\ref{sec:mdcf-geometry} provides the necessary foundation for this.
+Section~\ref{sec:mdcf-geometry} already provides the necessary foundation for this.
+Furthermore, there already exists a generalization of Lagrange's theorem by
+\citeauthor{German08}~\cite{German08}.
 
 % TODO: Add note about how approximation doesn't work well with the multi-dimensional continued fractions
