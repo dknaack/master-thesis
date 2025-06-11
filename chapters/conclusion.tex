@@ -9,8 +9,7 @@ The basis for this representation has been a generalization of Euclidean
 algorithm by \citeauthor{Klein24}.
 Although Hermite's question still remains open,
 we have seen that many concepts from the Euclidean algorithm naturally carry
-over to its generalization, such as the Fibonacci numbers or continued
-fractions.
+over to its generalization.
 
 Beginning with the Fibonacci numbers,
 we saw that different strategies lead to different definitions of Fibonacci numbers.
@@ -29,21 +28,20 @@ These two roots were the first examples of periodic inputs for the generalized E
 % TODO: Explain how MCFs were constructed
 These examples led to the development of multidimensional continued fractions
 as presented in Chapter~\ref{ch:mdcf}.
-Instead of focusing on a single algorithm,
-the multidimensional continued fractions of this thesis encompass many of these
-algorithms under one framework.
-Many algorithms only choose the pivot index in their construction and for a
-selection of these algorithms we have seen in the comparison of
-Section~\ref{sec:comparison}, how they fit into the multidimensional
-continued fractions.
+They are essentially the generalized Euclidean algorithm, but in reverse.
+Since the algorithm allows us to choose a pivot index at each iteration,
+there does not exist a unique multidimensional continued fraction for every vector.
+However, this choice provides more flexibility.
+Instead of focusing on a single algorithm, the multidimensional continued
+fractions unify many Jacobi-Perron-type algorithms under one framework.
 
 Under this framework,
 I have shown that any algorithm, which chooses all possible pivot indices and
-chooses them not too far apart, leads to multidimensional continued fractions,
-which are converging.
+chooses them not too far apart, constructs multidimensional continued fractions,
+that are converging.
 This covers algorithms like the classical Jacobi-Perron algorithm,
 but also other algorithms, which choose the pivot indices based on a fixed list.
-More importantly, it covers the first part of Hermite's question.
+Most importantly, it establishes the first part of Hermite's question.
 It shows that many algorithms lead to a representation of the real numbers
 using the multidimensional continued fractions.
 
