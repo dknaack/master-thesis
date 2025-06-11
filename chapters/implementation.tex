@@ -21,7 +21,10 @@ the possibility of a positive answer to the second part of Hermite’s question.
 The second part of this chapter focuses on the approximation rate of MCFs.
 For ordinary continued fractions, the convergents are known to give
 exceptionally good approximations to irrational numbers.
-Here, we test whether MCFs offer similar approximation behavior in higher dimensions.
+For the approximation of irrational vectors, there is no known efficient algorithm.
+%Previous work either focuses solely on Hermite's question or simultaneous Diophantine approximation.
+%But never both.
+Therefore, I tested whether MCFs could offer similar approximation behavior in higher dimensions.
 
 % ==============================================================================
 \section{Comparing Methods for Constructing Periodic Multidimensional Continued Fractions of Algebraic Numbers}
@@ -236,34 +239,44 @@ which satisfy
   \text{ for every } i ∈ \{1, …, d\}.
 \end{equation}
 Such vectors will be called \emph{good rational approximations} of $(α₁, …, α_d)$.
-The idea would be that the convergents of MCFs are such good rational approximations.
+Although Dirichlet has shown that infinitely many good approximations exist,
+the proof is non-constructive, it does not state how to find these approximations.
+
+The idea would be that the convergents of MCFs can be used to find good
+rational approximations.
 To study this behavior, I did a brief analysis on the number of convergents,
 which satisfy this bound.
-
-The implementation consists of a breadth-first search over the construction of an MCF for the vector $x$.
-The search begins with the root $x^{(0)} = x$ and it expands a node $x^{(n)} ∈ ℝ^d$
-by adding the vector $\mathrm{pivot}_ℓ(x^{(n)})$ for every $ℓ ∈ \{1, …, d\}$ to the queue.
-However, it only expands a node $x^{(n)}$
-if its convergent vector $r^{(n)}$ is a good approximation,
-i.e. satisfies the bound from Equation~\ref{eq:sim-approx}.
-Otherwise, the node is considered a leaf.
+For a given irrational vector $x ∈ ℝ^d$,
+I search every possible MCF for convergents, that are good rational approximations.
+The search begins with the root $x^{(0)} = x$ and
+it only considers vectors $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$,
+if $x^{(n)}$ is a good rational approximations.
 The search terminates either after a maximum number of steps is reached or if
-there are no more nodes in the queue.
-At each step, I keep track of the number of nodes, which are active.
-The goal of this search is to see how many convergents satisfy the
-approximation bound.
+there are no more vectors in the queue.
+At each step, I keep track of the number of convergents,
+which are active.
 
-Since this is very similar to a brute-force search,
-I could only run the algorithm with a maximum of $20$ steps
-and I only ran it with $d = 2$.
-As the input, I have used the cube roots again.
-Since the golden ratio is the most irrational number
-in terms of approximation,
-I used the cube roots as they would represent the worst-case for the
-approximation using MCFs.
-In total,
-I tested the cube roots from $\sqrt[3]{2}$ to $\sqrt[3]{100}$ amounting to a
-total of $96$ cube roots, when removing the perfect cubes.
+Since this is very similar to a brute-force search, I could only run the
+algorithm with a maximum of $20$ steps.
+The search becomes even more expensive for three dimensions.
+Therefore, this was the only test I have done.
+However, this does not mean that the MCFs themselves are expensive to
+construct.
+The search considers every possible MCF,
+whereas the construction of one specific MCF can be done efficiently.
+The aim of the search is just to compare all possible MCFs on the feasibility
+of good rational approximations.
+
+In terms of one-dimensional rational approximations,
+the golden ratio is the worst approximable number.
+The reason is that its continued fraction consists solely of ones.
+Therefore, the convergents increase the slowest.
+Other quadratic irrationals are similarly badly approximable.
+In higher dimensions, we can consider the cube roots as badly approximable.
+Thus, I tested the approximations with two-dimensional vectors and used the
+cube roots as input, again.
+In total, I tested the cube roots from $\sqrt[3]{2}$ to $\sqrt[3]{100}$
+amounting to a total of $96$ cube roots, when removing the perfect cubes.
 
 \begin{figure}[tbp]
   \centering
@@ -284,10 +297,6 @@ Figure~\ref{fig:results-approx} shows the results of this analysis.
 % approximation bound intact or does it violate it after some point?
 For most cubic roots from the previous test,
 there are MCFs which satisfy the approximation bound.
-However, they are notably different MCFs than those found in the brute-force
-search.
-So some cubic roots can have different MCFs
-and not all of them must necessarily be good simultaneous approximations.
 The most surprising result of this analysis is that there are some cubic roots
 for which there exists no path which satisfies the approximation bound of Equation~\ref{eq:sim-approx}.
 Perron already suggested that his algorithm does not satisfy this bound \cite{Perron07},
@@ -302,15 +311,15 @@ after only a few number of iterations.
 % TODO: What about transcendental numbers?
 
 % Conclusion:
-The analysis shows that for some cube roots,
-there is no MCF whose convergents produce good rational approximations.
-Therefore, MCFs generally do not mirror continued fractions;
-they do not provide good rational approximations for real vectors in general.
-However, the converse is still possible, i.e. that the best rational
-approximations are convergents of some MCF.
+This shows that MCFs generally do not mirror continued fractions in the case of simultaneous Diophantine approximation.
+In general, they do not provide good rational approximations for irrational vectors at all times.
+However, there are still different ways they could be useful for generating rational approximations.
+One option would be to investigate a weaker bound for Equation~\ref{eq:sim-approx}.
+Instead of finding a approximation which has a distance of $1/q^{1 + 1/d}$,
+we could find an approximation which has a distance of $c/q^{1 + 1/d}$ for some constant $c > 1$.
+Thus, they could still be useful for the field of simultaneous Diophantine
+approximation.
 % TODO: If we end up using Klein polyhedra, uncomment this:
 % This seems especially likely if they share a connection with the Klein polyhedra.
 % Since then the area between the convergent is empty and they continue to
 % approach the irrational line by the given vector.
-Thus, they could still be useful for the field of simultaneous Diophantine
-approximation.
