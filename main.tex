@@ -11,25 +11,31 @@
   Studiengang           = {Informatik},
   Datum                 = {18. Juni 2025},
   Abstract              = {
-    A number is a quadratic irrational if and only if it can be represented by
-    a periodic continued fraction.
-    In 1839, Charles Hermite asked Jacobi,
-    whether a similar representation for algebraic numbers of higher degree exists.
-    Although the question was posed nearly two centuries ago,
-    no known representation has been found.
-    Previous work has focused on individual algorithms,
-    but none of them have resolved the question.
-    In contrast, this thesis considers a broader class of multidimensional
-    continued fractions, which unifies many of these algorithms under a single
-    framework.
+    A number is rational if and only if its decimal representation is eventually periodic.
+    Similarly, a number is a quadratic irrational if and only if it its continued fraction is eventually periodic.
+    This raises a natural question: Is there a representation which is periodic
+    if and only if the number is a cubic irrational?
+    Although this question was posed by Charles Hermite nearly two
+    centuries ago, it remains unanswered to this day.
 
-    The basis of these continued fractions is a generalization of the Euclidean algorithm,
-    mirroring the already established connection between ordinary continued fractions and
-    the Euclidean algorithm.
-    I show that all periodic multidimensional continued fractions represent
-    algebraic numbers and that a subset of them always converges.
-    Moreover, I provide an experimental analysis comparing several algorithms
-    and examining their effectiveness in simultaneous Diophantine approximation.
+    The earliest approach was due to Jacobi and Perron,
+    who developed a generalization of the Euclidean algorithm to arbitrarily many numbers.
+    Their algorithm uses the smallest number and calculates the remainder with respect to the others.
+    Since then, many variants have emerged, each selecting different numbers based on a new algorithm.
+    However, usually only a single strategy is considered.
+
+    In this thesis, a broad class of multidimensional continued fractions is presented,
+    which combines all of these algorithms under a unified framework.
+    It is shown that a specific subset of them converges
+    and that every periodic fraction leads to an algebraic number,
+    but the converse still remains open.
+    Nevertheless, an experimental analysis on these fractions
+    suggests that many cubic irrationals have a periodic representation
+    under certain algorithms.
+
+    %The thesis establishes connections between the generalization and
+    %higher-order Fibonacci numbers,
+    %which are already well known for the Euclidean algorithm.
 
     % TODO: Maybe we should move this into contributions?
     %The primary application of continued fractions has been the approximation
