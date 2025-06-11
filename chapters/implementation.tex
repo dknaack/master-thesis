@@ -1,67 +1,67 @@
 \chapter{Experimental Analysis on Multidimensional Continued Fractions}
 \label{ch:implementation}
 
-In the previous, we saw that most MDCFs converge,
-and that any periodic MDCF consists of algebraic numbers.
+In the previous, we saw that most MCFs converge,
+and that any periodic MCF consists of algebraic numbers.
 The former solves the first part of Hermite's question, but the latter solves
 only one direction of the second part.
 The first part of this chapter will focus on the remaining direction:
-whether every algebraic number admits a periodic MDCF.
+whether every algebraic number admits a periodic MCF.
 
 We have already seen in Chapter~\ref{ch:fibonacci},
-that the simplest periodic MDCFs can be considered a generalization of the
+that the simplest periodic MCFs can be considered a generalization of the
 golden ratio.
 The first part of this chapter extends this result by presenting further
-examples of periodic MDCF for algebraic numbers.
+examples of periodic MCF for algebraic numbers.
 These include a wide range of cube roots,
 all of which appear to have periodic representations under one particular strategy.
 While this does not amount to a proof, the evidence strongly supports
 the possibility of a positive answer to the second part of Hermite’s question.
 
-The second part of this chapter focuses on the approximation rate of MDCFs.
+The second part of this chapter focuses on the approximation rate of MCFs.
 For ordinary continued fractions, the convergents are known to give
 exceptionally good approximations to irrational numbers.
-Here, we test whether MDCFs offer similar approximation behavior in higher dimensions.
+Here, we test whether MCFs offer similar approximation behavior in higher dimensions.
 
 % ==============================================================================
 \section{Comparing Methods for Constructing Periodic Multidimensional Continued Fractions of Algebraic Numbers}
 % ==============================================================================
 
-The first part of the analysis is meant to find periodic MDCFs for cubic
+The first part of the analysis is meant to find periodic MCFs for cubic
 irrationals.
 For the construction, we use the $\mathrm{pivot}$ operation from generalized
 Euclidean algorithm and some sequence of indices, which we pivot with.
 The choice of our indices essentially defines a tree
 with the initial input vector $x$ as the root
-and subsequent nodes as complete quotients of one MDCF.
+and subsequent nodes as complete quotients of one MCF.
 The edges in this tree are the indices $ℓ$, which we use to get from one
 complete quotient $x^{(n)}$ to another $x^{(n+1)}$ by computing $x^{(n+1)} =
 \mathrm{pivot}_ℓ(x^{(n)})$.
 We have found a periodic representation if there is a path from the root to a
 node such that the last node occurs twice on the path.
 
-Initially I tried searching for the MDCF of cube roots
+Initially I tried searching for the MCF of cube roots
 using a brute-force search.
 For any irrational vector $x$,
 I tried every possible sequence of indices,
-which could be used for the construction of an MDCF.
+which could be used for the construction of an MCF.
 Using this search, I was only able to find the cube roots from $\sqrt[3]{2}$
 and $\sqrt[3]{32}$ with the exception of $\sqrt[3]{29}$.
 The results are listed in Table~\ref{tbl:cubics}.
-The MDCFs I found using this search are the shortest possible representation
+The MCFs I found using this search are the shortest possible representation
 for the number, when we measure the combined length of the preperiod and
 period.
 Since there are a total of $O(2^N)$ sequences,
 the search took quite a lot of time.
 Therefore, I proceeded to look into better strategies,
-which could more easily find MDCFs for cube roots.
+which could more easily find MCFs for cube roots.
 
 % ==============================================================================
 \begin{Python}[
     float=tbp,
     numbers=left,
     caption={
-      The implementation of the search for periodic MDCFs.
+      The implementation of the search for periodic MCFs.
       The strategy \texttt{strat} outputs a single index $ℓ$, which is used
       for pivoting.
       The search stops once a duplicate vector $x$ has been found and the
@@ -185,8 +185,8 @@ the maximum fractional value.
 Since Tamura and Yasutomi's algorithm worked so well,
 I have also tested it on fifth, sixth and seventh roots
 from $\sqrt[d]{2}$ up to $\sqrt[d]{200}$.
-Beginning with the fifth roots, the algorithm no longer returns a periodic MDCF for all roots.
-In fact, I have only found periodic MDCFs for the following roots:
+Beginning with the fifth roots, the algorithm no longer returns a periodic MCF for all roots.
+In fact, I have only found periodic MCFs for the following roots:
 \begin{itemize}
   \item Fifth roots:
     $\sqrt[5]{2}, \sqrt[5]{7}, \sqrt[5]{11}, \sqrt[5]{13}, \sqrt[5]{19},
@@ -236,13 +236,11 @@ which satisfy
   \text{ for every } i ∈ \{1, …, d\}.
 \end{equation}
 Such vectors will be called \emph{good rational approximations} of $(α₁, …, α_d)$.
-The idea would be that the convergents of MDCFs are such good rational approximations.
-However, if that is not the case, there is still a possibility that some path
-during the construction has good rational approximations.
+The idea would be that the convergents of MCFs are such good rational approximations.
 To study this behavior, I did a brief analysis on the number of convergents,
 which satisfy this bound.
 
-The implementation consists of a breadth-first search over the construction of an MDCF for the vector $x$.
+The implementation consists of a breadth-first search over the construction of an MCF for the vector $x$.
 The search begins with the root $x^{(0)} = x$ and it expands a node $x^{(n)} ∈ ℝ^d$
 by adding the vector $\mathrm{pivot}_ℓ(x^{(n)})$ for every $ℓ ∈ \{1, …, d\}$ to the queue.
 However, it only expands a node $x^{(n)}$
@@ -285,10 +283,10 @@ Figure~\ref{fig:results-approx} shows the results of this analysis.
 % TODO: When repeating the period multiple times, does this actually keep the
 % approximation bound intact or does it violate it after some point?
 For most cubic roots from the previous test,
-there are MDCFs which satisfy the approximation bound.
-However, they are notably different MDCFs than those found in the brute-force
+there are MCFs which satisfy the approximation bound.
+However, they are notably different MCFs than those found in the brute-force
 search.
-So some cubic roots can have different MDCFs
+So some cubic roots can have different MCFs
 and not all of them must necessarily be good simultaneous approximations.
 The most surprising result of this analysis is that there are some cubic roots
 for which there exists no path which satisfies the approximation bound of Equation~\ref{eq:sim-approx}.
