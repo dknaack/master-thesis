@@ -5,29 +5,30 @@ The main objective of this thesis
 was to investigate Hermite's question
 on a new representation of real numbers,
 which is periodic if and only if the number is algebraic.
-The basis for this representation has been a generalization of Euclidean
+The basis for this representation has been a generalization of the Euclidean
 algorithm by \citeauthor{Klein24}.
-Specifically, I have used a small subroutine from the algorithm,
-which was used to update the old solution vector instead of solving a linear
-system in each iteration.
-This subroutine was then used as the basis of the multidimensional continued fractions.
+Specifically, I used a small subroutine from the algorithm,
+which updates the previous solution vector instead of solving a linear system
+at each iteration.
+This subroutine served as the basis for the multidimensional continued fractions.
 Although these were not enough to fully solve Hermite's question,
-we have seen that many concepts from the Euclidean algorithm naturally carry
+we saw that many concepts from the Euclidean algorithm naturally carry
 over to its generalization.
 
 Beginning with the Fibonacci numbers,
-we saw that different strategies lead to different definitions of Fibonacci numbers.
+we saw that different strategies led to different definitions of Fibonacci numbers.
 The first example of such numbers was for the minimum strategy,
 which chooses the smallest fractional value.
 For this strategy, the $d$-bonacci numbers represent the worst case,
 just like the Fibonacci numbers represent the worst case for the classical
 Euclidean algorithm.
-The second strategy improves upon this strategy by minimizing the ratio between two values over two iterations.
+The second strategy improves upon the first by minimizing the ratio between two values over two iterations.
 For this strategy, its golden ratio and the corresponding Fibonacci numbers
 already came up when bounding the decrease of the determinant over just two iterations.
 Although the golden ratio is not periodic under the strategy itself,
-we have seen that the maximum strategy leads to periodicity.
-These two roots were the first examples of periodic inputs for the generalized Euclidean algorithm.
+we saw that it becomes periodic under the maximum strategy.
+These two roots were the first examples of periodic inputs for the generalized
+Euclidean algorithm.
 
 These examples led to the development of multidimensional continued fractions
 as presented in Chapter~\ref{ch:mdcf}.
@@ -36,32 +37,32 @@ Since the algorithm allows us to choose a pivot index at each iteration,
 there does not exist a unique multidimensional continued fraction for every vector.
 However, this choice provides more flexibility.
 Instead of focusing on a single algorithm, the multidimensional continued
-fractions unify many Jacobi-Perron-type algorithms under one framework.
-Additionally, they share many properties with continued fractions.
+fractions unify many Jacobi-Perron-type algorithms under a single framework.
+Additionally, they share many properties with classical continued fractions.
 For example, the linear recurrence for continued fractions proven in Lemma~\ref{lem:cf-wallis}
 has an equivalent sequence proven in Lemma~\ref{lem:mdcf-wallis} for
 multidimensional continued fractions.
 
-The convergence of multidimensional continued fractions was proven in Section~\ref{sec:mcf-convergence}.
+The convergence of multidimensional continued fractions was established in Section~\ref{sec:mcf-convergence}.
 The proof is considerably more complex than for continued fractions.
-However, it still shows that the multidimensional continued fractions are
-converging under any algorithm, which chooses all possible pivot indices and
-chooses these indices not too far apart.
-This covers algorithms like the classical Jacobi-Perron algorithm,
-but also other algorithms, which choose the pivot indices based on a fixed list.
+However, it still shows that the multidimensional continued fractions converge
+under any algorithm, which selects all possible pivot indices and ensures these
+indices not too far apart.
+This covers algorithms like the classical Jacobi-Perron algorithm as well as
+other algorithms that select the pivot indices based on a fixed list.
 Most importantly, it establishes the first part of Hermite's question.
-It shows that many algorithms lead to a representation of the real numbers
+It shows that many algorithms yield a representation of real numbers
 using the multidimensional continued fractions.
 
 While the first part of Hermite's question has been solved,
 the second part is only partially solved.
-Whereas the first part only asks of a representation of the real numbers,
-the second part states that the repersentation should be periodic if and only
+Whereas the first part only asks of a representation of real numbers,
+the second part states that the representation should be periodic if and only
 if the number is a cubic irrational (or algebraic number, in general).
 The first direction has been proven in Section~\ref{sec:mcf-periodic}.
-The proof is based on eigenvectors and shows that if the MCF of an irrational vector $x$ is
-purely periodic, then $x$ is one of the eigenvectors in the convergent matrix.
-% TODO: We have to define the convergent matrix
+The proof is based on eigenvectors and shows that if the MCF of an irrational
+vector $x$ is purely periodic, then $x$ is an eigenvector of the convergent
+matrix.
 
 Theorem~\ref{thm:unimodular-algebraic} suggests that we can always find a
 unimodular matrix with $x$ as one of its eigenvectors,
@@ -69,11 +70,11 @@ thereby indicating that we should be able to find a periodic MCF.
 However, I was not able to show this in the scope of this thesis.
 Nevertheless, the analysis in Chapter~\ref{ch:implementation}
 strongly supports the conjecture.
-In particular, the algorithm by \citeauthor{Tamura09} has shown promise for
-finding periodic representation of cubic and quartic irrationals.
+In particular, the algorithm proposed by \citeauthor{Tamura09} has shown promise for
+finding periodic representations of cubic and quartic irrationals.
 The authors have already proven that their algorithm is periodic for certain
 classes of cubic polynomials.
-Future research into this algorithm could possibly lead to a periodic sequence
+Future research into this algorithm could potentially yield a periodic sequence
 for all cubic and quartic irrationals.
 
 In the case of continued fractions,
@@ -81,10 +82,10 @@ we were able to show that they are periodic only if the number is a quadratic ir
 The proof uses Klein polygons, which are preserved under a specific unimodular transformation
 and we can find such a transformation for every quadratic irrational.
 We can find a similar transformation for all algebraic numbers, but for the
-multidimensional continued fractions we are missing the connection between them
-and Klein polytopes.
+multidimensional continued fractions a formal connection to Klein polytopes has
+yet to be established.
 Section~\ref{sec:mdcf-geometry} already provides the necessary foundation for this.
-Furthermore, there already exists a generalization of Lagrange's theorem by
+Furthermore, a generalization of Lagrange's theorem has already been proven by
 \citeauthor{German08}~\cite{German08}.
 
 % TODO: Add note about how approximation doesn't work well with the multi-dimensional continued fractions
