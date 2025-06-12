@@ -3,8 +3,8 @@
 
 In 1839, Charles Hermite wrote a letter to Jacobi~\cite{Hermite50} about the
 representation of real numbers.
-He asked, whether there exists a representation of the real numbers as a
-sequence of integers, which is periodic if and only if the represented number
+He asked whether there exists a representation of the real numbers as a
+sequence of integers that is periodic if and only if the represented number
 is a cubic irrational, i.e. the root of a cubic polynomial.
 Although he posed the question nearly two centuries ago,
 it remains unanswered to this day.
@@ -14,20 +14,20 @@ A number is represented as a sequence of digits, which begins with the integer
 part and is followed by a (potentially infinite) sequence of digits for the
 fractional part.
 If the decimal expansion of a number is finite, then the number is clearly rational.
-Furthermore, if the decimal expansion is periodic, then the number is rational, too.
+Furthermore, if the decimal expansion is periodic, then the number is also rational.
 The same behavior occurs for continued fractions and quadratic irrationals.
 Continued fractions are fractions of the form
 \[
   a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}},
 \]
 where $a₀, a₁, a₂, …$ are integers.
-Any real number has a continued fraction expansion,
+Every real number has a continued fraction expansion,
 which can be constructed using the Euclidean algorithm.
 If that continued fraction is periodic, then the number must be a quadratic irrational.
 More importantly, the converse is also true:
 If a number is a quadratic irrational,
 then its continued fraction must be eventually periodic.
-Naturally, we can ask whether we can extend this and
+Naturally, we may ask whether we can extend this and
 find a periodic representation for cubic irrationals.
 However, no such representation exists as of yet.
 
@@ -35,7 +35,7 @@ The interest in a generalization to cubic irrationals
 comes from the effectiveness of continued fractions in related fields.
 The primary example is Diophantine approximation, where the goal is to
 approximate real numbers using rational numbers as closely as possible.
-It turns out that the best rational approximations are exactly those provided
+It turns out that the best rational approximations are precisely those provided
 by continued fractions.
 A generalization of continued fractions could serve a similar role in the field
 of simultaneous Diophantine approximation, where the goal is to approximate
@@ -44,7 +44,7 @@ multiple real numbers at once with a single rational vector.
 Hermite's original question only applies to cubic irrationals,
 but it can be easily generalized to any algebraic number:
 Does there exist a representation of the real numbers as a sequence of integers
-that is periodic if and only if the represented number is a algebraic number of
+that is periodic if and only if the represented number is an algebraic number of
 degree $d$?
 There are two parts to this question.
 The first is the representation of real numbers as a sequence of integers.
@@ -52,7 +52,7 @@ Each finite subsequence of the representation should give us a rational number,
 which approaches the represented number as the sequence grows larger.
 The second part is about the periodicity of the integer sequence.
 In the original question, the sequence should repeat after some point if and
-only if the represented is a cubic irrational.
+only if the represented number is a cubic irrational.
 The general question asks whether a periodic sequence exists for any algebraic
 number with a certain degree.
 
@@ -119,7 +119,7 @@ Hermite's question remains open.
 % The other algorithms focus on a single path, whereby the only use their own
 % transformation function to find a periodic representation.
 Whereas previous algorithms typically only consider a single transformation,
-I present a framework which is able to choose any one of these transformations.
+I present a framework that is able to choose any one of these transformations.
 This framework will be called \emph{multidimensional continued fractions} (MCF),
 since it is based on a generalization of the Euclidean algorithm by Klein and
 Reuter~\cite{Klein24}.
@@ -128,12 +128,12 @@ The main contribution of this thesis is a theoretical analysis of the
 multidimensional continued fractions.
 This includes two important theorems.
 The first shows that many multidimensional continued fractions converge.
-This was neglected by Jacobi at first, but it was evenutally shown by Perron.
-Since then, the main focus has been on the second part again
+This was neglected by Jacobi at first, but it was eventually shown by Perron.
+Since then, the main focus has returned to the second part
 with the convergence often being implicitly assumed.
 However, the convergence is crucial for a correct representation of the real numbers.
 For this thesis, I give an explicit proof that many multidimensional continued
-fractions are converging.
+fractions converge.
 This covers the first part of Hermite's question.
 The second theorem partially solves the second part of Hermite's question.
 It shows that every periodic multidimensional continued fraction leads to an
@@ -141,16 +141,16 @@ algebraic number, thus solving the first direction.
 The converse still remains open.
 
 Nevertheless, I have performed an experimental analysis on the MCFs,
-which strongly suggest that every cubic irrational has a periodic MCF.
+which strongly suggests that every cubic irrational has a periodic MCF.
 The aim of this analysis was to evaluate different strategies
 for constructing periodic MCFs for algebraic numbers.
-One of these strategy shows particular promise in the construction,
-since it has provided a periodic MCF for any cubic and quartic irrational I tested.
+One of these strategies shows particular promise in the construction,
+since it has provided a periodic MCF for every cubic and quartic irrational I tested.
 In addition, I have evaluated the performance of MCFs in the field of
 simultaneous Diophantine approximation.
 Since ordinary continued fractions can be used for the best rational approximations
-of a single real numbers, the idea for MCFs would be that they provide the best
-rational approximations of real vectors.
+of a single real number, the idea for MCFs would be that they provide the best
+rational approximations for real vectors.
 With my analysis, I show that not all convergents lead to good rational approximations.
 I give one specific example where no MCF produces good rational
 approximations of a vector at all times.
@@ -160,11 +160,10 @@ Klein and Reuter \cite{Klein24}.
 The initial aim was to analyze the algorithm on its worst-case performance
 and whether there exists some generalization of Fibonacci numbers,
 which represent the worst-case for the classical Euclidean algorithm.
-As such, a side result of this thesis is a proof that such Fibonacci numbers do
-exist at least for one strategy and, more importantly, that they represent the
-worst-case for this strategy.
+As such, a side result of this thesis is a proof that such Fibonacci numbers exist, at least for one strategy.
+More importantly, I show that they represent the worst-case for this strategy.
 Using these numbers, I derive the multidimensional analogue of the golden
-ratio, which can be seen as one of the simplest example of a periodic MCF.
+ratio, which can be seen as one of the simplest examples of a periodic MCF.
 
 In summary, there are three main contributions:
 \begin{enumerate}
@@ -243,18 +242,19 @@ but this has not solved Hermite's question, yet.
 % ==============================================================================
 
 Chapter~\ref{ch:preliminaries} introduces the necessary background for this thesis,
-which mainly includes algebraic number theory and lattice theory.
-Chapter~\ref{ch:quadratic} goes through the case of quadratic irrationals and continued fractions.
+which primarily includes algebraic number theory and lattice theory.
+Chapter~\ref{ch:quadratic} examines the case of quadratic irrationals and continued fractions.
 It presents a geometric interpretation of continued fractions based on Klein polygons,
 which is used in the subsequent proof of Lagrange's theorem.
 Chapter~\ref{ch:generalized-euclidean} introduces the generalized Euclidean algorithm.
 In Chapter~\ref{ch:fibonacci}, the generalized Euclidean algorithm is analyzed
 for worst-case performance under two different strategies.
-Each results in a different generalization of Fibonacci numbers and its own definition of a golden ratio.
+Each strategy results in a different generalization of the Fibonacci numbers
+and in its own definition of a golden ratio.
 This golden ratio is the first case of a periodic representation of an algebraic number.
-On the basis of this result, Chapter~\ref{ch:mdcf} generalizes the continued fractions to higher dimensions
-and presents the two main theoretical results for thesis: Convergence and periodicity.
+Building on this result, Chapter~\ref{ch:mdcf} generalizes continued fractions to higher dimensions
+and presents the two main theoretical results of the thesis: convergence and periodicity.
 Chapter~\ref{ch:implementation} analyzes the second part of Hermite's problem,
 whether multidimensional continued fractions of algebraic numbers are always periodic.
-I present examples of such continued fractions for cubic irrationals and I
-compare different strategies for constructing these continued fractions.
+In this chapter, examples of such continued fractions for cubic irrationals are presented,
+and different strategies for constructing these continued fractions are compared.
