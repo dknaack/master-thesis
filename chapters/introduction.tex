@@ -81,6 +81,10 @@ which is defined as
 \end{align*}
 This transformation is applied repeatedly until $T^m(x) = T^n(x)$ for $m ≠ n$,
 in which case the continued fraction is periodic.
+For example, $T(\sqrt{2}) = 1/(\sqrt{2} - 1) = \sqrt{2} + 1$
+and $T^2(\sqrt{2}) = T(\sqrt{2} + 1) = \sqrt{2} + 1$.
+Thus, the continued fraction of $\sqrt{2}$ is periodic after two iterations.
+
 The Jacobi-Perron uses a similar transform,
 which takes a vector $x = (x₁, …, x_d)$ as input and calculates
 \begin{align*}
