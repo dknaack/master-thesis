@@ -118,39 +118,36 @@ Hermite's question remains open.
 
 % The other algorithms focus on a single path, whereby the only use their own
 % transformation function to find a periodic representation.
-This thesis extends previous work on multidimensional continued fractions (MCFs).
-The JPA usually only considers the smallest number in each iteration,
-however there are algorithms based on the JPA which choose a different number,
-like choosing the largest number \cite{Podsypanin77} or choosing some number
-based on a cost function \cite{Tamura09}.
-In this thesis, I present a whole class of MCFs,
-which encompass all JPA-type algorithms.
-The main contributions regarding these MCFs are as follows:
-\begin{enumerate}
-  \item \textbf{Convergence}:
-    I establish sufficient conditions under which the proposed class of MCFs
-    algorithms converges.
-    This generalizes known convergence results for the JPA to a wider family of
-    transformations and solves the first part of Hermite's question.
-  \item \textbf{Algebraicity from Periodicity}:
-    I prove that if a multidimensional continued fraction expansion becomes
-    eventually periodic, then the original input vector consists of algebraic
-    numbers.
-    This solves one direction for the second part of Hermite's question.
-    It still leaves open the question whether algebraic numbers always lead to
-    periodic MCFs.
-\end{enumerate}
+Whereas previous algorithms typically only consider a single transformation,
+I present a framework which is able to choose any one of these transformations.
+This framework will be called \emph{multidimensional continued fractions} (MCF),
+since it is based on a generalization of the Euclidean algorithm by Klein and
+Reuter~\cite{Klein24}.
 
-In addition to these theoretical results,
-I have performed an experimental analysis on the MCFs.
-The aim of this analysis was to see which strategies could be used
-to construct periodic MCFs for algebraic numbers
-and I provide a comparison of existing JPA-type algorithms,
-which can be used for constructing MCFs of cubic and quartic irrationals.
-One strategy shows particular promise in the construction,
+The main contribution of this thesis is a theoretical analysis of the
+multidimensional continued fractions.
+This includes two important theorems.
+The first shows that many multidimensional continued fractions converge.
+This was neglected by Jacobi at first, but it was evenutally shown by Perron.
+Since then, the main focus has been on the second part again
+with the convergence often being implicitly assumed.
+However, the convergence is crucial for a correct representation of the real numbers.
+For this thesis, I give an explicit proof that many multidimensional continued
+fractions are converging.
+This covers the first part of Hermite's question.
+The second theorem partially solves the second part of Hermite's question.
+It shows that every periodic multidimensional continued fraction leads to an
+algebraic number, thus solving the first direction.
+The converse still remains open.
+
+Nevertheless, I have performed an experimental analysis on the MCFs,
+which strongly suggest that every cubic irrational has a periodic MCF.
+The aim of this analysis was to evaluate different strategies
+for constructing periodic MCFs for algebraic numbers.
+One of these strategy shows particular promise in the construction,
 since it has provided a periodic MCF for any cubic and quartic irrational I tested.
-
-The second type of analysis was focused on the application of MCFs.
+In addition, I have evaluated the performance of MCFs in the field of
+simultaneous Diophantine approximation.
 Since ordinary continued fractions can be used for the best rational approximations
 of a single real numbers, the idea for MCFs would be that they provide the best
 rational approximations of real vectors.
@@ -171,9 +168,8 @@ ratio, which can be seen as one of the simplest example of a periodic MCF.
 
 In summary, there are three main contributions:
 \begin{enumerate}
-  \item The multidimensional continued fractions,
-    including a proof of their convergence and
-    how they lead to algebraic numbers.
+  \item A new class of multidimensional continued fractions, including a proof
+    of their convergence and how they lead to algebraic numbers.
   \item An experimental analysis of the multidimensional continued fractions
     on cubic irrationals as well as their application in simultaneous
     Diophantine approximation.
