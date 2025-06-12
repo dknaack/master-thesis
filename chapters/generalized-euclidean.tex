@@ -356,57 +356,54 @@ no longer negated:
   \end{cases}
 \end{align}
 By $\mathrm{pivot}_ℓ(x) = x'$, we denote this modified update rule.
-We call $x_ℓ$ the \emph{pivot element} and $ℓ$ the \emph{pivot index}.
+We call $x_ℓ$ the \emph{pivot element} and the index $ℓ$ is called the \emph{pivot index}.
 The final algorithm for constructing MCFs can be seen in
 Listing~\ref{lst:modified-generalized-euclidean}.
 
-Unfortunately, this representation is not unique.
-But this gives us more flexibility.
-To find a unique representation, all we need is a strategy,
-that decides which element $x_ℓ$ to choose for pivoting.
-For example, the transform of the Jacobi-Perron algorithm,
-which is defined as
-\begin{align*}
-  T(x₁, …, x_d) =
-  \left(
-  \frac{x_2 - \floor{x_2}}{x_1 - \floor{x_1}},
-  \frac{x_3 - \floor{x_3}}{x_1 - \floor{x_1}},
-  …,
-  \frac{x_d - \floor{x_d}}{x_1 - \floor{x_1}},
-  \frac{1}{x_1 - \floor{x_1}}
-  \right),
-\end{align*}
-is one possible strategy.
-If we keep the order of the elements
-instead of moving $x₁$ to the end,
-then the strategy chooses $1$ in the first iteration,
-$2$ in the second iteration and so on.
-After $d$ iterations, the strategy repeats.
-
 \begin{example}
   Consider the vector $x = (13/5, 8/5)$.
-  It has at least two different representations.
-  It can be represented as $[(2, 1); (1, 1), (1, 0), (2, 0)]$, since
+  We can represent this vector as the multidimensional continued fraction
+  $[(2, 1); (1, 1), (1, 0), (2, 0)]$, since
   \[
     \begin{array}{lclcl}
                                   &   & (13/5, \, 8/3) & = & (2, \, 1) + (3/5, \, 3/5) \\
       \mathrm{pivot}_1(13/5, \, 8/5) & = & (5/3, \,  1)   & = & (1, \, 1) + (1/3, \, 0)   \\
       \mathrm{pivot}_1(5/3, \, 1)    & = & (3/2, \,  0)   & = & (1, \, 0) + (1/2, \, 0)   \\
-      \mathrm{pivot}_1(3/2, \, 1)    & = & (2, \,    0)   & = & (2, \, 0) + (0, \, 0),
+      \mathrm{pivot}_1(3/2, \, 1)    & = & (2, \,    0)   & = & (2, \, 0) + (0, \, 0).
     \end{array}
   \]
-  or it can be represented as $[(2, 1); (1, 1), (0, 1), (0, 2)]$, since
-  \[
-    \begin{array}{lclcl}
-                                  &   & (13/5, \, 8/5) & = & (2, \, 1) + (3/5, \, 3/5) \\
-      \mathrm{pivot}_2(13/5, \, 8/5) & = & (1, \, 5/3)    & = & (1, \, 1) + (0, \, 1/3)   \\
-      \mathrm{pivot}_2(1, \, 5/3)    & = & (0, \, 3/2)    & = & (0, \, 1) + (0, \, 1/2)   \\
-      \mathrm{pivot}_2(0, \, 3/2)    & = & (0, \, 2)      & = & (0, \, 2) + (0, \, 0).
-    \end{array}
-  \]
-  Hence, the representation for $x$ is not unique.
-  However, if we choose $ℓ ∈ \{1, …, d\}$ such that $x_ℓ$ is the minimum
-  then $x$ is uniquely represented by $\bigl[(2, 1); (1, 1), (0, 1), (0, 2)\bigr]$.
+\end{example}
+
+Unfortunately, this representation is not unique.
+For the given example, there is another representation, if we start with $ℓ = 2$ instead of $ℓ = 1$.
+Nevertheless, this gives us more flexibility.
+To find a unique representation, all we need is a strategy,
+that decides which element $x_ℓ$ to choose for pivoting at each iteration.
+This is can be achieved via a function~$ℓ \colon ℝ^d × ℕ → \{1, …, d\}$,
+which is given the current vector $x ∈ ℝ^d$ and the number of steps $n ∈ ℕ$
+and it has to output the next pivot index $ℓ = ℓ(x, n) ∈ \{1, …, d\}$.
+
+\begin{example}
+  Consider the transform of the Jacobi-Perron algorithm,
+  which is defined as
+  \begin{align*}
+    T(x₁, …, x_d) =
+    \left(
+    \frac{x_2 - \floor{x_2}}{x_1 - \floor{x_1}},
+    \frac{x_3 - \floor{x_3}}{x_1 - \floor{x_1}},
+    …,
+    \frac{x_d - \floor{x_d}}{x_1 - \floor{x_1}},
+    \frac{1}{x_1 - \floor{x_1}}
+    \right).
+  \end{align*}
+  We can reformulate this as a strategy for the generalized Euclidean algorithm.
+  If we keep the order of the elements
+  instead of moving $x₁$ to the end,
+  then the strategy chooses $1$ in the first iteration,
+  $2$ in the second iteration and so on.
+  After $d$ iterations, the strategy repeats.
+  Thus, the Jacobi-Perron strategy can be seen as choosing $ℓ(x, n) = (n \bmod d) + 1$.
+  More importantly, the algorithm is one special case of the multidimensional continued fractions.
 \end{example}
 
 In conclusion,
@@ -416,7 +413,5 @@ The index $ℓ$ is given according to some strategy and at each step we store
 $\floor{x}$ as one coefficient in the representation for $x$.
 We turn this into a representation for a single number $r ∈ ℝ$ by mapping each
 number to the vector $(r^1, r^2, …, r^d)$.
-This solves the first part of Hermite's question.
-In the next chapters, we will discuss the second part of Hermite's question,
-whether the representation is periodic if and only if the number is a cubic
-irrational, or algebraic number in general.
+This addresses the first part of Hermite's question,
+giving us a representation of the real numbers but also real vectors.
