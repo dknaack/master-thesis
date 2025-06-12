@@ -12,7 +12,6 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: |
-            figures/convergence.tex
             figures/lattice.tex
             main.tex
           args: -lualatex -file-line-error -halt-on-error -interaction=nonstopmode -outdir=build
