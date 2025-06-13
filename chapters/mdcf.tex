@@ -3,22 +3,11 @@
 
 % TODO: This needs to be rewritten since we have already introduced a
 % representation in the previous chapter on the generalized Euclidean algorithm
-For quadratic irrationals, we used continued fractions to represent them as a
-periodic sequence of integers.
-The continued fractions were constructed using the Euclidean algorithm.
-Naturally, we can generalize continued fractions to higher dimensions using the
-generalized Euclidean algorithm.
-This leads to a concept of Multidimensional Continued Fractions (MCFs), which could
-potentially be an answer of Hermite's question.
-Since they are based on the generalized Euclidean algorithm,
-they extend previous generalizations of continued fractions based on the
-Jacobi-Perron algorithm, like bifurcating or ternary continued fractions \cite{Gupta00}.
-
-This chapter introduces the concept of MCFs and discusses their potential as
-an answer to Hermite's question.
-We begin by defining what they are and deriving many properties similar to
-continued fractions.
-The chapter contains two main results for MCFs.
+This chapter further investigates the properties of the multidimensional
+continued fractions constructed in Section~\ref{sec:mcf-construction}.
+We begin with a proper definition of multidimensional continued fractions
+similar to the definition of continued fractions.
+This is followed by the two main results of this thesis.
 The first is that they converge under certain conditions
 and the second is that periodic MCFs always consist of algebraic numbers with degree $≤ d+1$.
 For the latter, we will first analyze the geometry behind MCFs in the same
@@ -29,24 +18,20 @@ This will be discussed in more detail in the next chapter.
 
 % ==============================================================================
 \section{Definition and Basic Properties}
-\label{mcf:construction}
+\label{sec:mcf-definition}
 % ==============================================================================
 
-% TODO: Why do we need a bottom-up definition? Because the construction only
-% associates the integer sequence with a real number, we don't have any way to
-% calculate which number it corresponds to.
-% Also, the top-down construction gives us no notion of convergents.
-The construction of MCFs using the generalized Euclidean algorithm gives us a
-top-down definition, where we start with a vector $x$ and derive its
-representation using the algorithm.
-The continued fraction defined on page~\pageref{def:cont-frac}
-use a bottom-up definition:
+Previously, we have used the generalized Euclidean algorithm to construct multidimensional continued fractions.
+However, this results in a top-down definition,
+where we begin with a vector $x$ and derive its representation using the algorithm.
+In contrast, the definition of continued fractions on page~\pageref{def:cont-frac} is bottom-up.
 We begin with the continued fraction $[a₀]$ of a single coefficent
 and then we inductively define the continued fraction $[a₀; a₁, …, aₙ]$
 based on the smaller continued fraction $[a₁; a₂, …, aₙ]$.
-For MCFs, we can similarly derive a bottom-up definition based on the inverse
-pivot operation.
+Such a definition is needed, so that we can calculate the convergents of a
+multidimensional continued fraction.
 
+We can derive a bottom-up definition based on the inverse pivot operation.
 Let $x ∈ ℝ^d$ and $a = \floor{x}$.
 Suppose that $x' = \mathrm{pivot}_ℓ(x)$ for a given index $ℓ ∈ \{1, …, d\}$.
 We can derive $x$ from the vectors $x'$ and $a$ as follows:
@@ -98,7 +83,7 @@ Again this is for subsequent lemmas, where we will need rational or even real ve
   \]
 \end{definition}
 
-For the representation to be correct, we require $\max_i r_i^{(n)} ≠ 0$ for $n ≥ 1$.
+For the representation to be correct, we require $\max_i r_i^{(n)} > 0$ for $n ≥ 1$.
 This is similar to the continued fractions, where only the first value could be zero,
 while all subsequent values had to be positive.
 For the multidimensional counterpart we only require that the pivot element is not zero.
@@ -129,8 +114,7 @@ The other values in the coefficients $r^{(n)}$ can assume any non-negative value
   Thus, $[(1,\, 2); (3,\, 2),\, (3,\, 5)] = (23/18,\, 41/18)$.
 \end{example}
 
-The terminology from one-dimensional continued fractions naturally carry over to its
-multidimensional counterpart.
+The terminology from one-dimensional continued fractions naturally carries over to its multidimensional counterpart.
 Given an infinite MCF representation~$[r^{(0)}; r^{(1)}, …]$ of a vector $x ∈ ℝ^d$, we define the following:
 
 \begin{itemize}
@@ -143,8 +127,7 @@ Given an infinite MCF representation~$[r^{(0)}; r^{(1)}, …]$ of a vector $x �
 \end{itemize}
 
 For the analysis of MCFs,
-we begin with two lemmas which generalize Lemma~\ref{lem:cf-nesting} and
-Lemma~\vref{lem:cf-wallis}.
+we begin with two lemmas that generalize Lemma~\ref{lem:cf-nesting} and Lemma~\vref{lem:cf-wallis}.
 The first allows us to merge the last two coefficients of an MCF.
 The second gives us a formula for calculating the convergents.
 
@@ -192,17 +175,17 @@ The initial terms are
 \]
 where $e_i$ is the $i$-th unit vector.
 For the remaining terms,
-Let $ℓ$ be the index of the maximum element in the complete quotient $x^{(n)}$.
+Let $ℓ$ be the pivot index of $x^{(n)}$, i.e. $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
 Then, the next terms in the sequences are:
 \[
   \begin{aligned}
     P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} r_1^{(n)} + ⋯ + P_d^{(n-1)} r_d^{(n)}, &
-    P_0^{(n)} & = P_{ℓₙ}^{(n-1)}, \\
+    P_0^{(n)} & = P_ℓ^{(n-1)}, \\
     Q_ℓ^{(n)} & = Q_0^{(n-1)} + Q_1^{(n-1)} r_1^{(n)} + ⋯ + Q_d^{(n-1)} r_d^{(n)}, &
-    Q_0^{(n)} & = Q_{ℓₙ}^{(n-1)}.
+    Q_0^{(n)} & = Q_ℓ^{(n-1)}.
   \end{aligned}
 \]
-The terms $P_i^{(n)}$ and $Q_i^{(n)}$ where $i ≠ ℓ$ are carried over from the previous iteration,
+The terms $P_i^{(n)}$ and $Q_i^{(n)}$ with $i ≠ ℓ$ are carried over from the previous iteration,
 i.e.
 \[
   P_i^{(n)} = P_i^{(n-1)}, Q_i^{(n)} = Q_i^{(n-1)}.
@@ -211,8 +194,8 @@ i.e.
 The idea behind these sequences is that they behave like the generalized
 Euclidean algorithm, but in reverse.
 We can consider the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ as the basis,
-which is reduced by the algorithm.
-The Euclidean algorithm terminates when one vector is an integral combination
+which is reduced by the generalized algorithm.
+It terminates when one vector is an integral combination
 of the other vectors, because then the remainder is zero.
 The sequence $P_0^{(n)}$ starts with the zero vector,
 i.e. when the basis has been fully reduced.
@@ -294,7 +277,7 @@ Let $x ∈ ℝ$ and let $[a^{(0)}; a^{(1)}, …]$ be its MCF expansion,
 constructed using the generalized Euclidean algorithm.
 The vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$
 and $r^{(n)}$ denotes the $n$-th convergent.
-We say that $ℓ ∈ \{1, …, d\}$ is the \emph{pivot index} of $x^{(n)}$,
+Then, $ℓ ∈ \{1, …, d\}$ is the pivot index of $x^{(n)}$,
 if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
 With this index $ℓ$, the $n$-th convergent is defined as
 \[
@@ -334,23 +317,26 @@ The first requirement is already satisfied by the generalized Euclidean algorith
 Because $x_ℓ^{(n)}$ is the largest element
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
 the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
-Furthermore $a_ℓ^{(n)}$ cannot be zero due to the requirements.
+Furthermore, $a_ℓ^{(n)}$ cannot be zero due to the requirements.
 Hence, this condition is satisfied for $A = 1$.
 Nevertheless,
-this condition can be used when replacing the floor function with a different function.
-If one can guarantee that the new function satisfies the first requirement,
-then the convergence will still hold.
+this condition is necessary when replacing the floor function with a different
+function.
+If one can guarantee that the new function satisfies the first requirement, the
+convergence will still hold.
+The requirement will only be needed in one place,
+but in return it makes the proof more general.
 
 The last two requirements are specifically for MCFs.
 The vector $r^{(n)}$ is only one possible convergent out of several.
 If $n$ is large enough, then we can consider the other vectors
 $P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
 since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
-We will call $r^{(n)}$ the \emph{primary convergent} and the other ones
+We will refer to $r^{(n)}$ as the \emph{primary convergent} and the others as
 \emph{secondary convergents}.
 When updating the secondary convergents,
 we exchange $P_0^{(n)} / Q_0^{(n)}$ with $P_ℓ^{(n)}/Q_ℓ^{(n)}$
-and replace  $P_ℓ^{(n)}/Q_ℓ^{(n)}$ with a new vector.
+and then replace  $P_ℓ^{(n)}/Q_ℓ^{(n)}$ with a new vector.
 Thus, we only move one of the secondary convergents.
 The second requirement guarantees that we move every secondary convergent
 and the last requirement guarantees that we have moved every convergent after at most $L$ iterations.
@@ -374,11 +360,11 @@ and the last requirement guarantees that we have moved every convergent after at
 \end{example}
 
 Since we use the Euclidean algorithm to construct an MCF,
-we can assume that all vectors $a^{(n)}$ are positive integers,
+we may assume that all vectors $a^{(n)}$ are positive integers,
 including the initial coefficient $a^{(0)}$.
 Although the first coefficient could be negative,
 the second coefficient is always positive.
-If we can prove the convergence for the second complete quotient $x^{(1)} = [a^{(1)}; a^{(2)}, …]$,
+If we can prove convergence for the second complete quotient $x^{(1)} = [a^{(1)}; a^{(2)}, …]$,
 then this implies the convergence for the whole MCF.
 Thus, it suffices to show the convergence for the second complete quotient,
 which is positive.
@@ -396,7 +382,7 @@ which means that the MCF is infinite.
 \end{lemma}
 
 \begin{proof}
-  We choose $N$ such that every index in the construction has been used at least once.
+  We choose $N$ such that each index has been used at least once in the construction.
   In particular, we choose $N$ such that all denominators $Q_i^{(n-1)}$ are not zero.
   Let $ℓ$ be the index of the largest element in $x^{(n)}$.
   By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ}^{(n)}$ using the previous values as follows:
@@ -407,9 +393,9 @@ which means that the MCF is infinite.
   \begin{align*}
     \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
   \end{align*}
-  Using the coefficients $λ_k^{(n)} = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $k ∈ \{1, …, d\}$
+  If we define the coefficients as $λ_k^{(n)} = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $k ∈ \{1, …, d\}$
   and $λ₀^{(n)} = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
-  we can reformulate the convergent $r^{(n)}$ as
+  then we can reformulate the convergent $r^{(n)}$ as
   \[
     λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
   \]
@@ -426,14 +412,14 @@ which means that the MCF is infinite.
     1 = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}} + \frac{Q_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)} + ⋯ + \frac{Q_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)} = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)}.
   \]
   The second property follows from the fact that every vector $a^{(n)}$ is nonnegative.
-  Therefore, the denominator $Q_ℓ^{(n)}$ is always less than or equal to $a_i^{(n)} Q_i^{(n-1)}$ and
-  $λ_i$ is always bounded between $0$ and $1$.
+  The denominator $Q_ℓ^{(n)}$ is the sum of the terms $a_i^{(n)} Q_i^{(n-1)}$
+  Therefore, $Q_ℓ^{(n)} ≥ a_i^{(n)} Q_i^{(n-1)}$ and $λ_i$ is always bounded between $0$ and $1$.
 \end{proof}
 
 The lemma shows that the next convergent lies inside the convex hull of the secondary convergents.
-We enclose the entire hull inside an axis-aligned bounding box
+We enclose the entire convex hull within an axis-aligned bounding box
 and we show that this box converges to a single point,
-which implies the convergence of the original convergent sequence $r^{(n)}$.
+thereby implying the convergence of the primary convergent $r^{(n)}$.
 At each iteration, the bounding box is characterized by its minimum and maximum corner,
 which are defined as $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
 \[
@@ -450,14 +436,15 @@ Therefore, if $s^{(n)}$ and $t^{(n)}$ converge,
 then the sequence $r^{(n)}$ must converge, too.
 
 \begin{lemma}
-  The sequences $s_i^{(n)}$ and $t_i^{(n)}$ converge.
+  The sequences $s^{(n)}$ and $t^{(n)}$ converge.
 \end{lemma}
 
 \begin{proof}
-  We show that the sequences are monotone and bounded, which implies convergence.
-  We begin with $s^{(n)}$ and show that this sequence is non-decreasing.
-  The sequence is non-decreasing if every secondary convergent at iteration $n$
-  is greater than the previous minimum $s^{(n-1)}$.
+  We show that the sequences are monotonic and bounded, which implies convergence.
+  To show that the sequence is non-decreasing,
+  it suffices to show that each secondary convergent at iteration $n$
+  is at least the previous minimum $s_i^{(n)}$.
+  We begin with the primary convergent.
   Let $ℓ$ be the pivot index in iteration $n$.
   From the previous iteration, we already have for every $j ≠ ℓ$:
   \[
@@ -472,32 +459,28 @@ then the sequence $r^{(n)}$ must converge, too.
   \end{align*}
   Thus, $s_i^{(n)} ≥ s_i^{(n-1)}$ and $s^{(n)}$ is non-decreasing.
   We can show $t_i^{(n)} ≤ t_i^{(n-1)}$ by bounding the convergents from above using a similar argument.
-  Futhermore, $s_i^{(n)} ≤ t_i^{(n)}$ for every index $n ≥ 0$.
-  Thus, both sequences must converge.
+  Moreover, $s_i^{(n)} ≤ t_i^{(n)}$ for all $n ≥ 0$.
+  Hence, both sequences converge.
 \end{proof}
 
-In order to show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
+To show that the sequences $s^{(n)}$ and $t^{(n)}$ are actually
 converging to the same limit, we first need the following crucial lemma about the
 coefficients $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)}$ from Lemma~\ref{lem:conv-conv}.
-% TODO: Actually add the figure here. Or do we wanna use the combined one, which is already here?
-%The main idea behind the lemma is illustrated in Figure~\ref{fig:lambda-pos}.
-It states that one of the coefficients is always greater than some constant
-independently of $n$ and importantly that coefficient is for the previous convergent $r^{(n-1)}$.
+The lemma states that one of the coefficients is always greater than a constant
+independent of $n$ and that this coefficient corresponds to the current pivot index.
 From the recurrence for the convergents,
 it follows that we always carry over the primary convergent $r^{(n-1)}$ as one
-of the secondary convergents in the next iteration.
-Therefore, we cannot change its position.
-However, we can change one of the other convergents.
-But the area available for the next convergent $r^{(n)}$ is restricted by this lemma
+of the secondary convergent $P_0^{(n)}/Q_0^{(n)}$ in the next iteration.
+Thus, the position of $r^{(n-1)}$ remains fixed,
+but we can change the position of the other convergents.
+However,
+the region available for the next convergent $r^{(n)}$ is restricted by this lemma
 such that the convex hull always shrinks by a constant amount.
 
-% TODO: We could maybe save this by only stating that this occurs infinitely often.
-% I think so, because if this cannot happen less than $d$ times. Otherwise, we must have a duplicate index.
-% -> This should also work if we're doing this for any index.
 \begin{lemma}
   \label{lem:lambda-pos}
-  Let $ℓ$ be the pivot index in $x^{(n)}$,
-  then $λ_ℓ^{(n)} > 1/C$ for some integer $C > 0$.
+  Let $ℓ$ be the pivot index in $x^{(n)}$.
+  Then $λ_ℓ^{(n)} > 1/C$ for some integer $C > 0$.
 \end{lemma}
 
 % TODO: Show that it is not equal to 1!
@@ -519,8 +502,8 @@ such that the convex hull always shrinks by a constant amount.
   Specifically, the third requirement,
   which states that after at most $L$ iterations,
   we must have used $ℓ$ as the pivot index again.
-  Therefore, there must have been some index $m$ between $n$ and $n - L$
-  where we used $ℓ = \argmax_i x_i^{(m)}$ such that $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
+  Therefore, there must have been some index $m ∈ \{n - L, …, n\}$
+  such that $ℓ = \argmax_i x_i^{(m)}$ and $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
   If $x^{(m)} = \mathrm{pivot}_ℓ(x^{(m-1)})$,
   then we must have $x_ℓ^{(m+1)} = 1/\{x_ℓ^{(m)}\} > 1$
   and therefore the integer part $a_ℓ^{(m+1)}$ must be at least $1$.
@@ -539,14 +522,14 @@ such that the convex hull always shrinks by a constant amount.
   \[
     Q_i^{(n-1)} ≥ \frac{1}{A^L} Q_ℓ^{(m)} = \frac{1}{A^L} Q_ℓ^{(n-1)},
   \]
-  which we can finally use to bound the fraction $Q_i^{(n-1)}/Q_ℓ^{(n-1)}$
+  which we can finally use to bound the ratio $Q_i^{(n-1)}/Q_ℓ^{(n-1)}$
   from Equation~\ref{eq:lambda-ratio}.
   The equation leads to the bound $λᵢ^{(n)} ≤ A^{L-1} λ_ℓ^{(n)}$,
   from which it follows that
   \[
     1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_ℓ^{(n)} (1 + dA^{L-1}).
   \]
-  Finally, if we set $C = 1 + dA^{L-1} > 0$, then $λ_ℓ^{(n)} > 1/C$.
+  Hence, setting $C = 1 + dA^{L-1} > 0$, we conclude that $λ_ℓ^{(n)} > 1/C$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -579,8 +562,6 @@ point at which all convergents step over the box and all of them are contained
 in the supposed limit.
 This is the main idea behind the following proof.
 
-% TODO: Should we add the requirements, like every index occurs infinitely
-% often (but the correct version)?
 \begin{lemma}
   \label{lem:min-max-conv}
   The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same

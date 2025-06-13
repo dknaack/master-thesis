@@ -5,16 +5,13 @@
 We begin with the case of quadratic irrationals.
 A \emph{quadratic irrational} is any real number
 that is a root of a polynomial with degree $2$.
-The main goal of this chapter is to show that the continued fractions of a
-number are periodic if and only if the number is a quadratic irrational.
-For the proof, we require many important properties for continued fractions.
-Specifically, we will show that continued fractions are always the best
-rational approximations of a real number.
-The continued fractions can also be interpreted geometrically,
-which was initially proposed by Klein~\cite{Klein95}.
-In his interpretation, he viewed the continued fractions as points in a two-dimensional lattice.
-Using his interpretation,
-we show that any quadratic irrational has a periodic continued fraction.
+The main goal of this chapter is to show that the continued fraction expansion
+of a number is periodic if and only if the number is a quadratic irrational.
+Traditionally, this result is proven using the algebraic properties of the
+continued fraction and the minimal polynomial of the quadratic irrational.
+In contrast, this chapter takes a geometric approach based on Klein polygons.
+These polygons visualize the continued fractions as points in a two-dimensional
+integer lattice and reduce the proof to a simple geometric argument based on unimodular matrices.
 
 % ==============================================================================
 \section{Definition and Basic Properties}
@@ -24,7 +21,7 @@ we show that any quadratic irrational has a periodic continued fraction.
 Although continued fractions are typically defined over a sequence of
 positive integers, we extend the definition to allow for real numbers.
 This will be useful for the theorems which follow.
-A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
+A continued fraction will be denoted more compactly as $[r₀; r₁, …]$.
 
 \begin{definition}
   \label{def:cont-frac}
@@ -177,7 +174,7 @@ In general, if $x = [a₀; a₁, …, aₙ]$, then also $x = [a₀; a₁, …, a
 Therefore, we additionally require that in a finite continued fraction the last value is never $1$.
 
 We begin with the representation of rational numbers.
-We use the Euclidean algorithm to construct the continued fraction for a number $x ∈ ℚ$,
+We use the Euclidean algorithm to construct the continued fraction for a number $x ∈ ℚ$.
 More specifically, if $x = p/q$, then we run the algorithm with the input pair $(p, q)$.
 At each step, we keep track of the quotient,
 which will be used as a coefficient in the continued fraction.
