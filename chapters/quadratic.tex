@@ -818,39 +818,50 @@ points along the boundary.
   Hence, the continued fraction is periodic after some point.
 \end{proof}
 
-% TODO: Fix this example
 \begin{example}
   Consider the continued fraction $[1; \overline{2}]$ of $\sqrt{2}$.
-  Even if we only know the first few terms of the continued fraction, i.e. that
-  $\sqrt{2} ≈ [1; 2]$, we can still deduce that it must be periodic.
-  We use the matrix representation to calculate the second convergent
+  Even if we only know the first few terms of the continued fraction, i.e.
+  $\sqrt{2} ≈ [1; 2, 2]$, we can still deduce that it must be periodic.
+  We use the matrix representation to calculate the third convergent
   \[
-    B_2 = B_1 S^2 R = B_0 S^1 R (S^2 R)^{n-1} = SRS · S^1 R (S^2 R)^{n-2}.
+    B_3 = B_2 · SSR = B_1 · SSR · SSR = SR · SSR · SSR = SRS · SRS · SR
   \]
-  The first three matrices in this product are
+  The first six matrices in this product are $U = SRSSRS = (SRS)^2$
+  and
   \[
-    SRS =
+    U = (SRS)^2 =
+    \left(
     \begin{pmatrix}
       1 & 1 \\
       0 & 1 \\
     \end{pmatrix}
+    ·
     \begin{pmatrix}
       1 & 0 \\
       0 & 1 \\
     \end{pmatrix}
+    ·
     \begin{pmatrix}
       1 & 1 \\
       0 & 1 \\
     \end{pmatrix}
+    \right)^2
     =
     \begin{pmatrix}
       1 & 2 \\
       1 & 1 \\
-    \end{pmatrix}.
+    \end{pmatrix}^2
+    =
+    \begin{pmatrix}
+      3 & 4 \\
+      2 & 3 \\
+    \end{pmatrix}
+    .
   \]
-  This matrix is the mutliplication matrix for $1 + \sqrt{2}$.
+  This matrix is the mutliplication matrix for $3 + 2\sqrt{2}$.
   In Example~\vref{ex:sqrt2-unit},
   we have already seen that this matrix has $(±\sqrt{2}, 1)$ as eigenvectors.
-  Therefore, if $B_2$ is a convergent, then so is $U^n B_2$.
+  Therefore, if $B_2$ and $B_3$ are convergent matrices,
+  then so are $U^n B_2$ and $U^n B_3$ for all $n ≥ 1$.
   Thus, the continued fraction of $\sqrt{2}$ is periodic.
 \end{example}
