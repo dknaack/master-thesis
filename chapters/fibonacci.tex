@@ -55,11 +55,11 @@ input.
 The proof is considered by some as the beginning of computational
 complexity theory.
 
-\begin{theorem}
+\begin{lemma}
   \label{thm:lame}
   If the Euclidean algorithm requires at least $n$ steps for $(a, b) ∈ ℤ_{> 0}^2$ with $a < b$,
   then $a ≥ F(n+2)$ and $b ≥ F(n+1)$.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
   For $n = 0$, we have $F(2) = 2$ and $F(1) = 1$
@@ -79,7 +79,7 @@ complexity theory.
   Therefore, the theorem also holds for $n+1$.
 \end{proof}
 
-The theorem also follows easily using the continued fraction of the ratios
+The lemma also follows easily using the continued fraction of the ratios
 between Fibonacci numbers.
 Given a finite continued fraction $[a₀; a₁, …, a_n]$, the Euclidean algorithm
 requires $n$ steps for any input $(a, b)$ with the same ratio $a/b$ as the
@@ -110,9 +110,9 @@ infinity the convergents tend towards the golden ratio $φ$.
 \end{example}
 \fi
 
-\begin{theorem}
+\begin{lemma}
   The ratios $\frac{F(n+1)}{F(n)}$ converge towards the golden ratio $φ$ as $n$ increases.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
   First, we show that the ratios are converging by mapping it to the continued fraction $[1; \overline{1}]$.
@@ -134,14 +134,29 @@ infinity the convergents tend towards the golden ratio $φ$.
   Because the ratios are always positive, we must have $φ' = φ$.
 \end{proof}
 
-% TODO: Metallic means
+\begin{corollary}
+  \label{cor:fib-conv}
+  The ratios $\frac{F(n+k)}{F(n)}$ converge towards $φ^k$ as $n$ increases.
+\end{corollary}
+
+\begin{theorem}
+  The Euclidean algorithm requires at most $O(\log b)$ iterations.
+\end{theorem}
+
+\begin{proof}
+  Suppose the algorithm requires $n$ iterations.
+  By Lemma~\ref{thm:lame}, we have $b ≥ F(n+1)$
+  and by Corollary~\ref{cor:fib-conv}, we must have $F(n+1) ≥ φ^{n-1}$ at some point.
+  Then, $\log b ≥ (n - 1) \log φ$.
+  Therefore, the algorithm requires $n ≤ O(\log b)$ iterations.
+\end{proof}
 
 In summary,
 the defining property of Fibonacci numbers with respect to the Euclidean
 algorithm is that they represent the worst-case for the algorithm.
 At each step, they have a quotient of $1$, so they decrease slower than any other pair of integers.
 Additionally, their ratios approximate the golden ratio,
-which follows from the continued fraction.
+which can then be used to bound the number of iterations.
 
 % ==============================================================================
 \section{A Higher-Order Fibonacci Sequence for the Minimum Strategy}
