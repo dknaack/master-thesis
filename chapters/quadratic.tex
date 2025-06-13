@@ -21,19 +21,19 @@ integer lattice and reduce the proof to a simple geometric argument based on uni
 Although continued fractions are typically defined over a sequence of
 positive integers, we extend the definition to allow for real numbers.
 This will be useful for the theorems which follow.
-A continued fraction will be denoted more compactly as $[r₀; r₁, …]$.
+A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
 
 \begin{definition}
   \label{def:cont-frac}
-  Given a sequence $(rₙ)_{n≥0}$ of real numbers, the finite continued
+  Given a sequence $(aₙ)_{n≥0}$ of real numbers, the finite continued
   fractions over this sequence are defined inductively as
   \[
-    [r₀] = r₀, \qquad
-    [r₀; r₁, …, rₙ] = r₀ + \frac{1}{[r₁; r₂, …, rₙ]}.
+    [a₀] = a₀, \qquad
+    [a₀; a₁, …, aₙ] = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}.
   \]
-  The infinite continued fraction $[r₀; r₁, r₂, …]$ is then defined if the limit
+  The infinite continued fraction $[a₀; a₁, a₂, …]$ is then defined if the limit
   \[
-    r = \lim_{n → ∞} [r₀; r₁, …, rₙ]
+    r = \lim_{n → ∞} [a₀; a₁, …, aₙ]
   \]
   exists.
 \end{definition}
@@ -44,27 +44,27 @@ starting from the last coefficient going right to left:
 
 \begin{lemma}
   \label{lem:cf-nesting}
-  Let $r₀, r₁, …, r_n, x ∈ ℝ$, then
+  Let $a₀, a₁, …, aₙ, x ∈ ℝ$, then
   \[
-    [r₀; r₁, …, r_n, x] = [r₀; r₁, …, r_n + 1/x]
+    [a₀; a₁, …, aₙ, x] = [a₀; a₁, …, a_n + 1/x]
   \]
 \end{lemma}
 
 \begin{proof}
   If $n = 0$, then
   \[
-    [r₀; x] = r₀ + \frac{1}{[x]} = r₀ + \frac{1}{x} = [r₀ + 1/x].
+    [a₀; x] = a₀ + \frac{1}{[x]} = a₀ + \frac{1}{x} = [a₀ + 1/x].
   \]
   Suppose the lemma is true for some $n ≥ 0$, then
   \begin{align*}
-    [r₀; r₁, …, rₙ, x]
-    & = r₀ + \frac{1}{[r₁; r₂, …, rₙ, x]} \\
-    & = r₀ + \frac{1}{[r₁; r₂, …, rₙ + 1/x]} \\
-    & = [r₀; a₁, …, rₙ, x]. \qedhere
+    [a₀; a₁, …, aₙ, x]
+    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ, x]} \\
+    & = a₀ + \frac{1}{[a₁; a₂, …, aₙ + 1/x]} \\
+    & = [a₀; a₁, …, aₙ, x]. \qedhere
   \end{align*}
 \end{proof}
 
-The \emph{$n$-th convergent} of $[r₀; r₁, …]$ is the finite continued fraction $[r₀; r₁, …, rₙ]$.
+The \emph{$n$-th convergent} of $[a₀; a₁, …]$ is the finite continued fraction $[a₀; a₁, …, aₙ]$.
 For a continued fraction $[a₀; a₁, …]$ with integer coefficients,
 we denote each convergent $[a₀; a₁, …, aₙ]$ by a unique rational value $p/q$.
 This is representation is called the \emph{canonical representation} of the
@@ -94,8 +94,8 @@ from the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$
 of the same continued fraction.
 We use the following recurrence to calculate $p_n/q_n$:
 \begin{align*}
-  p_n & = p_{n-1} r_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
-  q_n & = q_{n-1} r_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0.
+  p_n & = p_{n-1} a_n + p_{n-2}, & p_{-1} & = 1, & p_{-2} & = 0, \\
+  q_n & = q_{n-1} a_n + q_{n-2}, & q_{-1} & = 1, & q_{-2} & = 0.
 \end{align*}
 
 \begin{lemma}
@@ -159,7 +159,7 @@ if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
 
 % TODO: Should we jump out of the gate with this problem?
 The first part of Hermite's question requires a representation of the real numbers.
-This means we have to find a unique continued fraction $[r₀; r₁, …]$ for every real number $x$.
+This means we have to find a unique continued fraction $[a₀; a₁, …]$ for every real number $x$.
 So far, we have allowed continued fractions with real coefficients
 but for the construction we use only integer coefficients.
 More specifically, we will only look at continued fractions $[a₀; a₁, a₂, …]$
