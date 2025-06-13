@@ -346,19 +346,11 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
 \end{proof}
 
 % TODO: Explain how this can be used to bound the time
-Using the contrapositive of the theorem, it follows that if a vector $x$
-has only one value smaller than the listed bounds, then it must take less than
-$n$ steps.
-Furthermore, we have seen that the Fibonacci numbers require exactly $n$ steps.
-Therefore, these Fibonacci numbers represent the worst-case input for the
-minimum strategy.
-This mirrors how classical Fibonacci numbers represent the worst-case for the
-classical Euclidean algorithm.
-
-In the same spirit,
-we can ask whether this generalization of Fibonacci also lead to a generalization of the golden ratio.
-The classical Fibonacci numbers approach the golden ratio, when dividing consecutive numbers.
-Therefore, we look at what values the $d$-bonacci numbers approach by dividing consecutive numbers.
+For these Fibonacci numbers,
+we can ask whether they also lead to a generalization of the golden ratio.
+We can use this generalization to bound the runtime again.
+The classical Fibonacci numbers approach the golden ratio, when looking at their ratios.
+Therefore, we look at the ratios of consecutive $d$-bonacci numbers.
 This limit can be considered a multi-dimensional generalization of the golden ratio.
 For now, we will assume that these ratios are converging.
 A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at the end of the chapter.
@@ -397,7 +389,23 @@ A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at t
   The ratios $F(n + i)/F(n)$ converge towards $φ_d^i$ for any $i ≥ 0$.
 \end{corollary}
 
-We can then replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
+\begin{theorem}
+  The generalized Euclidean algorithm requires $O(\log p_d)$ iterations,
+  when selecting the minimum fractional value.
+\end{theorem}
+
+\begin{proof}
+  Suppose the algorithm requires $n$ iterations.
+  By Lemma~\ref{thm:lame}, we have $p_d ≥ F(n+1)$
+  and by Corollary~\ref{cor:dfib-conv}, we must have $F(n+1) ≥ φ_d^{n-1}$ at some point.
+  Then, $\log p_d ≥ (n - 1) \log φ_d$.
+  As $d$ increases, $ψ_d$ approaches $2$.
+  Therefore, $ψ_d = O(1)$ and the algorithm requires $n ≤ O(\log p_d)$ iterations.
+\end{proof}
+
+Apart from the runtime, we can additionally find an algebraic solution vector,
+which is periodic under the algorithm.
+We replace the ratios in the solution vector $x$ with the actual golden ratio $φ_d$.
 We now have an algebraic vector $x = (x₁, …, x_d) ∈ ℝ^d$ with
 \[
   x_i
