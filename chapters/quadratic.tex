@@ -2,7 +2,7 @@
 \label{ch:quadratic}
 
 % TODO: Find a source for this chapter
-We begin with the case of quadratic irrationals.
+We begin with Hermite's question for quadratic irrationals.
 A \emph{quadratic irrational} is any real number
 that is a root of a polynomial with degree $2$.
 The main goal of this chapter is to show that the continued fraction expansion
@@ -415,32 +415,35 @@ continued fractions of quadratic irrationals.
   \label{fig:klein-polygon}
 \end{figure}
 
-Figure~\ref{fig:klein-polygon} shows an example with $\sqrt{2}$ and its convergent vectors $bₙ$.
-The figure clearly shows that there are two different polygonal chains.
-One formed by the even convergents and one formed by the odd convergents.
-These chains both seemingly approach a line where $x/y = \sqrt{2}$.
-The reason for this follows from the convergence of continued fractions proven in Lemma~\ref{lem:cf-approx}.
-If we scale down each convergent $(pₙ, qₙ)$ by its second coordinate,
-then we get the vector $(pₙ/qₙ, 1)$.
-This vector cannot be further away than $1/qₙ^2$ from the vector $(\sqrt{2}, 1)$.
-Therefore, scaling things back up results in a distance $1/qₙ$, which decreases as $n$ increases.
-So convergence in this geometrical interpretation means that the vectors are
+As an example, Figure~\ref{fig:klein-polygon} shows the convergent vectors of $\sqrt{2}$.
+The figure clearly shows that there are two distinct polygonal chains:
+One formed by the even convergents and the other formed by the odd convergents.
+These chains both appear to approach a line where $x/y = \sqrt{2}$.
+The phenomenon can be explained by the convergence as proven in Lemma~\ref{lem:cf-approx}.
+If each convergent $(pₙ, qₙ)$ is scaled down by its second coordinate,
+then the resulting vector is $(pₙ/qₙ, 1)$.
+This vector lies within a distance of at most $1/qₙ^2$ from the vector $(\sqrt{2}, 1)$.
+Consequently, scaling the vector back up results in a maximum distance of $1/qₙ$,
+which decreases as $n$ increases.
+Thus, convergence in this geometrical interpretation means that the vectors are
 approaching a line spanned by the vector $(x, 1)$.
 
-Convergence is one property which can be interpreted geometrically.
-There is also a geometrical interpretation for the definition of continued fractions themselves.
+Convergence is one property that can be interpreted geometrically.
+The definition of continued fractions itself admits a geometrical interpretation.
 Suppose we have the vector $\tilde b_{n-1} = (\tilde p_{n-1}, \tilde q_{n-1})^⊤$
 for the continued fraction $[a₁; a₂, …, aₙ]$.
-To calculate the convergent of $[a₀; a₁, …, aₙ]$,
-we would calculate the reciprocal of $\tilde p_{n-1} / \tilde q_{n-1}$ first
-and then add the integer part $a₀$ to it.
-The equivalent of calculating the reciprocal in the vector space is swapping the two coordinates
-since $\tilde b_{n-1} = (\tilde p_{n-1}, \tilde q_{n-1})^⊤$ is the vector for $\tilde p_{n-1} / \tilde q_{n-1}$
-and therefore $(\tilde q_{n-1}, \tilde p_{n-1})^⊤$ must be the vector for $\tilde q_{n-1} / \tilde p_{n-1}$.
-The second part is adding some integer part $a₀$ to the reciprocal.
-This is equivalent to adding $a₀ q$ to the first coordinates
-or skewing the vector using linear transformation $S$.
-In fact, the reciprocal can also be done by a matrix transformation $R$.
+Then,
+\[
+  \frac{pₙ}{qₙ}
+  = \frac{a₀ \tilde p_{n-1} + \tilde q_{n-1}}{\tilde p_{n-1}}
+  \iff
+  \binom{pₙ}{qₙ}
+  = \binom{a₀ \tilde p_{n-1} + \tilde q_{n-1}}{\tilde p_{n-1}}
+\]
+What is more important is that this operation is linear.
+We can represent it as the product of two matrices $R$ and $S$.
+The first matrix $R$ calculates the reciprocal by swapping the two coordinates.
+The second matrix $S$ skews the vector by its second coordinate.
 These matrices are defined as follows:
 \[
   S^a =
@@ -460,15 +463,18 @@ These matrices are defined as follows:
     1 & 0 \\
   \end{pmatrix}.
 \]
-The vector $b_n$ can then be calculated using
+The vector $b_n$ can then be calculated according to
 \[
-  b_n = S^{a_0} R \tilde b_{n-1}.
+  \binom{pₙ}{qₙ}
+  = S^{a₀} R \binom{\tilde p_{n-1}}{q_{n-1}}
+  = S^{a₀} \binom{\tilde q_{n-1}}{\tilde p_{n-1}}
+  = \binom{a₀ \tilde p_{n-1} + \tilde q_{n-1}}{\tilde p_{n-1}}.
 \]
 
 For the continued fractions, we quickly moved from the definition to Lemma~\ref{lem:cf-wallis},
 which tells us how to calculate the convergent $pₙ/qₙ$ using $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
-Naturally, we can ask whether this has a nice geometrical interpretation, too.
-First, we can easily derive a formula to calculate the vector $bₙ$, since
+Naturally, we can extend this to our geometrical interpretation, too.
+In fact, it is just a linear operation:
 \begin{align*}
   b_n =
   \begin{pmatrix}
@@ -489,12 +495,13 @@ First, we can easily derive a formula to calculate the vector $bₙ$, since
   \end{pmatrix}
   = b_{n-1} a_n + b_{n-2}.
 \end{align*}
-However, there is also an explanation for the choice of the coefficients $aₙ$.
-If we view $aₙ$ as a variable between $0$ and infinity, then this forms a ray
-starting at $b_{n-2}$ and going in the direction of $b_{n-1}$.
-This line must intersect the line spanned by $(x, 1)$ at some point
-and we choose $aₙ$ such that $bₙ$ comes just before the intersection.
-Importantly, we can use the complete quotient $xₙ$ to calculate the intersection point:
+
+This also explains the choice of the coefficient $aₙ$.
+If we replace $aₙ$ in the equation with a variable $t ≥ 0$,
+then $b_{n-1} t + b_{n-2}$ forms a ray starting at $b_{n-2}$ and going in the
+direction of $b_{n-1}$.
+This ray must intersect the line generated by $(x, 1)$ at some point.
+In fact, it intersects the line at $t = xₙ$, since
 \[
   λ
   \begin{pmatrix}
@@ -504,8 +511,9 @@ Importantly, we can use the complete quotient $xₙ$ to calculate the intersecti
   =
   b_{n-1} x_n + b_{n-2}
   \iff
-  \frac{λ x}{λ} = \frac{p_{n-1} x_n + p_{n-2}}{q_{n-1} x_n + q_{n-2}}.
+  \frac{λ x}{λ} = x = \frac{p_{n-1} x_n + p_{n-2}}{q_{n-1} x_n + q_{n-2}}.
 \]
+Since $aₙ = \floor{xₙ}$, we choose $aₙ$ as the last integer point before the intersection point.
 
 For the first new lemma, we return to what we saw in
 Figure~\ref{fig:klein-polygon} and show that even and odd convergent lie on
@@ -522,7 +530,7 @@ greater than $x$.
 \begin{proof}
   We proceed via induction on $n$.
   For the first two vectors $b_{-2}$ and $b_{-1}$, this is obviously true.
-  Now suppose, that $b_{n-1}$ and $b_{n-2}$ lie in different cones.
+  Now suppose, that $b_{n-1}$ and $b_{n-2}$ lie on different sides.
   The next vector $b_n$ can be calculated according to
   \[
     b_n = b_{n-1} a_n + b_{n-2}.
