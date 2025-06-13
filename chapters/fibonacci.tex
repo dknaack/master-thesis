@@ -1,25 +1,29 @@
 \chapter{Higher-Order Fibonacci Sequences and their Golden Ratios}
 \label{ch:fibonacci}
 
-% TODO: Add reference to Fibonacci numbers in the continued fraction chapter
-One of the simplest periodic continued fraction is $[1; \overline{1}]$.
-This fraction evaluates to the golden ratio and its convergents are ratios of
-consecutive Fibonacci numbers.
-Naturally, we can consider the simplest vectors $x ∈ ℝ^d$ for the generalized
-Euclidean algorithm, where the integer part in each iteration is $1$.
-Such vectors can be seen as a generalization of the golden
-ratio to higher dimensions and their approximation can be seen as a
-generalization of Fibonacci numbers.
-However, there does not exist a single definitive golden ratio,
-Since the generalized algorithm allows an additional freedom in the choice of the pivot.
-So there are actually multiple different possible definitions.
+It is well known that the worst-case for the classical Euclidean algorithm
+are consecutive Fibonacci numbers.
+Naturally, we can ask, whether an equivalent concept exists for the generalized
+Euclidean algorithm.
+Furthermore, the Euclidean algorithm is used to construct continued fractions.
+Constructing a continued fraction using the Fibonacci numbers
+produces one of the simplest continued fractions, the golden ratio.
+For the higher-order Fibonacci numbers,
+we can equally construct a multidimensional continued fraction,
+which can be considered a generalization of the golden ratio.
 Some of these are well known, like the supergolden ratio or the plastic ratio,
 which are both roots of cubic polynomials.
+They bring us one step closer to Hermite's question,
+since they are some of the simplest examples of periodic multidimensional
+continued fractions.
 
-Since the definition of the golden ratios depends entirely on the choice of our
-pivot element $x_ℓ$, we consider two strategies for choosing $x_ℓ$ in this
-chapter: First choosing the smallest fractional value $\{x_ℓ\}$ and second
-choosing the largest fractional value $\{x_ℓ\}$.
+Whereas the classical algorithm has one clear worst-case input,
+the generalized algorithm has multiple worst-case inputs
+depending on the pivot strategy.
+In this chapter, we consider two different strategies.
+We begin with the locally optimal strategy,
+which chooses the minimum fractional value in each iteration.
+In the next section, we improve upon the strategy by minimizing the ratios between the values.
 Both of these strategies have a respective golden ratio for which the algorithm
 becomes periodic and they each have a corresponding linear recurrence, which
 can be seen as a generalization of the Fibonacci numbers.
