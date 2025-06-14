@@ -133,11 +133,14 @@ We use the following recurrence to calculate $p_n/q_n$:
   \end{align*}
 \end{proof}
 
-The canonical representation of a convergent is unique
-if we cannot reduce the fraction $pₙ/qₙ$ any further.
+Thus, we can use this simple recurrence to calculate the convergent of a
+continued fraction.
+This is unique if we cannot reduce the fraction $pₙ/qₙ$ any further.
 In other words, $pₙ$ and $qₙ$ have a greatest common divisor of $1$.
 By Bezout's identity, $pₙ$ and $qₙ$ have a greatest common divisor of $1$
 if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
+Choosing $a = q_{n-1}$ and $b = p_{n-1}$ solves the identity
+as shown by the following lemma.
 
 \begin{lemma}
   \label{lem:cf-det}
@@ -149,13 +152,17 @@ if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
   \[
     p_{-1} q_{-2} - q_{-1} p_{-2} = 1 - 0 = 1.
   \]
-  Suppose that the lemma holds for $n ≥ -1$, then
+  Suppose that the lemma holds for $n ≥ 0$.
+  By Lemma~\ref{lem:cf-wallis},
   \begin{align*}
-    p_n q_{n-1} - q_n p_{n-1}
-    & = (p_{n-1} a_n + p_{n-2}) q_{n-1} - (q_{n-1} a_n + q_{n-2}) p_{n-1} \\
-    & = p_{n-2} q_{n-1} - q_{n-2} p_{n-1} \\
-    & = (-1) (p_{n-1} q_{n-2} - q_{n-1} p_{n-2}) \\
-    & = (-1)^{n+1}. \qedhere
+    p_{n-1} q_{n-2} - q_{n-1} p_{n-2}
+    & = (p_{n-2} a_{n-1} + p_{n-3}) q_{n-2} - (q_{n-2} a_{n-1} + q_{n-3}) p_{n-2} \\
+    & = p_{n-3} q_{n-2} - q_{n-3} p_{n-2}.
+  \intertext{By the induction hypothesis,}
+    p_{n-1} q_{n-2} - q_{n-1} p_{n-2}
+    & = -(p_{n-2} q_{n-3} - q_{n-2} p_{n-3})
+      = -(-1)^{n-1}
+      = (-1)^n. \qedhere
   \end{align*}
 \end{proof}
 
