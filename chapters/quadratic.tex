@@ -4,13 +4,13 @@
 % TODO: Find a source for this chapter
 We begin with Hermite's question for quadratic irrationals.
 A \emph{quadratic irrational} is any real number
-that is a root of a polynomial with degree $2$.
+that is a root of a quadratic polynomial.
 The main goal of this chapter is to show that the continued fraction expansion
 of a number is periodic if and only if the number is a quadratic irrational.
 Traditionally, this result is proven using the algebraic properties of the
 continued fraction and the minimal polynomial of the quadratic irrational.
 In contrast, this chapter takes a geometric approach based on Klein polygons.
-These polygons visualize the continued fractions as points in a two-dimensional
+These polygons visualize continued fractions as points in a two-dimensional
 integer lattice and reduce the proof to a simple geometric argument based on unimodular matrices.
 
 % ==============================================================================
@@ -18,9 +18,9 @@ integer lattice and reduce the proof to a simple geometric argument based on uni
 \label{sec:cf-def}
 % ==============================================================================
 
-Although continued fractions are typically defined over a sequence of
-positive integers, we extend the definition to allow for real numbers.
-This will be useful for the theorems which follow.
+Although continued fractions are typically defined in terms of a positive integer sequence,
+we extend the definition to allow for arbitrary real numbers.
+This will be useful for the theorems that follow.
 A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
 
 \begin{definition}
@@ -31,17 +31,17 @@ A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
     [a₀] = a₀, \qquad
     [a₀; a₁, …, aₙ] = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}.
   \]
-  The infinite continued fraction $[a₀; a₁, a₂, …]$ is then defined if the limit
+  The infinite continued fraction $[a₀; a₁, a₂, …]$ is then defined to be the limit
   \[
     r = \lim_{n → ∞} [a₀; a₁, …, aₙ]
   \]
-  exists.
+  if this limit exists.
 \end{definition}
 
 In a finite continued fraction $[a₀; a₁, …, aₙ]$,
 we begin at the first coefficient $a₀$ and
 calculate the continued fraction of its tail $[a₁; a₂, …, aₙ]$.
-However, this works in reverse, too.
+However, this process works in reverse, too.
 We can begin at the last coefficient $aₙ$
 and merge it with the previous coefficient
 using the same approach as in the definition.
@@ -68,35 +68,35 @@ using the same approach as in the definition.
   \end{align*}
 \end{proof}
 
-For an infinite continued fraction,
-it is necessary to show that the finite continued fractions $[a₀; a₁, …, aₙ]$ are converging.
-These continued fractions are called \emph{convergents},
-specifically the finite continued fraction $[a₀; a₁, …, aₙ]$
+For an infinite continued fraction to be well-defined,
+it is necessary to show that the finite continued fractions $[a₀; a₁, …, aₙ]$ converge.
+These continued fractions are called \emph{convergents};
+specifically, $[a₀; a₁, …, aₙ]$
 is called the \emph{$n$-th convergent} of $[a₀; a₁, …]$.
 If $[a₀; a₁, …]$ is a continued fraction with integer coefficients,
 then each convergent produces a unique rational $p/q$.
-This representation is called the \emph{canonical representation} of the convergent.
+This expression is called the \emph{canonical representation} of the convergent.
 We calculate this representation inductively as follows:
 
 The canonical representation of the first convergent is simply
 \[
   [a₀] = a₀.
 \]
-Suppose that the $(n-1)$-th convergent of $[a₁; a₂, …]$ is $p'/q'$,
-then the $n$-th convergent of the continued fractions $[a₀; a₁, …]$ is
+Suppose that the $(n-1)$-th convergent of $[a₁; a₂, …]$ is $p'/q'$.
+Then the $n$-th convergent of the continued fractions $[a₀; a₁, …]$ is
 \[
   [a₀; a₁, …, aₙ]
   = a₀ + \frac{1}{[a₁; a₂, …, aₙ]}
   = a₀ + \frac{q'}{p'}
   = \frac{p' a₀ + q'}{p'}.
 \]
-Thus, the canonical representation $p/q$ of $[a₀; a₁, …, aₙ]$ is defined as:
+Thus, the canonical representation $p/q$ of $[a₀; a₁, …, aₙ]$ is given by
 \begin{align*}
   p = p' a₀ + q', \quad q = p'.
 \end{align*}
 
-Of course, this requires the convergent of a different continued fraction.
-Instead, we use a more direct way to calculate the canonical representation $pₙ/qₙ$
+However, this approach depends on the convergent of a different continued fraction.
+Instead, we adopt a more direct method to compute the canonical representation $pₙ/qₙ$
 from the previous convergents $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$
 of the same continued fraction.
 We use the following recurrence to calculate $p_n/q_n$:
@@ -107,7 +107,8 @@ We use the following recurrence to calculate $p_n/q_n$:
 
 \begin{lemma}
   \label{lem:cf-wallis}
-  Let $x ∈ ℝ$, then
+  Let $x ∈ ℝ$.
+  Then,
   \[
     [a₀; a₁, …, a_{n-1}, x] = \frac{pₙ}{qₙ} = \frac{p_{n-1} x + p_{n-2}}{q_{n-1} x + q_{n-2}}.
   \]
@@ -133,13 +134,13 @@ We use the following recurrence to calculate $p_n/q_n$:
   \end{align*}
 \end{proof}
 
-Thus, we can use this simple recurrence to calculate the canonical
-representation of a convergent.
+Thus, this recurrence provides a straightforward method to computing the
+canonical representation of a convergent.
 This representation is unique if the fraction $pₙ/qₙ$ cannot be reduced any further.
-In other words, $pₙ$ and $qₙ$ have a greatest common divisor of $1$.
-By Bezout's identity, $pₙ$ and $qₙ$ have a greatest common divisor of $1$
-if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
-Choosing $a = q_{n-1}$ and $b = p_{n-1}$ solves the identity
+In other words, $pₙ$ and $qₙ$ are coprime.
+By Bézout's identity, $pₙ$ and $qₙ$ are coprime
+if and only if there exist integers $a$ and $b$ such that $apₙ + bqₙ = 1$.
+Setting $a = q_{n-1}$ and $b = p_{n-1}$ satisfies the identity,
 as shown by the following lemma.
 
 \begin{lemma}
@@ -173,7 +174,7 @@ as shown by the following lemma.
 
 % TODO: Should we jump out of the gate with this problem?
 The definition only tells us how to calculate the value of a continued fraction,
-not how to construct a continued fraction.
+not how to construct one.
 However, the first part of Hermite's question requires an explicit representation of every real number.
 Thus, we need to construct a unique continued fraction $[a₀; a₁, …]$ for every
 real number $x$ such that $x = [a₀; a₁, …]$.
