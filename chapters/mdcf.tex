@@ -275,26 +275,48 @@ original input vector $x ∈ ℝ^d$.
 The aim of this section is to show that the convergents actually live up to
 their name and converge towards the vector $x$ as $n$ increases.
 
-Let $x ∈ ℝ$ and let $[a^{(0)}; a^{(1)}, …]$ be its MCF expansion,
-constructed using the generalized Euclidean algorithm.
-The vector $x^{(n)}$ denotes the $n$-th complete quotient of $x$
-and $r^{(n)}$ denotes the $n$-th convergent.
-Then, $ℓ ∈ \{1, …, d\}$ is the pivot index of $x^{(n)}$,
-if $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
-With this index $ℓ$, the $n$-th convergent is defined as
+\begin{definition}
+  Let $(a^{(n)})_{n ≥ 0}$ be a sequence of $d$-dimensional real vectors
+  and let
+  \[
+    r^{(n)} = (r_1^{(n)}, …, r_d^{(n)})^⊤ = [a^{(0)}; a^{(1)}, …, a^{(n)}].
+  \]
+  Then, the infinite multidimensional continued fraction $[a^{(0)}; a^{(1)}, …]$ is defined to be
+  the vector $r = (r₁, …, r_d) ∈ ℝ^d$ if the limit
+  \[
+    r_i = \lim_{n → ∞} r_i^{(n)}
+  \]
+  exists.
+\end{definition}
+
+We assume that we have an infinite MCF $[a^{(0)}; a^{(1)}, …]$
+with only integer vectors $a^{(n)}$.
+The vector $r^{(n)}$ denotes the $n$-th \emph{convergent}
+and $x^{(n)}$ denotes the $n$-th \emph{complete quotient} of the MCF $[a^{(0)}; a^{(1)}, …]$.
+During the construction, we start with $x^{(0)}$ and use the pivot operation to
+go from one complete quotient, $x^{(n)}$, to the next, $x^{(n+1)}$.
+At each step, we have to define an index, that we use for pivoting.
+If $x^{(n+1)} = \mathrm{pivot}_ℓ(x^{(n)})$ for some index $ℓ ∈ \{1, …, d\}$,
+then $ℓ$ is called the \emph{pivot index} of the complete quotient $x^{(n)}$.
+
+By Lemma~\ref{lem:mcf-wallis},
+if $ℓ$ is the pivot index of the complete quotient $x^{(n)}$,
+then the $n$-th convergent is simply
 \[
   r^{(n)}
-  = (r_1^{(n)}, …, r_d^{(n)})
-  = \left( \frac{P_{1ℓ}^{(n)}}{Q_ℓ^{(n)}}, \dots, \frac{P_{dℓ}^{(n)}}{Q_ℓ^{(n)}} \right)
-  = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}}.
+  = \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}}
+  = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}}{Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}}.
 \]
-We say that $r^{(n)}$ converges towards $x$ if
-\[
-  x_i = \lim_{n → ∞} r_i^{(n)} \text{ for every } i ∈ \{1, …, d\}.
-\]
-The proof for this is based on Perron's original proof \cite{Perron07} for the
-convergence of his algorithm.
-For the proof we need three additional requirements:
+The vector $r^{(n)}$ is only one possible convergent out of several.
+If $n$ is large enough, then we can consider the other vectors
+$P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
+since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
+We will refer to $r^{(n)}$ as the \emph{primary convergent} and the others as
+\emph{secondary convergents}.
+
+The goal of this section is to show that the primary convergent $r^{(n)}$ approaches the vector $x$.
+The proof is based on Perron's convergence proof for his algorithm \cite{Perron07}.
+Based on this proof, an infinite MCF converges under the following conditions:
 \begin{enumerate}
   \item
     For every $n ≥ 0$,
@@ -311,37 +333,34 @@ For the proof we need three additional requirements:
     we can find an index $n ≥ N$ such that $ℓ$ is the pivot index of $x^{(n)}$.
   \item
     The distance between the same index is bounded by some constant $L$,
-    i.e. for every $n ≥ 0$ we can find a index $m ∈ \{n+1, …, n+L\}$ such that
+    i.e. for every index $n ≥ 0$ there exists an $m ∈ \{n+1, …, n+L\}$ such that
     the pivot indices of $x^{(m)}$ and $x^{(n)}$ are the same.
 \end{enumerate}
 
-The first requirement is already satisfied by the generalized Euclidean algorithm for $A = 1$.
+The first condition is already satisfied by the generalized Euclidean algorithm,
+if we set $A = 1$.
 Because $x_ℓ^{(n)}$ is the largest element
 and the integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
 the element $a_ℓ^{(n)}$ must also be the largest element in $a^{(n)}$.
-Furthermore, $a_ℓ^{(n)}$ cannot be zero due to the requirements.
+Furthermore, $a_ℓ^{(n)}$ cannot be zero by definition.
 Hence, this condition is satisfied for $A = 1$.
 Nevertheless,
 this condition is necessary when replacing the floor function with a different
 function.
-If one can guarantee that the new function satisfies the first requirement, the
+If one can guarantee that the new function satisfies the first condition, the
 convergence will still hold.
-The requirement will only be needed in one place,
+The condition will only be needed in one place,
 but in return it makes the proof more general.
 
-The last two requirements are specifically for MCFs.
-The vector $r^{(n)}$ is only one possible convergent out of several.
-If $n$ is large enough, then we can consider the other vectors
-$P_i^{(n)}/Q_i^{(n)}$ with $i ≠ ℓ$ as convergent vectors,
-since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
-We will refer to $r^{(n)}$ as the \emph{primary convergent} and the others as
-\emph{secondary convergents}.
+The last two conditions are specifically for MCFs.
 When updating the secondary convergents,
 we exchange $P_0^{(n)} / Q_0^{(n)}$ with $P_ℓ^{(n)}/Q_ℓ^{(n)}$
 and then replace  $P_ℓ^{(n)}/Q_ℓ^{(n)}$ with a new vector.
-Thus, we only move one of the secondary convergents.
-The second requirement guarantees that we move every secondary convergent
-and the last requirement guarantees that we have moved every convergent after at most $L$ iterations.
+Thus, we only move one of the secondary convergents in each iteration.
+However, the second condition guarantees that we move every secondary
+convergent at some point
+and the last condition guarantees that this must happen after at most $L$ iterations.
+Therefore, every secondary convergent changes frequently.
 
 \begin{example}
   Consider the MCF $x = [(2, 1); \overline{(2, 1)}]$,
@@ -361,7 +380,7 @@ and the last requirement guarantees that we have moved every convergent after at
   Therefore, the convergence proof presented in this section does not apply to this example.
 \end{example}
 
-Since we use the Euclidean algorithm to construct an MCF,
+Since we use the generalized Euclidean algorithm to construct an MCF,
 we may assume that all vectors $a^{(n)}$ are positive integers,
 including the initial coefficient $a^{(0)}$.
 Although the first coefficient could be negative,
