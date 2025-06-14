@@ -38,13 +38,13 @@ A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
   exists.
 \end{definition}
 
-Using the definition,
-we always have to begin at the first coefficient
-and calculate the continued fraction of the tail.
+In a finite continued fraction $[a₀; a₁, …, aₙ]$,
+we begin at the first coefficient $a₀$ and
+calculate the continued fraction of its tail $[a₁; a₂, …, aₙ]$.
 However, this works in reverse, too.
-We can begin at the end of the continued fraction
-and merge the last two coefficients using the same formula as in the
-definition.
+We can begin at the last coefficient $aₙ$
+and merge it with the previous coefficient
+using the same approach as in the definition.
 
 \begin{lemma}
   \label{lem:cf-nesting}
@@ -71,8 +71,8 @@ definition.
 For an infinite continued fraction,
 it is necessary to show that the finite continued fractions $[a₀; a₁, …, aₙ]$ are converging.
 These continued fractions are called \emph{convergents},
-specifically the \emph{$n$-th convergent} of $[a₀; a₁, …]$ is the finite
-continued fraction $[a₀; a₁, …, aₙ]$.
+specifically the finite continued fraction $[a₀; a₁, …, aₙ]$
+is called the \emph{$n$-th convergent} of $[a₀; a₁, …]$.
 If $[a₀; a₁, …]$ is a continued fraction with integer coefficients,
 then each convergent produces a unique rational $p/q$.
 This representation is called the \emph{canonical representation} of the convergent.
@@ -133,9 +133,9 @@ We use the following recurrence to calculate $p_n/q_n$:
   \end{align*}
 \end{proof}
 
-Thus, we can use this simple recurrence to calculate the convergent of a
-continued fraction.
-This is unique if we cannot reduce the fraction $pₙ/qₙ$ any further.
+Thus, we can use this simple recurrence to calculate the canonical
+representation of a convergent.
+This representation is unique if the fraction $pₙ/qₙ$ cannot be reduced any further.
 In other words, $pₙ$ and $qₙ$ have a greatest common divisor of $1$.
 By Bezout's identity, $pₙ$ and $qₙ$ have a greatest common divisor of $1$
 if and only if there are integers $a, b$ such that $apₙ + bqₙ = 1$.
@@ -198,8 +198,8 @@ At each step, we keep track of the quotient,
 which will be used as a coefficient in the continued fraction.
 So if we calculate $p = a₀q + r$ in the first division step, then the quotient $a₀$ will be
 the first coefficient in the continued fraction $[a₀; a₁, …, aₙ]$ for $p/q$.
-This is also the reason why we allow $a₀$ to be negative.
-If the fraction $p/q$ is negative, then $a₀$ is negative, too.
+%This is also the reason why we allow $a₀$ to be negative.
+%If the fraction $p/q$ is negative, then $a₀$ is negative, too.
 
 \begin{example}
   \label{ex:euclidean-cf}
@@ -252,34 +252,62 @@ If the fraction $p/q$ is negative, then $a₀$ is negative, too.
   Therefore, $[a₀; a₁, …, aₙ]$ is a valid continued fraction for $p/q$.
 \end{proof}
 
-So for every rational number, we have a finite continued fraction.
-It remains to be shown that there exists a continued fraction for every irrational number.
-However, we cannot use the Euclidean algorithm again.
-In order to run the Euclidean algorithm for an irrational number $x$,
-we would have to find two integers $p, q$ such that $p/q = x$
-and that is by definition not possible.
-Therefore, we cannot use the Euclidean algorithm directly to construct a
-continued fraction.
+For rational numbers,
+the application of the Euclidean is straightforward.
+We simply run the algorithm on the pair $(p, q)$ to construct a continued fraction for $p/q$.
+However, if the number is irrational, then the application is not so straightforward.
+The issue is that it is not clear how we can split up an irrational number into
+two inputs $(a, b)$ for the Euclidean algorithm.
 
+% TODO: We could maybe rewrite this as peeling of the first coefficient using the Gauss transform
 Instead, we take a different approach.
-For a given number $x₀ ∈ ℝ$,
-we begin the algorithm with the input $(x₀, 1)$
-and we use the division from Example~\vref{ex:real-divmod}, i.e.
-we split $x$ into its integer and fractional part:
+We use the real division with remainder operation from
+Example~\vref{ex:real-divmod}, but between iterations we rescale the input.
+\iffalse
+The idea is to look at the ratios between the two inputs of the Euclidean
+algorithm.
+Suppose $a = qb + r$.
+Then, the quotient is the integer part of the ratio $a/b$ and $r/b$ is the
+fractional part of $a/b$.
+In the next iteration,
+we could calculate $b = q'r + r'$
+\fi
+For an irrational number $x₀ ∈ ℝ$,
+we begin the algorithm with the input $(x₀, 1)$ and
+we split $x$ into its integer and fractional part according to the division
+operation,
+i.e.
 \[
-  x = \floor{x} · 1 + \{x\}
+  x₀ = \floor{x₀} · 1 + \{x₀\}
 \]
-In the next iteration, we multiply the pair $(1, \{x\})$ by $1/\{x\}$
-such that we have $(1/\{x\}, 1)$.
-Then, the next input pair is $(x₁, 1) = (1/\{x₀\}, 1)$
-and  we repeat the division step:
+Then, the quotient is $\floor{x₀}$ and the remainder is $\{x₀\}$.
+Normally, we would continue with $(1, \{x\})$,
+but instead we multiply each number by $1/\{x\}$ such that
+we have the pair $(x₁, 1) = (1/\{x\}, 1)$, where the second number is $1$ again.
+Thus, the quotient in the next iteration is the integer part again
+and the remainder is the fractional part.
+We repeat this with
 \[
-  \frac{1}{\{x\}} = \floor{\frac{1}{\{x\}}} + \left\{ \frac{1}{\{x\}} \right\}.
+  x_{n+1} = \frac{1}{\{x_n\}}
 \]
-We continue this process until $xₙ = 0$.
-At each step, we take the integer part $aₙ = \floor{xₙ}$ as one coefficient in
-the continued fraction $[a₀; a₁, …]$.
-The values $xₙ$ are also called \emph{complete quotients} of $x$.
+for each $n ≥ 0$ until $x_n = 0$.
+At each step, we keep track of the integer part $aₙ = \floor{xₙ}$ and store it
+as one coefficient in the continued fraction $[a₀; a₁, …]$.
+
+This transformation works, because it removes the first coefficient of $[a₀; a₁, …]$,
+and applying it $n$ times removes $n$ coefficients.
+Suppose we already know that the continued fraction of $x$ is $[a₀; a₁, …]$.
+Its fractional part is entirely determined by $[a₁; a₂, …]$,
+since $a₁$ is a positive integer and $1/(a₁ + y)$ is less than $1$ for any positive $y$.
+Thus, $a₀$ determines the integer part of the continued fraction.
+If we subtract $a₀$ from $x$ and then calculate its inverse, then
+\[
+  \frac{1}{[a₀; a₁, …] - a₀} = \frac{1}{[0; a₁, …]} = \frac{1}{\frac{1}{[a₁; a₂, …]}} = [a₁; a₂, …].
+\]
+Thus, we map $x₀ = [a₀; a₁, …]$ to $x₁ = [a₁; a₂, …]$.
+If we repeat this $n$ times, then we remove $n$ coefficients from $x$ such that we have $xₙ = [aₙ; a_{n+1}, …]$.
+The values $xₙ$ are also called \emph{complete quotients} of $x$,
+since $xₙ = [a_n; a_{n+1}, …]$.
 
 \begin{example}
   \label{ex:cf-rat}
