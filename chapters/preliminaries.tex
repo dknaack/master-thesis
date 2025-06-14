@@ -335,18 +335,23 @@ The basis is also known as the \emph{power basis}.
   \end{enumerate}
 \end{example}
 
-Multiplication by a fixed element $α ∈ K$ of a number field $K$ can be viewed
-as a linear transformation on its corresponding vector space.
-For an element $β ∈ ℚ(α)$ we begin by evaluating the
-multiplication of $β$ with one element $α^k$ of the power basis.
+Multiplication by a fixed element $β$ of a number field $K$ can be viewed as a
+linear transformation on its corresponding vector space.
+If $\{1, α, …, α^{n-1}\}$ is the basis of the vector space, then we begin by
+evaluating the multiplication of $β$ with one element $α^k$ of the basis.
 The resulting element can be represented as a linear combination again,
-i.e.
+where one column can be calculated as follows:
 \[
-  β · α^k = \sum_{j=0}^{n-1} m_{kj} α^j
+  β · α^k = \sum_{j=0}^{n-1} m_{kj} α^j \Rightarrow
+  \begin{pmatrix}
+    m_{k,0} \\
+    m_{k,1} \\
+    ⋮ \\
+    m_{k,n-1} \\
+  \end{pmatrix}
 \]
 for some coefficients $m_{jk} ∈ ℚ$.
-This represents one row in the multiplication matrix.
-Combining each row into one matrix gives us the final multiplication matrix.
+Combining each column into one matrix gives us the final multiplication matrix.
 
 \begin{example}
   \label{ex:mult-matrix}
@@ -365,18 +370,6 @@ Combining each row into one matrix gives us the final multiplication matrix.
   $(a + b \sqrt{d}) · \sqrt{d} = bd + a \sqrt{d}$,
   each of which represents one column in the multiplication matrix.
 \end{example}
-
-\begin{lemma}
-  Let $α$ be algebraic and let $α₁, …, α_n$ be its conjugates.
-  Then, any multiplication matrix of an element $β ∈ ℚ(α)$ has $(α_i^{n-1}, …, α_i, 1)$ as one of its eigenvectors.
-\end{lemma}
-
-\begin{proof}
-  This follows from the definition.
-  \[
-    (M_β α)_k = \sum_{j=0}^{n-1} m_{jk} α^j = β α^k.
-  \]
-\end{proof}
 
 \begin{definition}
   Let $K$ be a number field.
@@ -461,24 +454,35 @@ This multiplication matrix actually has the power basis as one of its eigenvecto
 The other eigenvectors are similarly the power basis of the conjugates of $α$,
 that is any root $β$ of $m_α(x)$ defines an eigenvector $(1, β, …, β^{n-1})$.
 
+\begin{lemma}
+  \label{lem:mult-eig}
+  Let $α$ be algebraic and let $α₁, …, α_n ∈ ℂ$ be its conjugates.
+  Then, the multiplication matrix of an element $β ∈ ℚ(α)$ has the row vector
+  $(1, α, …, α^{n-1})$ as one of its left eigenvectors.
+\end{lemma}
+
+\begin{proof}
+  The row vector $a_i = (1, α_i, …, α_i^{n-1})$ is a linear form $a_i(x) = a_i x$,
+  which maps any vector $x ∈ ℚ^d$ of a corresponding element in $ℚ(α)$ to its
+  embedding in the complex plane.
+  Thus, it maps each column of the multiplication matrix $M_β$ to its embedding.
+  By definition,
+  each column is $β · α^k$.
+  Thus, $a_i M_β = (β, β α_i, …, β α_i^{n-1}) = β a_i$ and $a_i$ is a left
+  eigenvector.
+\end{proof}
+
 \begin{theorem}
   \label{thm:unimodular-algebraic}
   Let $α$ be an algebraic number and let $α_1, …, α_n$ be its conjugates.
   There exists a unimodular matrix $U ≠ I$,
-  which has $(1, α_i, …, α_i^{n-1})$ as eigenvectors.
+  which has $(1, α_i, …, α_i^{n-1})$ as one of its \emph{right} eigenvectors.
 \end{theorem}
 
 \begin{proof}
-  Corollary~\ref{cor:nontrivial-unit}
-  already shows that a nontrivial unimodular matrix exists,
-  which is a multiplication matrix $M_β = (m_{ij})$ of some unit $β ∈ ℤ[α]$.
-  It remains to be shown that the conjugate vectors are eigenvectors of this matrix.
-  Let $x = (1, α_i, …, α_i^{n-1})$ and let $y = M_β x$.
-  Then,
-  \[
-    y_j = \sum_{k=0}^{n-1} m_{jk} α^k = β α^j.
-  \]
-  Thus, $M_β x = β x$ and $x$ is an eigenvector of the unimodular matrix $M_β$.
+  This follows from Corollary~\ref{cor:nontrivial-unit} and Lemma~\ref{lem:mult-eig}.
+  Although the eigenvector of Lemma~\ref{lem:mult-eig} is one the right,
+  transposing the multiplication matrix produces a right eigenvector.
 \end{proof}
 
 \begin{example}
@@ -490,46 +494,26 @@ that is any root $β$ of $m_α(x)$ defines an eigenvector $(1, β, …, β^{n-1}
   It has the unimodular multiplication matrix
   \[
     U = \begin{pmatrix}
-      3 & 2 \\
-      4 & 3 \\
+      3 & 4 \\
+      2 & 3 \\
     \end{pmatrix}.
   \]
-  Furthermore, it has $(1, \sqrt{2})^⊤$ and $(1, -\sqrt{2})^⊤$ as eigenvectors,
+  Furthermore, it has $(1, \sqrt{2})$ and $(1, -\sqrt{2})$ as its left eigenvectors,
   since
   \begin{align*}
+    (1, \sqrt{2})
     \begin{pmatrix}
-      3 & 2 \\
-      4 & 3 \\
+      3 & 4 \\
+      2 & 3 \\
     \end{pmatrix}
+    & = (3 + 2\sqrt{2}, 4 + 3\sqrt{2})
+    = (3 + 2\sqrt{2}) · (1, \sqrt{2}), \\
+    (1, -\sqrt{2})
     \begin{pmatrix}
-      1 \\ \sqrt{2} \\
+      3 & 4 \\
+      2 & 3 \\
     \end{pmatrix}
-    & =
-    \begin{pmatrix}
-      3 + 2\sqrt{2} \\
-      4 + 3\sqrt{2} \\
-    \end{pmatrix}
-    =
-    (3 + 2\sqrt{2})
-    \begin{pmatrix}
-      1 \\ \sqrt{2} \\
-    \end{pmatrix}, \\
-    \begin{pmatrix}
-      3 & 2 \\
-      4 & 3 \\
-    \end{pmatrix}
-    \begin{pmatrix}
-      1 \\ -\sqrt{2} \\
-    \end{pmatrix}
-    & =
-    \begin{pmatrix}
-      3 - 2\sqrt{2} \\
-      4 - 3\sqrt{2} \\
-    \end{pmatrix}
-    =
-    (3 - 2\sqrt{2})
-    \begin{pmatrix}
-      1 \\ -\sqrt{2} \\
-    \end{pmatrix}.
+    & = (3 - 2\sqrt{2}, 4 - 3\sqrt{2})
+    = (3 - 2\sqrt{2}) · (1, -\sqrt{2}).
   \end{align*}
 \end{example}
