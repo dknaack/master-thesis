@@ -580,18 +580,23 @@ If the sequences $s^{(n)}$ and $t^{(n)}$ converge to the same limit,
 then that means that the bounding box shrinks to a point.
 Therefore, the convergent $r^{(n)}$, which is inside this box, converges to the
 same point.
-However, the box could also turn out to be nonempty,
-if the sequences approach different limits, i.e.
+However, the sequences $s^{(n)}$ and $t^{(n)}$ could approach different limits, i.e.
 \[
-  \lim_{n → ∞} s_i^{(n)} < \lim_{n → ∞} t_i^{(n)}.
+  s = \lim_{n → ∞} s_i^{(n)} < \lim_{n → ∞} t_i^{(n)} = t.
 \]
-But the previous lemma contradicts this assumption.
+Then, the box does not converge to a point but to another box delimited
+by its corner points $s$ and $t$.
+More importantly, this implies that the primary convergent may not converge.
+
+The previous lemma contradicts this assumption.
 The area of the convex hull always shrinks by a at least a constant proportion.
 So if the sequences would approach different limits, then we can always find a
 point at which all convergents step over the box and all of them are contained
 in the supposed limit.
-This is the main idea behind the following proof.
+This is the main idea behind the following proof,
+which is also illustrated in Figure~\ref{fig:convergence}.
 
+\pagebreak
 \begin{lemma}
   \label{lem:min-max-conv}
   The minimum $s_i^{(n)}$ and maximum $t_i^{(n)}$ are converging to the same
@@ -651,21 +656,11 @@ This is the main idea behind the following proof.
   Therefore, $t_i$ and $s_i$ converge to the same limit.
 \end{proof}
 
-We have shown that $s^{(n)}$ and $t^{(n)}$ converge to the same limit
-and that $r^{(n)}$ therefore also converges to that limit.
-What remains to be shown is what they converge to,
-which is the original vector $x$ used for construction of the MCF.
-
-% TODO: Fix statement, i.e. ℓₙ no longer exists...
 \begin{theorem}
   \label{thm:mdcf-conv}
   The sequence $r^{(n)}$ converges to $x$.
 \end{theorem}
 
-% TODO: We should improve the last section of this proof,
-% because I don't think this is correctly showing that it converges to the same
-% limit. Or rather, we're already assuming that we are approaching x_i in the
-% limit.
 \begin{proof}
   Let $x^{(n)}$ denote the $n$-th complete quotient of $x$.
   By Lemma~\ref{lem:mcf-wallis}, we can represent each element in $x$ as
@@ -700,14 +695,14 @@ which is the original vector $x$ used for construction of the MCF.
 
 One important example where this theorem applies is for periodic MCFs,
 where the period contains every index as a pivot index.
-Since the period is constant,
-the distance between the same pivot indices is also constant.
+Since the period has finite length,
+the distance between the same pivot indices is constant.
 Thus, they satisfy the requirements of this theorem.
 Besides periodic MCFs, the theorem also includes other JPA-like algorithms.
-For example, an algorithm may construct an MCF based on a fixed list of indices $[ℓ₁, ℓ₂, …, ℓₘ]$,
+For example, an algorithm could construct an MCF based on a predetermined list of indices $[ℓ₁, ℓ₂, …, ℓₘ]$,
 which is repeated throughout the construction.
 If this list contains every possible index,
-then this theorem would guarantee the convergence.
+then this theorem guarantees the convergence.
 
 % ==============================================================================
 \section{Geometrical Interpretation Based on Projective Spaces}
