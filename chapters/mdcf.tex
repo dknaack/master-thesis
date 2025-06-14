@@ -389,40 +389,48 @@ If we can prove convergence for the second complete quotient $x^{(1)} = [a^{(1)}
 then this implies the convergence for the whole MCF.
 Thus, it suffices to show the convergence for the second complete quotient,
 which is positive.
-Finally, we assume that the target vector $x = (x₁, …, x_d)$ is irrational,
-which means that the MCF is infinite.
 
 \begin{lemma}
   \label{lem:conv-conv}
-  There exists an integer $N ≥ 0$ such that for all $n ≥ N$,
+  There exists a starting index $N ≥ 0$ such that for all $n ≥ N$,
   there are nonnegative coefficients $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)}$
   satisfying $λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} = 1$ and
   \[
-    r_i^{(n)} = λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+    r^{(n)} = λ_0^{(n)} \frac{P_0^{(n-1)}}{Q_0^{(n-1)}}
+            + λ_1^{(n)} \frac{P_1^{(n-1)}}{Q_1^{(n-1)}}
+            + ⋯
+            + λ_d^{(n)} \frac{P_d^{(n-1)}}{Q_d^{(n-1)}}.
   \]
 \end{lemma}
 
 \begin{proof}
-  We choose $N$ such that each index has been used at least once in the construction.
-  In particular, we choose $N$ such that all denominators $Q_i^{(n-1)}$ are not zero.
-  Let $ℓ$ be the index of the largest element in $x^{(n)}$.
-  By Lemma~\ref{lem:mdcf-wallis}, we can calculate $P_{iℓ}^{(n)}$ using the previous values as follows:
+  The index $N$ is chosen such that each index has been used at least once in the construction.
+  In particular, all denominators $Q_i^{(n-1)}$ with $n ≥ N$ are not zero.
+  Let $ℓ$ be the pivot index of $x^{(n)}$.
+  According to Equation~\ref{eq:mcf-wallis}, the vector $P_ℓ^{(n)}$ can be calculated as follows:
   \begin{align*}
-    P_{iℓ}^{(n)} = \sum_{k = 1}^d P_{ik}^{(n-1)} a_k^{(n)} + P_{i0}^{(n-1)}.
+    P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)},
   \end{align*}
-  Dividing by $Q_ℓ^{(n)}$ gives us
+  Dividing by $Q_ℓ^{(n)}$ results in
   \begin{align*}
-    \frac{P_{iℓ}^{(n)}}{Q_ℓ^{(n)}} = \sum_{k = 1}^d \frac{P_{ik}^{(n-1)}}{Q_ℓ^{(n)}} a_k^{(n)} + \frac{P_{i0}^{(n-1)}}{Q_ℓ^{(n)}}.
+    \frac{P_ℓ^{(n)}}{Q_ℓ^{(n)}}
+    & = \frac{P_0^{(n-1)}}{Q_ℓ^{(n)}}
+      + \frac{P_1^{(n-1)}}{Q_ℓ^{(n)}} a_1^{(n)}
+      + ⋯
+      + \frac{P_d^{(n-1)}}{Q_ℓ^{(n)}} a_d^{(n)},
   \end{align*}
   If we define the coefficients as $λ_k^{(n)} = a_k^{(n)} \frac{Q_k^{(n-1)}}{Q_ℓ^{(n)}}$ for $k ∈ \{1, …, d\}$
   and $λ₀^{(n)} = \frac{Q_0^{(n-1)}}{Q_ℓ^{(n)}}$,
   then we can reformulate the convergent $r^{(n)}$ as
   \[
-    λ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}} + λ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + ⋯ + λ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}.
+      λ_0^{(n)} \frac{P_0^{(n-1)}}{Q_0^{(n-1)}}
+    + λ_1^{(n)} \frac{P_1^{(n-1)}}{Q_1^{(n-1)}}
+    + ⋯
+    + λ_d^{(n)} \frac{P_d^{(n-1)}}{Q_d^{(n-1)}}.
   \]
   Because $N$ was chosen large enough such that every index has occurred at least once,
   the denominators $Q_i^{(n-1)}$ cannot be zero.
-  Therefore, this is a valid representation of the convergent $r_i^{(n)}$.
+  Therefore, this is a well-defined representation of the convergent $r^{(n)}$.
   For the coefficients themselves, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
   The first property follows from the definition of $Q_ℓ^{(n)}$:
   \[
@@ -442,19 +450,20 @@ We enclose the entire convex hull within an axis-aligned bounding box
 and we show that this box converges to a single point,
 thereby implying the convergence of the primary convergent $r^{(n)}$.
 At each iteration, the bounding box is characterized by its minimum and maximum corner,
-which are defined as $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
+defined as $s^{(n)} = (s_1^{(n)}, …, s_d^{(n)})$ and $t^{(n)} = (t_1^{(n)}, …, t_d^{(n)})$ with
 \[
   s_i^{(n)} = \min\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}
 \]
 and
 \[
-  t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\}.
+  t_i^{(n)} = \max\left\{\frac{P_{i0}^{(n)}}{Q_0^{(n)}}, \frac{P_{i1}^{(n)}}{Q_1^{(n)}}, …, \frac{P_{id}^{(n)}}{Q_d^{(n)}}\right\},
 \]
+where $P_j^{(n)} = (P_{1j}^{(n)}, …, P_{dj}^{(n)})$.
 The primary convergent $r^{(n)}$ lies inside the box,
-since it is one of the secondary convergent vectors
+since it is also one of the secondary convergent vectors
 used in the definition of $s^{(n)}$ and $t^{(n)}$.
-Therefore, if $s^{(n)}$ and $t^{(n)}$ converge,
-then the sequence $r^{(n)}$ must converge, too.
+Therefore, if $s^{(n)}$ and $t^{(n)}$ converge to the same point,
+then the sequence $r^{(n)}$ must converge to that point, too.
 
 \begin{lemma}
   The sequences $s^{(n)}$ and $t^{(n)}$ converge.
@@ -659,7 +668,7 @@ which is the original vector $x$ used for construction of the MCF.
 % limit.
 \begin{proof}
   Let $x^{(n)}$ denote the $n$-th complete quotient of $x$.
-  By Lemma~\ref{lem:mdcf-wallis}, we can represent each element in $x$ as
+  By Lemma~\ref{lem:mcf-wallis}, we can represent each element in $x$ as
   \[
     x_i = \frac{P_{i0}^{(n-1)} + P_{i1}^{(n-1)} x_1^{(n)} + ⋯ + P_{id}^{(n-1)} x_d^{(n)}}{Q_{i0}^{(n-1)} + Q_{i1}^{(n-1)} x_1^{(n)} + ⋯ + Q_{id}^{(n-1)} x_d^{(n)}}.
   \]
