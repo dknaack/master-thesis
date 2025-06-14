@@ -121,15 +121,15 @@ We use the following recurrence to calculate $p_n/q_n$:
   Suppose, the lemma is true for $n ≥ 0$.
   By Lemma~\ref{lem:cf-nesting}, we have
   \begin{align*}
-    [a₀; a₁, …, aₙ, x]
-    & = [a₀; a₁, …, aₙ + 1/x].
+    [a₀; a₁, …, a_{n-1}, x]
+    & = [a₀; a₁, …, a_{n-1} + 1/x].
   \end{align*}
   From the induction hypothesis, it follows that
   \begin{align*}
-    [a₀; a₁, …, aₙ + 1/x]
-    & = \frac{p_{n - 1} (aₙ + 1/x) + p_{n-2}}{q_{n-1} (aₙ + 1/x) + q_{n-2}} \\
-    & = \frac{x (p_{n-1} aₙ + p_{n-2}) + p_{n-1}}{x (q_{n-1} aₙ + q_{n-2}) + q_{n-1}} \\
-    & = \frac{pₙ x + p_{n-1}}{qₙ x + q_{n-1}}. \qedhere
+    [a₀; a₁, …, a_{n-1} + 1/x]
+    & = \frac{p_{n - 2} (aₙ + 1/x) + p_{n-3}}{q_{n-2} (aₙ + 1/x) + q_{n-3}} \\
+    & = \frac{x (p_{n-2} aₙ + p_{n-3}) + p_{n-2}}{x (q_{n-2} aₙ + q_{n-3}) + q_{n-2}} \\
+    & = \frac{p_{n-1} x + p_{n-2}}{q_{n-1} x + q_{n-2}}. \qedhere
   \end{align*}
 \end{proof}
 
