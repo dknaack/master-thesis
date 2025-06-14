@@ -264,15 +264,6 @@ two inputs $(a, b)$ for the Euclidean algorithm.
 Instead, we take a different approach.
 We use the real division with remainder operation from
 Example~\vref{ex:real-divmod}, but between iterations we rescale the input.
-\iffalse
-The idea is to look at the ratios between the two inputs of the Euclidean
-algorithm.
-Suppose $a = qb + r$.
-Then, the quotient is the integer part of the ratio $a/b$ and $r/b$ is the
-fractional part of $a/b$.
-In the next iteration,
-we could calculate $b = q'r + r'$
-\fi
 For an irrational number $x₀ ∈ ℝ$,
 we begin the algorithm with the input $(x₀, 1)$ and
 we split $x$ into its integer and fractional part according to the division
