@@ -345,26 +345,24 @@ since $xₙ = [a_n; a_{n+1}, …]$.
 \end{example}
 
 % TODO: Explain that we need to show that it converges
-The next step is to show that the constructed continued fraction actually
-produces a correct representation for the number.
-By definition, a number $x ∈ ℝ$ is represented by a continued fraction $[a₀;
-a₁, …]$ if and only if the limit
+The remaining step is to show that the constructed continued fraction of a
+number $x ∈ ℝ$ actually produces the correct representation.
+By definition, $x = [a₀; a₁, …]$ if and only if
 \[
   x = \lim_{n → ∞} [a₀; a₁, …, aₙ]
 \]
-exists.
+and the limit exists.
 In other words, the convergents must approach the number $x$ as $n$ increases.
-Thus, the next step is to prove that convergents actually approach the number $x$.
-
-Lemma~\ref{lem:cf-det} already gives us a hint towards the convergence of
-continued fractions, because dividing the equation by $q_n q_{n-1}$ results in
+Thus, the next step is proving that convergents approach the number $x$.
+Lemma~\ref{lem:cf-det} already hints at the convergence,
+because dividing the equation by $q_n q_{n-1}$ results in
 \[
   \frac{p_n}{q_n} - \frac{p_{n-1}}{q_{n-1}} = \frac{(-1)^{n+1}}{q_n q_{n-1}}.
 \]
 Since $aₙ > 0$ for $n ≥ 1$, the denominators $q_n$ and $q_{n-1}$ are always
 increasing after some point.
 Consequently, the distance between consecutive convergents is decreasing.
-But we need to show that the convergents actually approach the represented number.
+But we need to show that the convergents actually approach the number $x$.
 For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ < 1$.
 
 \begin{lemma}
@@ -379,9 +377,9 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
 % TODO: Have we proven that (p_{n-1} q_n - p_n q_{n-1}) = (-1)^n yet?
 \begin{proof}
   Let $x_n = [a_n; a_{n+1}, …]$.
-  Then, $x = [a₀; a₁, …, a_{n-1}, x_n]$ and $a_n = \floor{x_n}$.
-  Using Lemma~\ref{lem:cf-wallis},
-  we can represent $x$ as well as $p_n/q_n$ using the previous convergents
+  By Lemma~\ref{lem:cf-nesting}, $x = [a₀; a₁, …, a_{n-1}, x_n]$ and $a_n = \floor{x_n}$.
+  Using the linear recurrence from Lemma~\ref{lem:cf-wallis},
+  we can represent both $x$ as well as the convergent $p_n/q_n$ using
   $p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$ together with the coefficients $x_n$
   and $a_n$, respectively.
   Hence,
@@ -401,8 +399,6 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
 % TODO: Mention that we can also prove the other direction
 We now have a continued fraction for both rational number and irrational numbers.
 What remains to be shown is that the continued fractions are unique.
-This gives us a unique representation for every real number $x ∈ ℝ$ by a
-continued fraction $[a₀; a₁, …]$.
 
 \begin{theorem}
   \label{thm:irrat-cf}
