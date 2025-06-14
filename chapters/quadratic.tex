@@ -410,15 +410,8 @@ continued fraction $[a₀; a₁, …]$.
 \end{theorem}
 
 \begin{proof}
-  From the previous considerations, it follows that for every number $x ∈ ℝ$,
+  From previous considerations, it follows that for every number $x ∈ ℝ$,
   there exists a continued fraction $[a₀; a₁, …]$ such that $[a₀; a₁, …] = x$.
-  Because the continued fraction $[a₀; a₁, …]$ is made up of integers and the
-  ones after $a₀$ are all positive, its integer part is entirely determined by
-  the first coefficient $a₀$ and its fractional part is determined by $[0; a₁, a₂, …]$.
-  Although, there is one special case of $[0; 1] = 1$,
-  this cannot be constructed using the algorithm.
-  The algorithm would have to begin with a fractional part of $1$, which is impossible.
-
   Now, suppose there is a different continued fraction $[b₀; b₁, …]$ with $[b₀; b₁, …] = x$.
   Because $[0; a₁, a₂, …]$ and $[0; b₁, b₂, …]$ both lie between $0$ and $1$,
   the continued fractions must share the same first coefficient $a₀ = b₀$.
@@ -426,7 +419,7 @@ continued fraction $[a₀; a₁, …]$.
   By induction, suppose that the first $n ≥ 0$ terms are equal.
   Then, the continued fractions $[a_{n+1}; a_{n+2}, …]$ and $[b_{n+1}; b_{n+2}, …]$ must be equal.
   But by the same argument, we have $a_{n+1} = b_{n+1}$.
-  Therefore, the continued fraction $[a₀; a₁, …]$ is unique.
+  Therefore, the continued fraction $[a₀; a₁, …]$ for $x$ is unique.
 \end{proof}
 
 This concludes the first part for Hermite's question.
