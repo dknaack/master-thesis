@@ -38,9 +38,13 @@ A continued fraction will be denoted more compactly as $[a₀; a₁, …]$.
   exists.
 \end{definition}
 
-The definition gives us one way to calculate the value of a continued fraction.
-The following lemma gives us the other direction,
-starting from the last coefficient going right to left:
+Using the definition,
+we always have to begin at the first coefficient
+and calculate the continued fraction of the tail.
+However, this works in reverse, too.
+We can begin at the end of the continued fraction
+and merge the last two coefficients using the same formula as in the
+definition.
 
 \begin{lemma}
   \label{lem:cf-nesting}
@@ -64,12 +68,15 @@ starting from the last coefficient going right to left:
   \end{align*}
 \end{proof}
 
-The \emph{$n$-th convergent} of $[a₀; a₁, …]$ is the finite continued fraction $[a₀; a₁, …, aₙ]$.
-For a continued fraction $[a₀; a₁, …]$ with integer coefficients,
-we denote each convergent $[a₀; a₁, …, aₙ]$ by a unique rational value $p/q$.
-This is representation is called the \emph{canonical representation} of the
-convergent.
-We can define this representation inductively as follows:
+For an infinite continued fraction,
+it is necessary to show that the finite continued fractions $[a₀; a₁, …, aₙ]$ are converging.
+These continued fractions are called \emph{convergents},
+specifically the \emph{$n$-th convergent} of $[a₀; a₁, …]$ is the finite
+continued fraction $[a₀; a₁, …, aₙ]$.
+If $[a₀; a₁, …]$ is a continued fraction with integer coefficients,
+then each convergent produces a unique rational $p/q$.
+This representation is called the \emph{canonical representation} of the convergent.
+We calculate this representation inductively as follows:
 
 The canonical representation of the first convergent is simply
 \[
