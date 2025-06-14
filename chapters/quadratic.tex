@@ -172,11 +172,15 @@ as shown by the following lemma.
 % ==============================================================================
 
 % TODO: Should we jump out of the gate with this problem?
-The first part of Hermite's question requires a representation of the real numbers.
-This means we have to find a unique continued fraction $[a₀; a₁, …]$ for every real number $x$.
-So far, we have allowed continued fractions with real coefficients
-but for the construction we use only integer coefficients.
-More specifically, we will only look at continued fractions $[a₀; a₁, a₂, …]$
+The definition only tells us how to calculate the value of a continued fraction,
+not how to construct a continued fraction.
+However, the first part of Hermite's question requires an explicit representation of every real number.
+Thus, we need to construct a unique continued fraction $[a₀; a₁, …]$ for every
+real number $x$ such that $x = [a₀; a₁, …]$.
+
+So far, we have allowed continued fractions with real coefficients.
+For the construction, we allow only integer coefficients.
+More specifically, we allow only continued fractions $[a₀; a₁, a₂, …]$
 where the first coefficient $a₀$ can be any integer but the remaining ones have to be positive.
 These constraints do not guarantee a unique representation alone.
 Consider $x = 3/2$, with the current requirements there are two possible representations:
