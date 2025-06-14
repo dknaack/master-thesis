@@ -248,6 +248,7 @@ Specifically,
 
 % ==============================================================================
 \section{Algebraic Numbers}
+\label{sec:algebraic}
 % ==============================================================================
 
 This section draws on standard results from algebraic number theory, as presented in the book by Dummit \cite{Dummit04}.
@@ -396,8 +397,8 @@ Finding such a nontrivial unit requires Dirichlet's unit theorem,
 for which we first need the notion of integer rings and orders.
 
 The \emph{integer ring} $\mathcal O_K$ of a number field $K$
-contains all elements $x ∈ \mathcal O_K$, which are algebraic integers,
-i.e. their minimal polynomial is a monic polynomial with integer coefficients.
+contains all elements $x ∈ K$, which are algebraic integers,
+i.e. their minimal polynomial has only integer coefficients.
 In general, algebraic numbers which are the root of a monic polynomial with integer coefficients
 are known as \emph{algebraic integers}.
 The ring of integers is not necessarily equal to $ℤ[α]$.
@@ -481,7 +482,7 @@ that is any root $β$ of $m_α(x)$ defines an eigenvector $(1, β, …, β^{n-1}
 
 \begin{proof}
   This follows from Corollary~\ref{cor:nontrivial-unit} and Lemma~\ref{lem:mult-eig}.
-  Although the eigenvector of Lemma~\ref{lem:mult-eig} is one the right,
+  Although the eigenvector of Lemma~\ref{lem:mult-eig} is on the right,
   transposing the multiplication matrix produces a right eigenvector.
 \end{proof}
 

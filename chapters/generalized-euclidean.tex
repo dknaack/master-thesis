@@ -90,39 +90,42 @@ while $x$ is not integral do
 end
 \end{Pseudocode}
 
-The algorithm is shown in Listing~\ref{lst:generalized-euclidean}.
+The algorithm by Klein and Reuter is shown in Listing~\ref{lst:generalized-euclidean}.
+We begin by reviewing their results.
 In this thesis, we only consider the case where we have one additional vector,
 i.e. $A ∈ ℤ^{d×(d+1)}$.
-We begin by taking a linearly independent subset $B ∈ ℤ^{d × d}$ of the columns of $A$,
-leaving behind one column vector $c ∈ ℤ^d$.
-The algorithm calculates a new basis $B'$ such that $\mathcal L(B') = \mathcal L(B ∪ \{c\})$.
-Its basic structure consists of two steps:
+The algorithms starts with a linearly independent subset $B ∈ ℤ^{d × d}$ of the
+columns of $A$, leaving behind one column vector $c ∈ ℤ^d$.
+The goal is to find a new basis $B'$ such that $\mathcal L(B') = \mathcal L(B ∪ \{c\})$.
+The basic structure of the algorithm consists of two steps:
 A \emph{modulo} operation and an \emph{exchange} operation.
 The operations are similar to the Euclidean algorithm, where we first compute
 the modulo $a \bmod b$ and then swap the two inputs.
 
 First, we look at the modulo operation.
-Suppose we have a basis $B ∈ ℤ^{d×d}$ with vectors $B₁, …, B_d$,
-any vector $a ∈ ℝ^d$ can easily be represented
-as a linear combination $B₁x₁ + \dots + B_d x_d$ of the basis vectors.
-However, the linear combination is not necessarily an integral combinations,
-so the vector $a$ might not be contained in the lattice $\mathcal L(B)$.
-But we can split the vector into an integral part,
-which is contained in the lattice,
+Let $B ∈ ℤ^{d×d}$ with column vectors $B₁, …, B_d$.
+Any vector $c ∈ ℤ^d$ can easily be represented
+as a linear combination $B₁x₁ + \dots + B_d x_d$.
+However, a \emph{linear} combination is not necessarily an \emph{integral} combination.
+Therefore, the vector $c$ might not be contained in the lattice $\mathcal L(B)$.
+Nonetheless, we can split the vector into an integral part,
+which is contained in the lattice $\mathcal L(B)$,
 and a fractional part,
-which is contained in the fundamental parallelepiped.
+which is contained in the fundamental parallelepiped $Π(B)$.
 If $c = Bx$, then the vector $z = B \floor{x}$ is a lattice point
 and $r = c - z$ is contained in the fundamental parallelepiped.
+
 Thus, we can split $c$ into
 \[
-  c = B\floor{x} + B\{x\} = z + r.
+  c = \underbrace{B\floor{x}}_{∈ \mathcal L(B)} + \underbrace{B\{x\}}_{∈ Π(B)} = z + r,
 \]
-This is essentially a multidimensional division with remainder operation inside a lattice.
-It allows us to define a modulo operation for the algorithm as follows:
+which allows us to define a modulo operation for the algorithm as follows:
 \[
-  c \pmod{Π(B)} := c - B\floor{B^{-1} a}.
+  c \pmod{Π(B)} := c - B\floor{B^{-1} c}.
 \]
 This modulo operation is visualized in Figure~\ref{fig:modulo}.
+It essentially finds the cell, which contains the vector $c$,
+and returns the vector from origin of that cell to the original vector.
 It remains to be shown that applying this modulo operation on $a$ does not
 affect the underlying lattice $\mathcal L(B ∪ \{a\})$.
 
@@ -147,16 +150,16 @@ affect the underlying lattice $\mathcal L(B ∪ \{a\})$.
 \end{lemma}
 
 \begin{proof}
-  By definition of the modulo operation $c'$ is an integral combination of $c'$ and $B$,
-  specifically $c' = c - B \floor{B^{-1} c}$.
-  Therefore, $c' ∈ \mathcal L(A)$ and $\mathcal L(A) ⊆ \mathcal L(A \setminus \{c\} ∪ \{c'\})$.
-  Similarly, we can reach $c$ by the integral combination $c' + B \floor{B^{-1} c}$,
-  so $c ∈ \mathcal L(A \setminus \{c\} ∪ \{c'\})$.
+  By definition of the modulo operation $r$ is an integral combination of $c$ and $B$,
+  specifically $r = c - B \floor{B^{-1} c}$.
+  Therefore, $r ∈ \mathcal L(A)$ and $\mathcal L(A) ⊆ \mathcal L(A \setminus \{c\} ∪ \{r\})$.
+  Similarly, we can reach $c$ by the integral combination $r + B \floor{B^{-1} c}$,
+  so $c ∈ \mathcal L(A \setminus \{c\} ∪ \{r\})$.
   Therefore applying the modulo operation does not change the lattice.
 \end{proof}
 
 With the modulo operation done, we turn our attention to the exchange operation.
-On one side we have the basis $B$ and on the other we have the vector $c$.
+On one side, we have the basis $B$ and on the other, we have the vector $c$.
 So a swap of the two inputs will not work.
 Instead, we swap $c$ with a single column $B_ℓ$ of the basis $B$,
 where the specific index $ℓ$ depends on the result from the modulo operation.
@@ -178,9 +181,12 @@ which means that we have found a new basis for the original lattice.
 \end{lemma}
 
 \begin{proof}
-  By Cramer's rule, $\{x_ℓ\} = \frac{\det B'}{\det B}$
+  Let $B$ be the basis of the current iteration
+  and $B'$ the basis in the next iteration.
+  In the basis $B'$, the $ℓ$-th column is swapped with the remainder $r = B\{x\}$.
+  Then, $\{x_ℓ\} = \frac{\det B'}{\det B}$ by Cramer's rule
   and therefore the determinant decreases by a factor of $\{x_ℓ\} < 1$.
-  Since the vectors in $B$ and $B'$ are integral, the determinant must also be integral.
+  Since both matrices are integral, the determinant is integral, too.
   Therefore, the determinant decreases by at least one and in total it
   decreases at most $\det(B)$ iterations.
 \end{proof}
@@ -199,7 +205,7 @@ and the previous two lemmas lead to the following theorem:
 
 This solves the problem of computing a basis for an integer lattice.
 The authors proceed to optimize the algorithm to achieve a better running time.
-Of those optimization we need one, which removes the need to solve a linear
+Of those optimization we only need one, which removes the need to solve a linear
 system in each iteration.
 
 Instead of solving the system completely from new again,
@@ -284,13 +290,14 @@ In this thesis, we will use the function
   r ↦ (r, r^2, …, r^d).
 \]
 % TODO: The reason is that this vector represents the power basis, (at least partially. The first value is missing.)
-This function has the advantage that the elements of the vector are linearly independent,
-if $r$ is an algebraic number with degree $≥ d$.
+We choose this function,
+since it is very similar to the power basis $\{1, r, …, r^d\}$
+presented in Section~\ref{sec:algebraic}.
 However, any function which keeps the elements linearly independent would work.
-In general, we can choose polynomials $q_1(x), q_2(x), …, q_d(x)$ with rational
-coefficients where $\deg(q_i) = i$ and
-use the solution vector $x = (q_1(r), …, q_d(r))$.
-But for this thesis, I will use the vector $(r, r^2, …, r^d)$ unless noted otherwise.
+In general, we could choose any rational polynomials~$q_1(x), q_2(x), …, q_d(x)$
+with $\deg(q_i) = i$ and use the solution vector $x = (q_1(r), …, q_d(r))$.
+For the purposes of this thesis,
+I will use the vector $(r, r^2, …, r^d)$ unless noted otherwise.
 
 % TODO: Rewrite this whole section
 % TODO: For the next chapter, we should remark that the entire execution only
@@ -393,14 +400,13 @@ Unfortunately, this representation is not unique.
 For the given example, there is another representation, if we start with $ℓ = 2$ instead of $ℓ = 1$.
 Nevertheless, this gives us more flexibility.
 To find a unique representation, all we need is a strategy,
-that decides which element $x_ℓ$ to choose for pivoting at each iteration.
-This is can be achieved via a function~$ℓ \colon ℝ^d × ℕ → \{1, …, d\}$,
-which is given the current vector $x ∈ ℝ^d$ and the number of steps $n ∈ ℕ$
-and it has to output the next pivot index $ℓ = ℓ(x, n) ∈ \{1, …, d\}$.
+that selects the pivot element $x_ℓ$ at each iteration.
+Formally, we have a function~$ℓ \colon ℝ^d × ℤ_{> 0} → \{1, …, d\}$,
+which given the current vector~$x ∈ ℝ^d$ and the number of steps $n ∈ ℤ_{> 0}$
+returns the next pivot index $ℓ = ℓ(x, n) ∈ \{1, …, d\}$.
 
 \begin{example}
-  Consider the transform of the Jacobi-Perron algorithm,
-  which is defined as
+  Consider the transform of the Jacobi-Perron algorithm~\cite{Perron07}, defined as
   \begin{align*}
     T(x₁, …, x_d) =
     \left(
@@ -414,7 +420,7 @@ and it has to output the next pivot index $ℓ = ℓ(x, n) ∈ \{1, …, d\}$.
   We can reformulate this as a strategy for the generalized Euclidean algorithm.
   If we keep the order of the elements
   instead of moving $x₁$ to the end,
-  then the strategy chooses $1$ in the first iteration,
+  then the strategy selects $1$ in the first iteration,
   $2$ in the second iteration and so on.
   After $d$ iterations, the strategy repeats.
   Thus, the Jacobi-Perron strategy can be seen as choosing $ℓ(x, n) = (n \bmod d) + 1$.
