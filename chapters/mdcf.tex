@@ -179,7 +179,7 @@ For the remaining terms,
 Let $ℓ$ be the pivot index of $x^{(n)}$, i.e. $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
 Then, the next terms in the sequences are:
 \begin{equation}
-  \label{eq:wallis}
+  \label{eq:mcf-wallis}
   \begin{aligned}
     P_ℓ^{(n)} & = P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}, &
     P_0^{(n)} & = P_ℓ^{(n-1)}, \\
@@ -849,7 +849,7 @@ The projective definition of an MCF can be written as
 where $ℓ$ is the pivot index of $[a^{(1)}; a^{(2)}, …, a^{(n)}]$
 and $\hat a^{(0)} = [1, a_1^{(0)}, …, a_d^{(0)}]$.
 
-We can also use the projective space to dramatically simplify Lemma~\ref{lem:mdcf-wallis}.
+We can also use the projective space to dramatically simplify Lemma~\ref{lem:mcf-wallis}.
 Instead of two different sequences $P_i^{(n)}$ and $Q_i^{(n)}$, we simplify it
 to a single matrix sequence $(B^{(n)})_{n ≥ 0}$, which we call the
 \emph{convergent matrix}.
@@ -863,7 +863,7 @@ and the remaining terms are calculated according to the recurrence
 \end{align*}
 where $ℓ$ is the pivot index and $\hat a^{(n)} = [1, a_1^{(n)}, …, a_d^{(n)}]$.
 By construction, the convergent matrix $B^{(n)}$ is the combined matrix of the original sequences
-$P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mdcf-wallis}:
+$P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mcf-wallis}:
 \[
   B^{(n)} = \begin{bmatrix}
     Q_0^{(n)} & Q_1^{(n)} & ⋯ & Q_d^{(n)} \\
@@ -873,7 +873,7 @@ $P_i^{(n)}$ and $Q_i^{(n)}$ defined for Lemma~\vref{lem:mdcf-wallis}:
 In fact, we can prove an equivalent statement from this lemma using the new sequence.
 
 \begin{lemma}
-  \label{lem:mdcf-wallis'}
+  \label{lem:mcf-wallis'}
   Let $x ∈ ℝ^d$ and $\hat x = (1, x₁, …, x_d)$, then
   \[
     [r^{(0)}; r^{(1)}, …, r^{(n-1)}, x] \sim B^{(n-1)} \hat x.
@@ -909,7 +909,7 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
     r^{(n)} = \frac{P_0^{(n-1)} + P_1^{(n-1)} x_1 + ⋯ + P_d^{(n-1)} x_d}{Q_0^{(n-1)} + Q_1^{(n-1)} x_1 + ⋯ + Q_d^{(n-1)} x_d}
   \]
   from
-  Lemma~\ref{lem:mdcf-wallis}.
+  Lemma~\ref{lem:mcf-wallis}.
 \end{proof}
 
 \iffalse
@@ -957,7 +957,7 @@ the vector itself is an eigenvector for one of the convergent matrices $B^{(k)}$
 Furthermore, the elements of this eigenvector can only be algebraic numbers with degree $≤ d+1$.
 
 \begin{lemma}
-  \label{lem:mdcf-purely-periodic}
+  \label{lem:mcf-purely-periodic}
   If there exists a purely periodic MCF for $x ∈ ℝ^d$,
   then $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{lemma}
@@ -966,7 +966,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 \begin{proof}
   If the MCF is purely periodic, then there is some index $n ≥ 1$ such that $x = x^{(n)}$.
   Let $\hat x = [1, x₁, …, x_d]$ and $\hat x^{(n)} = [1, x_1^{(n)}, …, x_d^{(n)}]$.
-  By Lemma~\ref{lem:mdcf-wallis'},
+  By Lemma~\ref{lem:mcf-wallis'},
   \[
     \hat x \sim B^{(n)} \hat x^{(n)} \sim B^{(n)} \hat x \iff λ \hat x = B^{(n)} \hat x,
   \]
@@ -1001,7 +1001,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   of this fraction.
   Suppose that the MCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
   $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
-  By Lemma~\ref{lem:mdcf-wallis'}, $\hat x \sim B^{(k)} \hat x^{(k)}$,
+  By Lemma~\ref{lem:mcf-wallis'}, $\hat x \sim B^{(k)} \hat x^{(k)}$,
   which means that very element in the projection $x$ can be represented
   as a rational expression of $x^{(k)}$:
   \[
@@ -1010,7 +1010,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   % TODO: I think we should be more precise here since the elements could be
   % inside different fields. They are not, but this sentence does not indicate
   % that.
-  From Lemma~\ref{lem:mdcf-purely-periodic},
+  From Lemma~\ref{lem:mcf-purely-periodic},
   it follows that the elements of $\hat x^{(k)}$
   are contained in a field $ℚ(λ)$ with degree $[ℚ(λ) : ℚ] ≤ d+1$.
   Since $B^{(k)}$ consists solely of integers, every element in $x$ is contained in the same field $ℚ(λ)$.
