@@ -4,6 +4,35 @@
 
 \begin{document}
 \begin{tikzpicture}
-% TODO
+  \coordinate (B0) at (0.3, 1.7);
+  \coordinate (B1) at (2.3, 0.4);
+  \coordinate (C) at ($1.8*(B0) + 2.2*(B1)$);
+
+  \clip (-0.5, -0.5) rectangle (8.5, 5.5);
+
+  \fill[cyan!10] ($(B0) + 2*(B1)$)
+    { [current point is local] -- ++(B0) -- ++(B1) } -- +(B1) -- cycle;
+
+  % Draw points
+  \foreach \x in {-5, ..., 5}
+  \foreach \y in {-5, ..., 5}
+  {
+    \fill[black!20] ($\x*(B0) + \y*(B1)$) circle (1.2pt);
+  }
+
+  \foreach \i in {-5, ..., 5}
+  {
+    \draw[dotted, black!20] ($-5*(B0) + \i*(B1)$) -- ($+5*(B0) + \i*(B1)$);
+    \draw[dotted, black!20] ($\i*(B0) + 5*(B1)$) -- ($\i*(B0) - 5*(B1)$);
+  }
+  \draw[black!20] ($(B0) + 2*(B1)$)
+    { [current point is local] -- ++(B0) -- ++(B1) } -- +(B1) -- cycle;
+
+  \draw[->] (0, 0) -- node[left] {$B_1$} (B0);
+  \draw[->] (0, 0) -- node[below] {$B_2$} (B1);
+
+  \draw[->] (0, 0) -- node[above] {$c$} (C);
+  \draw[->, very thick, blue!50!black] ($(B0) + 2*(B1)$) -- node[right] {$r$} (C);
+  \fill (C) circle (1pt);
 \end{tikzpicture}
 \end{document}

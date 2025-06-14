@@ -120,8 +120,20 @@ It allows us to define a modulo operation for the algorithm as follows:
 \[
   c \pmod{Π(B)} := c - B\floor{B^{-1} a}.
 \]
+This modulo operation is visualized in Figure~\ref{fig:modulo}.
 It remains to be shown that applying this modulo operation on $a$ does not
 affect the underlying lattice $\mathcal L(B ∪ \{a\})$.
+
+\begin{figure}[tbp]
+  \centering
+  \includestandalone{figures/lattice-modulo}
+  \caption{
+    The modulo operation inside a lattice.
+    The vector $c$ lies in one of the cells of the lattice
+    and the vector $r$ is the remainder of $c$ modulo $Π(B₁, B₂)$.
+  }
+  \label{fig:modulo}.
+\end{figure}
 
 \begin{lemma}
   \label{lem:lattice-mod}
