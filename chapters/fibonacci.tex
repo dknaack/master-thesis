@@ -67,22 +67,23 @@ complexity theory.
   For $n = 0$, we have $F(2) = 2$ and $F(1) = 1$
   and they are the smallest pair of positive integers which require one step of
   the Euclidean algorithm.
-  In fact, they are the smallest pair which satisfy $a < b$.
+  In fact, they are the smallest pair satisfying $a < b$.
   So any pair, which takes only one step, must satisfy $a ≥ F(2)$ and $b ≥ F(1)$.
-  Next, suppose that the theorem holds for some $n ≥ 0$.
+
+  Now, suppose that the statement holds for some $n ≥ 0$.
   Let $(a, b)$ be an input pair which requires $n+1$ steps.
   Then, $a = qb + r$ for some integers $q, r ≥ 1$.
-  For the pair $(b, r)$, the algorithm requires $n$ steps, so $b ≥ F(n+2)$ and
-  $r ≥ F(n+1)$ by induction.
-  But then
+  Since the pair $(b, r)$ requires $n$ steps, by the induction hypothesis,
+  we have $b ≥ F(n+2)$ and $r ≥ F(n+1)$.
+  Therefore
   \[
     a = qb + r ≥ F(n+2) + F(n+1) = F(n+3).
   \]
-  Therefore, the theorem also holds for $n+1$.
+  Hence, the lemma also holds for $n+1$.
 \end{proof}
 
-The lemma also follows easily using the continued fraction of the ratios
-between Fibonacci numbers.
+The lemma can also be derived using the continued fraction for the ratios
+between Fibonacci numbers $F(n+1)/F(n)$.
 Given a finite continued fraction $[a₀; a₁, …, a_n]$, the Euclidean algorithm
 requires $n$ steps for any input $(a, b)$ with the same ratio $a/b$ as the
 continued fraction.
@@ -91,11 +92,11 @@ takes at least $n$ steps for two consecutive Fibonacci numbers.
 Furthermore, Fibonacci numbers are the smallest numbers which require $n$ steps
 since we can only increase the coefficients of the continued fraction.
 
-The continued fractions also show the connection between the Fibonacci numbers
-and the golden ratio.
-The convergents of the continued fraction $[1; \overline{1}]$ are ratios
-between consecutive Fibonacci numbers $F(n+1)/F(n)$ and as $n$ approaches
-infinity the convergents tend towards the golden ratio $φ$.
+The continued fractions also highlights the connection between the Fibonacci
+numbers and the golden ratio.
+The convergents of the infinite continued fraction $[1; \overline{1}]$ are the ratios
+between consecutive Fibonacci numbers $F(n+1)/F(n)$.
+As $n → ∞$, these convergents approach the golden ratio $φ$.
 
 \iffalse
 \begin{example}
@@ -117,23 +118,28 @@ infinity the convergents tend towards the golden ratio $φ$.
 \end{lemma}
 
 \begin{proof}
-  First, we show that the ratios converge by mapping it to the continued fraction $[1; \overline{1}]$.
-  By Lemma~\ref{lem:cf-wallis}, we can calculate the convergents of the continued fraction as
+  First, we show that the ratios converge by relating them back to the
+  continued fraction $[1; \overline{1}]$.
+  By Lemma~\ref{lem:cf-wallis}, the convergents of the continued fraction are
+  given by
   \[
-    p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}.
+    p_n = a_n p_{n-1} + p_{n-2}, \quad
+    q_n = a_n q_{n-1} + q_{n-2}.
   \]
-  The continued fraction consists solely of ones,
-  so the Fibonacci sequence and the sequence $p_n$ are identical.
-  The same is true for $q_n$, but $q_{-1} = 0$ and $q_{-2} = 1$, so the sequence lags one step behind $p_n$.
-  Therefore, the convergents are actually $F(n+1)/F(n)$.
+  Since the continued fraction consists solely of ones,
+  the sequences $p_n$ and $F(n)$ are identical.
+  The same is true for $q_n$, except that $q_{-1} = 0$ and $q_{-2} = 1$,
+  so it lags one step behind $p_n$.
+  Therefore, the convergents are precisely $F(n+1)/F(n)$.
+
   The convergence is already given by Lemma~\vref{lem:cf-approx},
-  so all that remains to be shown is that they actually converge to the golden ratio $φ$.
-  Suppose they converge to some different limit $φ'$
+  so it remains to be shown that the limit is in fact the golden ratio $φ$.
+  Suppose the sequence converges to some different limit $φ'$
   \[
     φ' = \lim_{n → ∞} \frac{F(n+1)}{F(n)} = \lim_{n → ∞} 1 + \frac{F(n-1)}{F(n)} = 1 + \frac{1}{φ'}.
   \]
-  Multiplying this equation by $φ'$ results in the defining polynomial of the golden ratio $φ$.
-  Because the ratios are always positive, we must have $φ' = φ$.
+  Multiplying both sides by $φ'$ results in the defining polynomial of the golden ratio $φ$.
+  Since the ratios $F(n+1)/F(n)$ are positive for all $n ≥ 0$, it follows that $φ' = φ$.
 \end{proof}
 
 \begin{corollary}
@@ -147,41 +153,46 @@ infinity the convergents tend towards the golden ratio $φ$.
 
 \begin{proof}
   Suppose the algorithm requires $n$ iterations.
-  By Lemma~\ref{thm:lame}, we have $b ≥ F(n+1)$
-  and by Corollary~\ref{cor:fib-conv}, we must have $F(n+1) ≥ φ^{n-1}$ at some point.
-  Then, $\log b ≥ (n - 1) \log φ$.
-  Therefore, the algorithm requires $n ≤ O(\log b)$ iterations.
+  By Lemma~\ref{thm:lame}, we have $b ≥ F(n+1)$.
+  By Corollary~\ref{cor:fib-conv}, we also know that $F(n+1) ≥ φ^{n-1}$ at some point.
+  Taking logarithms gives $\log b \geq (n - 1) \log φ$, so
+  \[
+    n \leq \frac{\log b}{\log φ} + 1 = O(\log b).
+  \]
+  Thus, the Euclidean algorithm requires at most $O(\log b)$ iterations.
 \end{proof}
 
 In summary,
 the defining property of Fibonacci numbers with respect to the Euclidean
-algorithm is that they represent the worst-case for the algorithm.
-At each step, they have a quotient of $1$, so they decrease slower than any other pair of integers.
+algorithm is that they represent the worst-case input.
+At each step, they yield quotient of $1$, so they decrease slower than any
+other pair of integers.
 Additionally, their ratios approximate the golden ratio,
-which can then be used to bound the number of iterations.
+which can be used to bound the number of iterations.
 
 % ==============================================================================
 \section{A Higher-Order Fibonacci Sequence for the Minimum Strategy}
 % ==============================================================================
 
 % TODO: We should also discuss the thing about idempotence under the choice of the pivot.
+% TODO: I would like a better explanation of what the goal of this section is
 
 For the generalisation of Fibonacci numbers,
-we must find a sequence which similarly has a quotient of $1$ at each iteration.
+we must find a sequence that similarly yields a quotient of $1$ at each
+iteration.
 However, the problem is that no single definitive sequence can exist.
-With the generalized Euclidean algorithm we have an additional choice with the
-element we choose to pivot with.
-Therefore, multiple different notions of Fibonacci numbers exist for this
-algorithm.
+In the generalized Euclidean algorithm, we have an additional degree of freedom
+in the choice of the pivot element.
+As a result, multiple different notions of Fibonacci numbers can arise,
+each corresponding to a different pivot strategy.
 
-% I would like a better explanation of what the goal of this section is
-We begin by deriving the Fibonacci numbers for one particular strategy.
+We begin by deriving the Fibonacci-like sequence for one particular strategy.
 Recall that the determinant decreases by $\{x_ℓ\}$ in each iteration.
-So the first strategy one may think of is to choose the index $ℓ$ with the
+A natural first strategy is to choose the index $ℓ$ with the
 smallest fractional value.
-After all, this gives us the largest decrease in the determinant over one iteration.
-Locally, this would be the highest decrease we can achieve.
-So we begin with this strategy.
+After all, this maximizes the decrease in the determinant over one iteration.
+Locally, it yields the greatest reduction that we can achieve.
+Therefore, we begin our analysis with this strategy.
 
 % TODO: We should move this table
 % TODO: Maybe it's better to show the numbers in the ratios, since we explain
@@ -194,28 +205,32 @@ So we begin with this strategy.
 \end{table}
 
 \begin{definition}
-  The Fibonacci numbers for the minimum strategy are defined as
+  The Fibonacci sequence for the minimum strategy is defined as
   \begin{enumerate}
     \item $F(0) = F(1) = ⋯ = F(d) = 1$.
     \item $F(n + 1) = F(n) + F(n - 1) + ⋯ + F(n - d)$.
   \end{enumerate}
 \end{definition}
 
-For $d = 2, 3$ and $4$, they are also referred to as the Tribonacci, Tetranacci
-and Pentanacci numbers.
+For $d = 2, 3$ and $4$, these sequqences are also referred to as the
+Tribonacci, Tetranacci and Pentanacci numbers, respectively.
 In general, they are known as the $d$-bonacci numbers
-and they were first explicitly studied by Miles~\cite{Miles60}.
-Apart from the generalized Euclidean algorithm,
+and were first explicitly studied by Miles~\cite{Miles60}.
+Beyond the generalized Euclidean algorithm,
 they have also been successfully applied in probability theory~\cite{Philippou82,Raab63,Schlegel94}.
 
 For these numbers, we initialize the solution vector $x = (x₁, …, x_d)$ with
 \[
   x_i = \frac{\sum_{k=0}^i F(n - i)}{F(n)}.
 \]
-Because $F(n) = F(n - 1) + ⋯ + F(n - d - 1) > F(n - 1) + ⋯ + F(n - i)$,
+Since
+\[
+  F(n) = F(n - 1) + ⋯ + F(n - d - 1) > F(n - 1) + ⋯ + F(n - i),
+\]
 each $x_i$ is bounded between $1$ and $2$.
 Thus, each $x_i$ has a fractional value of $1$.
 The smallest one is $x₁$, so we pivot with $ℓ = 1$ first.
+
 Let $x' = \mathrm{pivot}_ℓ(x)$, then the first value is
 \begin{align*}
   x₁' &
@@ -224,26 +239,27 @@ Let $x' = \mathrm{pivot}_ℓ(x)$, then the first value is
   = \frac{F(n)}{F(n - 1)}
   = \frac{F(n - 1) + ⋯ + F(n - d)}{F(n)}.
 \end{align*}
-This equals the value of $x_d$, if we would have started with $F(n-1)$ instead of $F(n)$.
-The other values in our input vector $x$ are calculated as follows:
+This is equal to the value of $x_d$, if we had started with $F(n-1)$ instead of $F(n)$.
+
+The other components of the input vector $x$ are updated as follows:
 \begin{align*}
   xᵢ'
   & = \frac{\{xᵢ\}}{\{x₁\}} = \frac{xᵢ - 1}{x₁ - 1} \\
   & = \frac{F(n - 1) + ⋯ + F(n - i)}{F(n + 1)} · \frac{F(n)}{F(n - 1)} \\
   & = \frac{F(n - 1) + ⋯ + F(n - i)}{F(n - 1)}.
 \end{align*}
-So in the next iteration the value $x_i'$ has the same value as $x_{i-1}$, if we
-would have started with $F(n - 1)$.
-Therefore, in the next iteration the smallest fractional value must be $x_2$.
-If we repeat this a total of $d$ times, then we end up where we started, but
-each term is shifted backwards by $d$ steps.
+Thus, in the next iteration, the value $x_i'$ has the same value as $x_{i-1}$,
+if we had started with $F(n - 1)$.
+Therefore, in the following step, the smallest fractional value must be $x_2$.
+Repeating this process a total of $d$ times brings us back to the initial
+configuration, except each term is shifted back by $d$ steps.
 To reach the end, we need a total $n$ steps.
 
-For the worst-case analysis, we first need the following lemma, which shows
+For the worst-case analysis, we begin with the following lemma, which shows
 that the $\mathrm{pivot}$ operation from Equation~\ref{eq:modified-update-rule}
-can be viewed as a multi-dimensional division with remainder operation, where
-we have a set of integers $p₁, …, p_d, q$ and divide them by one particular
-element $p_ℓ$.
+can be interpreted as a multi-dimensional division-with-remainder operation.
+In this interpretation, we have a set of integers $p₁, …, p_d, q$ and divide
+them by one particular element $p_ℓ$.
 
 \begin{lemma}
   \label{lem:divmod}
@@ -254,51 +270,55 @@ element $p_ℓ$.
   %Suppose $\gcd(q, p₁, …, p_d) = 1$ and $\gcd(q', p₁', …, p_d') = 1$, then
   Then,
   \[
-    q = p_ℓ',
-    \qquad
-    p_ℓ = a_ℓ p_ℓ' + q',
-    \qquad
+    q = p_ℓ', \qquad
+    p_ℓ = a_ℓ p_ℓ' + q', \qquad
     p_i = a_i p_ℓ' + p_i',
   \]
-  for every $i ∈ \{1, …, d\}$ and $a = \floor{x}$.
+  for every $i ∈ \{1, …, d\}$, where $a = \floor{x}$.
 \end{lemma}
 
 \begin{proof}
   By definition of $\mathrm{pivot}$, we have
   \[
-    x_ℓ' = \frac{p_ℓ'}{q'} = \frac{1}{\frac{p_ℓ}{q} - a_ℓ} = \frac{q}{p_ℓ - a_ℓ q}.
+    x_ℓ'
+    = \frac{p_ℓ'}{q'}
+    = \frac{1}{\frac{p_ℓ}{q} - a_ℓ}
+    = \frac{q}{p_ℓ - a_ℓ q}.
   \]
   Therefore, $q = p_ℓ'$ and $p_ℓ = a_ℓ q + q' = a_ℓ p_ℓ' + q'$.
   For the remaining elements, we have
   \[
-    \frac{p_i'}{q'} = \frac{\frac{p_i}{q} - a_i}{\frac{p_ℓ}{q} - a_ℓ} = \frac{p_i - a_i q}{p_ℓ - a_ℓ q}.
+    \frac{p_i'}{q'}
+    = \frac{\frac{p_i}{q} - a_i}{\frac{p_ℓ}{q} - a_ℓ}
+    = \frac{p_i - a_i q}{p_ℓ - a_ℓ q}.
   \]
   Therefore, $p_i = p_i' + a_i q = p_i' + a_i p_ℓ'$.
 \end{proof}
 
 To show that the $d$-bonacci numbers are the worst-case for the minimum
-strategy, we first need a few requirements.
-The first is that the vector $x$ is strictly positive,
-which can be easily solved by ignoring the first iteration.
-In the second iteration, $x$ must always be positive.
-The second requirement is that the values in $x$ are all different.
+strategy, we first need to establish a few conditions.
+The first condition is that the vector $x$ is strictly positive.
+This can be ensured by simply ignoring the first iteration,
+as in the second iteration, $x$ will always be positive.
+
+The second condition is that the values in $x$ must be distinct.
 The reasoning behind this requirement is that one could easily check if there
 are two elements $x_i, x_j$ with $x_i = x_j$.
 Pivoting with either $ℓ = i$ or $ℓ = j$ removes the other element from the
 vector, since the element will be zero in the next iteration.
 Hence, this step will always be more efficient than pivoting a different element.
-With these requirements, we can show that the $d$-bonacci numbers are the worst-case.
+Given these two conditions, we can show that the $d$-bonacci numbers
+yield the worst-case behavior for the minimum strategy.
 
 \begin{theorem}
   Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$.
   Suppose the algorithm requires at least $n ≥ 0$ steps for the vector $x$ when
-  taking the minimum fractional value at each step.
+  selecting the minimum fractional value at each step.
   Then, there exists a permutation~$σ$ such that
   \[
-    q ≥ F(n+d),
-    \qquad
+    q ≥ F(n+d), \qquad
     p_{σ(i)} ≥ \sum_{k = 0}^i F(n+d - k),
-    \text{ for every } i ≤ d.
+    \quad \text{ for every } i ≤ d.
   \]
 \end{theorem}
 
