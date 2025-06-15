@@ -29,7 +29,7 @@ If a number is a quadratic irrational,
 then its continued fraction must be eventually periodic.
 Naturally, we may ask whether we can extend this and
 find a periodic representation for cubic irrationals.
-However, no such representation exists as of yet.
+However, no such representation exists yet.
 
 The interest in a generalization to cubic irrationals
 comes from the effectiveness of continued fractions in related fields.
@@ -39,7 +39,7 @@ It turns out that the best rational approximations are precisely those provided
 by continued fractions.
 A generalization of continued fractions could serve a similar role in the field
 of simultaneous Diophantine approximation, where the goal is to approximate
-multiple real numbers at once with a single rational vector.
+multiple real numbers with a single rational vector.
 
 Hermite's original question only applies to cubic irrationals,
 but it can be easily generalized to any algebraic number:
@@ -61,13 +61,13 @@ number with a certain degree.
 \label{sec:jacobi-perron}
 % ==============================================================================
 
-Since Hermite originally posed his question to Jacobi, it was he who first
+Since Hermite originally posed his question to Jacobi, it was Jacobi who first
 attempted to answer it.
 He developed an algorithm \cite{Jacobi68} inspired by the Euclidean algorithm,
 which calculates the greatest common divisor of three numbers instead of two.
 At each step,
 the algorithm chooses the smallest number and uses it to divide the other two.
-In the next triple, the other two numbers are replaced by their remainder.
+In the next triple, the other two numbers are replaced by their remainders.
 This process is continued until the greatest common divisor is found.
 Later, Oskar Perron generalized Jacobi's method to arbitrary dimensions \cite{Perron07},
 resulting in what is now called the Jacobi–Perron Algorithm (JPA).
@@ -85,7 +85,7 @@ For example, $T(\sqrt{2}) = 1/(\sqrt{2} - 1) = \sqrt{2} + 1$
 and $T^2(\sqrt{2}) = T(\sqrt{2} + 1) = \sqrt{2} + 1$.
 Thus, the continued fraction of $\sqrt{2}$ is periodic after two iterations.
 
-The Jacobi-Perron uses a similar transform,
+The Jacobi-Perron algorithm uses a similar transform,
 which takes a vector $x = (x₁, …, x_d)$ as input and calculates
 \begin{align*}
   T(x₁, …, x_d) =
@@ -103,11 +103,11 @@ Perron showed that if the algorithm becomes periodic,
 then each $x_i$ is an algebraic number with degree $d+1$.
 However, he was not able to show the other direction.
 
-In an attempt to find an algorithm, which solves both directions,
+In an attempt to find an algorithm which solves both directions,
 previous work often replaces this transformation with a different one,
 which can be considered JPA-type algorithms.
 For example, a different transformation could use the second smallest number.
-They usually consider only one particular transformation and iterate this until a period has been found.
+They usually consider only one particular transformation and iterate it until a period has been found.
 Despite numerous different transformations being proposed,
 Hermite's question remains open.
 
@@ -118,16 +118,16 @@ Hermite's question remains open.
 
 % The other algorithms focus on a single path, whereby the only use their own
 % transformation function to find a periodic representation.
-Whereas previous algorithms typically only consider a single transformation,
+Whereas previous algorithms typically consider only a single transformation,
 I present a framework that is able to choose any one of these transformations.
-This framework will be called \emph{multidimensional continued fractions} (MCF),
-since it is based on a generalization of the Euclidean algorithm by Klein and
+This framework, which I call \emph{multidimensional continued fractions} (MCF),
+is based on a generalization of the Euclidean algorithm by Klein and
 Reuter~\cite{Klein24}.
 
 The main contribution of this thesis is a theoretical analysis of the
 multidimensional continued fractions.
 This includes two important theorems.
-The first shows that many multidimensional continued fractions converge.
+The first theorem shows that many multidimensional continued fractions converge.
 This was neglected by Jacobi at first, but it was eventually shown by Perron.
 Since then, the main focus has returned to the second part
 with the convergence often being implicitly assumed.
@@ -138,39 +138,39 @@ This covers the first part of Hermite's question.
 The second theorem partially solves the second part of Hermite's question.
 It shows that every periodic multidimensional continued fraction leads to an
 algebraic number, thus solving the first direction.
-The converse still remains open.
+The converse remains open.
 
 Nevertheless, I have performed an experimental analysis on the MCFs,
 which strongly suggests that every cubic irrational has a periodic MCF.
 The aim of this analysis was to evaluate different strategies
 for constructing periodic MCFs for algebraic numbers.
-One of these strategies shows particular promise in the construction,
-since it has provided a periodic MCF for every cubic and quartic irrational I tested.
+One of these strategies shows particular promise, having produced a periodic
+MCF for every cubic and quartic irrational I tested..
 In addition, I have evaluated the performance of MCFs in the field of
 simultaneous Diophantine approximation.
-Since ordinary continued fractions can be used for the best rational approximations
+Since ordinary continued fractions yield the best rational approximations
 of a single real number, the idea for MCFs would be that they provide the best
 rational approximations for real vectors.
 With my analysis, I show that not all convergents lead to good rational approximations.
-I give one specific example where no MCF produces good rational
-approximations of a vector at all times.
+I provide a specific example where no MCF consistently produces good rational
+approximations of a vector.
 
 The basis of these MCFs is a generalization of the Euclidean algorithm from
 Klein and Reuter \cite{Klein24}.
-The initial aim was to analyze the algorithm on its worst-case performance
-and whether there exists some generalization of Fibonacci numbers,
-which represent the worst-case for the classical Euclidean algorithm.
-As such, a side result of this thesis is a proof that such Fibonacci numbers exist, at least for one strategy.
-More importantly, I show that they represent the worst-case for this strategy.
+The initial aim was to analyze the algorithm's worst-case performance
+and to determine whether there exists some generalization of Fibonacci numbers,
+as they represent the worst-case for the classical Euclidean algorithm.
+As such, a secondary result of this thesis is a proof that such Fibonacci numbers exist, at least for one strategy.
+More importantly, I show that they represent the worst case for this strategy.
 Using these numbers, I derive the multidimensional analogue of the golden
 ratio, which can be seen as one of the simplest examples of a periodic MCF.
 
 In summary, there are three main contributions:
 \begin{enumerate}
   \item A new class of multidimensional continued fractions, including a proof
-    of their convergence and how they lead to algebraic numbers.
+    of convergence and how they lead to algebraic numbers.
   \item An experimental analysis of the multidimensional continued fractions
-    on cubic irrationals as well as their application in simultaneous
+    on cubic irrationals and their application in simultaneous
     Diophantine approximation.
   \item Worst-case bounds for the generalized Euclidean algorithm
     using higher-order Fibonacci numbers and multidimensional golden ratios.
@@ -191,20 +191,20 @@ However, numerical computations by Elsner and Hasse \cite{Elsner67} have shown
 that the JPA seems to fail for certain cube roots.
 This has led some to conjecture that the JPA does not provide an answer to Hermite's question.
 
-Since then, numerous alternative algorithms have since been proposed
-\cite{Assaf05, Hendy81, Schweiger13, Schweiger00}.
+Since then, numerous alternative algorithms have been
+proposed~\cite{Assaf05, Hendy81, Schweiger13, Schweiger00}.
 However, they usually build upon the Jacobi-Perron algorithm.
 This includes the subtractive algorithms by
 Brun~\cite{Brun19} and Selmer~\cite{Selmer67}
 as well as the fully subtractive algorithms introduced by Schweiger~\cite{Schweiger95}.
 Each algorithm is still fundamentally based on the idea of the JPA, though they
-do not use the full remainder and instead only subtract the chosen element.
+do not use the full remainder and instead subtract only the chosen element.
 While the main focus has been on periodicity, Selmer's algorithm is one of the
-few algorithms, for which the convergence has been proven~\cite{Bruin15}.
+few algorithms, for which convergence has been proven~\cite{Bruin15}.
 However, none of them give a full answer to Hermite's question.
 
 There are also generalizations of continued fractions to two dimensions,
-called bifurcating or ternary continued fractions \cite{Gupta00,Daus22},
+called bifurcating~\cite{Gupta00} or ternary continued fractions~\cite{Daus22},
 and they are constructed by reversing the JPA in two dimensions.
 Traditionally, they only admitted integers as coefficients,
 but Murru~\cite{Murru15} used rational coefficients to construct periodic
@@ -216,9 +216,9 @@ and thus, it does not provide a full answer to Hermite's question.
 
 More recently, Karpenkov has proposed two new algorithms \cite{Karpenkov24, Karpenkov21}.
 The first, known as the $\sin^2$-algorithm, has been shown to be periodic for
-every totally real cubic irrational, that is any root of a cubic polynomial
+every totally real cubic irrational, i.e. any root of a cubic polynomial
 with three real roots.
-The second is called the HAPD algorithm and he conjectures that it is periodic
+The second is called the HAPD algorithm, and he conjectures that it is periodic
 for all cubic irrationals, though this remains unproven.
 Nevertheless, both algorithms are built upon transformations closely related to
 those used in the JPA.
@@ -226,10 +226,10 @@ those used in the JPA.
 Apart from the algorithmic approach,
 there has also been significant effort in a geometric generalization of
 continued fractions.
-Felix Klein famously interpreted the convergents of a continued fractions as
+Felix Klein famously interpreted the convergents of a continued fraction as
 points on integer lattices \cite{Klein95}.
-His interpretation has lead to a geometric proof of Lagrange’s theorem, which
-will also be presented in this thesis following the work of Korkina~\cite{Korkina96}.
+His interpretation has led to a geometric proof of Lagrange’s theorem, which
+will also be presented in this thesis, following the work of Korkina~\cite{Korkina96}.
 Arnol'd has suggested a generalization of Klein's interpretation to higher
 dimensions \cite{Arnold98} and it was conjectured that they satisfy a
 multidimensional equivalent of the Lagrange's famous theorem,
@@ -245,8 +245,8 @@ One notable example is the Minkowski question-mark function $?(x)$,
 which maps a quadratic irrational $x$ to a rational number.
 Efforts to define higher-dimensional analogues of this function aim to mirror
 the relationship between algebraic numbers and their representations.
-There has been an extension of this function to two dimensions \cite{Beaver04},
-but this has not solved Hermite's question, yet.
+There has been an extension of this function to two dimensions~\cite{Beaver04},
+but this has not yet solved Hermite's question.
 
 % ==============================================================================
 \section{Structure of this Thesis}
@@ -262,11 +262,11 @@ Chapter~\ref{ch:generalized-euclidean} introduces the generalized Euclidean algo
 In Chapter~\ref{ch:fibonacci}, the generalized Euclidean algorithm is analyzed
 for worst-case performance under two different strategies.
 Each strategy results in a different generalization of the Fibonacci numbers
-and in its own definition of a golden ratio.
+and its own definition of a golden ratio.
 This golden ratio is the first case of a periodic representation of an algebraic number.
 Building on this result, Chapter~\ref{ch:mdcf} generalizes continued fractions to higher dimensions
 and presents the two main theoretical results of the thesis: convergence and periodicity.
 Chapter~\ref{ch:implementation} analyzes the second part of Hermite's problem,
 whether multidimensional continued fractions of algebraic numbers are always periodic.
-In this chapter, examples of such continued fractions for cubic irrationals are presented,
-and different strategies for constructing these continued fractions are compared.
+This chapter presents examples of such continued fractions for cubic irrationals,
+and compares different strategies for constructing these continued fractions.
