@@ -173,21 +173,23 @@ In summary, the following strategies were tried:
 \end{figure}
 
 Figure~\ref{fig:comparison} shows the total number of MCFs found using each strategy.
-The clear winner is the algorithm by Tamura and Yatusomi.
+The clear winner is the algorithm by Tamura and Yasutomi.
 It has found a periodic representation for almost every cubic irrational I tested.
 The only cube roots it didn't find were the largest ones,
 since at that point the maximum number of steps is too low.
 Increasing the number of steps solves the issue and the strategy would have
 also found a periodic representation for these roots.
-The JPA and the Min strategy faired slightly worse and managed to find a
+The JPA and the Min strategy faired considerably worse and managed to find a
 periodic representation for only 10\% of the roots.
 By far the worst strategies were choosing the closest convergents and choosing
 the maximum fractional value.
 
-% TODO: Quartic irrationals
-
 Since Tamura and Yasutomi's algorithm worked so well,
-I have also tested it on fifth, sixth and seventh roots
+I have tested it again with cube roots and fourth roots.
+This time, I increased the maximum search depth to $N = 10\,000$ iterations
+and examined roots up to $\sqrt[d]{10\,000}$ for $d=3,4$.
+In both cases, it successfully found a periodic MCF for every root.
+I then repeated these tests for fifth, sixth and seventh roots
 from $\sqrt[d]{2}$ up to $\sqrt[d]{200}$.
 Beginning with the fifth roots, the algorithm no longer returns a periodic MCF for all roots.
 In fact, I have only found periodic MCFs for the following roots:
@@ -199,10 +201,15 @@ In fact, I have only found periodic MCFs for the following roots:
   \item Sixth roots: $\sqrt[6]{18}, \sqrt[6]{65}, \sqrt[6]{66},\sqrt[6]{198}$.
   \item Seventh roots: $\sqrt[6]{2}$.
 \end{itemize}
+It is well known that there is no general solution in terms of radicals and
+standard arithmetic operations for polynomials of degree five or higher.
+This may imply an inherent structural barrier that limits periodic MCFs for
+higher-degree roots, even though these roots can clearly be constructed using
+radicals.
 
 In conclusion,
 there are many algebraic numbers which have a periodic MCF.
-The best strategy for constructing such MCFs seems to be the algorithm of Tamura and Yatsumi.
+The best strategy for constructing such MCFs seems to be the algorithm of Tamura and Yasutomi.
 Although the Jacobi-Perron algorithm is able to find periodic representations
 for a significant portion of cube roots, it seems unable to do so for every
 cube root.
