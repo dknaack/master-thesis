@@ -780,7 +780,8 @@ points along the boundary.
 \begin{proof}
   Let $\overline{x}$ denote the conjugate of $x$.
   By Theorem~\ref{thm:unimodular-algebraic}, we can find a unimodular matrix $U$ for $x$,
-  which has $(x, 1)^⊤$ and $(\overline{x}, 1)^⊤$ as eigenvectors.
+  which has $(1, 1/x)^⊤$ and $(1, 1/\overline{x})^⊤$ as right eigenvectors.
+  Therefore, $U$ also has $(x, 1)$ and $(\overline{x}, 1)$ as eigenvectors.
   Applying $U$ on the Klein polygon, we have
   \begin{align*}
     UK
@@ -878,10 +879,15 @@ points along the boundary.
     \end{pmatrix}
     .
   \]
-  This matrix is the mutliplication matrix for $3 + 2\sqrt{2}$.
-  In Example~\vref{ex:sqrt2-unit},
-  we have already seen that this matrix has $(±\sqrt{2}, 1)$ as eigenvectors.
+
+  The matrix $U$ is the mutliplication matrix for $3 + 2\sqrt{2}$,
+  shown in Example~\vref{ex:sqrt2-unit}.
+  The example only shows that this matrix has $(1, ±\sqrt{2})$ as left eigenvectors.
+  However, the row vectors each induce a line which remains invariant under $U$
+  and the lines are spanned exactly by the column vectors $(±\sqrt{2}, 1)$.
+
+  Thus, the Klein polygon remains invariant under $U$.
   Therefore, if $B_2$ and $B_3$ are convergent matrices,
   then so are $U^n B_2$ and $U^n B_3$ for all $n ≥ 1$.
-  Thus, the continued fraction of $\sqrt{2}$ is periodic.
+  Hence, the continued fraction of $\sqrt{2}$ is periodic.
 \end{example}

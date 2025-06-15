@@ -343,16 +343,15 @@ evaluating the multiplication of $β$ with one element $α^k$ of the basis.
 The resulting element can be represented as a linear combination again,
 where one column can be calculated as follows:
 \[
-  β · α^k = \sum_{j=0}^{n-1} m_{kj} α^j \Rightarrow
+  β · α^k = \sum_{j=1}^{n} m_{kj} α^{j-1} \Rightarrow
   \begin{pmatrix}
-    m_{k,0} \\
-    m_{k,1} \\
+    m_{k0} \\
+    m_{k1} \\
     ⋮ \\
-    m_{k,n-1} \\
-  \end{pmatrix}
+    m_{kn} \\
+  \end{pmatrix}.
 \]
-for some coefficients $m_{jk} ∈ ℚ$.
-Combining each column into one matrix gives us the final multiplication matrix.
+Combining each column into one matrix gives us the final multiplication matrix $M_β$.
 
 \begin{example}
   \label{ex:mult-matrix}
@@ -371,6 +370,24 @@ Combining each column into one matrix gives us the final multiplication matrix.
   $(a + b \sqrt{d}) · \sqrt{d} = bd + a \sqrt{d}$,
   each of which represents one column in the multiplication matrix.
 \end{example}
+
+\begin{lemma}
+  \label{lem:mult-eig}
+  Let $α$ be algebraic and let $α₁, …, α_n ∈ ℂ$ be its conjugates.
+  Then, the multiplication matrix of an element $β ∈ ℚ(α)$ has the row vector
+  $(1, α, …, α^{n-1})$ as a left eigenvector.
+\end{lemma}
+
+\begin{proof}
+  The row vector $a_i = (1, α_i, …, α_i^{n-1})$ is a linear form $a_i(x) = a_i x$,
+  which maps any vector $x ∈ ℚ^d$ of a corresponding element in $ℚ(α)$ to its
+  embedding in the complex plane.
+  Thus, it maps each column of the multiplication matrix $M_β$ to its embedding.
+  By definition,
+  each column is $β · α^k$.
+  Thus, $a_i M_β = (β, β α_i, …, β α_i^{n-1}) = β a_i$ and $a_i$ is a left
+  eigenvector.
+\end{proof}
 
 \begin{definition}
   Let $K$ be a number field.
@@ -451,38 +468,20 @@ the ring of integers is equal to $ℤ\left[\frac{1+\sqrt{d}}{2}\right]$ if $d �
 The corollary tells us that there always exists a unit $ε ∈ ℚ(α)$ with integral
 coefficients in the power basis $\{1, α, …, α^{n-1}\}$.
 The multiplication matrix of $ε$ is therefore unimodular.
-This multiplication matrix actually has the power basis as one of its eigenvectors.
+This multiplication matrix actually has the power basis as a \emph{left} eigenvector.
 The other eigenvectors are similarly the power basis of the conjugates of $α$,
-that is any root $β$ of $m_α(x)$ defines an eigenvector $(1, β, …, β^{n-1})$.
-
-\begin{lemma}
-  \label{lem:mult-eig}
-  Let $α$ be algebraic and let $α₁, …, α_n ∈ ℂ$ be its conjugates.
-  Then, the multiplication matrix of an element $β ∈ ℚ(α)$ has the row vector
-  $(1, α, …, α^{n-1})$ as one of its left eigenvectors.
-\end{lemma}
-
-\begin{proof}
-  The row vector $a_i = (1, α_i, …, α_i^{n-1})$ is a linear form $a_i(x) = a_i x$,
-  which maps any vector $x ∈ ℚ^d$ of a corresponding element in $ℚ(α)$ to its
-  embedding in the complex plane.
-  Thus, it maps each column of the multiplication matrix $M_β$ to its embedding.
-  By definition,
-  each column is $β · α^k$.
-  Thus, $a_i M_β = (β, β α_i, …, β α_i^{n-1}) = β a_i$ and $a_i$ is a left
-  eigenvector.
-\end{proof}
+that is any root $α_i$ of $m_α(x)$ defines another left eigenvector $(1, α_i, …, α_i^{n-1})$.
 
 \begin{theorem}
   \label{thm:unimodular-algebraic}
   Let $α$ be an algebraic number and let $α_1, …, α_n$ be its conjugates.
-  There exists a unimodular matrix $U ≠ I$,
-  which has $(1, α_i, …, α_i^{n-1})$ as one of its \emph{right} eigenvectors.
+  Then, there exists a unimodular matrix $U ≠ I$,
+  which has $(1, α_i, …, α_i^{n-1})^⊤$ as one of its \emph{right} eigenvectors.
 \end{theorem}
 
 \begin{proof}
   This follows from Corollary~\ref{cor:nontrivial-unit} and Lemma~\ref{lem:mult-eig}.
-  Although the eigenvector of Lemma~\ref{lem:mult-eig} is on the right,
+  Although the eigenvector of Lemma~\ref{lem:mult-eig} is on the left,
   transposing the multiplication matrix produces a right eigenvector.
 \end{proof}
 
