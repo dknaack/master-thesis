@@ -1,35 +1,37 @@
 \chapter{Higher-Order Fibonacci Sequences and their Golden Ratios}
 \label{ch:fibonacci}
 
-It is well known that the worst-case for the classical Euclidean algorithm
-are consecutive Fibonacci numbers.
-Naturally, we can ask, whether an equivalent concept exists for the generalized
+It is well known that the worst-case scenario for the classical Euclidean
+algorithm involves consecutive Fibonacci numbers.
+Naturally, we may ask whether an equivalent concept exists for the generalized
 Euclidean algorithm.
-Furthermore, the Euclidean algorithm is used to construct continued fractions.
-Constructing a continued fraction using the Fibonacci numbers
-produces one of the simplest continued fractions, the golden ratio.
-For the higher-order Fibonacci numbers,
-we can equally construct a multidimensional continued fraction,
-which can be considered a generalization of the golden ratio.
-Some of these are well known, like the supergolden ratio or the plastic ratio,
-which are both roots of cubic polynomials.
-They bring us one step closer to Hermite's question,
-since they are some of the simplest examples of periodic multidimensional
-continued fractions.
 
-Whereas the classical algorithm has one clear worst-case input,
-the generalized algorithm has multiple worst-case inputs
-depending on the pivot strategy.
-In this chapter, we consider two different strategies.
-We begin with the locally optimal strategy,
-which chooses the minimum fractional value in each iteration.
-In the next section, we improve upon the strategy by minimizing the ratios between the values.
-Both of these strategies have a respective golden ratio for which the algorithm
-becomes periodic and they each have a corresponding linear recurrence, which
-can be seen as a generalization of the Fibonacci numbers.
-In the end, we will derive a general definition of higher-order Fibonacci
-sequences and show that the generalized Euclidean algorithm is periodic for
-their golden ratios.
+Furthermore, the Euclidean algorithm is used to construct continued fractions;
+when applied to Fibonacci numbers, it produces one of the simplest examples:
+the golden ratio.
+For higher-order Fibonacci numbers, we can similarly construct multidimensional
+continued fractions, which may be considered generalizations of the golden
+ratio.
+Some of these are well known -- such as the supergolden ratio and the plastic
+ratio -- both of which are roots of cubic polynomials.
+These examples bring us a step closer to addressing Hermite’s question, as they
+represent some of the simplest periodic multidimensional continued fractions.
+
+While the classical algorithm has a single, well-defined worst-case input, the
+generalized algorithm has multiple worst-case inputs depending on the pivot
+strategy.
+In this chapter, we consider two such strategies.
+We begin with the locally optimal strategy, which selects the minimum
+fractional value at each iteration.
+In the following section, we refine this approach by minimizing the ratios
+between the values.
+Each of these strategies corresponds to a specific “golden ratio” for which the
+algorithm becomes periodic.
+They also have associated linear recurrences that can be seen as
+generalizations of the Fibonacci sequence.
+Ultimately, we derive a general definition of higher-order Fibonacci sequences
+and demonstrate that the generalized Euclidean algorithm exhibits periodic
+behavior when applied to their respective golden ratios.
 
 % ==============================================================================
 \section{The Classical Case: The Fibonacci Sequence and the Golden Ratio}
@@ -37,22 +39,22 @@ their golden ratios.
 
 We revisit the classical case of Fibonacci numbers and the golden ratio
 to understand their relationship with the Euclidean algorithm.
-Fibonacci numbers are a recursive sequence.
-Starting with the initial conditions $F(0) = 1$ and $F(1) = 1$,
-the remaining terms are calculated using the formula
+Fibonacci numbers form a recursive sequence:
+starting with the initial conditions $F(0) = 1$ and $F(1) = 1$,
+each subsequent term is given by the formula
 \[
   F(n) = F(n-1) + F(n-2).
 \]
 The first terms of this sequence are $1, 1, 2, 3, 5, 8, 13, 21, …$
 
 Their relationship with the Euclidean algorithm becomes apparent when analyzing
-the runtime of the algorithm.
-In fact, the analysis was one of the first practical application of
+the algorithm's runtime.
+In fact, this analysis represents one of the earliest practical application of
 the Fibonacci numbers.
 Lamé \cite{Lame44} used the Fibonacci numbers to show that the number of
 iterations in the Euclidean algorithm is bounded by the number of digits in the
 input.
-The proof is considered by some as the beginning of computational
+The proof is regarded by some as the beginning of computational
 complexity theory.
 
 \begin{lemma}
