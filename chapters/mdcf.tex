@@ -56,7 +56,7 @@ The reason is that $x_ℓ' = 1/\{x_ℓ\}$ is always the largest element, since $
 So we can derive $ℓ$ from the vector $x'$ by finding the index of the largest element.
 Therefore, the inverse function $\mathrm{pivot}^{-1}$ only takes
 a vector $x' ∈ ℝ^d$ and a vector $a ∈ ℤ^d$ as input.
-It calculates the vector $x$ according to the equations above.
+It calculates the vector $x$ according to the previous equations.
 In summary, we have
 \[
   \mathrm{pivot}_ℓ(x) = x' \iff \mathrm{pivot}^{-1}(a, x') = x.
@@ -74,8 +74,8 @@ Again this is for subsequent theorems, where we will need rational or even real 
   \[
     [a^{(0)}] = a^{(0)},
     \qquad
-    [a^{(0)}, a^{(1)}, …, a^{(n)}]
-    = \mathrm{pivot}^{-1}\big(a^{(0)}, [a^{(1)}, a^{(2)}, …, a^{(n)}]\big).
+    [a^{(0)}; a^{(1)}, …, a^{(n)}]
+    = \mathrm{pivot}^{-1}\big(a^{(0)}, [a^{(1)}; a^{(2)}, …, a^{(n)}]\big).
   \]
 \end{definition}
 
