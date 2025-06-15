@@ -208,6 +208,7 @@ they converge to a limit as $n$ increases.
 \end{lemma}
 
 \begin{proof}
+  We proceed via induction on $n$.
   If $n = 0$, then
   \[
     [x]
@@ -216,13 +217,12 @@ they converge to a limit as $n$ increases.
     = \frac{0 + e₁ x₁ + ⋯ + e_d x_d}{1 + 0 x₁ + ⋯ + 0 x_d}
     = \frac{P₀^{(0)} + P₁^{(0)} x₁ + ⋯ + P_d^{(0)} x_d}{Q_0^{(0)} + Q_1^{(0)} x₁ + ⋯ + Q_d^{(0)} x_d}.
   \]
-  Suppose the lemma holds for $n ≥ 0$,
-  we show that it also holds for $n+1$.
+  Suppose the lemma holds for $n ≥ 0$, then we show that it also holds for $n + 1$.
   From the previous lemma, it follows that
   \begin{align*}
     [a^{(0)}; a^{(1)}; …, a^{(n)}, x] & = [a^{(0)}; a^{(1)}, …, a^{(n-1)}, \mathrm{pivot}^{-1}(a^{(n)}, x)].
   \end{align*}
-  Let $y = \mathrm{pivot}^{-1}(a^{(n)}, x)$ and $ℓ = \argmax_i x_i$.
+  Let $y = \mathrm{pivot}^{-1}(a^{(n)}, x)$ with $ℓ$ as the pivot index from $x$ to $y$.
   By the induction hypothesis,
   \begin{align*}
     [a^{(0)}; a^{(1)}; …, a^{(n)}, x]
@@ -663,7 +663,7 @@ which is also illustrated in Figure~\ref{fig:convergence}.
   as a convex combination
   \begin{align*}
     x_i = μ₀^{(n)} \frac{P_{i0}^{(n-1)}}{Q_0^{(n-1)}}  + μ₁^{(n)} \frac{P_{i1}^{(n-1)}}{Q_1^{(n-1)}} + μ_d^{(n)} \frac{P_{id}^{(n-1)}}{Q_d^{(n-1)}}
-  \intertext{with}
+  \intertext{where the coefficients $μ_i^{(n)}$ are defined as}
     μ_i^{(n)} = x_i^{(n)} \frac{Q_i^{(n-1)}}{Q_0^{(n-1)} + Q_d^{(n)} x_1^{(n)} + ⋯ + Q_d^{(n-1)} x_d^{(n)}}.
   \end{align*}
   From the previous lemma, we know that $r^{(n)}$ converges to some limit $x' ∈ ℝ^d$.
