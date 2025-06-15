@@ -115,7 +115,7 @@ infinity the convergents tend towards the golden ratio $φ$.
 \end{lemma}
 
 \begin{proof}
-  First, we show that the ratios are converging by mapping it to the continued fraction $[1; \overline{1}]$.
+  First, we show that the ratios converge by mapping it to the continued fraction $[1; \overline{1}]$.
   By Lemma~\ref{lem:cf-wallis}, we can calculate the convergents of the continued fraction as
   \[
     p_n = a_n p_{n-1} + p_{n-2}, q_n = a_n q_{n-1} + q_{n-2}.
@@ -356,11 +356,11 @@ We can use this generalization to bound the runtime again.
 The classical Fibonacci numbers approach the golden ratio, when looking at their ratios.
 Therefore, we look at the ratios of consecutive $d$-bonacci numbers.
 This limit can be considered a multi-dimensional generalization of the golden ratio.
-For now, we will assume that these ratios are converging.
+For now, we will assume that these ratios converge.
 A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at the end of the chapter.
 
 \begin{theorem}
-  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $φ_d$,
+  If the ratios $\frac{F(n+1)}{F(n)}$ converge, then they approach $φ_d$,
   where $φ_d$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - ⋯ - 1$.
 \end{theorem}
 % TODO: Add note about convergence towards some sort of golden ratio
@@ -478,10 +478,10 @@ to bound the decrease of the determinant over two iterations.
   \[
     x₁ = \frac{x₂}{x₁} - 1 = ⋯ = \frac{x_d}{x_{d-1}} - 1 = \frac{1}{x_d} - 1.
   \]
-  The first equation gives us $x₂ = x₁(x₁ + 1)$.
 
-  Next, we show via induction that $x_i = x₁ (x₁ + 1)^{i-1}$.
-  The case $i = 1$ is trivial and we shown the case $i = 2$ just now.
+  We show via induction that $x_i = x₁ (x₁ + 1)^{i-1}$.
+  The case $i = 1$ is trivial and
+  the first equation gives us $x₂ = x₁(x₁ + 1)$.
   Thus, we proceed with the induction step.
   Suppose that $x_{i+1} = x₁ (x₁ + 1)^{i-1}$.
   The other equations (except the last) result in
@@ -504,9 +504,10 @@ to bound the decrease of the determinant over two iterations.
 \end{proof}
 
 As before, the proof leads to an algebraic solution vector $x = (x₁, …, x_d)$ defined by $x_i = ψ_d (ψ_d + 1)^{i-1}$
-and we consider, what happens with this vector under the specified strategy.
+and we can consider, what happens with this vector under the specified strategy.
 Although the previous golden ratio $φ_d$ was periodic under the minimum strategy,
 the vector $x$ is not periodic under this strategy.
+% TODO: Explain why it's not periodic
 Nevertheless, we can use a different strategy under which the input becomes periodic.
 
 \begin{theorem}
@@ -556,10 +557,10 @@ Using this equation, we define the new Fibonacci numbers as
 \[
   F(n + d + 1) = F(n + d) + F(n + 1).
 \]
-We can then show that their ratios are converging towards the root $θ_d$.
+We can then show that the ratios of these Fibonacci numbers converge towards the root $θ_d$.
 
 \begin{theorem}
-  If the ratios $\frac{F(n+1)}{F(n)}$ are converging, then they approach $θ_d$.
+  If the ratios $\frac{F(n+1)}{F(n)}$ converge, then they approach $θ_d$.
 \end{theorem}
 
 \begin{proof}
@@ -587,7 +588,7 @@ We can then show that their ratios are converging towards the root $θ_d$.
 \end{proof}
 
 \begin{corollary}
-  If the ratios $\frac{F(n+1)}{F(n)} - 1$ are converging, then they approach $ψ_d$.
+  If the ratios $\frac{F(n+1)}{F(n)} - 1$ converge, then they approach $ψ_d$.
 \end{corollary}
 
 We can now construct a vector $x$ using these Fibonacci numbers.
@@ -646,7 +647,7 @@ which is periodic under this strategy.
 
 We have seen that the ratios of consecutive Fibonacci numbers for both
 definition converges towards their own respective golden ratios.
-However, this was under the assumption that the ratios are converging.
+However, this was under the assumption that the ratios converge.
 In this section, we will show in this section that this is actually the case.
 To show this for both sequences at once, we use a general linear recurrence $F(n)$
 with the initial terms $F(0) = ⋯ = F(d) = 1$ and with the remaining terms
@@ -664,7 +665,7 @@ The goal is to show that the ratios
   := \frac{F(n+1)}{F(n)}
   = \frac{c_0 F(n - d)}{F(n)} + \frac{c₁ F(n - d + 1)}{F(n)} + ⋯ + \frac{c_{d-1} F(n-1)}{F(n)} + c_d
 \]
-are converging.
+converge.
 
 The first step is to rewrite the terms of the recurrence such that each ratio
 between non-consecutive Fibonacci numbers can be rewritten as a product of
@@ -729,7 +730,7 @@ Even the ratios of the original Fibonacci sequence alternate between increasing
 and decreasing.
 So we cannot possibly prove that the higher-order sequences are monotone.
 Instead, we bound the sequence between two other sequences $s_n$ and $t_n$
-and show that the two sequences are converging to the same limit.
+and show that the two sequences converge to the same limit.
 From the squeeze theorem, it follows that $r_n$ converges to the same limit.
 The main idea is illustrated in Figure~\ref{fig:fibonacci-convergence}.
 The sequences are
@@ -740,7 +741,7 @@ Because $r_n$ clearly lies between the two sequences, it must converge to the sa
 For these sequences, we already know from the previous lemma that they are bounded,
 so it only remains to be shown that they are monotone,
 i.e. $s_n$ is increasing and $t_n$ is decreasing.
-After which we can show that they are converging to the same limit.
+After which we can show that they converge to the same limit.
 
 \begin{lemma}
   The sequences $s_n$ and $t_n$ are monotone.
@@ -769,7 +770,7 @@ After which we can show that they are converging to the same limit.
 \end{proof}
 
 \begin{lemma}
-  The sequences $s_n$ and $t_n$ are converging to the same limit.
+  The sequences $s_n$ and $t_n$ converge to the same limit.
 \end{lemma}
 
 % TODO: Finish this proof
