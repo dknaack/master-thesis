@@ -311,6 +311,7 @@ Given these two conditions, we can show that the $d$-bonacci numbers
 yield the worst-case behavior for the minimum strategy.
 
 \begin{theorem}
+  \label{thm:dbonacci}
   Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$.
   Suppose the algorithm requires at least $n ≥ 0$ steps for the vector $x$ when
   selecting the minimum fractional value at each step.
@@ -427,16 +428,16 @@ A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at t
 
 \begin{theorem}
   The generalized Euclidean algorithm requires $O(\log p_d)$ iterations,
-  when selecting the minimum fractional value.
+  when selecting the minimum fractional value in each step.
 \end{theorem}
 
 \begin{proof}
-  Suppose the algorithm requires $n$ iterations.
-  By Lemma~\ref{thm:lame}, we have $p_d ≥ F(n+1)$
+  Suppose the algorithm requires $n$ iterations for an input $x = (p₁/q, …, p_d/q)$.
+  By Lemma~\ref{thm:dbonacci}, we have $p_d ≥ F(n+1)$
   and by Corollary~\ref{cor:dfib-conv}, we must have $F(n+1) ≥ φ_d^{n-1}$ at some point.
   Then, $\log p_d ≥ (n - 1) \log φ_d$.
-  As $d$ increases, $ψ_d$ approaches $2$.
-  Therefore, $ψ_d = O(1)$ and the algorithm requires $n ≤ O(\log p_d)$ iterations.
+  As $d$ increases, $ψ_d$ approaches $2$, so $ψ_d = Θ(1)$.
+  Hence, the algorithm requires $n = O(\log p_d)$ iterations.
 \end{proof}
 
 Apart from the runtime, we can additionally find an algebraic solution vector,
@@ -459,17 +460,25 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 \end{theorem}
 
 \begin{proof}
-  %The integer part of each $x_i$ is still $1$.
-  The first value $x₁$ is the smallest again, so $ℓ = 1$.
-  In the following iteration, we have
+  The fractional part of each $x_i$ is given by
   \[
-    x_i' = \frac{\{x_i\}}{\{x_1\}} = \frac{φ_d + φ_d^2 + ⋯ + φ_d^i}{φ_d} = 1 + φ_d + ⋯ + φ_d^{i-1} = x_{i-1}.
+    \{x_i\} = x_i - \lfloor x_i \rfloor = \sum_{k = 1}^i φ_d^k.
   \]
-  and
+  Since all $x_i$ have the same integer part $1$, the smallest fractional value
+  is $\{x_1\} = φ_d$, so we pivot with $ℓ = 1$.
+
+  Applying the pivot rule, the next vector $x'$ has entries:
+  \begin{align*}
+    x_1' &= \frac{1}{\{x_1\}} = \frac{1}{φ_d} = \sum_{k = 0}^d φ_d^k = x_d, \\
+    x_i' &= \frac{\{x_i\}}{\{x_1\}} = \frac{\sum_{k = 1}^i φ_d^k}{φ_d}
+          = \sum_{k = 0}^{i - 1} φ_d^k = x_{i - 1} \quad \text{for } i > 1.
+  \end{align*}
+  So the vector is cyclically shifted:
   \[
-    x_1' = \frac{1}{\{x_1\}} = \frac{1}{φ_d} = 1 + φ_d + ⋯ + φ_d^d = x_d.
+    x' = (x_d, x_1, x_2, \dots, x_{d-1}).
   \]
-  Therefore, we reach the original input vector after $d$ iterations.
+  After $d$ iterations, the vector returns to its original state.
+  Hence, the algorithm is periodic with period $d$.
 \end{proof}
 
 % ==============================================================================
