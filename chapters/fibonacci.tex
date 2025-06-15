@@ -47,7 +47,7 @@ The first terms of this sequence are $1, 1, 2, 3, 5, 8, 13, 21, …$
 
 Their relationship with the Euclidean algorithm becomes apparent when analyzing
 the runtime of the algorithm.
-In fact, the analysis was actually one of the first practical application of
+In fact, the analysis was one of the first practical application of
 the Fibonacci numbers.
 Lamé \cite{Lame44} used the Fibonacci numbers to show that the number of
 iterations in the Euclidean algorithm is bounded by the number of digits in the
@@ -183,7 +183,7 @@ So the first strategy one may think of is to choose the index $ℓ$ with the
 smallest fractional value.
 After all, this gives us the largest decrease in the determinant over one iteration.
 Locally, this would be the highest decrease we can achieve.
-So we begin with this strategy and see how the Fibonacci numbers are defined.
+So we begin with this strategy.
 
 % TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
 % TODO: Should we have a table for the Fibonacci numbers?
@@ -213,7 +213,7 @@ and they were first explicitly studied by Miles~\cite{Miles60}.
 Apart from the generalized Euclidean algorithm,
 they have also been successfully applied in probability theory~\cite{Philippou82,Raab63,Schlegel94}.
 
-For these numbers, we use the solution vector $x = (x₁, …, x_d)$ with
+For these numbers, we initialize the solution vector $x = (x₁, …, x_d)$ with
 \[
   x_i = \frac{\sum_{k=0}^i F(n - i)}{F(n)}.
 \]
@@ -259,7 +259,7 @@ element $p_ℓ$.
   % remainder
   Let $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$
   and $x' = \left(\frac{p₁'}{q'}, \frac{p₂'}{q'}, …, \frac{p_d'}{q'}\right)$
-  with $x' = \mathrm{pivot}_ℓ(x)$ for some index $ℓ$.
+  with $x' = \mathrm{pivot}_ℓ(x)$.
   % TODO: Do we need gcd = 1?
   %Suppose $\gcd(q, p₁, …, p_d) = 1$ and $\gcd(q', p₁', …, p_d') = 1$, then
   Then,
@@ -302,9 +302,9 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
 
 \begin{theorem}
   Let $x = (p₁/q, …, p_d/q) ∈ ℚ^d$.
-  If the algorithm requires at least $n ≥ 0$ steps for the vector $x$ when
-  taking the minimum fractional value at each step, then there exists a permutation $σ$ such
-  that
+  Suppose the algorithm requires at least $n ≥ 0$ steps for the vector $x$ when
+  taking the minimum fractional value at each step.
+  Then, there exists a permutation~$σ$ such that
   \[
     q ≥ F(n+d),
     \qquad
@@ -331,7 +331,7 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
 
   % TODO: Fix indices
   Suppose the algorithm requires $n+1$ steps for some input $x = (p₁/q, …, p_d/q)$.
-  Hence, $x' = \mathrm{pivot}_ℓ(x)$ requires $n$ steps and by induction,
+  Hence, the vector $x' = \mathrm{pivot}_ℓ(x)$ requires $n$ steps and by induction,
   there exists a permutation $σ$ such that $q' ≥ F(n)$ and
   \begin{align*}
     p_{σ(i)}' & ≥ \sum_{k=0}^i F(n - k) = F(n + 1).
