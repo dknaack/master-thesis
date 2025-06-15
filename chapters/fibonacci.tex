@@ -539,7 +539,8 @@ Nevertheless, we can use a different strategy under which the input becomes peri
   \]
   Note that the fractional values have not changed in $x'$
   except that now $x_{d-1}$ has the largest fraction value.
-  Thus, $x$ is periodic if we repeat this step $d$ times.
+  Thus, $x$ is periodic under the maximum strategy
+  if we repeat this step $d$ times.
 \end{proof}
 
 To find the Fibonacci numbers, we have to go backwards.
@@ -571,7 +572,7 @@ We can then show that the ratios of these Fibonacci numbers converge towards the
     = \lim_{n → ∞} \frac{F(n+1)}{F(n)}
     = \lim_{n → ∞} \left(1 + \frac{F(n-d)}{F(n)}\right).
   \]
-  The ratio $F(n-d)/F(n)$ in the sum can be rewritten as a product of ratios with
+  The ratio $F(n-d)/F(n)$ can be rewritten as a product of ratios with
   consecutive Fibonacci numbers, since
   \[
     \frac{F(n - d)}{F(n)}
@@ -637,7 +638,7 @@ it could be another element.
 Therefore, we cannot use them as a bound for the worst-case
 in the same way as we did before.
 Nevertheless, their ratios still lead to the root $θ_d$,
-which is periodic under this strategy.
+which is periodic when taking the maximum fractional value.
 
 % ==============================================================================
 \section{Convergence of General Linear Recurrences}
