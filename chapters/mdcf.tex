@@ -593,8 +593,8 @@ which is also illustrated in Figure~\ref{fig:convergence}.
   Let $s_i = \lim_{n → ∞} s_i^{(n)}$
   and $t_i = \lim_{n → ∞} t_i^{(n)}$ for every $i ≤ d$.
   Suppose $s_i < t_i$.
-  For the minimum~$s_i$, there must exist an $ε > 0$ and an index $N ≥ 0$ such
-  that for every $n ≥ N$,
+  For the minimum~$s_i$, there must exist an $ε > 0$ and an index $N' ≥ 0$ such
+  that for every $n ≥ N'$,
   \[
     \frac{P_{ij}^{(n)}}{Q_j^{(n)}} ≥ s_i^{(n)} > s_i - ε.
   \]
@@ -618,7 +618,7 @@ which is also illustrated in Figure~\ref{fig:convergence}.
   \begin{align*}
     r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
-  This inequality holds for all $n ≥ N$.
+  This inequality holds for all $n ≥ N'$.
   Therefore, we can advance $n$ to $n + k$
   for any $k ≥ 0$ such that
   \begin{align*}
@@ -943,7 +943,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 
 \begin{lemma}
   \label{lem:mcf-purely-periodic}
-  If there exists a purely periodic MCF for $x ∈ ℝ^d$,
+  If $x = [\overline{a^{(0)}; a^{(1)}, …, a^{(n)}}]$,
   then $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{lemma}
 
@@ -956,7 +956,7 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
     \hat x \sim B^{(n)} \hat x^{(n)} \sim B^{(n)} \hat x \iff λ \hat x = B^{(n)} \hat x,
   \]
   for some nonzero $λ ∈ ℝ$.
-  Therefore, we are looking for an eigenvector $\hat x$ and an eigenvalue $λ$ of $B^{(n)}$.
+  Therefore, $\hat x$ is an eigenvector of $B^{(n)}$ with eigenvalue~$λ$.
   The characteristic polynomial $\det(B^{(n)} - λ I)$ can have a degree of at most $d+1$,
   therefore the eigenvalue $λ$ is an algebraic number of degree $d+1$.
   For the eigenvector $\hat x$, we have to find a nontrivial solution to the
@@ -977,17 +977,16 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
 
 \begin{theorem}
   \label{thm:mdcf-periodic}
-  If there exists a periodic MCF for $x ∈ ℝ^d$,
+  If $x = [a^{(0)}; a^{(1)}, …, a^{(k-1)}, \overline{a^{(k)}, …, a^{(k+n)}}]$,
   then $[ℚ(x₁, …, x_d) : ℚ] ≤ d + 1$.
 \end{theorem}
 
 \begin{proof}
-  Given such a MCF for $x$, let $x^{(k)}$ denote the $k$-th complete quotient
-  of this fraction.
-  Suppose that the MCF is periodic after $K ≥ 0$ with period $ℓ ≥ 0$, i.e.
-  $x^{(k)} = x^{(k+ℓ)}$ for every $k ≥ K$.
-  By Lemma~\ref{lem:mcf-wallis'}, $\hat x \sim B^{(k)} \hat x^{(k)}$,
-  which means that very element in the projection $x$ can be represented
+  Let $x^{(k)}$ denote the $k$-th complete quotient of $x$.
+  Since the MCF for $x^{(k)}$ is purely periodic,
+  we must have $[ℚ(x_1^{(k)}, …, x_d^{(k)}) : ℚ] ≤ d+1$.
+  By Lemma~\ref{lem:mcf-wallis'}, we have $\hat x \sim B^{(k)} \hat x^{(k)}$,
+  which means that every element in the projection $x$ can be represented
   as a rational expression of $x^{(k)}$:
   \[
     x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}}.
@@ -995,12 +994,10 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   % TODO: I think we should be more precise here since the elements could be
   % inside different fields. They are not, but this sentence does not indicate
   % that.
-  From Lemma~\ref{lem:mcf-purely-periodic},
-  it follows that the elements of $\hat x^{(k)}$
+  The elements of $\hat x^{(k)}$
   are contained in a field $ℚ(λ)$ with degree $[ℚ(λ) : ℚ] ≤ d+1$.
-  Since $B^{(k)}$ consists solely of integers, every element in $x$ is contained in the same field $ℚ(λ)$.
-  Therefore, they must also be algebraic numbers
-  and we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
+  Since the matrix $B^{(k)}$ consists solely of integers, every element in $x$ lies in the same field $ℚ(λ)$.
+  Therefore, we have $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{proof}
 
 This section has shown that a purely periodic multidimensional continued fraction must represent a vector of algebraic numbers.
