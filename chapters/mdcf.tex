@@ -486,8 +486,8 @@ coefficients $λ₀^{(n)}, λ₁^{(n)}, …, λ_d^{(n)}$ from Lemma~\ref{lem:con
 The lemma states that one of the coefficients is always greater than a constant
 independent of $n$ and that this coefficient corresponds to the current pivot index.
 From the recurrence for the convergents,
-it follows that we always carry over the primary convergent $r^{(n-1)}$ as one
-of the secondary convergent $P_0^{(n)}/Q_0^{(n)}$ in the next iteration.
+it follows that we always carry over the primary convergent $r^{(n-1)}$
+as the secondary convergent $P_0^{(n)}/Q_0^{(n)}$ in the next iteration.
 Thus, the position of $r^{(n-1)}$ remains fixed,
 but we can change the position of the other convergents.
 However,
@@ -515,26 +515,25 @@ such that the convex hull always shrinks by a constant amount.
   But for the other values the issue is that $Q_i^{(n-1)}$ might be larger than $Q_ℓ^{(n-1)}$,
   if $i$ is the pivot index, for example.
 
-  We solve this issue using the initial requirements.
-  Specifically, the third requirement,
+  We solve this issue using the initial conditions.
+  Specifically, we use the third condition,
   which states that after at most $L$ iterations,
   we must have used $ℓ$ as the pivot index again.
   Therefore, there must have been some index $m ∈ \{n - L, …, n\}$
-  such that $ℓ = \argmax_i x_i^{(m)}$ and $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
-  If $x^{(m)} = \mathrm{pivot}_ℓ(x^{(m-1)})$,
-  then we must have $x_ℓ^{(m+1)} = 1/\{x_ℓ^{(m)}\} > 1$
-  and therefore the integer part $a_ℓ^{(m+1)}$ must be at least $1$.
-  Furthermore, if $k$ is the pivot index in the next iteration $m+1$,
-  then
+  such that $ℓ$ is the pivot index of $x^{(m)}$ and $Q_ℓ^{(n-1)} = Q_ℓ^{(m)}$.
+  If $x^{(m+1)} = \mathrm{pivot}_ℓ(x^{(m)})$, then $x_ℓ^{(m+1)} = 1/\{x_ℓ^{(m)}\} > 1$.
+  Therefore, the integer part $a_ℓ^{(m+1)}$ must be at least $1$.
+  Suppose $k$ is the pivot index in the next iteration $m+1$.
+  By the first condition,
   \[
     Q_k^{(m+1)}
     = Q_0^{(m)} + Q_1^{(m)} a_1^{(m+1)} + ⋯ + Q_d^{(m)} a_d^{(m+1)}
     ≥ a_ℓ^{(m+1)} Q_ℓ^{(m)}
     ≥ \frac{1}{A} Q_ℓ^{(m)}.
   \]
-  We can repeat this step for every pivot index from $m$ to $n$
-  tracing the bound back from $Q_ℓ^{(m)}$ to $Q_i^{(n-1)}$.
-  This path consists of at most $L$ steps.
+  We can repeat this step for every pivot index from $m$ to $n-1$,
+  whereby we trace the bound back from $Q_ℓ^{(m)}$ to $Q_i^{(n-1)}$.
+  By the third condition, this path consists of at most $L$ steps.
   Thus, we can bound $Q_i^{(n-1)}$ from below by $Q_ℓ^{(n-1)}$ according to
   \[
     Q_i^{(n-1)} ≥ \frac{1}{A^L} Q_ℓ^{(m)} = \frac{1}{A^L} Q_ℓ^{(n-1)},
