@@ -540,12 +540,12 @@ such that the convex hull always shrinks by a constant amount.
   \]
   which we can finally use to bound the ratio $Q_i^{(n-1)}/Q_ℓ^{(n-1)}$
   from Equation~\ref{eq:lambda-ratio}.
-  The equation leads to the bound $λᵢ^{(n)} ≤ A^{L-1} λ_ℓ^{(n)}$,
+  The equation leads to the bound $λᵢ^{(n)} ≤ A^L λ_ℓ^{(n)}$,
   from which it follows that
   \[
-    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_ℓ^{(n)} (1 + dA^{L-1}).
+    1 = λ₀^{(n)} + λ₁^{(n)} + ⋯ + λ_d^{(n)} ≤ λ_ℓ^{(n)} (1 + dA^L).
   \]
-  Hence, setting $C = 1 + dA^{L-1} > 0$, we conclude that $λ_ℓ^{(n)} > 1/C$.
+  Hence, setting $C = 1 + dA^L > 0$, we conclude that $λ_ℓ^{(n)} > 1/C$.
 \end{proof}
 
 \begin{figure}[tbp]
@@ -616,12 +616,11 @@ which is also illustrated in Figure~\ref{fig:convergence}.
   which bounds $λ_ℓ^{(n)}$ from below.
   It follows that
   \begin{align*}
-    r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε
+    r_i^{(n)} - s_i > \frac{1}{C} \left( r_i^{(n-1)} - s_i \right) - ε.
   \end{align*}
-  for some constant $C > 0$.
   This inequality holds for all $n ≥ N$.
-  Therefore, we can advance $n$ to some point $n + k$
-  such that
+  Therefore, we can advance $n$ to $n + k$
+  for any $k ≥ 0$ such that
   \begin{align*}
     r_i^{(n+k)} - s_i
     & > \frac{1}{C} \left( r_i^{(n+k-1)} - s_i \right) - ε \\
