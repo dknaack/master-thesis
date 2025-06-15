@@ -1,8 +1,6 @@
 \chapter{Multidimensional Continued Fractions}
 \label{ch:mdcf}
 
-% TODO: This needs to be rewritten since we have already introduced a
-% representation in the previous chapter on the generalized Euclidean algorithm
 This chapter further investigates the properties of the multidimensional
 continued fractions constructed in Section~\ref{sec:mcf-construction}.
 We begin with a proper definition of multidimensional continued fractions
@@ -145,7 +143,6 @@ The second gives us a formula for calculating the convergents.
   \end{align*}
 \end{proof}
 
-% TODO: Explain how to derive the sequences
 The second lemma is a linear recurrence for calculating the convergents.
 For continued fractions,
 we defined the convergents of a continued fraction~$pₙ/qₙ$
@@ -200,7 +197,6 @@ As the vectors $P_0^{(n)}, P_1^{(n)}, …, P_d^{(n)}$ would grow infinitely, we
 divide them by the scalars $Q_0^{(n)}, Q_1^{(n)}, …, Q_d^{(n)}$ to ensure that
 they converge to a limit as $n$ increases.
 
-% TODO: Ensure that this is correct for the first index!
 \begin{lemma}
   \label{lem:mcf-wallis}
   Let $a^{(0)}, a^{(1)}, …, a^{(n-1)}, x ∈ ℝ^d$, then
@@ -259,10 +255,6 @@ they converge to a limit as $n$ increases.
 \section{Infinite Multidimensional Continued Fractions and their Convergence}
 \label{sec:mcf-convergence}
 % ==============================================================================
-
-% TODO: I don't like how we say that the requirement is from Perron, when it's
-% not really from him, but just based on his version.
-% TODO: The indices here are wrong...
 
 \begin{definition}
   Let $(a^{(n)})_{n ≥ 0}$ be a sequence of $d$-dimensional real vectors
@@ -503,7 +495,6 @@ such that the convex hull always shrinks by a constant amount.
   Then $λ_ℓ^{(n)} > 1/C$ for some integer $C > 0$.
 \end{lemma}
 
-% TODO: Show that it is not equal to 1!
 \begin{proof}
   The ratio between the coefficients $λ_i^{(n)}$ and $λ_ℓ^{(n)}$ is
   \begin{equation}
@@ -697,9 +688,6 @@ then this theorem guarantees the convergence.
 \label{sec:mdcf-geometry}
 % ==============================================================================
 
-% TODO: I'm not sold on the square brackets. With the list notation for the
-% continued fraction, they're kind of ambiguous. Maybe we should just switch to
-% regular parentheses instead.
 In the geometrical interpretation of continued fractions,
 each convergent $pₙ/qₙ$ is represented as a two-dimensional vector $(pₙ, qₙ)$.
 These vectors approach an irrational line spanned by the vector $(1, α)$
@@ -868,7 +856,6 @@ In fact, we can prove an equivalent statement from this lemma using the new sequ
   \]
 \end{lemma}
 
-% TODO
 \begin{proof}
   By construction of $B^{(n-1)}$, we have
   \begin{align*}
@@ -950,7 +937,6 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   then $[ℚ(x₁, …, x_d) : ℚ] ≤ d+1$.
 \end{lemma}
 
-% TODO: Should we use x ≡ y or [x] = [y]?
 \begin{proof}
   If the MCF is purely periodic, then there is some index $n ≥ 1$ such that $x = x^{(n)}$.
   Let $\hat x = [1, x₁, …, x_d]$ and $\hat x^{(n)} = [1, x_1^{(n)}, …, x_d^{(n)}]$.
@@ -994,9 +980,6 @@ Furthermore, the elements of this eigenvector can only be algebraic numbers with
   \[
     x_i = \frac{∑_{j=1}^d B_{ij}^{(k)} x_j^{(k)} + B_{i0}^{(k)}}{\sum_{j=1}^d B_{0j}^{(k)} x_j^{(k)} + B_{00}^{(k)}}.
   \]
-  % TODO: I think we should be more precise here since the elements could be
-  % inside different fields. They are not, but this sentence does not indicate
-  % that.
   The elements of $\hat x^{(k)}$
   are contained in a field $ℚ(λ)$ with degree $[ℚ(λ) : ℚ] ≤ d+1$.
   Since the matrix $B^{(k)}$ consists solely of integers, every element in $x$ lies in the same field $ℚ(λ)$.

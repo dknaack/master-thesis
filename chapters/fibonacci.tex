@@ -162,11 +162,7 @@ which can then be used to bound the number of iterations.
 \section{A Higher-Order Fibonacci Sequence for the Minimum Strategy}
 % ==============================================================================
 
-% TODO: There should be a discussion on what it even means to have a Fibonacci number in higher dimensions
 % TODO: We should also discuss the thing about idempotence under the choice of the pivot.
-% TODO: Should we have a discussion about why we choose this particular linear system.
-% TODO: The discussion about the linear system should go in the generalized Euclidean algorithm chapter
-% TODO: We should explain that very large values give the least decrease, but also give the most decrease in the following iteration
 
 For the generalisation of Fibonacci numbers,
 we must find a sequence which similarly has a quotient of $1$ at each iteration.
@@ -185,10 +181,7 @@ After all, this gives us the largest decrease in the determinant over one iterat
 Locally, this would be the highest decrease we can achieve.
 So we begin with this strategy.
 
-% TODO: Actually explain how we derive the Fibonacci numbers for this strategy.
-% TODO: Should we have a table for the Fibonacci numbers?
-% TODO: What about adding references to their OEIS number?
-
+% TODO: We should move this table
 % TODO: Maybe it's better to show the numbers in the ratios, since we explain
 % that they approach some golden ratio anyways
 \begin{table}[tbp]
@@ -244,9 +237,6 @@ If we repeat this a total of $d$ times, then we end up where we started, but
 each term is shifted backwards by $d$ steps.
 To reach the end, we need a total $n$ steps.
 
-% TODO: There should be a note, that we're taking the actual minimum, so we
-% stop once we see any zero. Because at that point, we're cycling.
-
 For the worst-case analysis, we first need the following lemma, which shows
 that the $\mathrm{pivot}$ operation from Equation~\ref{eq:modified-update-rule}
 can be viewed as a multi-dimensional division with remainder operation, where
@@ -255,8 +245,6 @@ element $p_ℓ$.
 
 \begin{lemma}
   \label{lem:divmod}
-  % TODO: This should basically prove that pivot is just division with
-  % remainder
   Let $x = \left(\frac{p₁}{q}, \frac{p₂}{q}, …, \frac{p_d}{q}\right)$
   and $x' = \left(\frac{p₁'}{q'}, \frac{p₂'}{q'}, …, \frac{p_d'}{q'}\right)$
   with $x' = \mathrm{pivot}_ℓ(x)$.
@@ -274,7 +262,6 @@ element $p_ℓ$.
 \end{lemma}
 
 \begin{proof}
-  % TODO: Reference the rule
   By definition of $\mathrm{pivot}$, we have
   \[
     x_ℓ' = \frac{p_ℓ'}{q'} = \frac{1}{\frac{p_ℓ}{q} - a_ℓ} = \frac{q}{p_ℓ - a_ℓ q}.
@@ -329,7 +316,6 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   we can find a permutation $σ$ such that
   the bounds for this theorem are satisfied.
 
-  % TODO: Fix indices
   Suppose the algorithm requires $n+1$ steps for some input $x = (p₁/q, …, p_d/q)$.
   Hence, the vector $x' = \mathrm{pivot}_ℓ(x)$ requires $n$ steps and by induction,
   there exists a permutation $σ$ such that $q' ≥ F(n)$ and
@@ -349,7 +335,6 @@ With these requirements, we can show that the $d$-bonacci numbers are the worst-
   using $σ'(1) = σ(d)$ and $σ'(i) = σ(i+1)$ for the other indices.
 \end{proof}
 
-% TODO: Explain how this can be used to bound the time
 For these Fibonacci numbers,
 we can ask whether they also lead to a generalization of the golden ratio.
 We can use this generalization to bound the runtime again.
@@ -363,7 +348,6 @@ A general proof of convergence will be shown in Section~\ref{sec:fib-conv}, at t
   If the ratios $\frac{F(n+1)}{F(n)}$ converge, then they approach $φ_d$,
   where $φ_d$ is the positive real root of the polynomial $p(x) = x^{d+1} - x^d - ⋯ - 1$.
 \end{theorem}
-% TODO: Add note about convergence towards some sort of golden ratio
 
 \begin{proof}
   By assumption, the ratios are approach some limit $r$.
@@ -440,8 +424,6 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
   \]
   Therefore, we reach the original input vector after $d$ iterations.
 \end{proof}
-
-% TODO: What property do the ratios have? Are they similar to the golden ratio?
 
 % ==============================================================================
 \section{Improving the Minimum Strategy over Two Iterations}
@@ -774,7 +756,6 @@ After which we can show that they converge to the same limit.
   The sequences $s_n$ and $t_n$ converge to the same limit.
 \end{lemma}
 
-% TODO: Finish this proof
 \begin{proof}
   For a contradiction, suppose there exists some $δ > 0$ such that $t_n - s_n > δ$ for every $n ≥ 0$.
   Out of the previous ratios, there must be one ratio $r_k$ exactly equal to $t_n$.
@@ -798,7 +779,6 @@ After which we can show that they converge to the same limit.
   Therefore, $δ = 0$ and it follows that $s_n$ and $t_n$ are approaching the same limit.
 \end{proof}
 
-% TODO: Show that this converges! We're still missing the convergence criteria
 \begin{theorem}
   Let $F$ be a linear recurrence with coefficients $c_0, \dots, c_d ≥ 0$
   and let $φ$ be the real positive root of its characteristic polynomial.

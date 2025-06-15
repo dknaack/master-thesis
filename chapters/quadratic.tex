@@ -172,7 +172,6 @@ as shown by the following lemma.
 \label{sec:cf-construction}
 % ==============================================================================
 
-% TODO: Should we jump out of the gate with this problem?
 The definition only tells us how to calculate the value of a continued fraction,
 not how to construct one.
 However, the first part of Hermite's question requires an explicit representation of every real number.
@@ -260,7 +259,6 @@ However, if the number is irrational, then the application is not so straightfor
 The issue is that it is not clear how we can split up an irrational number into
 two inputs $(a, b)$ for the Euclidean algorithm.
 
-% TODO: We could maybe rewrite this as peeling of the first coefficient using the Gauss transform
 Instead, we take a different approach.
 We use the real division with remainder operation from
 Example~\vref{ex:real-divmod}, but between iterations we rescale the input.
@@ -336,7 +334,6 @@ since $xₙ = [a_n; a_{n+1}, …]$.
   Therefore, the continued fraction for $\sqrt{2}$ is $[1; 2, 2, …]$.
 \end{example}
 
-% TODO: Explain that we need to show that it converges
 The remaining step is to show that the constructed continued fraction of a
 number $x ∈ ℝ$ actually produces the correct representation.
 By definition, $x = [a₀; a₁, …]$ if and only if
@@ -366,7 +363,6 @@ For the proof, we use the fact that the algorithm always guarantees $xₙ - aₙ
   \]
 \end{lemma}
 
-% TODO: Have we proven that (p_{n-1} q_n - p_n q_{n-1}) = (-1)^n yet?
 \begin{proof}
   Let $x_n = [a_n; a_{n+1}, …]$.
   By Lemma~\ref{lem:cf-nesting}, $x = [a₀; a₁, …, a_{n-1}, x_n]$ and $a_n = \floor{x_n}$.
@@ -675,7 +671,6 @@ This is shown in the following theorem.
 \label{sec:cf-quadratic}
 % ==============================================================================
 
-% TODO: Write introduction for this section
 This section is about the second part of Hermite's question for quadratic
 irrationals, i.e. whether the continued fraction of a number is periodic if and only
 if the number is a quadratic irrational.

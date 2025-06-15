@@ -22,7 +22,6 @@ common divisor.
 \label{sec:lattice-basis-computation}
 % ==============================================================================
 
-% TODO: Rewrite this section
 In a vector space of dimension $d$, consider any set of vectors $A = \{A₁, …, Aₙ\}$ with $n > d$.
 We can easily reduce this to a basis $B$ by taking $d$ linearly independent vectors from the original set $A$.
 In a lattice, this is not as simple.
@@ -41,8 +40,6 @@ The reason is that the missing vector cannot be reached by an
 integral combination of the other two vectors $A_i, A_j$.
 Instead, we have to find new basis vectors for this lattice.
 
-% TODO: Note about the fact that we only care about one additional vector
-% TODO: Shouldn't it be the rank instead of n > d?
 The problem of finding a basis for a lattice is known as \emph{lattice basis computation}.
 The input for this problem is a matrix $A ∈ ℤ^{d×n}$ with $n > d$ and the goal
 is to find a basis which generates the same lattice,
@@ -289,7 +286,6 @@ In this thesis, we will use the function
 \[
   r ↦ (r, r^2, …, r^d).
 \]
-% TODO: The reason is that this vector represents the power basis, (at least partially. The first value is missing.)
 We choose this function,
 since it is very similar to the power basis $\{1, r, …, r^d\}$
 presented in Section~\ref{sec:algebraic}.
@@ -299,13 +295,8 @@ with $\deg(q_i) = i$ and use the solution vector $x = (q_1(r), …, q_d(r))$.
 For the purposes of this thesis,
 I will use the vector $(r, r^2, …, r^d)$ unless noted otherwise.
 
-% TODO: Rewrite this whole section
 % TODO: For the next chapter, we should remark that the entire execution only
 % depends on the solution vector, not the original input matrix
-
-% TODO: There should be some explanation on the fact that the solution vector
-% kind of represents the ratio between the inputs just like in the Euclidean
-% algorithm.
 
 This covers a mapping from a real number to an input for the generalized Euclidean algorithm.
 What is missing is the sequence of integers.
