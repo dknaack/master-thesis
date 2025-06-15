@@ -485,21 +485,27 @@ For the algebraic solution, this means that it stays the same after $d$ steps.
 \section{Improving the Minimum Strategy over Two Iterations}
 % ==============================================================================
 
-We can achieve a much better decrease if we minimize over two iterations instead of just one.
-We assume that the values are ordered in increasing order by their fractional
-value, i.e. $\{x₁\} ≤ \{x₂\} ≤ ⋯ ≤ \{x_d\}$.
-In the first iteration, we choose the index $ℓ ∈ \{1, …, d\}$,
-which minimizes the fractional value $\{\{x_ℓ\}/\{x_{ℓ-1}\}\}$
-Then, we choose $ℓ + 1$ in the second iteration.
-We additionally define $x₀ = 1$ and $x_{d+1} = 1$ such that we can choose $ℓ = 1$ in the first iteration and $ℓ = d$ in the second.
-The reasoning behind this strategy is that it minimizes the distance between the two closest values,
-if we measure the distance by their ratios.
+We can achieve a significantly faster decrease if we minimize over two
+iterations instead of just one.
+To this end, we assume that the values are ordered in increasing order by their
+fractional value, i.e. $\{x₁\} ≤ \{x₂\} ≤ ⋯ ≤ \{x_d\}$.
+In the first iteration, we select
+\[
+  ℓ = \argmin_{i ∈ \{1,…,d\}} \left\{ \frac{\{x_{i+1}\}}{\{x_i\}} \right\},
+\]
+where we define the boundary cases $x_0 = 1$ and $x_{d+1} = 1$,
+so that $ℓ = 1$ and $ℓ = d$ remain valid choices.
+In the second iteration, we pivot with $ℓ + 1$ if $ℓ < d$
+and otherwise, we only pivot once.
 
-Whereas the Fibonacci numbers for the minimum strategy only occur,
-when analyzing the whole execution of the algorithm,
-the Fibonacci numbers for this strategy occur already after two iterations.
-In fact, we will go straight to the golden ratio for this strategy and use it
-to bound the decrease of the determinant over two iterations.
+The reasoning behind this strategy is that it minimizes the relative gap
+between the two closest fractional parts,
+measured by the ratio of their values.
+This often leads to a more substantial reduction in size
+compared to always choosing the single minimum fractional value.
+While the minimum strategy can only be bounded by its golden ratio over the
+entire execution, this improved strategy already leads to a new golden ratio
+after just two iterations.
 
 \begin{theorem}
   The determinant decreases by at least $ψ_d$ over two iterations,
