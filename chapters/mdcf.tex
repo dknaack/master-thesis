@@ -281,9 +281,9 @@ with only integer vectors $a^{(n)}$.
 The vector $r^{(n)}$ denotes the $n$-th \emph{convergent}
 and $x^{(n)}$ denotes the $n$-th \emph{complete quotient} of the MCF $[a^{(0)}; a^{(1)}, …]$.
 During the construction, we start with $x^{(0)}$ and use the pivot operation to
-go from one complete quotient, $x^{(n)}$, to the next, $x^{(n+1)}$.
+go from one complete quotient, $x^{(n-1)}$, to the next, $x^{(n)}$.
 At each step, we have to define an index, that we use for pivoting.
-If $x^{(n+1)} = \mathrm{pivot}_ℓ(x^{(n)})$ for some index $ℓ ∈ \{1, …, d\}$,
+If $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$ for some index $ℓ ∈ \{1, …, d\}$,
 then $ℓ$ is called the \emph{pivot index} of the complete quotient $x^{(n)}$.
 
 By Lemma~\ref{lem:mcf-wallis},
