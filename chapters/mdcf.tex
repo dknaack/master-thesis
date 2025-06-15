@@ -145,7 +145,7 @@ The second gives us a formula for calculating the convergents.
 
 The second lemma is a linear recurrence for calculating the convergents.
 For continued fractions,
-we defined the convergents of a continued fraction~$pₙ/qₙ$
+we computed the convergents of a continued fraction~$pₙ/qₙ$
 based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
 For MCFs, we can similarly derive a recursive formula to derive the values of
 the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
@@ -164,7 +164,7 @@ The initial terms are
 \]
 where $e_i$ is the $i$-th unit vector.
 For the remaining terms,
-Let $ℓ$ be the pivot index of $x^{(n)}$, i.e. $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
+let $ℓ$ be the pivot index of $x^{(n)}$, i.e. $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$.
 Then, the next terms in the sequences are:
 \begin{equation}
   \label{eq:mcf-wallis}
@@ -263,11 +263,11 @@ they converge to a limit as $n$ increases.
     r^{(n)} = (r_1^{(n)}, …, r_d^{(n)})^⊤ = [a^{(0)}; a^{(1)}, …, a^{(n)}].
   \]
   Then, the infinite multidimensional continued fraction $[a^{(0)}; a^{(1)}, …]$ is defined to be
-  the vector $r = (r₁, …, r_d) ∈ ℝ^d$ if the limit
+  the limit $r = (r₁, …, r_d)^⊤ ∈ ℝ^d$ with
   \[
-    r_i = \lim_{n → ∞} r_i^{(n)}
+    r_i = \lim_{n → ∞} r_i^{(n)},
   \]
-  exists.
+  if this limit exists.
 \end{definition}
 
 Suppose we have constructed an infinite MCF $[a^{(0)}; a^{(1)}, …]$
