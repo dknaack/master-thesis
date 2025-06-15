@@ -260,11 +260,6 @@ they converge to a limit as $n$ increases.
 % TODO: I don't like how we say that the requirement is from Perron, when it's
 % not really from him, but just based on his version.
 % TODO: The indices here are wrong...
-So far in our analysis, we have implicitly assumed that the MCF $[a^{(0)}; a^{(1)}, a^{(2)} …]$
-constructed using the generalized Euclidean algorithm always converges to the
-original input vector $x ∈ ℝ^d$.
-The aim of this section is to show that the convergents actually live up to
-their name and converge towards the vector $x$ as $n$ increases.
 
 \begin{definition}
   Let $(a^{(n)})_{n ≥ 0}$ be a sequence of $d$-dimensional real vectors
@@ -280,18 +275,18 @@ their name and converge towards the vector $x$ as $n$ increases.
   exists.
 \end{definition}
 
-We assume that we have an infinite MCF $[a^{(0)}; a^{(1)}, …]$
-with only integer vectors $a^{(n)}$.
+Suppose we have constructed an infinite MCF $[a^{(0)}; a^{(1)}, …]$
+with integer vectors $a^{(n)}$.
 The vector $r^{(n)}$ denotes the $n$-th \emph{convergent}
-and $x^{(n)}$ denotes the $n$-th \emph{complete quotient} of the MCF $[a^{(0)}; a^{(1)}, …]$.
+and $x^{(n)}$ denotes the $n$-th \emph{complete quotient}.
 During the construction, we start with $x^{(0)}$ and use the pivot operation to
 go from one complete quotient, $x^{(n-1)}$, to the next, $x^{(n)}$.
-At each step, we have to define an index, that we use for pivoting.
-If $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$ for some index $ℓ ∈ \{1, …, d\}$,
-then $ℓ$ is called the \emph{pivot index} of the complete quotient $x^{(n)}$.
+At each step, we need an index $ℓ$ for pivoting.
+If $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)})$ for some $ℓ ∈ \{1, …, d\}$,
+then $ℓ$ is called the \emph{pivot index} of $x^{(n)}$.
 
 By Lemma~\ref{lem:mcf-wallis},
-if $ℓ$ is the pivot index of the complete quotient $x^{(n)}$,
+if $ℓ$ is the pivot index of $x^{(n)}$,
 then the $n$-th convergent is simply
 \[
   r^{(n)}
@@ -305,9 +300,10 @@ since $x_i^{(m)}$ must have been the largest element at some index $m < n$.
 We will refer to $r^{(n)}$ as the \emph{primary convergent} and the others as
 \emph{secondary convergents}.
 
-The goal of this section is to show that the primary convergent $r^{(n)}$ approaches the vector $x$.
+The aim of this section is to show that the convergents actually live up to
+their name and converge towards the vector $x$ as $n$ increases.
 The proof is based on Perron's convergence proof for his algorithm \cite{Perron07}.
-Based on this proof, an infinite MCF converges under the following conditions:
+Based on the following proof, an infinite MCF converges under the following conditions:
 \begin{enumerate}
   \item
     For every $n ≥ 0$,
@@ -328,13 +324,12 @@ Based on this proof, an infinite MCF converges under the following conditions:
     the pivot indices of $x^{(m)}$ and $x^{(n)}$ are the same.
 \end{enumerate}
 
-The first condition is already satisfied by the generalized Euclidean algorithm,
-if we set $A = 1$.
+The first condition is already satisfied if
+the MCF is constructed using the generalized Euclidean algorithm.
 The integer part of every element in the complete quotient is determined by $a_i^{(n)}$,
-Because $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)}$,
-the value~$x_ℓ^{(n)}$ is the largest and therefore $a_ℓ^{(n)}$ must also be the
-largest element in $a^{(n)}$.
-Furthermore, $a_ℓ^{(n)}$ cannot be zero by definition.
+Because $x^{(n)} = \mathrm{pivot}_ℓ(x^{(n-1)}$, the value~$x_ℓ^{(n)}$ is the
+largest in $x^{(n)}$ and therefore, $a_ℓ^{(n)}$ must be the largest element in $a^{(n)}$.
+Moreover, $a_ℓ^{(n)}$ cannot be zero by definition.
 Hence, this condition is satisfied for $A = 1$.
 Nevertheless,
 this condition is necessary when replacing the floor function with a different
@@ -422,7 +417,7 @@ which is positive.
   \]
   Because $N$ was chosen large enough such that every index has occurred at least once,
   the denominators $Q_i^{(n-1)}$ cannot be zero.
-  Therefore, this is a well-defined representation of the convergent $r^{(n)}$.
+  Thus, this is a well-defined representation of $r^{(n)}$.
   For the coefficients themselves, we require $λ₀ + λ₁ + ⋯ + λ_d = 1$ and $0 ≤ λᵢ ≤ 1$ for every index $i$.
   The first property follows from the definition of $Q_ℓ^{(n)}$:
   \[
