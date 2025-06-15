@@ -95,7 +95,8 @@ The other values in the coefficients $a^{(n)}$ can assume any non-negative value
   \end{align*}
   We start with the inner most pivot operation,
   where the largest element in $(4,\, 5)$ is $5$.
-  Therefore, we invert the second element and divide the first element by $5$
+  Therefore, we must have pivoted with $ℓ = 2$.
+  We invert the second element, divide the first element by $5$
   and we add the vector $(3,\, 2)$ to the result, which leads to
   \begin{align*}
     x & = \mathrm{pivot}^{-1}\bigl((1,\, 2),\, (3,\, 2) + (3/5,\, 1/5)\bigr)
@@ -126,7 +127,7 @@ Given an infinite MCF representation~$[a^{(0)}; a^{(1)}, …]$ of a vector $x �
 
 An infinite MCF will be defined in the next section.
 Nevertheless, $[a^{(0)}; a^{(1)}, …, a^{(n)}]$ denotes the \emph{$n$-th convergent}
-and $[a^{(n)}; a^{(n+1)}, …]$ denotes the \emph{$n$-th complete quotient} of $[a^{(0)}; a^{(1)}]$.
+and $[a^{(n)}; a^{(n+1)}, …]$ denotes the \emph{$n$-th complete quotient} of the infinite MCF $[a^{(0)}; a^{(1)}, …]$.
 For the analysis of MCFs,
 we begin with two lemmas that generalize Lemma~\ref{lem:cf-nesting} and Lemma~\vref{lem:cf-wallis}.
 The first allows us to merge the last two coefficients of an MCF.
