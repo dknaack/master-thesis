@@ -188,34 +188,40 @@ the algorithm was analyzed again by Bernstein~\cite{Bernstein71},
 who identified explicit classes of cubic irrationals which are periodic under
 the JPA \cite{Bernstein64A, Bernstein65, Bernstein64B}.
 However, numerical computations by Elsner and Hasse \cite{Elsner67} have shown
-that the JPA seems to fail for certain cube roots,
-casting doubt on whether the algorithm can actually solve Hermite’s problem.
-As a result, numerous alternative algorithms have since been proposed
-\cite{Assaf05, Hendy81, Schweiger13, Schweiger00}.
+that the JPA seems to fail for certain cube roots.
+This has led some to conjecture that the JPA does not provide an answer to Hermite's question.
 
-The most prominent examples include the subtractive algorithms by
+Since then, numerous alternative algorithms have since been proposed
+\cite{Assaf05, Hendy81, Schweiger13, Schweiger00}.
+However, they usually build upon the Jacobi-Perron algorithm.
+This includes the subtractive algorithms by
 Brun~\cite{Brun19} and Selmer~\cite{Selmer67}
 as well as the fully subtractive algorithms introduced by Schweiger~\cite{Schweiger95}.
-These have been analyzed for their application in Diophantine approximation
-based on their ergodic properties~\cite{Schweiger04}.
-However, they do not provide a full answer to Hermite's question.
+Each algorithm is still fundamentally based on the idea of the JPA, though they
+do not use the full remainder and instead only subtract the chosen element.
+While the main focus has been on periodicity, Selmer's algorithm is one of the
+few algorithms, for which the convergence has been proven~\cite{Bruin15}.
+However, none of them give a full answer to Hermite's question.
 
 There are also generalizations of continued fractions to two dimensions,
-called bifurcating or ternary continued fractions \cite{Gupta00,Daus22}.
-These have been used by Murru~\cite{Murru15} to construct periodic expansions
-for all cubic irrationals.
+called bifurcating or ternary continued fractions \cite{Gupta00,Daus22},
+and they are constructed by reversing the JPA in two dimensions.
+Traditionally, they only admitted integers as coefficients,
+but Murru~\cite{Murru15} used rational coefficients to construct periodic
+expansions for all cubic irrationals.
 While this addresses one half of Hermite’s question,
 it does not provide a representation for arbitrary real numbers.
 It only provides a representation of cubic irrationals
 and thus, it does not provide a full answer to Hermite's question.
 
 More recently, Karpenkov has proposed two new algorithms \cite{Karpenkov24, Karpenkov21}.
-The first is called the $\sin^2$-algorithm and he has shown that this algorithm
-becomes periodic for every totally real cubic irrational -- that is any roof of
-a cubic polynomial with three real roots.
-The second algorithm is called the HAPD algorithm \cite{Karpenkov24} and he
-conjectures that this algorithm is periodic for all cubic irrationals,
-although this conjecture remains unproven.
+The first, known as the $\sin^2$-algorithm, has been shown to be periodic for
+every totally real cubic irrational, that is any root of a cubic polynomial
+with three real roots.
+The second is called the HAPD algorithm and he conjectures that it is periodic
+for all cubic irrationals, though this remains unproven.
+Nevertheless, both algorithms are built upon transformations closely related to
+those used in the JPA.
 
 Apart from the algorithmic approach,
 there has also been significant effort in a geometric generalization of
