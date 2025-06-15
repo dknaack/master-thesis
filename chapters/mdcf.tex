@@ -143,9 +143,10 @@ The second gives us a formula for calculating the convergents.
 \end{proof}
 
 % TODO: Explain how to derive the sequences
-In the lemma for continued fractions,
+The second lemma is a linear recurrence for calculating the convergents.
+For continued fractions,
 we defined the convergents of a continued fraction~$pₙ/qₙ$
-using a linear recurrence based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
+based on the previous two terms~$p_{n-1}/q_{n-1}$ and $p_{n-2}/q_{n-2}$.
 For MCFs, we can similarly derive a recursive formula to derive the values of
 the convergent vector $(p₁/q, \dots, p_d/q)$ using the previous convergents.
 Deriving the sequence is more involved than the one-dimensional case,
@@ -226,12 +227,16 @@ they converge to a limit as $n$ increases.
   Let $y = \mathrm{pivot}^{-1}(a^{(n)}, x)$ and $ℓ = \argmax_i x_i$.
   By the induction hypothesis,
   \begin{align*}
-    [a^{(0)}; a^{(1)}; …, a^{(n)}, x] & = \frac{x_ℓ}{x_ℓ} · \frac{P_0^{(n-1)} + P_1^{(n-1)} y_1 + ⋯ + P_d^{(n-1)} y_d}{Q_0^{(n-1)} + Q_1^{(n-1)} y_1 + ⋯ + Q_d^{(n-1)} y_d},
+    [a^{(0)}; a^{(1)}; …, a^{(n)}, x]
+    & = \frac{P_0^{(n-1)} + P_1^{(n-1)} y_1 + ⋯ + P_d^{(n-1)} y_d}{Q_0^{(n-1)} + Q_1^{(n-1)} y_1 + ⋯ + Q_d^{(n-1)} y_d} \\
+    & = \frac{x_ℓ}{x_ℓ} · \frac{P_0^{(n-1)} + P_1^{(n-1)} y_1 + ⋯ + P_d^{(n-1)} y_d}{Q_0^{(n-1)} + Q_1^{(n-1)} y_1 + ⋯ + Q_d^{(n-1)} y_d},
   \end{align*}
   where the fraction is expanded with $x_ℓ/x_ℓ$ such that the numerator and denominator are each multiplied by $x_ℓ$.
-  The numerator can then be simplified as follows:
+  Let $P$ denote the numerator and let $Q$ denote the denominator of the expression.
+  The numerator $P$ can then be simplified as follows:
   \begin{align*}
-    & \hphantom{{} = {}} x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} y_ℓ + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} y_i \right) \\
+    P
+    & = x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} y_ℓ + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} y_i \right) \\
     & = x_ℓ \left( P_0^{(n-1)} + P_ℓ^{(n-1)} \left( a_ℓ^{(n)} + \frac{1}{x_ℓ} \right) + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} \left(a_i^{(n)} + \frac{x_i}{x_ℓ} \right) \right) \\
     & = P_0^{(n-1)} x_ℓ + P_ℓ^{(n-1)} a_ℓ^{(n)} x_ℓ + P_ℓ^{(n-1)} + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} a_i^{(n)} x_ℓ + P_i^{(n-1)} x_i \\
     & = \underbrace{\left( P_0^{(n-1)} + P_ℓ^{(n-1)} a_ℓ^{(n)} + \sum_{i ∉ \{0,ℓ\}} P_i^{(n-1)} a_i^{(n)} \right)}_{P_ℓ^{(n)}} x_ℓ
@@ -239,10 +244,11 @@ they converge to a limit as $n$ increases.
       + \sum_{i ∉ \{0,ℓ\}} \underbrace{P_i^{(n)}}_{P_i^{(n)}} x_i \\
     & = P_0^{(n)} + P_1^{(n)} x_1 + ⋯ + P_d^{(n)} x_d.
   \end{align*}
-  The simplification for the denominator is identical.
+  The simplification for the denominator $Q$ is identical.
   Therefore,
   \[
     [a^{(0)}; a^{(1)}, …, a^{(n)}, x]
+    = \frac{P}{Q}
     = \frac{P_0^{(n)} + P_1^{(n)} x_1 + ⋯ + P_d^{(n)} x_d}{Q_0^{(n)} + Q_1^{(n)} x_1 + ⋯ + Q_d^{(n)} x_d}.
     \qedhere
   \]
