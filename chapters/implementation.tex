@@ -1,7 +1,7 @@
 \chapter{Experimental Analysis on Multidimensional Continued Fractions}
 \label{ch:implementation}
 
-In the previous, we saw that most MCFs converge,
+In the previous chapter, we saw that most MCFs converge,
 and that any periodic MCF consists of algebraic numbers.
 The former solves the first part of Hermite's question, but the latter solves
 only one direction of the second part.
@@ -75,16 +75,18 @@ which could more easily find MCFs for cube roots.
   ]
 def search(x, N, strat):
   seen = {x: 0}
+  L = []
   for n in range(N):
     l = strat(x)
+    L.append(l)
     x = pivot(x, l)
     if x in seen:
-      j = seen[x]
-      start = L[:j]
-      period = L[j:i+1]
+      m = seen[x]
+      start = L[:m]
+      period = L[m:n+1]
       return start, period
     else:
-      seen[y] = i + 1
+      seen[x] = n + 1
 \end{Python}
 % ==============================================================================
 
@@ -179,7 +181,7 @@ The only cube roots it didn't find were the largest ones,
 since at that point the maximum number of steps is too low.
 Increasing the number of steps solves the issue and the strategy would have
 also found a periodic representation for these roots.
-The JPA and the Min strategy faired considerably worse and managed to find a
+The JPA and the Min strategy fared considerably worse and managed to find a
 periodic representation for only 10\% of the roots.
 By far the worst strategies were choosing the closest convergents and choosing
 the maximum fractional value.
@@ -191,7 +193,7 @@ and examined roots up to $\sqrt[d]{10\,000}$ for $d=3,4$.
 In both cases, it successfully found a periodic MCF for every root.
 I then repeated these tests for fifth, sixth and seventh roots
 from $\sqrt[d]{2}$ up to $\sqrt[d]{200}$.
-Beginning with the fifth roots, the algorithm no longer returns a periodic MCF for all roots.
+Starting with fifth roots, the algorithm no longer returns a periodic MCF for all roots.
 In fact, I have only found periodic MCFs for the following roots:
 \begin{itemize}
   \item Fifth roots:
@@ -199,7 +201,7 @@ In fact, I have only found periodic MCFs for the following roots:
     \sqrt[5]{25}, \sqrt[5]{29}, \sqrt[5]{31}, \sqrt[5]{33}, \sqrt[5]{59},
     \sqrt[5]{82}, \sqrt[5]{123}, \sqrt[5]{152}$.
   \item Sixth roots: $\sqrt[6]{18}, \sqrt[6]{65}, \sqrt[6]{66},\sqrt[6]{198}$.
-  \item Seventh roots: $\sqrt[6]{2}$.
+  \item Seventh roots: $\sqrt[7]{2}$.
 \end{itemize}
 It is well known that there is no general solution in terms of radicals and
 standard arithmetic operations for polynomials of degree five or higher.
