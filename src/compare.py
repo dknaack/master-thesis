@@ -90,7 +90,7 @@ class BestConvergentStrategy:
         return min
 
 #
-# Main
+# Comparison
 #
 
 N = 2000
@@ -145,7 +145,7 @@ with open('comparison.tsv', 'w') as f:
             tsv_print(f, name, p, start_str, period_str)
         f.flush()
 
-with open('tables/success-rate.tsv', 'w') as f:
+with open('success-rate.tsv', 'w') as f:
     print('Strategy', 'Success')
     for name, rate in success_rate.items():
         tsv_print(f, name, rate, total)
