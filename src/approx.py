@@ -28,6 +28,30 @@ class ApproxStrategy:
                     yield l
 
 def nondeterministic_search(x, N, strat):
+    """
+    Searches only multiple possible sequences using the given strategy to find a
+    periodic representation of the given input.
+
+    INPUT:
+    
+    - ``x`` -- tuple; The input tuple that is to be represented. It should
+      contain only algebraic numbers with the same degree as its length. For
+      example, (a, a^2) for an algebraic number a.
+
+    - ``N`` -- integer; The maximum search depth
+
+    - ``strat`` -- function; The strategy to be used when searching. It is
+      given the original input and one of the possible sequence. It should
+      output a list of indices, which are appended to the create longer
+      sequences.
+
+    OUTPUT: Either
+
+    - a tuple for the preperiod and period of the indices required to create an
+      MDCF for the original input vector or
+
+    - `None` if no periodic representation was found.
+    """
     d = len(x)
     sequences = [[]]
     for n in range(N):
