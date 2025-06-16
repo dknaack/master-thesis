@@ -640,19 +640,19 @@ Specifically, we choose the vector
     \frac{F(n-1)}{F(n)},
     \frac{F(n-2)}{F(n)},
     …,
-    \frac{F(n-(d-1)}{F(n)},
+    \frac{F(n-(d-1))}{F(n)},
     \frac{F(n-d) + F(n)}{F(n)} \right).
 \end{align*}
 We pivot with the largest fractional value, which is $x_1$.
-The next vector is $x' = (x₁', …, x_d')$ where
-the first element is
+The next vector is $x' = (x₁', …, x_d')$,
+where the first element is
 \begin{align*}
   x_1'
   = \frac{1}{\left\{\frac{F(n-1)}{F(n)}\right\}}
   = \frac{F(n)}{F(n-1)}
   = \frac{F(n-1) + F(n-1-d)}{F(n)},
 \end{align*}
-the elements with $i ≤ d - 1$ are
+the elements with $i ∈ \{1, …, d - 1\}$ are
 \begin{align*}
   x_i'
   = \frac{\frac{F(n-i)}{F(n)}}{\frac{F(n-1)}{F(n)}}
@@ -665,15 +665,16 @@ and the last element is
   = \frac{F(n-d)}{F(n-1)}.
 \end{align*}
 
-However, this time the maximum Fibonacci numbers do not represent the worst-case,
-even for the new strategy.
+However, the maximum Fibonacci numbers no longer represent the worst-case, even
+under the new strategy.
 The issue is that in the equation
 \[
   p_ℓ = a_ℓ p_ℓ' + q'
 \]
-from Lemma~\ref{lem:divmod} we cannot bound $a_ℓ$ from below by $1$.
-The reason is that only element of $x$ can be greater than $1$
-and all other elements must be smaller than $1$.
+from Lemma~\ref{lem:divmod} we cannot bound $a_ℓ$ from below by $1$,
+which would lead to a worst-case bound by these Fibonacci numbers.
+This is because only one element of $x$ can be greater than $1$,
+while all others must be strictly less than $1$.
 But that element does not have to be the pivot element,
 it could be another element.
 Therefore, we cannot use them as a bound for the worst-case

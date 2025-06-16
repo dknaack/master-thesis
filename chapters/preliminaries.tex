@@ -414,8 +414,8 @@ for which we first need the notion of integer rings and orders.
 The \emph{integer ring} $\mathcal O_K$ of a number field $K$
 contains all elements $x ∈ K$, which are algebraic integers,
 i.e. their minimal polynomial has only integer coefficients.
-In general, algebraic numbers which are the root of a monic polynomial with integer coefficients
-are known as \emph{algebraic integers}.
+In general, algebraic numbers, that are roots of a monic polynomial with
+integer coefficients, are known as \emph{algebraic integers}.
 The ring of integers is not necessarily equal to $ℤ[α]$.
 For example, in quadratic fields $ℚ(\sqrt{d})$
 the ring of integers is equal to $ℤ\left[\frac{1+\sqrt{d}}{2}\right]$ if $d ≡ 1\ (\mathrm{mod}\ 4)$.
@@ -449,7 +449,7 @@ the ring of integers is equal to $ℤ\left[\frac{1+\sqrt{d}}{2}\right]$ if $d �
   However, we can find a subring of $ℤ[α]$ which is an order.
   Suppose $m_α(x) = x^n + a_{n-1} x^{n-1} + ⋯ + a_1 x + a_0$ is the minimal polynomial of $α$.
   Let $q$ be the common denominator of its coefficients.
-  Then, $q α$ is a root of the monic polynomial
+  Then, $q α$ is a root of the following polynomial with integer coefficients:
   \begin{align*}
     m_{qα}(x) & = x^n + a_{n-1} q x^{n-1} + ⋯ + a_1 q^{n-1} + a_0 q^n,
   \intertext{since}
@@ -466,9 +466,8 @@ the ring of integers is equal to $ℤ\left[\frac{1+\sqrt{d}}{2}\right]$ if $d �
 The corollary tells us that there always exists a unit $ε ∈ ℚ(α)$ with integral
 coefficients in the power basis $\{1, α, …, α^{n-1}\}$.
 The multiplication matrix of $ε$ is therefore unimodular.
-This multiplication matrix actually has the power basis as a \emph{left} eigenvector.
-The other eigenvectors are similarly the power basis of the conjugates of $α$,
-that is any root $α_i$ of $m_α(x)$ defines another left eigenvector $(1, α_i, …, α_i^{n-1})$.
+Furthermore, the matrix has the power basis as a \emph{left} eigenvector.
+Then, its tranpose has $(1, α, …, α^{n-1})$ as a \emph{right} eigenvector.
 
 \begin{theorem}
   \label{thm:unimodular-algebraic}
@@ -478,9 +477,7 @@ that is any root $α_i$ of $m_α(x)$ defines another left eigenvector $(1, α_i,
 \end{theorem}
 
 \begin{proof}
-  This follows from Corollary~\ref{cor:nontrivial-unit} and Lemma~\ref{lem:mult-eig}.
-  Although the eigenvector of Lemma~\ref{lem:mult-eig} is on the left,
-  transposing the multiplication matrix produces a right eigenvector.
+  This follows directly from Corollary~\ref{cor:nontrivial-unit} and Lemma~\ref{lem:mult-eig}.
 \end{proof}
 
 \begin{example}
