@@ -114,7 +114,7 @@ class BestConvergentStrategy:
         for l in range(1, d):
             if dist[min] >= dist[l]:
                 min = l
-        y = pivot(x, l)
+        y = pivot(x, min)
         a = floor_list(y)
         self.conv.append(a)
         return min
