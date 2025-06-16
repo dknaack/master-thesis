@@ -98,7 +98,6 @@ def search(x, N, strat):
     omitted since they are perfect cubes.}
   \label{tbl:cubics}
   \centering
-  % TODO: Remove the index sequence from the representation
   \input{tables/cubics2.tex}
 \end{table}
 
@@ -150,7 +149,6 @@ In summary, the following strategies were tried:
     \[
       ℓ = \argmax_i \frac{\{x_i\}}{\sqrt[d]{|N(\{x_i\})|}}.
     \]
-    % TODO: Mention that the Tamura and Yasutomi algorithm was tested by the authors themselves for both cubic and quadratic cases.
     The authors have proven that the vector
     $(\sqrt[3]{m^3+1} - m, \sqrt[3]{(m^3 + 1)^2} - m^2)$ is periodic under their algorithm
     as well as any vector $(α, α^2)$, where $α$ is an algebraic number defined by $x^3 - mx + 1 = 0$ with $m ≥ 3$.
@@ -303,8 +301,6 @@ amounting to a total of $96$ cube roots, when removing the perfect cubes.
 \end{figure}
 
 Figure~\ref{fig:results-approx} shows the results of this analysis.
-% TODO: When repeating the period multiple times, does this actually keep the
-% approximation bound intact or does it violate it after some point?
 For most cubic roots from the previous test,
 there are MCFs which satisfy the approximation bound.
 The most surprising result of this analysis is that there are some cubic roots
@@ -316,11 +312,6 @@ One example is the vector $(\sqrt[3]{5}, \sqrt[3]{25})$.
 In this case, the number of convergents starts out growing but quickly drops
 after only a few number of iterations.
 
-% TODO: Add table for numbers which admit good approximations
-
-% TODO: What about transcendental numbers?
-
-% Conclusion:
 This shows that MCFs generally do not mirror continued fractions in the case of simultaneous Diophantine approximation.
 In general, they do not provide good rational approximations for irrational vectors at all times.
 However, there are still different ways they could be useful for generating rational approximations.
@@ -329,7 +320,3 @@ Instead of finding a approximation which has a distance of $1/q^{1 + 1/d}$,
 we could find an approximation which has a distance of $c/q^{1 + 1/d}$ for some constant $c > 1$.
 Thus, they could still be useful for the field of simultaneous Diophantine
 approximation.
-% TODO: If we end up using Klein polyhedra, uncomment this:
-% This seems especially likely if they share a connection with the Klein polyhedra.
-% Since then the area between the convergent is empty and they continue to
-% approach the irrational line by the given vector.
