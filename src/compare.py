@@ -99,7 +99,7 @@ d = 2
 def tsv_print(f, *args):
     print(*args, sep='\t', file=f)
 
-with open('tables/comparison.tsv', 'w') as f:
+with open('comparison.tsv', 'w') as f:
     tsv_print(f, 'Strategy', 'Polynomial', 'Preperiod', 'Period')
 
     names = [ 'Min', 'Max', 'JPA', 'JPA*', 'TY', 'BC∞', 'BC2', 'WC∞', 'WC2', ]
