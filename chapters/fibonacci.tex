@@ -295,10 +295,10 @@ them by one particular element $p_ℓ$.
 \end{proof}
 
 To show that the $d$-bonacci numbers are the worst-case for the minimum
-strategy, we first need to establish a few conditions.
-The first condition is that the vector $x$ is strictly positive.
+strategy, we first need to establish two conditions.
+The first condition is that $x$ is strictly positive.
 This can be ensured by simply ignoring the first iteration,
-as in the second iteration, $x$ will always be positive.
+as in the second iteration, $x'$ will always be positive.
 
 The second condition is that the values in $x$ must be distinct.
 The reasoning behind this requirement is that one could easily check if there
@@ -306,8 +306,6 @@ are two elements $x_i, x_j$ with $x_i = x_j$.
 Pivoting with either $ℓ = i$ or $ℓ = j$ removes the other element from the
 vector, since the element will be zero in the next iteration.
 Hence, this step will always be more efficient than pivoting a different element.
-Given these two conditions, we can show that the $d$-bonacci numbers
-yield the worst-case behavior for the minimum strategy.
 
 \begin{theorem}
   \label{thm:dbonacci}
