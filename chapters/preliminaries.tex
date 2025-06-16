@@ -237,7 +237,7 @@ This region is a geometric representation of the “unit cell” of the lattice.
 \end{definition}
 
 An important property of the fundamental parallelepiped is that
-for $B$ any square integer matrix, both the volume and the number of integer points
+for any square integer matrix $B$, both the volume and the number of integer points
 inside the parallelepiped $Π(B)$ is entirely determined by $\mathrm{det}(B)$.
 Specifically,
 \[
@@ -253,7 +253,7 @@ This section draws on standard results from algebraic number theory, as presente
 For a ring $R$,
 the set $R[t]$ denotes all polynomial expressions in $t$,
 i.e. expressions of the form $a₀ + a₁ t + ⋯ + aₙ t^n$ with $a₀, …, aₙ ∈ R$.
-For a given field $K ⊆ L$ and an subset $S ⊆ L$,
+For a given field extension $K ⊆ L$ and an subset $S ⊆ L$,
 the set $K(S)$ denotes the smallest field containing $K$ and $S$.
 If $S = \{α₁, …, α_n\} ⊆ L$, then we simplify the
 expression $ℚ(\{α₁, …, αₙ\})$ to $ℚ(α₁, …, αₙ)$.
@@ -397,7 +397,12 @@ Combining each column into one matrix gives us the final multiplication matrix $
   By Example~\ref{ex:mult-matrix},
   the norm of an element $a + b \sqrt{d} ∈ ℚ(\sqrt{d})$ is
   \[
-    N_{K/ℚ}(a + b \sqrt{d}) = a^2 - d b^2.
+    N_{K/ℚ}(a + b \sqrt{d})
+    = \det\begin{pmatrix}
+      a & bd \\
+      b & a \\
+    \end{pmatrix}
+    = a^2 - d b^2.
   \]
 \end{example}
 
