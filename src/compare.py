@@ -11,17 +11,8 @@ def tsv_print(f, *args):
 with open('tables/comparison.tsv', 'w') as f:
     tsv_print(f, 'Strategy', 'Polynomial', 'Preperiod', 'Period')
 
-    strategies = {
-        'Min': fracmin,
-        'Max': fracmax,
-        'JPA': jacobi_perron,
-        'JPA*': modified_jpa,
-        'TY': tamura_yasutomi(d),
-        #'CC∞': BestConvergentStrategy(x, 'euclidean'),
-        #'CC2': BestConvergentStrategy(x, 'max'),
-    }
-
-    success_rate = {name: 0 for name in strategies}
+    names = [ 'Min', 'Max', 'JPA', 'JPA*', 'TY', 'BC∞', 'BC2', 'WC∞', 'WC2', ]
+    success_rate = {name: 0 for name in names}
 
     total = 0
     R = QQ['x']
@@ -34,6 +25,16 @@ with open('tables/comparison.tsv', 'w') as f:
         a = K.gen()
         xs = tuple([a**i for i in range(1, d+1)])
         total += 1
+
+        strategies = {
+            'Min': fracmin,
+            'Max': fracmax,
+            'JPA': jacobi_perron,
+            'JPA*': modified_jpa,
+            'TY': tamura_yasutomi(d),
+            'BC∞': BestConvergentStrategy(x, 'euclidean'),
+            'BC2': BestConvergentStrategy(x, 'max'),
+        }
 
         for i, name in enumerate(strategies):
             result = deterministic_search(xs, N, strategies[name], name)
