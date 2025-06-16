@@ -3,6 +3,11 @@ from search import pivot
 from sys import stdout
 
 class ApproxStrategy:
+    """
+    The approximation strategy only outputs sequences,
+    whose convergent satisfies the approximation bound. 
+    """
+
     def __init__(self, threshold):
         self.threshold = threshold
 
@@ -67,16 +72,30 @@ def nondeterministic_search(x, N, strat):
         if not sequences:
             raise ValueError('No more sequences')
 
+# The search tests every MCF for the number of convergents that satisfy the
+# approximation bound from Dirichlet's approximation theorem.
+# The output is a series of instructions. They are roughly structured like:
+#
+# - root r
+#   - approximation c 
+#     - iteration n
+#     - success, fail or nothing
+#
+# These can then be parsed to only output approximations with c = 1 or only
+# approximations that fail, etc.
+
 d = 2
 N = 20
 
 R = QQ['x']
 x = R.gen()
 for r in range(2, 101):
+    # Generate the (d+1)-th root of r
     p = x**(d+1) - r
     if not p.is_irreducible():
         continue
     a = NumberField(p, names=('x'), embedding=RR(1)).gen()
+    # Create an input vector for the search
     xs = tuple([a**i for i in range(1, d+1)])
 
     print('root', r)
