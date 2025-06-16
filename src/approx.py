@@ -1,7 +1,31 @@
 from sage.all import *
 from search import pivot
-from strategies import ApproxStrategy
 from sys import stdout
+
+class ApproxStrategy:
+    def __init__(self, threshold):
+        self.threshold = threshold
+
+    def __call__(self, xs, seq):
+        d = len(xs)
+        for l in range(d):
+            # Construct an MDCF from the new sequence
+            new_seq = seq + [l]
+            cf = [floor_list(xs)]
+            ys = xs
+            for i in new_seq:
+                if frac(ys[l]) == 0:
+                    break
+                ys = pivot(ys, i)
+                cf += [floor_list(ys)]
+            else:
+                conv = unpivot(cf)
+                q = lcm([x.denominator() for x in conv])
+
+                # Check if the convergent is a good simultaneous approximation
+                approx_rate = max([abs(x - p) for x, p in zip(xs, conv)])
+                if approx_rate <= self.threshold/q**(1+1/d):
+                    yield l
 
 def nondeterministic_search(x, N, strat):
     d = len(x)
