@@ -1,0 +1,126 @@
+\documentclass[aspectratio=169]{beamer}
+
+\title{On Elementary Properties of a Multidimensional Generalization of the Euclidean Algorithm}
+\author{Daniel Knaack}
+\date{}
+
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{standalone}
+
+\setmathfont{TeX Gyre Pagella Math}
+\usetikzlibrary{decorations.pathreplacing, calligraphy, intersections, backgrounds, graphdrawing, graphs, calc, 3d}
+
+\usetheme{metropolis}
+\usefonttheme[onlymath]{serif}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item A number is rational if and only if its decimal expansion is eventually periodic
+    \item A number is a quadratic irrational if and only if its continued fraction expansion is eventually periodic
+    \item A number is a cubic irrational if and only if ?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{enumerate}
+    \item The Euclidean Algorithm
+    \item Fibonacci Numbers
+    \item Continued Fractions
+    \item Klein Polygons
+    \item Periodicity
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Euclidean Algorithm}
+  % TODO: Figure for Euclidean algorithm
+\end{frame}
+
+\begin{frame}
+  \frametitle{The Euclidean Algorithm}
+  % TODO: Transitional figure for continued fractions
+\end{frame}
+
+\begin{frame}
+  \frametitle{Continued Fractions}
+  \[
+    [a₀; a₁, …] = a₀ + \cfrac{1}{a₁ + \cfrac{1}{a₂ + \cfrac{1}{⋱}}}.
+  \]
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \includestandalone{figures/klein-polygon}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  % TODO: Figure for pivot rule
+  \[
+    x_i' =
+    \begin{cases}
+      \frac{1}{x_ℓ - a_ℓ}, & \text{ if } i = ℓ, \\
+      \frac{x_i - a_i}{x_ℓ - a_ℓ}, & \text{ otherwise},
+    \end{cases}
+    \iff
+    x_i =
+    \begin{cases}
+      a_ℓ + \frac{1}{x_ℓ'}, & \text{ if } i = ℓ, \\
+      a_i + \frac{x_i'}{x_ℓ'}, & \text{ otherwise}.
+    \end{cases}
+  \]
+\end{frame}
+
+\begin{frame}
+  \begin{definition}
+    A \emph{multidimensional continued fraction} over a sequence
+    $(a^{(n)})_{n≥0}$ is defined inductively as
+    \[
+      [a^{(0)}] = a^{(0)}, \quad
+      [a^{(0)}; a^{(1)}, …, a^{(n)}] = \mathrm{pivot}^{-1}(a^{(0)}, [a^{(1)}; a^{(2)}, …, a^{(n)}]).
+    \]
+  \end{definition}
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}
+    The convergents of a multidimensional continued fraction converge towards $x$, if
+    \begin{enumerate}
+      \item Every index is used infinitely often
+      \item The distance between two equal indices is constant.
+    \end{enumerate}
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \includestandalone{figures/projective-space}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}
+    If a multidimensional continued fraction of a vector $x ∈ ℝ^d$ is periodic, then \[
+      [ℚ(x₁, …, x_d) : ℚ] ≤ d+1.
+    \]
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\begin{frame}
+  % TODO: References
+\end{frame}
+
+\end{document}
