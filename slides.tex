@@ -27,18 +27,39 @@
 \end{frame}
 
 \begin{frame}
-  \begin{itemize}
-    \item A number is rational if and only if its decimal expansion is eventually periodic
-    \item A number is a quadratic irrational if and only if its continued fraction expansion is eventually periodic
-    \item A number is a cubic irrational if and only if ?
-  \end{itemize}
+  \frametitle{Representation of Real Numbers}
+  \begin{columns}[T]
+    \column{0.33\textwidth}
+    \begin{center}
+      \textbf{Rational Numbers} \\
+      Decimals
+      \[
+        \frac{22}{7} = 3.\overline{142857}
+      \]
+    \end{center}
+
+    \column{0.33\textwidth}
+    \begin{center}
+      \textbf{Quadratic Irrationals} \\
+      Continued Fractions
+      \begin{align*}
+        \sqrt{2} & = 1 + \cfrac{1}{2 + \cfrac{1}{2 + \cfrac{1}{⋱}}}
+      \end{align*}
+    \end{center}
+    \column{0.33\textwidth}
+    \begin{center}
+      \textbf{Cubic Irrationals} \\
+      ?
+      \[\sqrt[3]{5} = ? \vphantom{\cfrac{1}{a₀}}\]
+    \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
   \begin{problem}[Hermite, 1839]
-    Does there exist a representation of the real numbers as a sequence of
-    integers such that the representation is eventually periodic if and only if
-    the number is \alt<2>{an algebraic number of degree $d$}{a cubic irrational}?
+    Does there exist a representation of the \alert{real numbers as a sequence of integers}
+    such that the representation is \alert{eventually periodic} if and only if
+    the number is \alert{\alt<2>{an algebraic number of degree $d$}{a cubic irrational}}?
   \end{problem}
 \end{frame}
 
