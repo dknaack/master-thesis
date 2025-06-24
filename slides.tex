@@ -132,55 +132,108 @@
 
 \begin{frame}
   \frametitle{Fibonacci Numbers}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Continued Fractions}
   \small
   \begin{columns}[T]
     \column{0.49\textwidth}
-    A continued fraction over a sequence over integers $(aₙ)_{n≥0}$ is defined as
+    The Fibonacci numbers are defined as
     \[
-      [a₀; a₁, …] = a₀ + \frac{1}{[a₁; a₂, …]}.
+      F(n) = F(n - 1) + F(n - 2).
     \]
+    \column{0.49\textwidth}
+    The $d$-bonacci numbers are defined as
+    \[
+      F(n) = F(n - 1) + ⋯ + F(n - d - 1).
+    \]
+  \end{columns}
+  \vspace{1em}
+  \begin{columns}[T]
+    \column{0.49\textwidth}
+    \begin{theorem}
+      If the Euclidean algorithm requires $n$ steps on $(a, b)$ with $a < b$,
+      then \[
+        a ≥ F(n+1) \text{ and } b ≥ F(n+2).
+      \]
+    \end{theorem}
 
     \column{0.49\textwidth}
-    A \emph{multidimensional continued fraction} over a sequence over integer
-    vectors $(a^{(n)})_{n≥0}$ is defined as
-    \[
-      [a^{(0)}; a^{(1)}, …] = \mathrm{pivot}^{-1}(a^{(0)}, [a^{(1)}; a^{(2)}, …]).
-    \]
+    \begin{theorem}
+      If the generalized Euclidean algorithm requires $n$ steps on $x = (p₁/q, …, p_d/q)$,
+      when selecting the minimum,
+      then \[
+        p_{σ(i)} ≥ ∑_{k=0}^i F(n-k) \text{ and } q ≥ F(n+1)
+      \]
+      for some permutation $σ$.
+    \end{theorem}
   \end{columns}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Geometry}
+  \frametitle{Golden Ratio}
 
   \begin{columns}
-    \column{.49\textwidth}
-    \[
-      p/q ↦ \begin{pmatrix}
-        p \\
-        q \\
-      \end{pmatrix}
-    \]
-    %\adjustbox{scale=.9}{\includestandalone{figures/klein-polygon}}
+    \column{0.49\textwidth}
 
-    \column{.49\textwidth}
-    \[
-      (p₁/q, …, p_d/q) ↦ \begin{pmatrix}
-        q   \\
-        p_1 \\
-        ⋮   \\
-        p_d \\
-      \end{pmatrix}
-    \]
-    %\adjustbox{scale=.9}{\includestandalone{figures/projective-space}}
+    \column{0.49\textwidth}
+  \end{columns}
+\end{frame}
+
+\begin{frame}<1>[label={cont-frac}]
+  \frametitle{Continued Fractions}
+  \small
+  \begin{columns}[T]
+    \column{0.49\textwidth}
+    \begin{definition}
+      A \emph{continued fraction} over a sequence over integers $(aₙ)_{n≥0}$ is defined as
+      \[
+        [a₀; a₁, …] = a₀ + \frac{1}{[a₁; a₂, …]}.
+      \]
+      The \emph{$n$-th convergent} is $[a₀; a₁, …, aₙ]$.
+    \end{definition}
+
+    \pause
+    \column{0.49\textwidth}
+    \begin{definition}
+      A \emph{multidimensional continued fraction} over a sequence over integer
+      vectors $(a^{(n)})_{n≥0}$ is defined as
+      \[
+        [a^{(0)}; a^{(1)}, …] = \mathrm{pivot}^{-1}(a^{(0)}, [a^{(1)}; a^{(2)}, …]).
+      \]
+      The \emph{$n$-th convergent} is $[a^{(0)}; a^{(1)}, …, a^{(n)}]$.
+    \end{definition}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Construction}
+
+  \begin{columns}
+    \column{0.49\textwidth}
+    \begin{tikzpicture}[scale=0.5]
+      \draw (0, 0) rectangle (8, 3) node[pos=0.5] {\large $8:3$};
+
+      \draw[thick, dashed, fill=black!50, opacity=0.2] (-0.5, -4) rectangle (2.5, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
+      \draw[thick, dashed, fill=black!50, opacity=0.2] (3, -4) rectangle (6, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
+      \draw[thick] (6.5, -4) rectangle (8.5, -1) node[pos=0.5] {\large$2:3$};
+
+      \draw (2.5, -7) rectangle (5.5, -5) node[pos=0.5] {\large$3:2$};
+
+      \draw[ultra thick] (6.5, -2.5) edge[bend right, ->] (4, -5);
+      \draw[thick] (2, 0) edge[->] (1, -1);
+      \draw[thick] (4, 0) edge[->] (4.5, -1);
+      \draw[ultra thick] (6, 0) edge[->] (7.5, -1);
+    \end{tikzpicture}
+
+    \column{0.49\textwidth}
   \end{columns}
 \end{frame}
 
 \begin{frame}
   % TODO: Figure for pivot rule
+  \[
+    x' = \mathrm{pivot}_ℓ(x)
+    \iff
+    x = \mathrm{pivot}^{-1}(a, x').
+  \]
   \[
     x_i' =
     \begin{cases}
@@ -196,14 +249,16 @@
   \]
 \end{frame}
 
+\againframe<2>{cont-frac}
+
 \begin{frame}
   \frametitle{Convergence}
   \small
   \begin{columns}[T]
     \column{0.49\textwidth}
     \begin{theorem}
-      Let $pₙ/qₙ$ be the convergent of a continued fraction for $x ∈ ℝ$.
-      Then,
+      The convergents $pₙ/qₙ$ of a continued fraction approach $x ∈ ℝ$.
+      Specifically,
       \[
         \left|x - \frac{pₙ}{qₙ}\right| < \frac{1}{qₙ^2}.
       \]
@@ -221,6 +276,49 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Geometry}
+  \small
+
+  \begin{columns}
+    \column{0.49\textwidth}
+    \begin{lemma}
+      \[
+        \frac{pₙ}{qₙ} = \frac{p_{n-1} a_n + p_{n-2}}{q_{n-1} a_n + q_{n-2}}.
+      \]
+    \end{lemma}
+
+    \column{0.49\textwidth}
+    \begin{lemma}
+      \[
+        \frac{P_ℓ^{(n)}}{Q_ℓ}
+        = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n)} a_d^{(n)}}
+               {Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n)} a_d^{(n)}}.
+      \]
+    \end{lemma}
+  \end{columns}
+
+  \begin{columns}
+    \column{.49\textwidth}
+    \[
+      p_n/q_n ↦ \begin{pmatrix}
+        p_n \\
+        q_n \\
+      \end{pmatrix}
+    \]
+    %\adjustbox{scale=.9}{\includestandalone{figures/klein-polygon}}
+
+    \column{.49\textwidth}
+    \[
+      P_ℓ^{(n)}/Q_ℓ^{(n)} ↦ \begin{pmatrix}
+        Q_ℓ \\
+        P_ℓ \\
+      \end{pmatrix}
+    \]
+    %\adjustbox{scale=.9}{\includestandalone{figures/projective-space}}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
   \begin{center}
     \includestandalone{figures/projective-space}
   \end{center}
@@ -232,7 +330,7 @@
   \begin{columns}[T]
     \column{0.49\textwidth}
     \begin{theorem}
-      If a continued fraction of a number $x ∈ R$ is periodic, then $x$ is a
+      If a continued fraction of a number $x ∈ ℝ$ is periodic, then $x$ is a
       quadratic irrational.
     \end{theorem}
 
