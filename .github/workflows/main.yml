@@ -13,6 +13,7 @@ jobs:
         with:
           root_file: |
             figures/lattice.tex
+            slides.tex
             main.tex
           args: -lualatex -file-line-error -halt-on-error -interaction=nonstopmode -outdir=build
           latexmk_use_lualatex: true
@@ -20,4 +21,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: build/main.pdf
+          path: |
+            build/main.pdf
+            build/slides.pdf
