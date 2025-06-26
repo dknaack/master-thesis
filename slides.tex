@@ -401,15 +401,20 @@
 \begin{frame}
   \frametitle{Convergence}
   \small
-  \begin{columns}[T]
+  \begin{columns}
     \column{0.49\textwidth}
-    \begin{theorem}
-      The convergents $pₙ/qₙ$ of a continued fraction approach $x ∈ ℝ$.
-      Specifically,
-      \[
-        \left|x - \frac{pₙ}{qₙ}\right| < \frac{1}{qₙ^2}.
-      \]
-    \end{theorem}
+    \begin{onlyenv}<1>
+      \begin{theorem}
+        The convergents $pₙ/qₙ$ of a continued fraction approach $x ∈ ℝ$.
+        Specifically,
+        \[
+          \left|x - \frac{pₙ}{qₙ}\right| < \frac{1}{qₙ^2}.
+        \]
+      \end{theorem}
+    \end{onlyenv}
+    \begin{onlyenv}<2>
+      \adjustbox{scale=1}{\includestandalone{figures/convergence}}
+    \end{onlyenv}
 
     \column{0.49\textwidth}
     \begin{theorem}
@@ -426,42 +431,86 @@
   \frametitle{Geometry}
   \small
 
-  \begin{columns}
-    \column{0.49\textwidth}
+  \begin{columns}[T]
+    \column{0.41\textwidth}
+    The \emph{$n$-th convergent} is $[a₀; a₁, …, aₙ]$.
     \begin{lemma}
-      \[
-        \frac{pₙ}{qₙ} = \frac{p_{n-1} a_n + p_{n-2}}{q_{n-1} a_n + q_{n-2}}.
-      \]
+      \begin{onlyenv}<1>
+        \[
+          \frac{pₙ}{qₙ} = \frac{p_{n-1} a_n + p_{n-2}}{q_{n-1} a_n + q_{n-2}}.
+        \]
+        \vspace{8em}
+      \end{onlyenv}
+      \begin{onlyenv}<2>
+        \begin{align*}
+          \binom{p_n}{q_n}
+          & = \begin{pmatrix}
+            p_{n-1} \\ q_{n-1} \\
+          \end{pmatrix} a_n + \begin{pmatrix}
+            p_{n-2} \\ q_{n-2} \\
+          \end{pmatrix} \\
+          & = \begin{pmatrix}
+            p_{n-1} & p_{n-2} \\
+            q_{n-1} & q_{n-2} \\
+          \end{pmatrix}
+          \begin{pmatrix}
+            a_n \\
+            1 \\
+          \end{pmatrix} \\
+          & =
+          B_n
+          \begin{pmatrix}
+            a_n \\
+            1 \\
+          \end{pmatrix}.
+        \end{align*}
+      \end{onlyenv}
     \end{lemma}
 
-    \column{0.49\textwidth}
+    \column{0.61\textwidth}
+    The \emph{$n$-th convergent} is $[a^{(0)}; a^{(1)}, …, a^{(n)}]$.
     \begin{lemma}
-      \[
-        \frac{P_ℓ^{(n)}}{Q_ℓ}
-        = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n)} a_d^{(n)}}
-               {Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n)} a_d^{(n)}}.
-      \]
+      \begin{onlyenv}<1>
+        \[
+          \frac{P_ℓ^{(n)}}{Q_ℓ}
+          = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n)} a_d^{(n)}}
+                 {Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n)} a_d^{(n)}}.
+        \]
+      \end{onlyenv}
+      \begin{onlyenv}<2>
+        \begin{align*}
+          \begin{pmatrix}
+            P_ℓ^{(n)} \\
+            Q_ℓ^{(n)} \\
+          \end{pmatrix}
+          & = \begin{pmatrix}
+            P_0^{(n-1)} \\
+            Q_0^{(n-1)} \\
+          \end{pmatrix} +
+          \begin{pmatrix}
+            P_1^{(n-1)} \\
+            Q_1^{(n-1)} \\
+          \end{pmatrix} a_1^{(n)} + ⋯ +
+          \begin{pmatrix}
+            P_1^{(n-1)} \\
+            Q_1^{(n-1)} \\
+          \end{pmatrix} a_d^{(n)} \\
+          & = \begin{pmatrix}
+            P_0^{(n-1)} & P_1^{(n-1)} & ⋯ & P_d^{(n-1)} \\
+            Q_0^{(n-1)} & Q_1^{(n-1)} & ⋯ & Q_d^{(n-1)} \\
+          \end{pmatrix}
+          \begin{pmatrix}
+            a^{(n)} \\
+            1 \\
+          \end{pmatrix} \\
+          & = B^{(n)}
+          \begin{pmatrix}
+            a^{(n)} \\
+            1 \\
+          \end{pmatrix}.
+        \end{align*}
+      \end{onlyenv}
     \end{lemma}
-  \end{columns}
-
-  \begin{columns}
-    \column{.49\textwidth}
-    \[
-      p_n/q_n ↦ \begin{pmatrix}
-        p_n \\
-        q_n \\
-      \end{pmatrix}
-    \]
-    %\adjustbox{scale=.9}{\includestandalone{figures/klein-polygon}}
-
-    \column{.49\textwidth}
-    \[
-      P_ℓ^{(n)}/Q_ℓ^{(n)} ↦ \begin{pmatrix}
-        Q_ℓ \\
-        P_ℓ \\
-      \end{pmatrix}
-    \]
-    %\adjustbox{scale=.9}{\includestandalone{figures/projective-space}}
   \end{columns}
 \end{frame}
 
