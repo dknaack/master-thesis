@@ -342,22 +342,35 @@
 
   \begin{columns}
     \column{0.49\textwidth}
-    \begin{tikzpicture}[scale=0.5]
-      \draw (0, 0) rectangle (8, 3) node[pos=0.5] {\large $8:3$};
+    \begin{center}
+      \begin{tikzpicture}[scale=0.5]
+        \draw (0, 0) rectangle (8, 3) node[pos=0.5] {\large $8:3$};
 
-      \draw[thick, dashed, fill=black!50, opacity=0.2] (-0.5, -4) rectangle (2.5, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
-      \draw[thick, dashed, fill=black!50, opacity=0.2] (3, -4) rectangle (6, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
-      \draw[thick] (6.5, -4) rectangle (8.5, -1) node[pos=0.5] {\large$2:3$};
+        \draw[thick, dashed, fill=black!50, opacity=0.2] (-0.5, -4) rectangle (2.5, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
+        \draw[thick, dashed, fill=black!50, opacity=0.2] (3, -4) rectangle (6, -1) node[pos=0.5, opacity=0.7] {\large$1:1$};
+        \draw[thick] (6.5, -4) rectangle (8.5, -1) node[pos=0.5] {\large$2:3$};
 
-      \draw (2.5, -7) rectangle (5.5, -5) node[pos=0.5] {\large$3:2$};
+        \draw (2.5, -7) rectangle (5.5, -5) node[pos=0.5] {\large$3:2$};
 
-      \draw[ultra thick] (6.5, -2.5) edge[bend right, ->] (4, -5);
-      \draw[thick] (2, 0) edge[->] (1, -1);
-      \draw[thick] (4, 0) edge[->] (4.5, -1);
-      \draw[ultra thick] (6, 0) edge[->] (7.5, -1);
-    \end{tikzpicture}
+        \draw[ultra thick] (6.5, -2.5) edge[bend right, ->] (4, -5);
+        \draw[thick] (2, 0) edge[->] (1, -1);
+        \draw[thick] (4, 0) edge[->] (4.5, -1);
+        \draw[ultra thick] (6, 0) edge[->] (7.5, -1);
+      \end{tikzpicture}
+    \end{center}
+    \[
+      x' = \frac{1}{x - \lfloor{x}\rfloor}
+    \]
 
     \column{0.49\textwidth}
+    \begin{align*}
+      x' & = \mathrm{pivot}_ℓ(x) \\
+      \text{ with } x_i' & =
+      \begin{cases}
+        \frac{1}{x_ℓ - a_ℓ}, & \text{ if } i = ℓ, \\
+        \frac{x_i - a_i}{x_ℓ - a_ℓ}, & \text{ otherwise}.
+      \end{cases}
+    \end{align*}
   \end{columns}
 \end{frame}
 
