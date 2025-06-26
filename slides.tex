@@ -16,6 +16,7 @@
 \tikzset{>=stealth}
 
 \newtheorem{conjecture}{Conjecture}
+\newcommand\floor[1]{\left\lfloor#1\right\rfloor}
 
 \usetheme{metropolis}
 \usefonttheme[onlymath]{serif}
@@ -143,23 +144,25 @@
 
 \begin{frame}[fragile]
   \frametitle{Modulo}
+  \small
   \begin{columns}
     \column{0.49\textwidth}
     \includestandalone{figures/golden-rectangle}
     \[
-      c = bq + r
+      c = b \floor{x} + r
     \]
 
     \column{0.49\textwidth}
     \adjustbox{scale=0.7}{\includestandalone{figures/lattice-modulo}}
     \[
-      c = {\underbrace{Bx}_{{} ∈ \mathcal L(B)}} + {\underbrace{r}_{{} ∈ Π(B)}}
+      c = {\underbrace{B \floor{x}}_{{} ∈ \mathcal L(B)}} + {\underbrace{r}_{{} ∈ Π(B)}}
     \]
   \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Exchange}
+  \small
   \begin{columns}
     \column{0.49\textwidth}
     \includestandalone{figures/golden-rectangle}
@@ -167,11 +170,11 @@
       \begin{tikzpicture}
         \node[matrix, matrix of math nodes, column sep=-2mm, row sep=7mm] (M)
         {
-          c   & =  & \symbfit{\color{purple}b} x &+& \symbfit{\color{blue}r} \\
-          \symbfit{\color{purple}b}   & =  & \symbfit{\color{blue}r} x &+& r' \\
+          c   & =  & \symbfit{\color{purple}b} \floor{x} &+& \symbfit{\color{blue}r} \\
+          \symbfit{\color{purple}b}   & =  & \symbfit{\color{blue}r} \floor{x'} &+& r' \\
         };
 
-        \draw[->, blue, in=90, out=270] (M-1-5) to (M-2-3);
+        \draw[->, blue, in=90, out=270] ([xshift=-3mm]M-1-5.south) to ([xshift=-3mm]M-2-3.north);
         \draw[->, red, in=90, out=270] (M-1-3) to (M-2-1);
       \end{tikzpicture}
     \end{center}
@@ -182,11 +185,11 @@
       \begin{tikzpicture}
         \node[matrix, matrix of math nodes, column sep=-2mm, row sep=7mm] (M)
         {
-          c   & =  & B_1 x_1  & + & ⋯ & + & \symbfit{\color{red}B_ℓ} x_ℓ & + & ⋯ & + & B_d x_d   & + & \symbfit{\color{blue}r}   \\
-          \symbfit{\color{red}B_ℓ} & =  & B_1 x_1' & + & ⋯ & + & \symbfit{\color{blue}r} x_ℓ'  & + & ⋯ & + & B_d x_d'  & + & r'  \\
+          c   & =  & B_1 \floor{x_1}  & + & ⋯ & + & \symbfit{\color{red}B_ℓ} \floor{x_ℓ} & + & ⋯ & + & B_d \floor{x_d}   & + & \symbfit{\color{blue}r}   \\
+          \symbfit{\color{red}B_ℓ} & =  & B_1 \floor{x_1'} & + & ⋯ & + & \symbfit{\color{blue}r} \floor{x_ℓ'}  & + & ⋯ & + & B_d \floor{x_d'}  & + & r'  \\
         };
 
-        \draw[->, blue, in=90, out=270, looseness=0.5] (M-1-13) to (M-2-7);
+        \draw[->, blue, in=90, out=270, looseness=0.5] ([xshift=-3mm]M-1-13.south) to ([xshift=-3mm]M-2-7.north);
         \draw[->, red, in=90, out=270, looseness=0.5] (M-1-7) to (M-2-1);
       \end{tikzpicture}
     \end{center}
