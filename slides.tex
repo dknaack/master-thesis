@@ -526,7 +526,7 @@
 
 \begin{frame}
   \frametitle{Periodicity $\Rightarrow$ Algebraicity}
-  \small
+  \footnotesize
   \begin{columns}[T]
     \column{0.49\textwidth}
     \begin{theorem}
@@ -536,7 +536,10 @@
 
     \begin{proof}[Proof Sketch]
       If the continued fraction is periodic,
-      then $(x, 1)$ is the eigenvector of an integer matrix $B ∈ ℤ^{2×2}$.
+      then
+      \[
+        B_{n+k} \binom{x_n}{1} = λ \binom{x_n}{1}. \qedhere
+      \]
     \end{proof}
 
     \column{0.49\textwidth}
