@@ -9,6 +9,7 @@
 \usepackage{unicode-math}
 \usepackage{standalone}
 \usepackage{adjustbox}
+\usepackage{emoji}
 
 \setmathfont{TeX Gyre Pagella Math}
 \usetikzlibrary{decorations.pathreplacing, calligraphy, intersections, backgrounds, graphdrawing, graphs, calc, matrix, 3d}
@@ -249,8 +250,76 @@
 
   \begin{columns}
     \column{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[scale=3]
+        \def\width{1.6180339}
+        \def\height{1}
+
+        \fill[black!30] (0, 0) rectangle (\height, \height);
+        \path (0, 0) rectangle (\height, \height) node[midway] {$1:1$};
+        \path (\height, 0) rectangle (\width, \height) node[midway, black] {$1:φ^{-1}$};
+        \draw (0, 0) rectangle (\width, \height)
+        \draw[dashed] (\height, 0) -- (\height, \height) node[above] {\emoji{scissors}};
+
+        \draw[<->] (0, -0.1) -- (\width, -0.1) node[midway, below] {$φ$};
+        \draw[<->] (-0.1, 0) -- (-0.1, \height) node[midway, left] {$1$};
+      \end{tikzpicture}
+    \end{center}
+    \[
+      \lim_{n → ∞} \frac{F(n+1)}{F(n)} = φ
+    \]
 
     \column{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[scale=1.5]
+        % Define dimensions
+        \def\width{1}         % along y-axis (ψ)
+        \def\depth{1.465571}  % along x-axis
+        \def\height{1.68232} % along z-axis (ψ²)
+
+        % Define corners of the cuboid
+        \coordinate (O) at (0, 0);                            % origin
+        \coordinate (A) at (\depth, 0);                      % x
+        \coordinate (B) at (\depth, \width);                 % x+y
+        \coordinate (C) at (0, \width);                      % y
+
+        \coordinate (O') at (0, 0, \height);                 % origin shifted up
+        \coordinate (A') at (\depth, 0, \height);            % x up
+        \coordinate (B') at (\depth, \width, \height);       % x+y up
+        \coordinate (C') at (0, \width, \height);            % y up
+
+        \fill[black!30] (O') -- (\width, 0, \height) -- (\width, \width, \height) -- (0, \width, \height);
+        \path (0, 0, \height) rectangle (\width, \width, \height) node[midway] {$1:1$};
+        \fill[black!30] (A) -- (\depth, \width) -- (\depth, \width, \width) -- (\depth, 0, \width);
+        \fill[black!30] (0, \width, \height) -- (0, \width) -- (\width, \width) -- (\width, \width, \height);
+        \fill[black!30] (B) -- (C) -- (0, \width, \width) -- (\depth, \width, \width);
+
+        \begin{scope}[canvas is zy plane at x=\depth]
+          \path (0, 0) rectangle (\width, \width) node[midway, transform shape, xscale=-1, scale=0.8] {$1:1$};
+        \end{scope}
+
+        %\fill (O') -- (\width, 0, \height) -- (\width, \width, \height) -- (0, \width, \height);
+
+        % Draw cuboid
+        \draw (O') -- (A') -- (B') -- (C') -- cycle;
+        \draw (A') -- (A);
+        \draw (B') -- (B);
+        \draw (C') -- (C);
+        \draw (A) -- (B) -- (C);
+
+        % Draw cuts
+        \draw[dashed] (\depth, 0, \width) -- (\depth, \width, \width) -- (0, \width, \width) node[rotate=90, above] {\emoji{scissors}};
+        \draw[dashed] (\width, 0, \height) -- (\width, \width, \height) -- (\width, \width) node[rotate=-45, above] {\emoji{scissors}};
+
+        % Label dimensions
+        \draw[<->] (\depth + 0.2, 0) -- (\depth + 0.2, \width) node[midway, right] {$1$};
+        \draw[<->] (0, -0.2, \height) -- (\depth, -0.2, \height) node[midway, below] {$φ_d$};
+        \draw[<->] (\depth, -0.2, 0) -- (\depth, -0.2, \height) node[midway, below right] {$φ_d^2 - φ_d$};
+      \end{tikzpicture}
+    \end{center}
+    \[
+      \lim_{n → ∞} \frac{F_d(n+1)}{F_d(n)} = φ_d
+    \]
   \end{columns}
 \end{frame}
 
