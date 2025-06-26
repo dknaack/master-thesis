@@ -208,7 +208,7 @@
     \column{0.49\textwidth}
     The $d$-bonacci numbers are defined as
     \[
-      F(n) = F(n - 1) + ⋯ + F(n - d - 1).
+      F_d(n) = F_d(n - 1) + ⋯ + F_d(n - d - 1).
     \]
   \end{columns}
   \vspace{1em}
@@ -224,9 +224,9 @@
     \column{0.49\textwidth}
     \begin{theorem}
       If the generalized Euclidean algorithm requires $n$ steps on $x = (p₁/q, …, p_d/q)$,
-      when selecting the minimum,
+      when selecting the \alert{minimum fractional value},
       then \[
-        p_{σ(i)} ≥ ∑_{k=0}^i F(n-k) \text{ and } q ≥ F(n+1)
+        p_{σ(i)} ≥ ∑_{k=0}^i F_d(n-k) \text{ and } q ≥ F_d(n)
       \]
       for some permutation $σ$.
     \end{theorem}
