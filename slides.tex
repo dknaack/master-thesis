@@ -11,16 +11,27 @@
 \usepackage{adjustbox}
 \usepackage{emoji}
 
-\setmathfont{TeX Gyre Pagella Math}
-\usetikzlibrary{decorations.pathreplacing, calligraphy, intersections, backgrounds, graphdrawing, graphs, calc, matrix, 3d}
-\tikzset{>=stealth}
+\usetikzlibrary{
+  decorations.pathreplacing,
+  calligraphy,
+  intersections,
+  backgrounds,
+  graphdrawing,
+  graphs,
+  calc,
+  matrix,
+  3d,
+  positioning
+}
 
+\tikzset{>=stealth}
 \newtheorem{conjecture}{Conjecture}
 \newcommand\floor[1]{\left\lfloor#1\right\rfloor}
 
 \usetheme{metropolis}
 \usefonttheme[onlymath]{serif}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\setmathfont{TeX Gyre Pagella Math}
 
 \begin{document}
 
@@ -147,9 +158,11 @@
   \small
   \begin{columns}
     \column{0.49\textwidth}
-    \includestandalone{figures/golden-rectangle}
+    \begin{center}
+      \input{figures/modulo.tex}
+    \end{center}
     \[
-      c = b \floor{x} + r
+      c = \symbfit{\color{red}b} \floor{x} + \symbfit{\color{blue}r}
     \]
 
     \column{0.49\textwidth}
@@ -165,8 +178,8 @@
   \small
   \begin{columns}
     \column{0.49\textwidth}
-    \includestandalone{figures/golden-rectangle}
     \begin{center}
+      \input{figures/modulo.tex}
       \begin{tikzpicture}
         \node[matrix, matrix of math nodes, column sep=-2mm, row sep=7mm] (M)
         {
