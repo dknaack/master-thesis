@@ -350,7 +350,7 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Construction}
 
   \begin{columns}
@@ -376,12 +376,42 @@
     \]
 
     \column{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}
+        \matrix[matrix of nodes, column sep=1ex] (m)
+        {
+          \node (a) {13}; & \node{:}; &
+          \node (b) {8};  & \node{:}; &
+          \node (c) {3}; \\
+        };
+
+        \matrix[matrix of nodes, column sep=1ex, below=of m] (m2)
+        {
+          \node (a2) {1}; & \node{:}; &
+          \node (b2) {2};  & \node{:}; &
+          \node (c2) {3}; \\
+        };
+
+
+        \matrix[matrix of nodes, column sep=1ex, below=of m2] (m3)
+        {
+          \node (a3) {3}; & \node{:}; &
+          \node (b3) {2};  & \node{:}; &
+          \node (c3) {1}; \\
+        };
+
+        \draw[->] (c) -- ($(c.south)-(0,0.2)$) -- ($(a.south)-(0,0.2)$) node[pos=0.7, below] {$-12$} -- (a);
+        \draw[->] (c) -- ($(c.south)-(0,0.2)$) -- ($(b.south)-(0,0.2)$) node[pos=0.5, below] {$-6$} -- (b);
+
+        \draw[<->] (c2) -- ($(c2.south)-(0,0.2)$) -- ($(a2.south)-(0,0.2)$) node[midway, below] {$ℓ$} -- (a2);
+      \end{tikzpicture}
+    \end{center}
     \begin{align*}
       x' & = \mathrm{pivot}_ℓ(x) \\
       \text{ with } x_i' & =
       \begin{cases}
         \frac{1}{x_ℓ - a_ℓ}, & \text{ if } i = ℓ, \\
-        \frac{x_i - a_i}{x_ℓ - a_ℓ}, & \text{ otherwise}.
+        \frac{x_i - \floor{x_i}}{x_ℓ - \floor{x_ℓ}}, & \text{ otherwise}.
       \end{cases}
     \end{align*}
   \end{columns}
