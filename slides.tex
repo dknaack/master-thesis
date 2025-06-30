@@ -211,6 +211,58 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}<1>[fragile, label={exchange}]
+  \frametitle{\alt<2>{Exchange}{Termination}}
+  \small
+  \begin{columns}
+    \column{0.49\textwidth}
+    \begin{center}
+      \[
+        \begin{array}{lclcl}
+          c   & = & b x     & = & b \floor{x} + r       \\
+          c'  & = & b' x'   & = & b' \floor{x'} + r'    \\
+          c'' & = & b'' x'' & = & b'' \floor{x''} + r'' \\
+              & ⋮ &         & ⋮ &                       \\
+          c_n & = & b_n x_n & = & b_n \floor{x_n} + r_n \\
+        \end{array}
+      \]
+      \begin{onlyenv}<1>
+        Terminate if $r_n = \symbf 0$.
+      \end{onlyenv}
+      \begin{onlyenv}<2>
+        \begin{align*}
+          x_{n+1} & = \frac{1}{x_n - \floor{x_n}}.
+        \end{align*}
+      \end{onlyenv}
+    \end{center}
+
+    \column{0.49\textwidth}
+    \begin{center}
+      \[
+        \begin{array}{lclcl}
+          c       & = & B x             & = & B \floor{x} + r             \\
+          c'      & = & B' x'           & = & B' \floor{x'} + r'          \\
+          c''     & = & B'' x''         & = & B'' \floor{x''} + r''       \\
+                  & ⋮ &                 & ⋮ &                             \\
+          c^{(n)} & = & B^{(n)} x^{(n)} & = & B^{(n)} \floor{x^{(n)}} + r^{(n)} \\
+        \end{array}
+      \]
+      \begin{onlyenv}<1>
+        Terminate if $r^{(n)} = \symbf 0$.
+      \end{onlyenv}
+      \begin{onlyenv}<2>
+        \[
+          x_i^{(n+1)} =
+          \begin{cases}
+            \frac{1}{x_ℓ^{(n)} - \floor{x_ℓ^{(n)}}}, & \text{ if } i = ℓ \\[1.2em]
+            \frac{x_i^{(n)} - \floor{x_i^{(n)}}}{x_ℓ^{(n)} - \floor{x_ℓ^{(n)}}}, & \text{ if } i ≠ ℓ.
+          \end{cases}
+        \]
+      \end{onlyenv}
+    \end{center}
+  \end{columns}
+\end{frame}
+
 \begin{frame}
   \frametitle{Fibonacci Numbers}
   \small
