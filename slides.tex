@@ -110,7 +110,7 @@
     \begin{problem}[Greatest Common Divisor]
       \begin{itemize}
         \item \textbf{Input}: $a, b ∈ ℤ$.
-        \item \textbf{Output}: $c = \gcd(a, b)$.
+        \item \textbf{Output}: $\gcd(a, b)$.
       \end{itemize}
     \end{problem}
     % TODO: Zahlenstrahl
@@ -472,7 +472,7 @@
       x' & = \mathrm{pivot}_ℓ(x) \\
       \text{ with } x_i' & =
       \begin{cases}
-        \frac{1}{x_ℓ - a_ℓ}, & \text{ if } i = ℓ, \\
+        \frac{1}{x_ℓ - \floor{x_ℓ}}, & \text{ if } i = ℓ, \\
         \frac{x_i - \floor{x_i}}{x_ℓ - \floor{x_ℓ}}, & \text{ otherwise}.
       \end{cases}
     \end{align*}
@@ -626,8 +626,8 @@
       \begin{onlyenv}<1>
         \[
           \frac{P_ℓ^{(n)}}{Q_ℓ}
-          = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n)} a_d^{(n)}}
-                 {Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n)} a_d^{(n)}}.
+          = \frac{P_0^{(n-1)} + P_1^{(n-1)} a_1^{(n)} + ⋯ + P_d^{(n-1)} a_d^{(n)}}
+                 {Q_0^{(n-1)} + Q_1^{(n-1)} a_1^{(n)} + ⋯ + Q_d^{(n-1)} a_d^{(n)}}.
         \]
       \end{onlyenv}
       \begin{onlyenv}<2>
@@ -645,8 +645,8 @@
             Q_1^{(n-1)} \\
           \end{pmatrix} a_1^{(n)} + ⋯ +
           \begin{pmatrix}
-            P_1^{(n-1)} \\
-            Q_1^{(n-1)} \\
+            P_d^{(n-1)} \\
+            Q_d^{(n-1)} \\
           \end{pmatrix} a_d^{(n)} \\
           & = \begin{pmatrix}
             P_0^{(n-1)} & P_1^{(n-1)} & ⋯ & P_d^{(n-1)} \\
