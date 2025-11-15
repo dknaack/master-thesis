@@ -1,6 +1,6 @@
 # Master Thesis
 
-**On Elementary Properties of a Multi-Dimensional Generalization of the Euclidean Algorithm** ([PDF](https://nightly.link/dknaack/master-thesis/workflows/main/main/PDF.zip))
+**On Elementary Properties of a Multi-Dimensional Generalization of the Euclidean Algorithm** ([PDF](https://github.com/dknaack/master-thesis/releases/download/v1.0/main.pdf))
 
 > In 1848, Charles Hermite posed the question of whether every real number admits
     a representation as a sequence of integers, periodic if and only if the number
